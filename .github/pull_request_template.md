@@ -1,11 +1,11 @@
 <!-- Title Convention
-pr 생성시 Format -> Type(Scope): Description
+pr 생성시 Format -> type(scope): description
 - 하나의 커밋일 경우 해당 커밋 메시지와 동일하게 작성한다.
 - 여러 커밋이 포함된 경우 요약되어야 한다.
-- Descriptiona: 영어인 경우, 첫 글자는 대문자.
-- ex. Feat(jwt): 사용자 인증을 위한 jwt 토큰 추가
+- description: 내용
+- ex. feat(jwt): 사용자 인증을 위한 jwt 토큰 추가
 
-merge pr시 Format -> Resolves #{이슈-번호}
+merge pr시 Format -> merge/type(scope): description
 -->
 
 ## 📌 개요
