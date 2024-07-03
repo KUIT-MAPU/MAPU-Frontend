@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import TimeLine from './pages/TimeLine';
 import Editor from './pages/Editor';
-import Viewer from './pages/Viewer';
+import Viewer from './pages/Map';
 import Community from './pages/Community';
 import MyMaps from './pages/MyMaps';
-import FileManager from './pages/FileManager';
+import UserProfile from './pages/UserProfile';
+
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -35,8 +36,8 @@ const Router = () => {
     },
     {
       index: true,
-      path: '/file-manager',
-      element: <FileManager />,
+      path: '/user',
+      element: <UserProfile />,
     },
   ]);
 
