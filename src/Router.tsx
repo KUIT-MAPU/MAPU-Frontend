@@ -1,10 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import TimeLine from './pages/TimeLine';
-import Editor from './pages/Editor';
-import Viewer from './pages/Map';
 import Community from './pages/Community';
 import MyMaps from './pages/MyMaps';
 import UserProfile from './pages/UserProfile';
+import Map from './pages/Map';
 
 
 const Router = () => {
@@ -16,13 +15,8 @@ const Router = () => {
     },
     {
       index: true,
-      path: '/editor',
-      element: <Editor />,
-    },
-    {
-      index: true,
-      path: '/viewer',
-      element: <Viewer />,
+      path: '/map',
+      element: <Map />,
     },
     {
       index: true,
