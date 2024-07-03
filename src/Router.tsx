@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Welcome from './pages/Welcome';
 import TimeLine from './pages/TimeLine';
-import Community from './pages/Community';
-import MyMaps from './pages/MyMaps';
-import UserProfile from './pages/UserProfile';
 import Map from './pages/Map';
+import Explore from './pages/Explore';
+import UserProfile from './pages/UserProfile';
 
 
 const Router = () => {
@@ -11,6 +11,11 @@ const Router = () => {
     {
       index: true,
       path: '/',
+      element: <Welcome />,
+    },
+    {
+      index: true,
+      path: '/timeline',
       element: <TimeLine />,
     },
     {
@@ -20,13 +25,8 @@ const Router = () => {
     },
     {
       index: true,
-      path: '/community',
-      element: <Community />,
-    },
-    {
-      index: true,
-      path: '/my-maps',
-      element: <MyMaps />,
+      path: '/explore',
+      element: <Explore />,
     },
     {
       index: true,
