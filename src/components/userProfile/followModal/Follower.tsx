@@ -10,6 +10,7 @@ import instance from '../../../apis/instance';
 
 const Follower = ({ onClose }: { onClose: () => void }) => {
   const [followerUsers,setFollowerUsers] = useState<any[]>([]);
+  const [followingUsers,setFollowingUsers] = useState<any[]>([])
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -27,9 +28,57 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
    fetchUserFollowerData();
   }, []);
 
+  useEffect(() => {
+    const fetchUserFollowingData = async () => {
+      try {
+        const response = await instance.get('/following');
+        const data = response.data.result.users;
+        
+        setFollowingUsers(data);
+
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+   };  
+   fetchUserFollowingData();
+  }, []);
+
+  //팔로워중에서 내가 팔로잉한 사람들인지 비교
+  //내가 팔로잉 했다면 팔로잉 회색 버튼, 안했다면 팔로잉 초록색 버튼
+
+  const isFollowing = ((userId : string) => {
+    return followerUsers.some((followingUsers) => followingUsers.userId === userId)
+  })
+
   const filteredUsers = followerUsers.filter((user:any) =>
     user.nickName?.toLowerCase().includes(searchTerm.toLowerCase())
   )
+
+  const unFollowing = async (followingId : number) => { 
+    try{
+      const response = await instance.delete(`/unfollow?followingId=${followingId}`);
+      console.error("삭제성공", response.data);
+
+      setFollowingUsers((currentUsers) =>
+        currentUsers.filter((user) => user.userId !== followingId)
+      );
+    } catch(error){
+      console.error("삭제실패",error);
+    }
+  }
+
+  const Following = async (followingId : number) => { 
+    try{
+      const response = await instance.post(`/follow`,{followingId});
+      console.error("팔로우성공", response.data);
+
+      setFollowingUsers((currentUsers) =>
+        currentUsers.filter((user) => user.userId !== followingId)
+      );
+    } catch(error){
+      console.error("팔로우실패",error);
+    }
+  }
 
   return (
     <div className={styles.modalOverlay}>
@@ -63,8 +112,10 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
                 />
                 <div className={styles.userName}>{user.nickName}</div>
               </Link>
-              <button className={styles.isFollow}>
-                팔로잉
+              <button className={isFollowing(user.userId) ? styles.isFollowing : styles.notFollowing}
+              onClick={() => {isFollowing(user.userId) ? unFollowing(user.userId) : Following(user.userId)}}
+              >
+                {isFollowing(user.userId) ? '팔로잉' : '팔로우'}
               </button>
             </div>
           ))}

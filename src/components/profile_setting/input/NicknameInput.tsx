@@ -2,8 +2,7 @@ import styles from './UserDataInput.module.scss';
 import InfoGrayCircle from '../../../assets/ico_info_gray.svg';
 import InfoErrorCircle from '../../../assets/ico_info_error_red.svg';
 
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 interface Props {
   value: string | undefined
   isNicknameEmpty: boolean;
@@ -11,6 +10,7 @@ interface Props {
   setNickname: React.Dispatch<React.SetStateAction<string | undefined>>;
   setIsNicknameEmpty: React.Dispatch<React.SetStateAction<boolean>>;
   setIsValidNickname: React.Dispatch<React.SetStateAction<boolean>>;
+  initialNickName : string | undefined;
 }
 
 const NicknameInput: React.FC<Props> = ({
@@ -20,8 +20,13 @@ const NicknameInput: React.FC<Props> = ({
   setNickname,
   setIsNicknameEmpty,
   setIsValidNickname,
+  initialNickName, //props로 받은 초기 닉네임
 }) => {
-  const [nicknameValue, setnicknameValue] = useState<string>(''); // 상태 관리
+  const [nicknameValue, setnicknameValue] = useState<string>(initialNickName || ''); // 상태 관리
+
+  useEffect (() => {
+    setNickname(initialNickName);
+  },[initialNickName,setNickname])
 
   useEffect(() => {
     setnicknameValue(value || ''); // 외부에서 value가 변경될 경우 내부 상태를 업데이트

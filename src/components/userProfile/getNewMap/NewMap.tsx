@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import styles from './NewMap.module.scss';
 import { ReactComponent as ModalClose } from '../../../assets/btn_followmodal_close.svg';
@@ -42,22 +42,33 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
     return mapCreate ? `${styles.onMapCreate}` : `${styles.offMapCreate}`;
   };
 
+
+  const mapContainer = useRef<HTMLDivElement>(null); 
   const handleCurrentLocation = () => {
     setLocation('현재 위치');
     kakao.maps.load(() => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
+          navigator.geolocation.getCurrentPosition((position) => {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
           setLatitude(lat);
           setLongitude(lon);
           console.log(lat, lon);
+
+          if(mapContainer.current){
+            let staticMapOption = {
+              center: new kakao.maps.LatLng(lat,lon),
+              level: 3
+            }
+            new kakao.maps.StaticMap(mapContainer.current,staticMapOption)
+          };
         });
       } else {
         alert('현재 위치 사용 불가');
       }
     });
   };
+
 
   const sendDataToBackend = async (data:any) => {
     try {

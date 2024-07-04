@@ -11,8 +11,8 @@ const LoginModal = () => {
 
   //oauth 요청 URL
   const ENCODED_PRESENT_URI = encodeURIComponent(pathname);
-  const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URL}&response_type=code&state=${ENCODED_PRESENT_URI}`;
-  const GOOGLE_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URL}&response_type=code&scope=email profile&state=${ENCODED_PRESENT_URI}`;
+  const KAKAO_URL = `http://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URL}&response_type=code&state=${ENCODED_PRESENT_URI}`;
+  const GOOGLE_URL = `http://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URL}&response_type=code&scope=email profile&state=${ENCODED_PRESENT_URI}`;
 
   const isWelcome = `${pathname}` === '/';
 

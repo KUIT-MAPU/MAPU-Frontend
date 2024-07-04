@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import styles from './MapBasicInfoContainer.module.scss';
+
 import { useMapBasicInfoQuery } from '../../../../../apis/Map/fetchMapBasicInfo';
+import useMapTitleEditMutation from '../../../../../apis/Map/useMapTitleEditMutation';
+import useMapDescriptionEditMutation from '../../../../../apis/Map/useMapDescriptionEditMutation';
+import useMapBookmarkEditMutation from '../../../../../apis/Map/useMapBookmarkEditMutation';
+
 import useRegisterStore from '../../../../../stores/registerStore';
+
 import { MapMode } from '../../../../../types/enum/MapMode';
 import { RegisterStatus } from '../../../../../types/enum/RegisterStatus';
+
 import BookmarkDefault from '../../../../../assets/btn_bookmark_default.svg';
 import BookmarkSelected from '../../../../../assets/btn_bookmark_selected.svg';
 
@@ -23,10 +30,9 @@ const MapBasicInfoContainer: React.FC<Props> = ({ mode, mapId }) => {
   );
 
   useEffect(() => {
-    if (!isMapBasicInfoLoading) {
-      const mapBasicInfoResult = mapBasicInfo!.result;
-      setEditedTitle(mapBasicInfoResult.title);
-      setEditedDescription(mapBasicInfoResult.description);
+    if (!isMapBasicInfoLoading && mapBasicInfo !== undefined) {
+      setEditedTitle(mapBasicInfo.result.title);
+      setEditedDescription(mapBasicInfo.result.description);
     }
   }, [isMapBasicInfoLoading]);
 
@@ -40,19 +46,28 @@ const MapBasicInfoContainer: React.FC<Props> = ({ mode, mapId }) => {
     setEditedDescription(e.currentTarget.value);
   };
 
-  const handleFocusOutTitle = () => {
-    //TODO: 지도 제목 저장 api 호출
+  const mapTitleEditMutation = useMapTitleEditMutation(mapId);
+  const mapDescriptionEditMutation = useMapDescriptionEditMutation(mapId);
+  const mapBookmarkEditMutation = useMapBookmarkEditMutation(mapId);
+
+  const handleFocusOutTitle = async () => {
+    //지도 제목 저장 api 호출
+    await mapTitleEditMutation.mutate(editedTitle);
   };
 
-  const handleFocusOutDescription = () => {
-    //TODO: 지도 설명 저장 api 호출
+  const handleFocusOutDescription = async () => {
+    //지도 설명 저장 api 호출
+    await mapDescriptionEditMutation.mutate(editedDescription);
   };
 
-  const handleSwitchIsBookmarked = () => {
+  const handleSwitchIsBookmarked = async () => {
     if (registerStatus !== RegisterStatus.LOG_IN) {
       setLoginNeededStatus(true);
     } else {
-      //TODO: 북마크 설정 api 호출
+      //북마크 설정 api 호출
+      if (mapBasicInfo!.result.bookmarked)
+        await mapBookmarkEditMutation.mutate(false);
+      else await mapBookmarkEditMutation.mutate(true);
     }
   };
   return (

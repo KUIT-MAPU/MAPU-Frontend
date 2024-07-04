@@ -182,8 +182,8 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
       {isProfileEditOpen && (
         <div onClick={handleProfileEditClose} className={styles.modalOverlay}>
           <div className={styles.modalContent}
-          onClick={(e) => e.stopPropagation}>
-            <ProfileSettingModal onClose={handleProfileEditClose} />
+          onClick={(e) => {e.stopPropagation();}}>
+            <ProfileSettingModal loginedNickName={userData.nickname} loginedId={userData.profileId} onClose={handleProfileEditClose} />
             </div>
         </div>
       )}

@@ -17,7 +17,7 @@ import UserProfile from '../../pages/UserProfile/UserProfile';
 
 import instance from '../../apis/instance';
 import { profile } from 'console';
-const ProfileInfoSetting = () => {
+const ProfileInfoSetting = (props:any) => {
   const prevUrl = useLocation().pathname.split('?')[0];
 
   const { registerStatus } = useRegisterStore();
@@ -88,7 +88,7 @@ const ProfileInfoSetting = () => {
           profileId: data.profileId,
           imgUrl: data.imgUrl,
         });
-
+        console.log(data);
       } catch (error) {
         console.error('Failed to fetch user data', error);
       }
@@ -123,6 +123,7 @@ const ProfileInfoSetting = () => {
       <div className={styles.userDataContainer}>
         <div className={styles.inputContainer}>
           <NicknameInput
+            initialNickName={props.loginedNickName}
             isNicknameEmpty={isNicknameEmpty}
             isValidNickname={isValidNickname}
             setIsNicknameEmpty={setIsNicknameEmpty}
@@ -131,6 +132,7 @@ const ProfileInfoSetting = () => {
             value={userData.nickname}
           />
           <IdInput
+            initialId={props.loginedId}
             isIdEmpty={isIdEmpty}
             isValidId={isValidId}
             setIsIdEmpty={setIsIdEmpty}

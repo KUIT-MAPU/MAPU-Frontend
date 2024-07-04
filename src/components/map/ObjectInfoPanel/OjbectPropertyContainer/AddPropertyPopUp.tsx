@@ -2,6 +2,7 @@ import { getTsid } from 'tsid-ts';
 import styles from './AddPropertyPopUp.module.scss';
 import useMapInfoStore from '../../../../stores/mapInfoStore';
 import { ObjectPropertyType } from '../../../../types/enum/ObjectPropertyType';
+import { InfoAttribute } from '../../../../types/map/object/ObjectInfo';
 
 const AddPropertyPopUp = () => {
   const { doc } = useMapInfoStore();
@@ -29,6 +30,15 @@ const AddPropertyPopUp = () => {
       <button
         type="button"
         className={styles.addPropertyBtn}
+        disabled={
+          doc
+            ?.getRoot()
+            .informationAttributes.find(
+              (attr: InfoAttribute) => attr.type === ObjectPropertyType.TAG,
+            )
+            ? true
+            : false
+        }
         onClick={() => handleAddProperty(ObjectPropertyType.TAG)}
       >
         태그 추가

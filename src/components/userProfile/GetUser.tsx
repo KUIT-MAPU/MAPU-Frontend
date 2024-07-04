@@ -149,11 +149,12 @@ const GetUser = (props: { children?: React.ReactNode }) => {
           </div>
         </div>
       </div>
-      <button className={styles.btnTitle} onClick={toggleDropdown}>
-        {mapCategory === 'edited' ? '편집 가능한 지도' : '북마크한 지도'}
-        <DownArrow />
-      </button>
-      {isDropdownOpen && (
+      <div className={styles.btnTitleContainer}>
+        <button className={styles.btnTitle} onClick={toggleDropdown}>
+          {mapCategory === 'edited' ? '편집 가능한 지도' : '북마크한 지도'}
+          <DownArrow />
+        </button>
+        {isDropdownOpen && (
         <div className={styles.dropdown}>
           <div
             onClick={() => selectCategory('edited')}
@@ -169,6 +170,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
           </div>
         </div>
       )}
+      </div>
       <div className={styles.middleBar}>
         <div className={styles.searchBar}>
           <div className={styles.search}>

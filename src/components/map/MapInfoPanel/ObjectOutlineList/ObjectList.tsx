@@ -3,6 +3,7 @@ import ObjectOutlineBtn from './ObjectOutlineBtn';
 import useMapInfoStore from '../../../../stores/mapInfoStore';
 import { useMapBasicInfoQuery } from '../../../../apis/Map/fetchMapBasicInfo';
 import { MapMode } from '../../../../types/enum/MapMode';
+import { useEffect } from 'react';
 
 interface Props {
   mode: MapMode;
@@ -13,6 +14,10 @@ const ObjectList: React.FC<Props> = ({ mode, mapId }) => {
   const { innerData } = useMapInfoStore();
   const { mapBasicInfo } = useMapBasicInfoQuery(mapId, mode);
 
+  useEffect(() => {
+    console.log('innerData.objects:', innerData.objects);
+  }, [innerData]);
+
   return (
     <div className={styles.objectListContainer}>
       <div className={styles.objectList__header}>
@@ -20,9 +25,11 @@ const ObjectList: React.FC<Props> = ({ mode, mapId }) => {
       </div>
       <div
         className={
-          mapBasicInfo !== undefined && mapBasicInfo!.result.mine
-            ? `${styles.objectList}`
-            : `${styles.objectList} ${styles.notMineList}`
+          mapBasicInfo !== undefined
+            ? mapBasicInfo!.result.mine
+              ? `${styles.objectList}`
+              : `${styles.objectList} ${styles.notMineList}`
+            : `${styles.objectList}`
         }
       >
         {innerData.objects &&

@@ -13,12 +13,13 @@ interface Props {
 
 const ObjectInfoPanel: React.FC<Props> = ({ mode, mapId }) => {
   const object = useMapInfoStore((state) => state.getSelectedObject());
+  const { selectedObjectId } = useMapInfoStore();
 
   return (
     <div id={styles.objectInfoPanel}>
       <PublishLinkContainer mode={mode} mapId={mapId} />
       <ObjectBasicInfoContainer mode={mode} object={object} />
-      {mode === MapMode.EDIT && (
+      {selectedObjectId !== undefined && mode === MapMode.EDIT && (
         <EditorObjectInfoInputContainer
           name={object?.name}
           detailAddress={
