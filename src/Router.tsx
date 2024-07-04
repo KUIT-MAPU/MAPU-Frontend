@@ -1,42 +1,37 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Welcome from './pages/Welcome';
 import TimeLine from './pages/TimeLine';
-import Editor from './pages/Editor';
-import Viewer from './pages/Viewer';
-import Community from './pages/Community';
-import MyMaps from './pages/MyMaps';
-import FileManager from './pages/FileManager';
+import Map from './pages/Map';
+import Explore from './pages/Explore';
+import UserProfile from './pages/UserProfile';
+
 
 const Router = () => {
   const router = createBrowserRouter([
     {
       index: true,
       path: '/',
+      element: <Welcome />,
+    },
+    {
+      index: true,
+      path: '/timeline',
       element: <TimeLine />,
     },
     {
       index: true,
-      path: '/editor',
-      element: <Editor />,
+      path: '/map',
+      element: <Map />,
     },
     {
       index: true,
-      path: '/viewer',
-      element: <Viewer />,
+      path: '/explore',
+      element: <Explore />,
     },
     {
       index: true,
-      path: '/community',
-      element: <Community />,
-    },
-    {
-      index: true,
-      path: '/my-maps',
-      element: <MyMaps />,
-    },
-    {
-      index: true,
-      path: '/file-manager',
-      element: <FileManager />,
+      path: '/user',
+      element: <UserProfile />,
     },
   ]);
 
