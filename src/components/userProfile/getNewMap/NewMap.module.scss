@@ -14,7 +14,8 @@
 .modalContent {
   background-color: #fff;
   width: 412px;
-  height: 430px;
+  min-height: 430px;
+  max-height: 80vh;
   padding: 20px;
   border-radius: 6px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -160,4 +161,33 @@
 
 .offMapCreate {
   background-color: var(--gray_200);
+}
+
+.citiesList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.cityButton {
+  padding: 8px 16px;
+  border: 1px solid white;
+  border-radius: 8px;
+  background-color: white;
+  height: 48px;
+  &:not(.selectedCityButton):hover {  // 선택되지 않은 버튼에만 호버 효과 적용
+    background-color: var(--gray_50);
+    color: var(--black);
+  }
+  text-align: left;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.selectedCityButton {
+  background-color: var(--sub);
+  color: var(--main);
+  font-weight: 600;
 }

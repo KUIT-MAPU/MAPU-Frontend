@@ -39,17 +39,24 @@ const ProfileInfoSetting = (props:any) => {
     nickname: '',
     profileId: '',
     imgUrl: '',
+    imgFile: '',
   });
 
-  useEffect(() => {
-    if (id === undefined || nickname === undefined) {
-      setIsComplete(false);
-      return;
-    }
+  const profileEditMutation = useProfileEditMutation(prevUrl);
 
-    if (!isNicknameEmpty && !isIdEmpty && isValidNickname && isValidId)
+  useEffect(() => {
+    // if (id === undefined || nickname === undefined) {
+    //   setIsComplete(false);
+    //   return;
+    // }
+
+    if ((props.loginedId && props.loginedNickName) ||
+    (!isNicknameEmpty && !isIdEmpty && isValidNickname && isValidId)){
       setIsComplete(true);
-    else setIsComplete(false);
+    }
+    else {
+      setIsComplete(false);
+    }
   }, [isNicknameEmpty, isValidNickname, isIdEmpty, isValidId]);
 
   
@@ -66,11 +73,30 @@ const ProfileInfoSetting = (props:any) => {
   const handleProfileSettingSubmit = async (event:any) => {
     event.preventDefault();
 
-    const formData = {
-      nickname,
-      id,
-      imageUrl: "https://profile-image-s3-bucket-mapu-backend.s3.ap-northeast-2.amazonaws.com/soju.png/2024-08-08T03%3A37%3A25.889237300",
-    };
+    const formData = new FormData();
+
+    //닉네임과 ID, 이미지 URL 추가
+    const requestJson = JSON.stringify({
+      nickname:nickname || userData.nickname,
+      profileId: id || userData.profileId,
+      imageUrl: userData.imgUrl,
+    })
+    const requestDTO = new Blob([requestJson], { type: 'application/json' });
+    formData.append('requestDTO', requestDTO);
+
+    // 새로 업로드된 이미지가 있다면 추가, 없으면 imageFile에 null 추가
+    if (imgFile) {
+      formData.append('imageFile', imgFile); // 새로운 이미지 파일 추가
+    } else {
+      formData.append('imageFile', ""); // 기존 이미지를 사용하는 경우 null처럼 빈 문자열로 추가
+    }
+    // const formData = {
+    //   nickname,
+    //   id,
+    //   imageUrl: "https://profile-image-s3-bucket-mapu-backend.s3.ap-northeast-2.amazonaws.com/soju.png/2024-08-08T03%3A37%3A25.889237300",
+    //   imageFile: null,
+    // };
+    await profileEditMutation.mutate(formData);
     
     console.log('데이터 생성 완료')
     console.log(formData);
@@ -87,6 +113,7 @@ const ProfileInfoSetting = (props:any) => {
           nickname: data.nickname,
           profileId: data.profileId,
           imgUrl: data.imgUrl,
+          imgFile: data.imgFile,
         });
         console.log(data);
       } catch (error) {
