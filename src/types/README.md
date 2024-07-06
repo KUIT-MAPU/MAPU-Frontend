@@ -1,1 +1,1 @@
-### 새로 지정한 type
+### interface 타입 정의
