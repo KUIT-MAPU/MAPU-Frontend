@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom';
-import SideBar from '../components/userProfile/SideBar'
-import styles from '../components/userProfile/SideBar.module.scss';
+import SideBar from '../components/userProfile/GlobalNavigationBar'
+import styles from '../components/userProfile/GlobalNavigationBar.module.scss';
 
 const UserProfile = () => {
   return (
