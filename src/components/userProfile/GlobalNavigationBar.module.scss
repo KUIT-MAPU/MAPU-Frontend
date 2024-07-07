@@ -16,7 +16,7 @@
 .iconContainer {
     width: 32px;
     height: 32px;
-    margin: 8px;
+    margin: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,6 +24,8 @@
 }
 
 .logoIconContainer{
+    width: 32px;
+    height: 32px;
     background-color: #00BD57;
     margin-bottom: 12px;
     border-radius: 6px;
