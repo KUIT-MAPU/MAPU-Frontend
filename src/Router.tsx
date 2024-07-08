@@ -20,7 +20,7 @@ const Router = () => {
     },
     {
       index: true,
-      path: '/map',
+      path: '/map/:mapId',
       element: <Map />,
     },
     {
@@ -30,7 +30,7 @@ const Router = () => {
     },
     {
       index: true,
-      path: '/user',
+      path: '/user/:userId',
       element: <UserProfile />,
     },
   ]);
