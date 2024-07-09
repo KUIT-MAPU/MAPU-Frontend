@@ -6,7 +6,7 @@ const Explore = () => {
     titleElement.innerHTML = `탐색 | MAPU`;
   }, []);
 
-  return <div>Explore</div>
+  return <div>Explore</div>;
 };
 
 export default Explore;
