@@ -1,5 +1,11 @@
+import { Link } from "react-router-dom";
+
 const Welcome = () => {
-  return <div>Welcome</div>;
+  return (
+    <>
+      <Link to ='/timeline'>Welcome</Link>
+    </>
+  );
 };
 
 export default Welcome;
