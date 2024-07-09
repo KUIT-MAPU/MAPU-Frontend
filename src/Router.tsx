@@ -1,10 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Welcome from './pages/Welcome';
+import Welcome from './pages/Welcome/Welcome';
 import TimeLine from './pages/TimeLine';
 import Map from './pages/Map';
 import Explore from './pages/Explore';
 import UserProfile from './pages/UserProfile';
-
 
 const Router = () => {
   const router = createBrowserRouter([
