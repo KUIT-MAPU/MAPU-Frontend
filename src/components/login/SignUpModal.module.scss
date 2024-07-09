@@ -1,0 +1,127 @@
+.container,
+.welcomeContainer,
+.welcome__textContainer,
+.signUpContainer,
+.userDataContainer,
+.userDataInputContainer,
+.userDataInputContainer > div,
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  gap: 44px;
+}
+
+.welcomeContainer {
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+.logo {
+  width: 44px;
+  height: 44px;
+}
+.welcome__textContainer {
+  gap: 8px;
+
+  h3 {
+    font-size: 1.375rem;
+    line-height: 150%;
+    font-weight: 600;
+  }
+  h4 {
+    font-size: 1.25rem;
+    line-height: 150%;
+  }
+}
+
+.signUpContainer {
+  gap: 32px;
+
+  .userImgContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+.userImg {
+  position: relative;
+}
+.profileEditBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  border: 2px solid #fff;
+  background: #ebeef2;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.userDataContainer {
+  gap: 44px;
+}
+.userDataInputContainer {
+  gap: 20px;
+
+  .inputContainer {
+    gap: 5.5px;
+  }
+}
+
+input {
+  width: 380px;
+  padding: 10px 20px;
+  font-size: 1.125rem;
+  line-height: 150%;
+  background-color: #fbfcfd;
+  border-radius: 8px;
+  border: 1px solid #f2f5f8;
+}
+input:focus {
+  border-color: #00bd57;
+}
+input::-webkit-input-placeholder {
+  color: #a3abb3;
+}
+
+.valueInfoContainer {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.valueInfo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  span {
+    line-height: 150%;
+    font-size: 0.875rem;
+    color: #767d86;
+  }
+}
+
+.signUpBtn {
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  background: #ced3da;
+
+  span {
+    font-weight: 600;
+    line-height: 150%;
+    color: #fff;
+  }
+}
