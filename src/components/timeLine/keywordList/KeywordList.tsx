@@ -1,18 +1,16 @@
-import React from "react";
+import React from 'react';
 import styles from './KeywordList.module.scss';
 
 interface KeywordListProps {
-  className ?: string;
+  className?: string;
 }
 
 const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   return (
     <>
-      <div className={className}>
-        KeywordList
-      </div>
+      <div className={className}>KeywordList</div>
     </>
-  )
-}
+  );
+};
 
 export default KeywordList;

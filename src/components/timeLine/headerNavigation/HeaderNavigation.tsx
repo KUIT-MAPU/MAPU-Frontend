@@ -23,7 +23,6 @@ const HeaderNavigation: React.FC<{ children: React.ReactNode }> = (props) => {
 
       setIsBack(idx !== 1);
       setIsForward(navigationType === 'POP' && idx < length - 2);
-
     };
 
     window.addEventListener('popstate', updateButtonStates);
@@ -49,14 +48,19 @@ const HeaderNavigation: React.FC<{ children: React.ReactNode }> = (props) => {
   return (
     <div className={styles.Root}>
       <nav className={styles.headerNav}>
-        <button className={styles.backbtn} onClick={handleBack} disabled={!isBack}>
-          <img
-            src={isBack ? backActive : backInactive}
-            alt="Back"
-          />
+        <button
+          className={styles.backbtn}
+          onClick={handleBack}
+          disabled={!isBack}
+        >
+          <img src={isBack ? backActive : backInactive} alt="Back" />
         </button>
 
-        <button className={styles.forwardbtn} onClick={handleForward} disabled={!isForward}>
+        <button
+          className={styles.forwardbtn}
+          onClick={handleForward}
+          disabled={!isForward}
+        >
           <img
             src={isForward ? forwardActive : forwardInactive}
             alt="Forward"
@@ -64,9 +68,7 @@ const HeaderNavigation: React.FC<{ children: React.ReactNode }> = (props) => {
         </button>
       </nav>
 
-      <main className={styles.headerMain}>
-        {props.children}
-      </main>
+      <main className={styles.headerMain}>{props.children}</main>
     </div>
   );
 };

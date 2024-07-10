@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import SideBar from '../../components/userProfile/GlobalNavigationBar';
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
-import styles from './Explore.module.scss'
+import styles from './Explore.module.scss';
 
 const Explore = () => {
   useEffect(() => {

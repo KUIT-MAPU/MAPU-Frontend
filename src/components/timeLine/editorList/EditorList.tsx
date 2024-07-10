@@ -6,11 +6,7 @@ interface EditorListProps {
 }
 
 const EditorList: React.FC<EditorListProps> = ({ className }) => {
-  return (
-    <div className={className}>
-      editorlist
-    </div>
-  );
+  return <div className={className}>editorlist</div>;
 };
 
 export default EditorList;

@@ -1,4 +1,4 @@
-$background: #FFF;
+$background: #fff;
 
 .Root {
   display: flex;
@@ -12,10 +12,11 @@ $background: #FFF;
   padding: 0.5rem 54.25rem 0.5rem 0.25rem;
   align-items: center;
   background-color: $background;
-  border-bottom: 1px solid #F2F5F8; 
+  border-bottom: 1px solid #f2f5f8;
 }
 
-.backbtn, .forwardbtn {
+.backbtn,
+.forwardbtn {
   background-color: $background;
   width: 2rem;
   height: 2rem;
@@ -24,7 +25,7 @@ $background: #FFF;
   justify-content: center;
   align-items: center;
 
-  border: none; 
+  border: none;
 
   img {
     width: 1rem;

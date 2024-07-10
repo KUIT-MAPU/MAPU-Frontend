@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
 import SideBar from '../../components/userProfile/GlobalNavigationBar';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
-import styles from './TimeLine.module.scss'
+import styles from './TimeLine.module.scss';
 
 const TimeLine = () => {
   useEffect(() => {
