@@ -11,16 +11,24 @@ interface Props {
 const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
+
+  //oauth 요청 URL
+  const ENCODED_PRESENT_URI = encodeURIComponent(pathname);
+  const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URL}&response_type=code&state=${ENCODED_PRESENT_URI}`;
+
   const isWelcome = `${pathname}` === '/';
 
-  const handleSignUp = () => {
-    setIsRegistering(true); //전역 상태 관리 개발 후 수정 필요
-    navigate(`${pathname}#signup`); //api 호출 후 회원가입 필요하면 해야 하는 애
+  const handleKakaoLogin = () => {
+    window.location.href = KAKAO_URL;
+  };
+
+  const handleGoogleLogin = () => {
+    // window.location.href = GOOGLE_URL;
   };
 
   const handleBackEvent = () => {
     navigate(pathname);
-    setIsRegistering(false);
+    setIsRegistering(false); //로그인 상태 관리 개발 후 수정
   };
   window.addEventListener('popstate', handleBackEvent);
 
@@ -46,7 +54,7 @@ const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
         <button
           type="button"
           className={`${styles.loginBtn} ${styles.kakaoBtn}`}
-          onClick={handleSignUp}
+          onClick={handleKakaoLogin}
         >
           <img
             src={KakaoLogo}
@@ -58,7 +66,7 @@ const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
         <button
           type="button"
           className={`${styles.loginBtn} ${styles.googleBtn}`}
-          onClick={handleSignUp}
+          onClick={handleGoogleLogin}
         >
           <img
             src={GoogleLogo}
