@@ -57,7 +57,6 @@ input {
   width: 380px;
   padding: 10px 20px;
   font-size: 18px;
-  line-height: 150%;
   background-color: #fbfcfd;
   border-radius: 8px;
   border: 1px solid #f2f5f8;
@@ -80,7 +79,6 @@ input::-webkit-input-placeholder {
   gap: 4px;
 
   span {
-    line-height: 150%;
     font-size: 14px;
     color: #767d86;
   }
@@ -93,7 +91,6 @@ input::-webkit-input-placeholder {
 
   span {
     font-weight: 600;
-    line-height: 150%;
     color: #fff;
   }
 }
