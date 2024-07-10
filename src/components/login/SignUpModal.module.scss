@@ -84,12 +84,14 @@ input::-webkit-input-placeholder {
   }
 }
 
-.signUpBtn {
+.signUpBtn:disabled {
   padding: 12px 0;
   border-radius: 8px;
   background: #ced3da;
+  cursor: auto;
 
   span {
+    font-size: 16px;
     font-weight: 600;
     color: #fff;
   }

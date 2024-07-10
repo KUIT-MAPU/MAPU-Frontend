@@ -40,8 +40,8 @@ const SignUpModal = () => {
             </div>
           </div>
         </div>
-        <button type="submit" className={styles.signUpBtn}>
-          <span>적용하기</span>
+        <button type="submit" className={styles.signUpBtn} disabled>
+          <span>시작하기</span>
         </button>
       </div>
     </div>
