@@ -130,3 +130,31 @@ table {
 * {
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('./assets/fonts/Freesentation-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Freesentation';
+  src: url('./assets/fonts/Freesentation-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Freesentation';
+  src: url('./assets/fonts/Freesentation-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Freesentation', Arial, sans-serif;
+  font-weight: 400;
+}
+input {
+  font-family: 'Freesentation';
+  outline: none;
+}
