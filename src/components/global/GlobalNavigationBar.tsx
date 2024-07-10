@@ -7,7 +7,7 @@ import { ReactComponent as Explore } from '../../assets/Explore.svg';
 import { ReactComponent as User } from '../../assets/User.svg';
 import { ReactComponent as Logout } from '../../assets/Logout.svg';
 
-const GlobalNavigationBar = (props: { children: React.ReactNode }) => {
+const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
@@ -39,7 +39,7 @@ const GlobalNavigationBar = (props: { children: React.ReactNode }) => {
           <Logout className={styles.icon} />
         </div>
       </div>
-      <main className={styles.main}>{props.children}</main>
+      {props.children && <main className={styles.main}>{props.children}</main>}
     </div>
   );
 };

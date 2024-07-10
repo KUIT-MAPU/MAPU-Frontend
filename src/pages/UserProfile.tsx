@@ -15,8 +15,8 @@ const UserProfile = () => {
 
   return (
     <div className={styles1.container}>
-      <GlobalNavigationBar>UserProfile</GlobalNavigationBar>
-      <UserInfoBar>user</UserInfoBar>
+      <GlobalNavigationBar />
+      <UserInfoBar />
       <main className={styles1.main}>
         <Outlet />
       </main>
