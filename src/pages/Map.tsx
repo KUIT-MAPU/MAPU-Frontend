@@ -6,7 +6,7 @@ const Map = () => {
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0];
-    titleElement.innerHTML = `지도명 | MAPU`; //api 호출 -> '지도명 | MAPU' 설정
+    titleElement.innerHTML = `지도명 | MAPU`; //TODO: api 호출 -> '지도명 | MAPU' 설정
   }, []);
 
   return <div>Map</div>;
