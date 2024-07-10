@@ -1,0 +1,35 @@
+.btnContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.loginBtn {
+  width: 380px;
+  height: 48px;
+  padding: 12px 0;
+  border-radius: 8px;
+
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+.kakaoBtn {
+  background: #fee102;
+}
+.googleBtn {
+  background: #f2f5f8;
+}
+.laterBtn {
+  border: 1px solid #ebeef2;
+}
+.socialIcon {
+  width: 20px;
+  height: 20px;
+}
