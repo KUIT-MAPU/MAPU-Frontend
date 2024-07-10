@@ -1,4 +1,3 @@
-.container,
 .welcomeContainer,
 .welcome__textContainer,
 .signUpContainer,
@@ -10,42 +9,10 @@
   flex-direction: column;
 }
 
-.container {
-  gap: 44px;
-}
-
-.welcomeContainer {
-  align-items: center;
-  text-align: center;
-  gap: 12px;
-}
-.logo {
-  width: 44px;
-  height: 44px;
-}
-.welcome__textContainer {
-  gap: 8px;
-
-  h3 {
-    font-size: 1.375rem;
-    line-height: 150%;
-    font-weight: 600;
-  }
-  h4 {
-    font-size: 1.25rem;
-    line-height: 150%;
-  }
-}
-
 .signUpContainer {
   gap: 32px;
-
-  .userImgContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
 }
+
 .userImg {
   position: relative;
 }
@@ -67,6 +34,12 @@
     width: 20px;
     height: 20px;
   }
+}
+
+.userImgContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .userDataContainer {
