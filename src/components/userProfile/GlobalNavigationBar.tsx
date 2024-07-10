@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import styles from './GlobalNavigationBar.module.scss';
 import { ReactComponent as MapuLogo } from '../../assets/mapu-logo.svg';
 import { ReactComponent as Home } from '../../assets/home.svg';
-import { ReactComponent as Explore } from '../../assets/explore.svg';
 import { ReactComponent as User } from '../../assets/user.svg';
+import { ReactComponent as Explore } from '../../assets/explore.svg';
 import { ReactComponent as Logout } from '../../assets/logout.svg';
 import { ReactComponent as Login } from '../../assets/login.svg';
 
