@@ -13,6 +13,17 @@ const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
   const pathname = useLocation().pathname;
   const isWelcome = `${pathname}` === '/';
 
+  const handleSignUp = () => {
+    setIsRegistering(true); //전역 상태 관리 개발 후 수정 필요
+    navigate(`${pathname}#signup`); //api 호출 후 회원가입 필요하면 해야 하는 애
+  };
+
+  const handleBackEvent = () => {
+    navigate(pathname);
+    setIsRegistering(false);
+  };
+  window.addEventListener('popstate', handleBackEvent);
+
   return (
     <div
       className={
@@ -35,6 +46,7 @@ const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
         <button
           type="button"
           className={`${styles.loginBtn} ${styles.kakaoBtn}`}
+          onClick={handleSignUp}
         >
           <img
             src={KakaoLogo}
@@ -46,6 +58,7 @@ const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
         <button
           type="button"
           className={`${styles.loginBtn} ${styles.googleBtn}`}
+          onClick={handleSignUp}
         >
           <img
             src={GoogleLogo}
