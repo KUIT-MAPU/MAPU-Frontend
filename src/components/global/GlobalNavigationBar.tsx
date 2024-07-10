@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { Link } from 'react-router-dom';
 import styles from './GlobalNavigationBar.module.scss';
 import { ReactComponent as MapuLogo } from '../../assets/mapu-logo.svg';
-import { ReactComponent as Home } from '../../assets/home.svg';
-import { ReactComponent as Explore } from '../../assets/explore.svg';
-import { ReactComponent as User } from '../../assets/user.svg';
-import { ReactComponent as Logout } from '../../assets/logout.svg';
-import { ReactComponent as Login } from '../../assets/login.svg';
+import { ReactComponent as Home } from '../../assets/Home.svg';
+import { ReactComponent as Explore } from '../../assets/Explore.svg';
+import { ReactComponent as User } from '../../assets/User.svg';
+import { ReactComponent as Logout } from '../../assets/Logout.svg';
 
-const SideBar = (props: { children: React.ReactNode }) => {
+const GlobalNavigationBar = (props: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
@@ -45,4 +44,4 @@ const SideBar = (props: { children: React.ReactNode }) => {
   );
 };
 
-export default SideBar;
+export default GlobalNavigationBar;
