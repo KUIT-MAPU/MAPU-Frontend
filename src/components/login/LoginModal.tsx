@@ -1,22 +1,36 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './LoginModal.module.scss';
 
-import GreenTransparentLogo from '../../assets/mapu-logo/green-transparent.svg';
 import KakaoLogo from '../../assets/login/kakao.svg';
 import GoogleLogo from '../../assets/login/google.svg';
 
 interface Props {
-  isRegistering: boolean;
   setIsRegistering: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LoginModal: React.FC<Props> = ({ isRegistering, setIsRegistering }) => {
+const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
+  const isWelcome = `${pathname}` === '/';
 
   return (
-    <div>
-      {`${pathname}` !== '/' && <div>hh</div>}
+    <div
+      className={
+        isWelcome
+          ? `${styles.loginModalContainer} ${styles.welcomeLoginModalContainer}`
+          : `${styles.loginModalContainer}`
+      }
+    >
+      {!isWelcome && (
+        <div className={styles.textContainer}>
+          <h5>로그인</h5>
+          <span>
+            SNS로 간편하게 로그인하고
+            <br />
+            마푸를 즐겨보세요!
+          </span>
+        </div>
+      )}
       <div className={styles.btnContainer}>
         <button
           type="button"
