@@ -38,10 +38,7 @@ const Welcome = () => {
         {isRegistering ? (
           <SignUpModal />
         ) : (
-          <LoginModal
-            setIsRegistering={setIsRegistering}
-            isRegistering={isRegistering}
-          /> //전역 상태로 로그인 관리하면 props 삭제될 것 같음
+          <LoginModal setIsRegistering={setIsRegistering} /> //전역 상태로 로그인 관리하면 props 삭제될 것 같음
         )}
       </div>
     </div>
