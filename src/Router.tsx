@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Welcome from './pages/Welcome/Welcome';
-import TimeLine from './pages/TimeLine';
+import TimeLine from './pages/TimeLine/TimeLine';
 import Map from './pages/Map';
-import Explore from './pages/Explore';
+import Explore from './pages/Explore/Explore';
 import UserProfile from './pages/UserProfile';
 
 const Router = () => {

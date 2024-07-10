@@ -1,0 +1,29 @@
+.leftBar {
+  width: 18.5rem;
+  height: 45rem;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  border-right: 1px solid #f2f5f8;
+}
+
+.border {
+  width: 17rem;
+  height: 0.0625rem;
+
+  background: #f2f5f8;
+}
+
+.editorList {
+  width: 100%;
+  height: 20.5rem;
+
+  // background-color: bisque;
+}
+
+.keywordList {
+  width: 100%;
+  flex-grow: 1;
+}
