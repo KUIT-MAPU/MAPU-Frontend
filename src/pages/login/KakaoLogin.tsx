@@ -13,7 +13,7 @@ const KakaoLogin = () => {
 
   useEffect(() => {
     if (kakaoCode) {
-      //login api 호출
+      //kakao login api 호출
       //TODO: 서비스 가입 여부에 따라, 회원가입중/로그인으로 상태 바꾸기
       setUserInfo(kakaoCode);
     } else {
