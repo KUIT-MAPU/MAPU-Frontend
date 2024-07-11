@@ -1,13 +1,23 @@
-import { useState } from 'react';
 import styles from './Welcome.module.scss';
 
 import WelcomeBanner from '../../assets/welcome-banner.webp';
 import GreenTransparentLogo from '../../assets/mapu-logo/green-transparent.svg';
 import LoginModal from '../../components/login/LoginModal';
 import SignUpModal from '../../components/login/SignUpModal';
+import useRegisterStore from '../../stores/registerStore';
+import { RegisterStatus } from '../../types/RegisterStatus';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Welcome = () => {
-  const [isRegistering, setIsRegistering] = useState(false);
+  const navigate = useNavigate();
+  const { registerStatus } = useRegisterStore();
+
+  useEffect(() => {
+    if (registerStatus === RegisterStatus.LOG_IN) {
+      navigate('/timeline');
+    }
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -26,19 +36,23 @@ const Welcome = () => {
             className={styles.logo}
           />
           <div className={styles.welcome__textContainer}>
-            {isRegistering ? <h3>프로필 만들기</h3> : <h3>환영합니다!</h3>}
-            {isRegistering ? (
-              <h4>나만의 닉네임과 아이디를 만들어보세요</h4>
+            {registerStatus === RegisterStatus.NEED_LOG_IN ? (
+              <h3>환영합니다!</h3>
             ) : (
+              <h3>프로필 만들기</h3>
+            )}
+            {registerStatus === RegisterStatus.NEED_LOG_IN ? (
               <h4>SNS 로그인을 하고 나만의 지도를 만들어보세요</h4>
+            ) : (
+              <h4>나만의 닉네임과 아이디를 만들어보세요</h4>
             )}
           </div>
         </div>
 
-        {isRegistering ? (
-          <SignUpModal />
+        {registerStatus === RegisterStatus.NEED_LOG_IN ? (
+          <LoginModal />
         ) : (
-          <LoginModal setIsRegistering={setIsRegistering} /> //전역 상태로 로그인 관리하면 props 삭제될 것 같음
+          <SignUpModal />
         )}
       </div>
     </div>

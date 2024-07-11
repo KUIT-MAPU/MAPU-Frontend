@@ -4,11 +4,7 @@ import styles from './LoginModal.module.scss';
 import KakaoLogo from '../../assets/login/kakao.svg';
 import GoogleLogo from '../../assets/login/google.svg';
 
-interface Props {
-  setIsRegistering: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
+const LoginModal = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
