@@ -6,7 +6,8 @@ interface State {
   registerStatus: RegisterStatus;
   accessToken: string;
   refreshToken: string;
-  setRegisterStatus: (status: RegisterStatus) => void; //미로그인/회원가입/로그인 상태 세팅
+  setRegisterStatus: (status: RegisterStatus) => void; //미로그인/회원가입 상태 세팅
+  setLogIn: (accessToken: string, refreshToken: string) => void;
   resetStatus: () => void; //로그인 필요한 상태로 초기화 - 로그아웃으로 사용 가능
   setAccessToken: (token: string) => void;
   setRefreshToken: (refreshToken: string) => void;
@@ -18,9 +19,14 @@ const useRegisterStore = create(
       registerStatus: RegisterStatus.NEED_LOG_IN,
       accessToken: '',
       refreshToken: '',
-      setRegisterStatus: (status) => {
-        console.log(status + '로 상태 수정');
-        set((state) => ({ ...state, registerStatus: status }));
+      setRegisterStatus: (status) =>
+        set((state) => ({ ...state, registerStatus: status })),
+      setLogIn: (accessToken, refreshToken) => {
+        set({
+          registerStatus: RegisterStatus.LOG_IN,
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        });
       },
       resetStatus: () => {
         resetStorage();
