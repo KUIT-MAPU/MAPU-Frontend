@@ -3,7 +3,7 @@ import styles from './Welcome.module.scss';
 import WelcomeBanner from '../../assets/welcome-banner.webp';
 import GreenTransparentLogo from '../../assets/mapu-logo/green-transparent.svg';
 import LoginModal from '../../components/login/LoginModal';
-import SignUpModal from '../../components/login/SignUpModal';
+import SignUpModal from '../../components/login/ProfileSettingModal';
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import { useNavigate } from 'react-router-dom';
