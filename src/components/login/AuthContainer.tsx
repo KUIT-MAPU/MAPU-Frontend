@@ -19,7 +19,10 @@ const AuthContainer = () => {
     }
   }, [authState]);
 
-  if (registerStatus === RegisterStatus.NEED_LOG_IN) {
+  if (
+    (authState !== 'login' || authState === null) &&
+    registerStatus === RegisterStatus.NEED_LOG_IN
+  ) {
     return <LoginModal />;
   }
 
