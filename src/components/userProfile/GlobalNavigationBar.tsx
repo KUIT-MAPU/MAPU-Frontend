@@ -17,7 +17,7 @@ const SideBar = (props: { children: React.ReactNode }) => {
         <div className={styles.logoIconContainer}>
           <MapuLogo className={styles.icon} />
         </div>
-        <Link to="/" className={styles.link}>
+        <Link to="/timeline" className={styles.link}>
           <div className={styles.iconContainer}>
             <Home className={styles.icon} />
           </div>
