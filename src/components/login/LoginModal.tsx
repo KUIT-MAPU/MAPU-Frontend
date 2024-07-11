@@ -15,6 +15,7 @@ const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
   //oauth 요청 URL
   const ENCODED_PRESENT_URI = encodeURIComponent(pathname);
   const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URL}&response_type=code&state=${ENCODED_PRESENT_URI}`;
+  const GOOGLE_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URL}&response_type=code&scope=email profile&state=${ENCODED_PRESENT_URI}`;
 
   const isWelcome = `${pathname}` === '/';
 
@@ -23,14 +24,8 @@ const LoginModal: React.FC<Props> = ({ setIsRegistering }) => {
   };
 
   const handleGoogleLogin = () => {
-    // window.location.href = GOOGLE_URL;
+    window.location.href = GOOGLE_URL;
   };
-
-  const handleBackEvent = () => {
-    navigate(pathname);
-    setIsRegistering(false); //로그인 상태 관리 개발 후 수정
-  };
-  window.addEventListener('popstate', handleBackEvent);
 
   return (
     <div
