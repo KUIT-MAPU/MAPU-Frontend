@@ -1,10 +1,10 @@
-import styles from './SignUpModal.module.scss';
+import styles from './ProfileSettingModal.module.scss';
 
 import UserDefaultImage from '../../assets/user-default-image.svg';
 import ProfileEditPen from '../../assets/profile-edit-pen.svg';
 import InfoGrayCircle from '../../assets/info-gray-circle.svg';
 
-const SignUpModal = () => {
+const ProfileSettingModal = () => {
   return (
     <div className={styles.signUpContainer}>
       <div className={styles.userImgContainer}>
@@ -48,4 +48,4 @@ const SignUpModal = () => {
   );
 };
 
-export default SignUpModal;
+export default ProfileSettingModal;

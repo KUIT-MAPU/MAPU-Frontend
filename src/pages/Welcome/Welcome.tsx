@@ -2,12 +2,11 @@ import styles from './Welcome.module.scss';
 
 import WelcomeBanner from '../../assets/welcome-banner.webp';
 import GreenTransparentLogo from '../../assets/mapu-logo/green-transparent.svg';
-import LoginModal from '../../components/login/LoginModal';
-import SignUpModal from '../../components/login/SignUpModal';
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import AuthContainer from '../../components/login/AuthContainer';
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -49,11 +48,7 @@ const Welcome = () => {
           </div>
         </div>
 
-        {registerStatus === RegisterStatus.NEED_LOG_IN ? (
-          <LoginModal />
-        ) : (
-          <SignUpModal />
-        )}
+        <AuthContainer />
       </div>
     </div>
   );

@@ -6,8 +6,8 @@ interface State {
   registerStatus: RegisterStatus;
   accessToken: string;
   refreshToken: string;
-  setRegisterStatus: (status: RegisterStatus) => void;
-  resetStatus: () => void; //logOut으로 사용 가능
+  setRegisterStatus: (status: RegisterStatus) => void; //미로그인/회원가입/로그인 상태 세팅
+  resetStatus: () => void; //로그인 필요한 상태로 초기화 - 로그아웃으로 사용 가능
   setAccessToken: (token: string) => void;
   setRefreshToken: (refreshToken: string) => void;
 }
