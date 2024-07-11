@@ -1,5 +1,48 @@
 .UserInfoBar{
+    width: 300px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.UserPhoto{
     width: 120px;
-    background-color: #00bd57;
-    flex-grow: 1;
+    height: 120px;
+    background-color: aqua;
+    margin-top: 72px;
+    border-radius: 760px;
+}
+
+.UserName{
+    margin-top: 4px;
+    min-width: 111px;
+    width: auto;
+    min-height: 64px;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    text-align: center;
+}
+
+.UserProfileNumber{
+    margin-top: 12px;
+    min-width: 216px;
+    width: auto;
+    min-height: 72px;
+    height: auto;
+    background-color: white;
+}
+
+.ProfileBottom{
+    margin-top: 20px;
+    width: 260px;
+    height: 32px;
+    background-color: #F2F5F8;
+    text-align: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
 }
