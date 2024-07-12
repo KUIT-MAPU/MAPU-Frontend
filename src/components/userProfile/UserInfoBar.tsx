@@ -1,13 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import styles from './UserInfoBar.module.scss';
+import { ReactComponent as ProfilePerson } from '../../assets/ProfilePerson.svg';
 
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
     return (
         <div className={styles.UserInfoBar}>
-            <div className={styles.UserPhoto} />
-            <div className={styles.UserName} />
-            <div className={styles.UserProfileNumber} />
+            <div className={styles.UserPhoto}>
+                <ProfilePerson className={styles.ProfilePerson} />
+            </div>
+            <div className={styles.UserName}>
+                <h1>환영해요!</h1>
+                <span>로그인이 필요해요</span>
+            </div>
+            <div className={styles.UserProfileNumber}>
+                <div className={styles.UserProfileBox}>
+                    <span>내 지도</span>
+                    <span>0</span>
+                </div>
+                <div className={styles.UserProfileBox}>
+                    <span>팔로워</span>
+                    <span>0</span>
+                </div>
+                <div className={styles.UserProfileBox}>
+                    <span>팔로잉</span>
+                    <span>0</span>
+                </div>
+            </div>
             <div className={styles.ProfileBottom}>
                 로그인하기
             </div>
