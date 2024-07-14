@@ -23,17 +23,6 @@ const AuthContainer: React.FC<AuthContainerProps> = ({ className }) => {
     }
   }, [authState]);
 
-  if (
-    (authState !== 'login' || authState === null) &&
-    registerStatus === RegisterStatus.NEED_LOG_IN
-  ) {
-    return (
-      <div className={className}>
-        <LoginModal />
-      </div>
-    );
-  }
-
   if (authState === 'signup' && registerStatus === RegisterStatus.SIGNING_UP) {
     return (
       <div className={className}>
@@ -43,7 +32,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({ className }) => {
   } else {
     return (
       <div className={className}>
-        <LoginModal />;
+        <LoginModal />
       </div>
     );
   }
