@@ -1,0 +1,9 @@
+.userDataInputContainer,
+.userDataInputContainer > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.userDataInputContainer {
+  gap: 20px;
+}

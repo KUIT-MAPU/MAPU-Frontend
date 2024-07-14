@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
-import UserDataInput from './UserDataInput';
+import { useMemo, useState } from 'react';
 import styles from './ProfileInfoSetting.module.scss';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import useRegisterStore from '../../stores/registerStore';
@@ -7,6 +6,7 @@ import imageCompression from 'browser-image-compression';
 
 import UserDefaultImage from '../../assets/user-default-image.svg';
 import ProfileEditPen from '../../assets/profile-edit-pen.svg';
+import UserDataContainer from './UserDataContainer';
 
 const ProfileInfo = () => {
   const { registerStatus, setLogIn } = useRegisterStore();
@@ -58,10 +58,7 @@ const ProfileInfo = () => {
         </div>
       </div>
       <div className={styles.userDataContainer}>
-        <form className={styles.userDataInputContainer}>
-          <UserDataInput type="nickname" setIsComplete={setIsComplete} />
-          <UserDataInput type="id" setIsComplete={setIsComplete} />
-        </form>
+        <UserDataContainer setIsComplete={setIsComplete} />
         <button
           type="submit"
           className={styles.submitBtn}

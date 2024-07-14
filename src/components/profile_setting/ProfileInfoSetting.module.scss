@@ -1,7 +1,5 @@
 .profileInfoContainer,
-.userDataContainer,
-.userDataInputContainer,
-.userDataInputContainer > div {
+.userDataContainer {
   display: flex;
   flex-direction: column;
 }
@@ -59,9 +57,6 @@
 
 .userDataContainer {
   gap: 40px;
-}
-.userDataInputContainer {
-  gap: 20px;
 }
 
 .submitBtn {
