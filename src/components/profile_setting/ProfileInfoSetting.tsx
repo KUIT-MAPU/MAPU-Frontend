@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import UserDataInput from './UserDataInput';
 import styles from './ProfileInfoSetting.module.scss';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import useRegisterStore from '../../stores/registerStore';
@@ -6,14 +7,15 @@ import imageCompression from 'browser-image-compression';
 
 import UserDefaultImage from '../../assets/user-default-image.svg';
 import ProfileEditPen from '../../assets/profile-edit-pen.svg';
-import InfoGrayCircle from '../../assets/info-gray-circle.svg';
 
 const ProfileInfo = () => {
   const { registerStatus, setLogIn } = useRegisterStore();
-
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [imgFile, setImgFile] = useState<string>();
-  // 프로필 편집에서는
+
+  useMemo(() => {
+    console.log(isComplete);
+  }, [isComplete]);
 
   const handleSignUp = () => {
     //TODO: 회원가입 api 연결
@@ -56,30 +58,10 @@ const ProfileInfo = () => {
         </div>
       </div>
       <div className={styles.userDataContainer}>
-        <div className={styles.userDataInputContainer}>
-          <div className={styles.inputContainer}>
-            <input type="text" placeholder="닉네임을 입력하세요." required />
-            <div className={styles.valueInfoContainer}>
-              <div className={styles.valueInfo}>
-                <img src={InfoGrayCircle} alt="회색 안내 아이콘" />
-                <span>3~12글자 이내</span>
-              </div>
-            </div>
-          </div>
-          <div className={styles.inputContainer}>
-            <input type="text" placeholder="아이디를 입력하세요." required />
-            <div className={styles.valueInfoContainer}>
-              <div className={styles.valueInfo}>
-                <img src={InfoGrayCircle} alt="회색 안내 아이콘" />
-                <span>3~20글자 이내</span>
-              </div>
-              <div className={styles.valueInfo}>
-                <img src={InfoGrayCircle} alt="회색 안내 아이콘" />
-                <span>한글 미사용</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <form className={styles.userDataInputContainer}>
+          <UserDataInput type="nickname" setIsComplete={setIsComplete} />
+          <UserDataInput type="id" setIsComplete={setIsComplete} />
+        </form>
         <button
           type="submit"
           className={styles.submitBtn}

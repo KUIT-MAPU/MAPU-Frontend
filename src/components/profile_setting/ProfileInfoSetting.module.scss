@@ -1,8 +1,7 @@
 .profileInfoContainer,
 .userDataContainer,
 .userDataInputContainer,
-.userDataInputContainer > div,
-.inputContainer {
+.userDataInputContainer > div {
   display: flex;
   flex-direction: column;
 }
@@ -63,41 +62,6 @@
 }
 .userDataInputContainer {
   gap: 20px;
-
-  .inputContainer {
-    gap: 5.5px;
-  }
-}
-
-.valueInfoContainer {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-.valueInfo {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  span {
-    font-size: 14px;
-    color: #767d86;
-  }
-}
-
-input {
-  width: 380px;
-  padding: 10px 20px;
-  font-size: 18px;
-  background-color: #fbfcfd;
-  border-radius: 8px;
-  border: 1px solid #f2f5f8;
-}
-input:focus {
-  border-color: #00bd57;
-}
-input::-webkit-input-placeholder {
-  color: #a3abb3;
 }
 
 .submitBtn {
