@@ -1,15 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
 import LoginModal from '../../components/login/LoginModal';
-import SignUpModal from '../../components/login/ProfileSettingModal';
+import SignUpModal from '../../components/login/ProfileSettingModal'; //AuthContainer에서 사용되는 ProfileSettingModal은 회원가입 용도로만 사용됨
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import React, { useEffect } from 'react';
 
 interface AuthContainerProps {
-  className? : string;
+  className?: string;
 }
 
-const AuthContainer: React.FC<AuthContainerProps> = ( {className} ) => {
+const AuthContainer: React.FC<AuthContainerProps> = ({ className }) => {
   const { registerStatus, resetStatus } = useRegisterStore();
   const [searchParams] = useSearchParams();
   const authState = searchParams.get('authState');
@@ -23,29 +23,18 @@ const AuthContainer: React.FC<AuthContainerProps> = ( {className} ) => {
     }
   }, [authState]);
 
-  if (
-    (authState !== 'login' || authState === null) &&
-    registerStatus === RegisterStatus.NEED_LOG_IN
-  ) {
-    return (
-      <div className={className}>
-        <LoginModal />;
-      </div>
-    )
-  }
-
   if (authState === 'signup' && registerStatus === RegisterStatus.SIGNING_UP) {
     return (
       <div className={className}>
         <SignUpModal />
       </div>
-    )
+    );
   } else {
     return (
       <div className={className}>
-        <LoginModal />;
+        <LoginModal />
       </div>
-    )
+    );
   }
 };
 

@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import styles from './EditorProfileCard.module.scss';
 import dimmedStyles from '../Dimmed.module.scss';
-import { EditorType } from "../../../types/EditorType";
-import useRegisterStore from "../../../stores/registerStore";
-import { RegisterStatus } from "../../../types/RegisterStatus";
+import { EditorType } from '../../../types/EditorType';
+import useRegisterStore from '../../../stores/registerStore';
+import { RegisterStatus } from '../../../types/RegisterStatus';
 
-import LoginModal from "../../login/LoginModal";
-import AuthContainer from "../../login/AuthContainer";
-import ProfileSettingModal from "../../login/ProfileSettingModal";
-
+import AuthContainer from '../../login/AuthContainer';
 
 interface ProfileCardProps {
   Editor: EditorType;
@@ -24,16 +21,16 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor }) => {
   };
 
   const handleFollow = () => {
-    if(!isLoggedIn()) {
+    if (!isLoggedIn()) {
       setShowLoginModal(true);
       setDimmed(true);
     }
-  }
+  };
 
   const handleCloseModal = () => {
     setShowLoginModal(false);
     setDimmed(false);
-  }
+  };
 
   return (
     <div className={styles.cardRoot}>
@@ -47,12 +44,12 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor }) => {
         </div>
       </div>
 
-      <button className={styles.following} onClick={handleFollow}>{Editor.following ? "팔로잉" : "팔로우"}</button>
+      <button className={styles.following} onClick={handleFollow}>
+        {Editor.following ? '팔로잉' : '팔로우'}
+      </button>
 
       {/* {showLoginModal && <LoginModal className={styles.LoginModal} laterBtnClick={}/>} */}
-      { showLoginModal 
-        && <AuthContainer className={styles.AuthContainer} />
-      }
+      {showLoginModal && <AuthContainer className={styles.AuthContainer} />}
     </div>
   );
 };

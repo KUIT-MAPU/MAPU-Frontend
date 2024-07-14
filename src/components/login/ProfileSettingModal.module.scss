@@ -1,6 +1,5 @@
-.welcomeContainer,
 .welcome__textContainer,
-.signUpContainer,
+.profileSettingContainer,
 .userDataContainer,
 .userDataInputContainer,
 .userDataInputContainer > div,
@@ -9,90 +8,30 @@
   flex-direction: column;
 }
 
-.signUpContainer {
+.profileSettingContainer {
   gap: 32px;
+  width: 412px;
+  height: 529px;
+  border-radius: 6px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.userImg {
-  position: relative;
+.titleContainer {
+  padding: 4px 0 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f2f5f8;
 }
-.profileEditBtn {
+
+.infoContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-
-  width: 32px;
-  height: 32px;
-  border-radius: 100%;
-  border: 2px solid #fff;
-  background: #ebeef2;
-
-  img {
-    width: 20px;
-    height: 20px;
-  }
+  gap: 8px;
 }
-
-.userImgContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.userDataContainer {
-  gap: 44px;
-}
-.userDataInputContainer {
-  gap: 20px;
-
-  .inputContainer {
-    gap: 5.5px;
-  }
-}
-
-input {
-  width: 380px;
-  padding: 10px 20px;
-  font-size: 18px;
-  background-color: #fbfcfd;
-  border-radius: 8px;
-  border: 1px solid #f2f5f8;
-}
-input:focus {
-  border-color: #00bd57;
-}
-input::-webkit-input-placeholder {
-  color: #a3abb3;
-}
-
-.valueInfoContainer {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-.valueInfo {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  span {
-    font-size: 14px;
-    color: #767d86;
-  }
-}
-
-.signUpBtn:disabled {
-  padding: 12px 0;
-  border-radius: 8px;
-  background: #ced3da;
-  cursor: auto;
-
-  span {
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-  }
+.info__text {
+  font-size: 20px;
+  font-weight: 600;
 }
