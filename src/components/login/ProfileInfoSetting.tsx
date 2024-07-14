@@ -21,9 +21,14 @@ const ProfileInfo = () => {
       <div className={styles.userImgContainer}>
         <div className={styles.userImg}>
           <img src={UserDefaultImage} alt="사용자 기본 프로필 이미지" />
-          <button type="button" className={styles.profileEditBtn}>
+          <input
+            type="file"
+            id="user-profile-img"
+            className={styles.profileEditInput}
+          />
+          <label htmlFor="user-profile-img" className={styles.profileEditBtn}>
             <img src={ProfileEditPen} alt="프로필 이미지 편집 버튼" />
-          </button>
+          </label>
         </div>
       </div>
       <div className={styles.userDataContainer}>

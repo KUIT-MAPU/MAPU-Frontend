@@ -20,6 +20,9 @@
   position: relative;
 }
 
+.profileEditInput {
+  display: none;
+}
 .profileEditBtn {
   display: flex;
   align-items: center;
@@ -38,6 +41,9 @@
     width: 20px;
     height: 20px;
   }
+}
+.profileEditBtn:hover {
+  cursor: pointer;
 }
 
 .userDataContainer {
