@@ -46,7 +46,11 @@ const ProfileInfo = () => {
             </div>
           </div>
         </div>
-        <button type="submit" className={styles.submitBtn} disabled>
+        <button
+          type="submit"
+          className={styles.submitBtn}
+          disabled={!isComplete}
+        >
           {registerStatus === RegisterStatus.SIGNING_UP ? (
             <span>시작하기</span>
           ) : (
