@@ -1,0 +1,74 @@
+@font-face {
+  font-family: 'Freesentation-SemiBold';
+  src: url('../../../assets/fonts/Freesentation-SemiBold.woff') format('woff');
+  font-weight: 400;
+  font-size: 16px;
+}
+
+@font-face {
+  font-family: 'Freesentation-Regular';
+  src: url('../../../assets/fonts/Freesentation-Regular.woff') format('woff');
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.cardRoot {
+  display: flex;
+  width: 360px;
+  height: 60px;
+  margin-bottom: 12px;
+  justify-content: space-between;
+  position: relative;
+}
+
+.editorInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.editorImg {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 90.795px;
+  border: 0.908px solid #EBEEF2;
+}
+
+.editorNameNid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.editorName {
+  font-family: 'Freesentation-SemiBold', sans-serif;
+}
+
+.editorId {
+  font-family: 'Freesentation-Regular', sans-serif;
+  color: #A3ABB3;
+}
+
+
+.following {
+  display: flex;
+  width: 56px;
+  height: 25px;
+  padding: 2px 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #D3F7E3;
+  border: none;
+  color:#00BD57;
+}
+
+.AuthContainer {
+  position: fixed;
+  z-index: 1100;
+  margin-top: 240px;
+  margin-left: 745px;
+}

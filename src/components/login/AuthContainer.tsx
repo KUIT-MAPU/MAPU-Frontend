@@ -3,9 +3,13 @@ import LoginModal from '../../components/login/LoginModal';
 import SignUpModal from '../../components/login/ProfileSettingModal';
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/RegisterStatus';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-const AuthContainer = () => {
+interface AuthContainerProps {
+  className? : string;
+}
+
+const AuthContainer: React.FC<AuthContainerProps> = ( {className} ) => {
   const { registerStatus, resetStatus } = useRegisterStore();
   const [searchParams] = useSearchParams();
   const authState = searchParams.get('authState');
@@ -23,13 +27,25 @@ const AuthContainer = () => {
     (authState !== 'login' || authState === null) &&
     registerStatus === RegisterStatus.NEED_LOG_IN
   ) {
-    return <LoginModal />;
+    return (
+      <div className={className}>
+        <LoginModal />;
+      </div>
+    )
   }
 
   if (authState === 'signup' && registerStatus === RegisterStatus.SIGNING_UP) {
-    return <SignUpModal />;
+    return (
+      <div className={className}>
+        <SignUpModal />
+      </div>
+    )
   } else {
-    return <LoginModal />;
+    return (
+      <div className={className}>
+        <LoginModal />;
+      </div>
+    )
   }
 };
 
