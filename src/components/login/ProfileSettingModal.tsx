@@ -16,7 +16,7 @@ const ProfileSettingModal = () => {
 
   const handelCancel = () => {
     const prevUrl = pathname.split('?')[0];
-    navigate(prevUrl); //test필요
+    navigate(prevUrl);
   };
 
   if (isWelcome) {
