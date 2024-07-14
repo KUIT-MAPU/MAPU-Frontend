@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import styles from './ProfileInfoSetting.module.scss';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import useRegisterStore from '../../stores/registerStore';
@@ -7,15 +7,20 @@ import imageCompression from 'browser-image-compression';
 import UserDefaultImage from '../../assets/user-default-image.svg';
 import ProfileEditPen from '../../assets/profile-edit-pen.svg';
 import UserDataInputContainer from './UserDataInputContainer';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ProfileInfoSetting = () => {
   const { registerStatus, setLogIn } = useRegisterStore();
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [imgFile, setImgFile] = useState<string>();
+  const navigate = useNavigate();
+  const pathname = useLocation().pathname;
 
   const handleSignUp = () => {
     //TODO: 회원가입 api 연결
     setLogIn('true access', 'true refresh'); //아마 얘가 회원가입 api 연결 코드 내부로 이동
+    const prevUrl = pathname.split('?')[0];
+    navigate(prevUrl);
   };
 
   const onChangIamge = async (e: React.ChangeEvent<HTMLInputElement>) => {
