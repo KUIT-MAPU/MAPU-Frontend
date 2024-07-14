@@ -111,6 +111,9 @@ input::-webkit-input-placeholder {
     color: #fff;
   }
 }
+.submitBtn:hover {
+  background: #00a84d;
+}
 .submitBtn:disabled {
   background: #ced3da;
   cursor: auto;
