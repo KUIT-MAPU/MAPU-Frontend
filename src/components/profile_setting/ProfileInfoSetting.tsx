@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './ProfileInfoSetting.module.scss';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import useRegisterStore from '../../stores/registerStore';
+import imageCompression from 'browser-image-compression';
 
 import UserDefaultImage from '../../assets/user-default-image.svg';
 import ProfileEditPen from '../../assets/profile-edit-pen.svg';
@@ -19,9 +20,17 @@ const ProfileInfo = () => {
     setLogIn('true access', 'true refresh'); //아마 얘가 회원가입 api 연결 코드 내부로 이동
   };
 
-  const onChangIamge = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangIamge = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    //이미지 압축
     if (!e.target.files) return;
-    setImgFile(URL.createObjectURL(e.target.files[0]));
+    const file = e.target.files[0];
+
+    const options = {
+      maxSizeMB: 0.6,
+      maxWidthOrHeight: 512,
+    };
+    const compressedFile = await imageCompression(file, options);
+    setImgFile(URL.createObjectURL(compressedFile));
   };
 
   return (
