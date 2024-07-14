@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './ProfileInfoSetting.module.scss';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import useRegisterStore from '../../stores/registerStore';
@@ -7,7 +8,8 @@ import ProfileEditPen from '../../assets/profile-edit-pen.svg';
 import InfoGrayCircle from '../../assets/info-gray-circle.svg';
 
 const ProfileInfo = () => {
-  const { registerStatus } = useRegisterStore();
+  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const { registerStatus, setLogIn } = useRegisterStore();
 
   return (
     <div className={styles.profileInfoContainer}>
@@ -22,7 +24,7 @@ const ProfileInfo = () => {
       <div className={styles.userDataContainer}>
         <div className={styles.userDataInputContainer}>
           <div className={styles.inputContainer}>
-            <input type="text" placeholder="닉네임을 입력하세요." />
+            <input type="text" placeholder="닉네임을 입력하세요." required />
             <div className={styles.valueInfoContainer}>
               <div className={styles.valueInfo}>
                 <img src={InfoGrayCircle} alt="회색 안내 아이콘" />
@@ -31,7 +33,7 @@ const ProfileInfo = () => {
             </div>
           </div>
           <div className={styles.inputContainer}>
-            <input type="text" placeholder="아이디를 입력하세요." />
+            <input type="text" placeholder="아이디를 입력하세요." required />
             <div className={styles.valueInfoContainer}>
               <div className={styles.valueInfo}>
                 <img src={InfoGrayCircle} alt="회색 안내 아이콘" />
