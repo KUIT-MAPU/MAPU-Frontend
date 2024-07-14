@@ -22,12 +22,13 @@ const UserDataInputContainer: React.FC<Props> = ({ setIsComplete }) => {
   const [idUnavailableError, setIdUnavailableError] = useState<boolean>(true); //사용 가능한 아이디인지
 
   useEffect(() => {
-    if (id === undefined && nickname === undefined) {
+    if (id === undefined || nickname === undefined) {
       setIsComplete(false);
       return;
     }
+
     if (!isNicknameEmpty && !isIdEmpty && isValidNickname && isValidId) {
-      console.log('setIsComplete');
+      console.log('setIsComplete true');
       setIsComplete(true);
     } else {
       console.log('setIsComplete false');
@@ -36,7 +37,7 @@ const UserDataInputContainer: React.FC<Props> = ({ setIsComplete }) => {
   }, [isNicknameEmpty, isValidNickname, isIdEmpty, isValidId]);
 
   return (
-    <div className={styles.userDataInputContainer}>
+    <div className={styles.inputContainer}>
       <NicknameInput
         isNicknameEmpty={isNicknameEmpty}
         isValidNickname={isValidNickname}

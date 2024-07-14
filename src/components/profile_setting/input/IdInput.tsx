@@ -1,37 +1,38 @@
 import styles from './UserDataInput.module.scss';
 
-import InfoGrayCircle from '../../assets/info-gray-circle.svg';
-import InfoErrorCircle from '../../assets/info-error-cricle.svg';
+import InfoGrayCircle from '../../../assets/info-gray-circle.svg';
+import InfoErrorCircle from '../../../assets/info-error-cricle.svg';
 
 interface Props {
   isIdEmpty: boolean;
   isValidId: boolean;
   setId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setIsValidId: React.Dispatch<React.SetStateAction<boolean>>;
   setIsIdEmpty: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsValidId: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const IdInput: React.FC<Props> = ({
   isIdEmpty,
   isValidId,
   setId,
-  setIsValidId,
   setIsIdEmpty,
+  setIsValidId,
 }) => {
   const onChangeIdHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const idValue = e.target.value;
     setId(idValue);
     idCheckHandler(idValue);
   };
+
   const idCheckHandler = async (id: string) => {
     //영문 소문자, 숫자, 마침표, 언더바 4종류 / 3~20자
     const idRegex = /^[a-z\d._]{3,20}$/;
-    if (id === '' || id === null || !idRegex.test(id)) {
-      setIsValidId(false);
-      return;
+    if (id !== '' && id !== null) setIsIdEmpty(false);
+    if (!idRegex.test(id)) setIsValidId(false);
+    else {
+      setIsIdEmpty(false);
+      setIsValidId(true);
     }
-    setIsIdEmpty(false);
-    setIsValidId(true);
   };
 
   const handleFocusOut = (e: React.FocusEvent<HTMLInputElement>) => {
