@@ -8,24 +8,39 @@ import ProfileEditPen from '../../assets/profile-edit-pen.svg';
 import InfoGrayCircle from '../../assets/info-gray-circle.svg';
 
 const ProfileInfo = () => {
-  const [isComplete, setIsComplete] = useState<boolean>(false);
   const { registerStatus, setLogIn } = useRegisterStore();
+
+  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [imgFile, setImgFile] = useState<string>();
+  // 프로필 편집에서는
 
   const handleSignUp = () => {
     //TODO: 회원가입 api 연결
     setLogIn('true access', 'true refresh'); //아마 얘가 회원가입 api 연결 코드 내부로 이동
   };
 
+  const onChangIamge = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    setImgFile(URL.createObjectURL(e.target.files[0]));
+  };
+
   return (
     <div className={styles.profileInfoContainer}>
       <div className={styles.userImgContainer}>
         <div className={styles.userImg}>
-          <img src={UserDefaultImage} alt="사용자 기본 프로필 이미지" />
-          <input
-            type="file"
-            id="user-profile-img"
-            className={styles.profileEditInput}
-          />
+          <div className={styles.userImg__view}>
+            <img
+              src={imgFile ? `${imgFile}` : `${UserDefaultImage}`}
+              alt="사용자 기본 프로필 이미지"
+            />
+            <input
+              type="file"
+              id="user-profile-img"
+              className={styles.profileEditInput}
+              accept=".jpg, .jpeg, .png"
+              onChange={onChangIamge}
+            />
+          </div>
           <label htmlFor="user-profile-img" className={styles.profileEditBtn}>
             <img src={ProfileEditPen} alt="프로필 이미지 편집 버튼" />
           </label>
