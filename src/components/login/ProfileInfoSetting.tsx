@@ -11,6 +11,11 @@ const ProfileInfo = () => {
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const { registerStatus, setLogIn } = useRegisterStore();
 
+  const handleSignUp = () => {
+    //TODO: 회원가입 api 연결
+    setLogIn('true access', 'true refresh'); //아마 얘가 회원가입 api 연결 코드 내부로 이동
+  };
+
   return (
     <div className={styles.profileInfoContainer}>
       <div className={styles.userImgContainer}>
@@ -50,6 +55,7 @@ const ProfileInfo = () => {
           type="submit"
           className={styles.submitBtn}
           disabled={!isComplete}
+          onClick={handleSignUp}
         >
           {registerStatus === RegisterStatus.SIGNING_UP ? (
             <span>시작하기</span>
