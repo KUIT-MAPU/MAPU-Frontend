@@ -27,13 +27,9 @@ const UserDataInputContainer: React.FC<Props> = ({ setIsComplete }) => {
       return;
     }
 
-    if (!isNicknameEmpty && !isIdEmpty && isValidNickname && isValidId) {
-      console.log('setIsComplete true');
+    if (!isNicknameEmpty && !isIdEmpty && isValidNickname && isValidId)
       setIsComplete(true);
-    } else {
-      console.log('setIsComplete false');
-      setIsComplete(false);
-    }
+    else setIsComplete(false);
   }, [isNicknameEmpty, isValidNickname, isIdEmpty, isValidId]);
 
   return (

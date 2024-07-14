@@ -6,16 +6,12 @@ import imageCompression from 'browser-image-compression';
 
 import UserDefaultImage from '../../assets/user-default-image.svg';
 import ProfileEditPen from '../../assets/profile-edit-pen.svg';
-import UserDataContainer from './UserDataContainer';
+import UserDataInputContainer from './UserDataInputContainer';
 
-const ProfileInfo = () => {
+const ProfileInfoSetting = () => {
   const { registerStatus, setLogIn } = useRegisterStore();
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [imgFile, setImgFile] = useState<string>();
-
-  useMemo(() => {
-    console.log(isComplete);
-  }, [isComplete]);
 
   const handleSignUp = () => {
     //TODO: 회원가입 api 연결
@@ -58,7 +54,7 @@ const ProfileInfo = () => {
         </div>
       </div>
       <div className={styles.userDataContainer}>
-        <UserDataContainer setIsComplete={setIsComplete} />
+        <UserDataInputContainer setIsComplete={setIsComplete} />
         <button
           type="submit"
           className={styles.submitBtn}
@@ -76,4 +72,4 @@ const ProfileInfo = () => {
   );
 };
 
-export default ProfileInfo;
+export default ProfileInfoSetting;
