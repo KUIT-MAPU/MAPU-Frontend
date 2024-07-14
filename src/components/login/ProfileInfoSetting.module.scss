@@ -82,15 +82,18 @@ input::-webkit-input-placeholder {
   color: #a3abb3;
 }
 
-.submitBtn:disabled {
+.submitBtn {
   padding: 12px 0;
   border-radius: 8px;
-  background: #ced3da;
-  cursor: auto;
+  background: #00bd57;
 
   span {
     font-size: 16px;
     font-weight: 600;
     color: #fff;
   }
+}
+.submitBtn:disabled {
+  background: #ced3da;
+  cursor: auto;
 }
