@@ -6,10 +6,10 @@ import { RegisterStatus } from '../../types/RegisterStatus';
 import React, { useEffect } from 'react';
 
 interface AuthContainerProps {
-  className? : string;
+  className?: string;
 }
 
-const AuthContainer: React.FC<AuthContainerProps> = ( {className} ) => {
+const AuthContainer: React.FC<AuthContainerProps> = ({ className }) => {
   const { registerStatus, resetStatus } = useRegisterStore();
   const [searchParams] = useSearchParams();
   const authState = searchParams.get('authState');
@@ -29,9 +29,9 @@ const AuthContainer: React.FC<AuthContainerProps> = ( {className} ) => {
   ) {
     return (
       <div className={className}>
-        <LoginModal />;
+        <LoginModal />
       </div>
-    )
+    );
   }
 
   if (authState === 'signup' && registerStatus === RegisterStatus.SIGNING_UP) {
@@ -39,13 +39,13 @@ const AuthContainer: React.FC<AuthContainerProps> = ( {className} ) => {
       <div className={className}>
         <SignUpModal />
       </div>
-    )
+    );
   } else {
     return (
       <div className={className}>
         <LoginModal />;
       </div>
-    )
+    );
   }
 };
 
