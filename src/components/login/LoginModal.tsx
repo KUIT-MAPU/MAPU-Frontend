@@ -23,6 +23,15 @@ const LoginModal = () => {
     window.location.href = GOOGLE_URL;
   };
 
+  const handleLater = () => {
+    if (pathname === '/') {
+      navigate('/timeline');
+    } else {
+      const prevUrl = pathname.split('?')[0];
+      navigate(prevUrl);
+    }
+  };
+
   return (
     <div
       className={
@@ -69,7 +78,7 @@ const LoginModal = () => {
         <button
           type="button"
           className={`${styles.loginBtn} ${styles.laterBtn}`}
-          onClick={() => navigate('/timeline')}
+          onClick={handleLater}
         >
           <span>나중에 하기</span>
         </button>
