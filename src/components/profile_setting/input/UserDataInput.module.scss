@@ -1,0 +1,43 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5.5px;
+}
+
+.valueInfoContainer {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.valueInfo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  span {
+    font-size: 14px;
+    color: #767d86;
+  }
+}
+.errorValueInfo > span {
+  color: #ff4b12;
+}
+
+.inputBox {
+  width: 380px;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #fbfcfd;
+  border-radius: 8px;
+  border: 1px solid #f2f5f8;
+}
+.inputBox:focus {
+  border-color: #00bd57;
+}
+.inputBox::-webkit-input-placeholder {
+  color: #a3abb3;
+}
+.errorInputBox,
+.errorInputBox:focus {
+  border-color: #ff4b12;
+}

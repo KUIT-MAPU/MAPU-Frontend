@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import LoginModal from '../../components/login/LoginModal';
-import SignUpModal from '../../components/login/ProfileSettingModal'; //AuthContainer에서 사용되는 ProfileSettingModal은 회원가입 용도로만 사용됨
+import SignUpModal from '../../components/profile_setting/ProfileSettingModal'; //AuthContainer에서 사용되는 ProfileSettingModal은 회원가입 용도로만 사용됨
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import React, { useEffect } from 'react';

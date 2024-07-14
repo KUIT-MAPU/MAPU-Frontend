@@ -1,0 +1,79 @@
+.profileInfoContainer,
+.userDataContainer {
+  display: flex;
+  flex-direction: column;
+}
+.profileInfoContainer {
+  gap: 32px;
+}
+
+.userImgContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.userImg {
+  position: relative;
+}
+
+.userImg__view {
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  overflow: hidden;
+
+  img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+  }
+}
+.profileEditInput {
+  display: none;
+}
+.profileEditBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  border: 2px solid #fff;
+  background: #ebeef2;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+.profileEditBtn:hover {
+  cursor: pointer;
+}
+
+.userDataContainer {
+  gap: 40px;
+}
+
+.submitBtn {
+  padding: 12px 0;
+  border-radius: 8px;
+  background: #00bd57;
+
+  span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+  }
+}
+.submitBtn:hover {
+  background: #00a84d;
+}
+.submitBtn:disabled {
+  background: #ced3da;
+  cursor: auto;
+}
