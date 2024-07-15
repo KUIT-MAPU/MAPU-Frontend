@@ -3,6 +3,8 @@ import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderN
 import SideBar from '../../components/userProfile/GlobalNavigationBar';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
 import styles from './TimeLine.module.scss';
+import useKeywordStore from '../../stores/keywordStore';
+import MapList from '../../components/timeLine/mapList/MapList';
 
 const TimeLine = () => {
   useEffect(() => {
@@ -10,13 +12,15 @@ const TimeLine = () => {
     titleElement.innerHTML = `홈 | MAPU`;
   }, []);
 
+  const { selectedList } = useKeywordStore();
+
   return (
     <>
       <SideBar>
         <div className={styles.leftBarWrapper}>
           <LeftBar />
           <HeaderNavigation>
-            <p>TimeLine</p>
+            <MapList />
           </HeaderNavigation>
         </div>
       </SideBar>

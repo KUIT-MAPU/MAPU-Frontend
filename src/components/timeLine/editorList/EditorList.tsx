@@ -55,7 +55,7 @@ const EditorList: React.FC<EditorListProps> = ({ className }) => {
       <div className={styles.titleBar}>
         <div className={styles.title}>추천 에디터</div>
         <button className={styles.refreshBtn} onClick={handleRefreshClick}>
-          <span className={styles.refreshBtnContent}>새로고침</span>
+          <span>새로고침</span>
         </button>
       </div>
 

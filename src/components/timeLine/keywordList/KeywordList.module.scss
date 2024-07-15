@@ -1,17 +1,3 @@
-@font-face {
-  font-family: 'Freesentation-SemiBold';
-  src: url('../../../assets/fonts/Freesentation-SemiBold.woff') format('woff');
-  font-weight: normal;
-  font-size: normal;
-
-  @font-face {
-    font-family: 'Freesentation-Regular';
-    src: url('../../../assets/fonts/Freesentation-Regular.woff') format('woff');
-    font-weight: normal;
-    font-size: normal;
-  }
-}
-
 .titleBar {
   padding-bottom: 19px;
   display: flex;
@@ -20,9 +6,8 @@
 }
 
 .title {
-  font-family: 'Freesentation-SemiBold';
   font-size: 20px;
-  font-weight: 600px;
+  font-weight: 600;
   line-height: 30px;
 }
 
@@ -33,22 +18,15 @@
   padding: 7px 8px 6px 8px;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
+  flex-shrink: 0;
+
+  font-size: 18px;
+  color: #767d86;
 
   background-color: transparent; 
   border: none;
 
   cursor: pointer;
-}
-
-.refreshBtnContent {
-  width: 54px;
-  height: 27px;
-  
-  font-family: 'Freesentation-Regular';
-  font-size: 18px;
-  color: #767d86;
-  white-space: nowrap;
 }
 
 .keywords {
@@ -67,8 +45,9 @@
   background-color: #D3F7E3;
 
   color: #00BD57;
-  font-family: 'Freesentation-Regular';
-}
+  font-weight: 600;
+  line-height: 150%;
+  }
 
 .keywordPills {
   display: flex;
@@ -81,7 +60,8 @@
   background-color: #F2F5F8;
 
   color: #111;
-  font-family: 'Freesentation-Regular';
+  font-weight: 600;
+  line-height: 150%;
 }
 
 .alertComment {
@@ -89,5 +69,6 @@
   align-items: center;
   gap: 4px;
   color: #767D86;
-  font-family: 'Freesentation-Regular';
+  font-size: 14px;
+  line-height: 150%;
 }
