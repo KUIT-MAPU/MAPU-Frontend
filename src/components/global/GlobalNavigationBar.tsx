@@ -5,7 +5,7 @@ import { ReactComponent as MapuLogo } from '../../assets/mapu-logo.svg';
 import { ReactComponent as Home } from '../../assets/Home.svg';
 import { ReactComponent as Explore } from '../../assets/Explore.svg';
 import { ReactComponent as User } from '../../assets/User.svg';
-import { ReactComponent as Logout } from '../../assets/Logout.svg';
+import { ReactComponent as Login } from '../../assets/Login.svg';
 
 const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,7 +36,7 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
         <div
           className={`${styles.iconContainer} ${styles.bottomIconContainer}`}
         >
-          <Logout className={styles.icon} />
+          <Login className={styles.icon} />
         </div>
       </div>
       {props.children && <main className={styles.main}>{props.children}</main>}

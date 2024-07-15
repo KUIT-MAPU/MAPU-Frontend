@@ -3,7 +3,7 @@
 }
 
 .LeftSideBar {
-    width: 44px;
+    width: 72px;
     height: 100vh;
     background-color: #FFFFFF;
     display: flex;
@@ -14,9 +14,9 @@
 }
 
 .iconContainer {
-    width: 32px;
-    height: 32px;
-    margin: 16px;
+    width: 48px;
+    height: 48px;
+    margin: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,12 +24,12 @@
 }
 
 .logoIconContainer{
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     background-color: #00BD57;
     margin-bottom: 12px;
     border-radius: 6px;
-    position: relative;
+
 }
 
 .logoIconContainer::after {

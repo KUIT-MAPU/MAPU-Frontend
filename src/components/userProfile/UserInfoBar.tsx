@@ -15,15 +15,15 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
             </div>
             <div className={styles.UserProfileNumber}>
                 <div className={styles.UserProfileBox}>
-                    <span>내 지도</span>
+                    <div>내 지도</div>
                     <span>0</span>
                 </div>
                 <div className={styles.UserProfileBox}>
-                    <span>팔로워</span>
+                    <div>팔로워</div>
                     <span>0</span>
                 </div>
                 <div className={styles.UserProfileBox}>
-                    <span>팔로잉</span>
+                    <div>팔로잉</div>
                     <span>0</span>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import GlobalNavigationBar from '../components/global/GlobalNavigationBar';
 import styles1 from '../components/global/GlobalNavigationBar.module.scss';
 import UserInfoBar from '../components/userProfile/UserInfoBar';
 import styles2 from '../components/userProfile/UserInfoBar.module.scss';
+import EmptyUser from '../components/userProfile/EmptyUser';
 
 const UserProfile = () => {
   const { userId } = useParams();
@@ -17,6 +18,7 @@ const UserProfile = () => {
     <div className={styles1.container}>
       <GlobalNavigationBar />
       <UserInfoBar />
+      <EmptyUser />
       <main className={styles1.main}>
         <Outlet />
       </main>
