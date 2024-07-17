@@ -12,29 +12,20 @@ interface ProfileCardProps {
 }
 
 const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor }) => {
-  const registerStore = useRegisterStore();
-  const [dimmed, setDimmed] = useState<boolean>(false);
-  const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
+  const { registerStatus, setLoginNeeded } = useRegisterStore();
 
   const isLoggedIn = () => {
-    return registerStore.registerStatus === RegisterStatus.LOG_IN;
+    return registerStatus === RegisterStatus.LOG_IN;
   };
 
   const handleFollow = () => {
     if (!isLoggedIn()) {
-      setShowLoginModal(true);
-      setDimmed(true);
+      setLoginNeeded(true);
     }
-  };
-
-  const handleCloseModal = () => {
-    setShowLoginModal(false);
-    setDimmed(false);
   };
 
   return (
     <div className={styles.cardRoot}>
-      {dimmed && <div className={dimmedStyles.background}></div>}
       <div className={styles.editorInfo}>
         <img className={styles.editorImg} src={Editor.img} alt="Editor Image" />
 
@@ -49,7 +40,6 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor }) => {
       </button>
 
       {/* {showLoginModal && <LoginModal className={styles.LoginModal} laterBtnClick={}/>} */}
-      {showLoginModal && <AuthContainer className={styles.AuthContainer} />}
     </div>
   );
 };
