@@ -20,7 +20,9 @@ const ProfileInfoSetting = () => {
     //TODO: 회원가입 api 연결
     setLogIn('true access', 'true refresh'); //아마 얘가 회원가입 api 연결 코드 내부로 이동
     const prevUrl = pathname.split('?')[0];
-    navigate(prevUrl);
+
+    if (prevUrl === '/') navigate('/timeline');
+    else navigate(prevUrl);
   };
 
   const onChangIamge = async (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,19 @@
+.timeLineContainer {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
 .leftBarWrapper {
   display: flex;
   flex-direction: row;
+}
+
+.authContainer {
+  position: absolute;
+  z-index: 1100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
