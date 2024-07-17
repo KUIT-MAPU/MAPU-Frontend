@@ -43,8 +43,6 @@ const EditorList: React.FC<EditorListProps> = ({ className }) => {
     }
     console.log('isRefresh',isRefresh);
   },[isRefresh])
-
-  console.log('editorData :',editorData);
   
   const handleRefreshClick = () => {
     setIsRefresh(true);
