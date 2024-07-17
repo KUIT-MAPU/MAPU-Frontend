@@ -8,7 +8,6 @@ import { RegisterStatus } from '../../../types/RegisterStatus';
 
 interface KeywordListProps {
   className?: string;
-  keywordList: KeywordType[];
 }
 
 const mockData: KeywordType[] = [
@@ -19,7 +18,7 @@ const mockData: KeywordType[] = [
   { id: 5, title: '코엑스 쇼핑몰 쇼핑 추천', selected: false },
 ];
 
-const KeywordList: React.FC<KeywordListProps> = ({ className, keywordList }) => {
+const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   const registerStore = useRegisterStore();
   const { selectedList, setSelectedList } = useKeywordStore();
 
@@ -28,15 +27,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, keywordList }) => 
   const [alert, setAlert] = useState<boolean>(false);
 
   const [isLog, setIsLog] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (registerStore.registerStatus === RegisterStatus.LOG_IN) {
-      setIsLog(true);
-    } else {
-      setIsLog(false);
-    }
-  }, [registerStore.registerStatus]);
-
+  
   const fetchKeywordData = async () => {
     try {
       // TODO: 실제 API 호출로 데이터 받아오기
@@ -45,35 +36,28 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, keywordList }) => 
       console.error('정보를 불러올 수 없음.');
     }
   };
-  
-  console.log(keywordData);
-  console.log('로그인상태:',isLog);
 
   useEffect(() => {
     fetchKeywordData();
-  },[]);
+    
+    if (registerStore.registerStatus === RegisterStatus.LOG_IN) {
+      setIsLog(true);
+    } else {
+      setIsLog(false);
+    }
+  },[fetchKeywordData, registerStore.registerStatus]);
+
 
   useEffect(() => {
-    // 미로그인 상태에서만 초기 2개 키워드를 활성화
-    if (!isLog && keywordData.length > 0) {
-      const initialSelectedKeywords = keywordData.slice(0, 2).map((item) => ({
-        ...item,
-        selected: true,
-      }));
-      setSelectedList(initialSelectedKeywords);
-      setKeywordData(keywordData.map((item, index) =>
-        index < 2 ? { ...item, selected: true } : item
-      ));
+    if(!isLog && selectedList.length === 0) {
+      const selectedInit = keywordData.slice(0,2).map((item:KeywordType) => {
+        item.selected = !item.selected;
+        return item;
+      });
+      setSelectedList(selectedInit);
     }
-    // setKeywordData([...keywordData]);
-  }, [isLog,keywordData]);
-  
-  console.log('키워드:', keywordData);
-  console.log('선택한 키워드:', selectedList);
+  },[isLog,keywordData]);
 
-  // useEffect(() => {
-  //   selectedList.map()
-  // })
 
   useEffect(() => {
     if (isRefresh) {
@@ -91,9 +75,12 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, keywordList }) => 
 
   const handleSelectPills = (selectedKeyword: KeywordType) => {
     selectedKeyword.selected = !selectedKeyword.selected;
-    setSelectedList(
-      keywordData.filter((item: KeywordType) => item.selected)
-    );
+    const updatedList = keywordData.filter((item) => item.selected);
+    setSelectedList(updatedList);
+    
+    if (updatedList.length < 5) {
+      setAlert(false);
+    };
   };
 
   return (
@@ -129,12 +116,12 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, keywordList }) => 
           ))}
       </div>
 
-      {alert && (
+      {alert ? (
         <div className={styles.alertComment}>
           <img src={ico_info} alt="Info Icon" />
           키워드를 해제하면 새로고침을 할 수 있습니다
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
