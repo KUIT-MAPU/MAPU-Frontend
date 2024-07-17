@@ -24,12 +24,14 @@
 }
 
 .logoIconContainer{
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
     background-color: #00BD57;
     margin-bottom: 12px;
     border-radius: 6px;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logoIconContainer::after {
