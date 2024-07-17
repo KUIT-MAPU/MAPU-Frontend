@@ -3,10 +3,12 @@ import styles from './LoginModal.module.scss';
 
 import KakaoLogo from '../../assets/login/kakao.svg';
 import GoogleLogo from '../../assets/login/google.svg';
+import useRegisterStore from '../../stores/registerStore';
 
 const LoginModal = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
+  const { setLoginNeeded } = useRegisterStore();
 
   //oauth 요청 URL
   const ENCODED_PRESENT_URI = encodeURIComponent(pathname);
@@ -24,6 +26,7 @@ const LoginModal = () => {
   };
 
   const handleLater = () => {
+    setLoginNeeded(false);
     if (pathname === '/') {
       navigate('/timeline');
     } else {
