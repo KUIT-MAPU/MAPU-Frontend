@@ -3,7 +3,7 @@
 }
 
 .LeftSideBar {
-  width: 60px;
+  width: 72px;
   height: 100vh;
   background-color: #ffffff;
   display: flex;
@@ -14,9 +14,9 @@
 }
 
 .iconContainer {
-  width: 32px;
-  height: 32px;
-  margin: 16px;
+  width: 48px;
+  height: 48px;
+  margin: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,12 +24,14 @@
 }
 
 .logoIconContainer {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   background-color: #00bd57;
   margin-bottom: 12px;
   border-radius: 6px;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logoIconContainer::after {
@@ -56,6 +58,7 @@
 
 .main {
   flex-grow: 1;
+  padding: 16px;
 }
 
 .bottomIconContainer {

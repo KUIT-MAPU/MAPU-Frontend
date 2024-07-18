@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import SideBar from '../../components/userProfile/GlobalNavigationBar';
+import SideBar from '../../components/global/GlobalNavigationBar';
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
 import styles from './Explore.module.scss';
@@ -12,7 +12,6 @@ const Explore = () => {
   }, []);
 
   const { selectedList } = useKeywordStore();
-
 
   return (
     <>

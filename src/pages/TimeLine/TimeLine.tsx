@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
-import SideBar from '../../components/userProfile/GlobalNavigationBar';
+import SideBar from '../../components/global/GlobalNavigationBar';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
 import styles from './TimeLine.module.scss';
 import useKeywordStore from '../../stores/keywordStore';

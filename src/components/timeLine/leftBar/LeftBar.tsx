@@ -5,7 +5,6 @@ import styles from './LeftBar.module.scss';
 import useKeywordStore from '../../../stores/keywordStore';
 import { KeywordType } from '../../../types/KeywordType';
 
-
 const LeftBar: React.FC = () => {
   const { selectedList } = useKeywordStore();
 

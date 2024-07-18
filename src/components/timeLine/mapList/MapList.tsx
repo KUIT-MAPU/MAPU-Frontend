@@ -1,11 +1,11 @@
-import React from "react";
-import useKeywordStore from "../../../stores/keywordStore";
+import React from 'react';
+import useKeywordStore from '../../../stores/keywordStore';
 
-const MapList:React.FC = () => {
-  const keywordStore = useKeywordStore()
+const MapList: React.FC = () => {
+  const keywordStore = useKeywordStore();
   const selectedList = keywordStore.selectedList;
-  
-  return <>map</>
-}
+
+  return <>map</>;
+};
 
 export default MapList;

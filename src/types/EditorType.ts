@@ -1,7 +1,7 @@
 export interface EditorType {
-  id : number;
+  id: number;
   userId: string;
-  img : string;
-  name : string;
-  following : boolean;
+  img: string;
+  name: string;
+  following: boolean;
 }
