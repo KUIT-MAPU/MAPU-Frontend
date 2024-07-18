@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import SideBar from '../components/userProfile/GlobalNavigationBar';
-import styles from '../components/userProfile/GlobalNavigationBar.module.scss';
+import GlobalNavigationBar from '../components/global/GlobalNavigationBar';
+import styles1 from '../components/global/GlobalNavigationBar.module.scss';
+import UserInfoBar from '../components/userProfile/UserInfoBar';
+import styles2 from '../components/userProfile/UserInfoBar.module.scss';
+import EmptyUser from '../components/userProfile/EmptyUser';
 
 const UserProfile = () => {
   const { userId } = useParams();
@@ -12,9 +15,11 @@ const UserProfile = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <SideBar>UserProfile</SideBar>
-      <main className={styles.main}>
+    <div className={styles1.container}>
+      <GlobalNavigationBar />
+      <UserInfoBar />
+      <EmptyUser />
+      <main className={styles1.main}>
         <Outlet />
       </main>
     </div>
