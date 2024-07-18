@@ -13,7 +13,6 @@ const Explore = () => {
 
   const { selectedList } = useKeywordStore();
 
-
   return (
     <>
       <SideBar>

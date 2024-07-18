@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './GlobalNavigationBar.module.scss';
 import { ReactComponent as MapuLogo } from '../../assets/mapu-logo.svg';

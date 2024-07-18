@@ -27,7 +27,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   const [alert, setAlert] = useState<boolean>(false);
 
   const [isLog, setIsLog] = useState<boolean>(false);
-  
+
   const fetchKeywordData = async () => {
     try {
       // TODO: 실제 API 호출로 데이터 받아오기
@@ -39,25 +39,23 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
 
   useEffect(() => {
     fetchKeywordData();
-    
+
     if (registerStore.registerStatus === RegisterStatus.LOG_IN) {
       setIsLog(true);
     } else {
       setIsLog(false);
     }
-  },[fetchKeywordData, registerStore.registerStatus]);
-
+  }, [fetchKeywordData, registerStore.registerStatus]);
 
   useEffect(() => {
-    if(!isLog && selectedList.length === 0) {
-      const selectedInit = keywordData.slice(0,2).map((item:KeywordType) => {
+    if (!isLog && selectedList.length === 0) {
+      const selectedInit = keywordData.slice(0, 2).map((item: KeywordType) => {
         item.selected = !item.selected;
         return item;
       });
       setSelectedList(selectedInit);
     }
-  },[isLog,keywordData]);
-
+  }, [isLog, keywordData]);
 
   useEffect(() => {
     if (isRefresh) {
@@ -68,7 +66,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
 
   const handleRefreshClick = () => {
     setIsRefresh(true);
-    if(selectedList.length === 5) {
+    if (selectedList.length === 5) {
       setAlert(true);
     }
   };
@@ -77,10 +75,10 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
     selectedKeyword.selected = !selectedKeyword.selected;
     const updatedList = keywordData.filter((item) => item.selected);
     setSelectedList(updatedList);
-    
+
     if (updatedList.length < 5) {
       setAlert(false);
-    };
+    }
   };
 
   return (
@@ -104,7 +102,10 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
         ))}
 
         {keywordData
-          .filter((keyword: KeywordType) => !selectedList?.some(selected => selected.id === keyword.id))
+          .filter(
+            (keyword: KeywordType) =>
+              !selectedList?.some((selected) => selected.id === keyword.id),
+          )
           .map((keyword: KeywordType) => (
             <button
               className={styles.keywordPills}

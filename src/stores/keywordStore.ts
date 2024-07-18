@@ -16,9 +16,8 @@ const useKeywordStore = create<KeywordStore>()(
     {
       name: 'keyword-store',
       getStorage: () => localStorage,
-    }
-  )
+    },
+  ),
 );
 
 export default useKeywordStore;
-

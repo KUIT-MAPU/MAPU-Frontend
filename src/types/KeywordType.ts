@@ -1,5 +1,5 @@
 export interface KeywordType {
-  id: number,
-  title: string,
-  selected: boolean,
+  id: number;
+  title: string;
+  selected: boolean;
 }

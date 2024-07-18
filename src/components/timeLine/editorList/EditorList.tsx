@@ -8,45 +8,73 @@ interface EditorListProps {
 }
 
 const mockData: EditorType[] = [
-  { id: 1, userId: 'alice123', img: 'https://via.placeholder.com/150', name: 'Alice', following: true },
-  { id: 2, userId: 'bob456', img: 'https://via.placeholder.com/150', name: 'Bob', following: false },
-  { id: 3, userId: 'charlie789', img: 'https://via.placeholder.com/150', name: 'Charlie', following: true },
-  { id: 4, userId: 'david101', img: 'https://via.placeholder.com/150', name: 'David', following: false },
-  { id: 5, userId: 'eva202', img: 'https://via.placeholder.com/150', name: 'Eva', following: true }
+  {
+    id: 1,
+    userId: 'alice123',
+    img: 'https://via.placeholder.com/150',
+    name: 'Alice',
+    following: true,
+  },
+  {
+    id: 2,
+    userId: 'bob456',
+    img: 'https://via.placeholder.com/150',
+    name: 'Bob',
+    following: false,
+  },
+  {
+    id: 3,
+    userId: 'charlie789',
+    img: 'https://via.placeholder.com/150',
+    name: 'Charlie',
+    following: true,
+  },
+  {
+    id: 4,
+    userId: 'david101',
+    img: 'https://via.placeholder.com/150',
+    name: 'David',
+    following: false,
+  },
+  {
+    id: 5,
+    userId: 'eva202',
+    img: 'https://via.placeholder.com/150',
+    name: 'Eva',
+    following: true,
+  },
 ];
-
 
 const EditorList: React.FC<EditorListProps> = ({ className }) => {
   const [editorData, setEditorData] = useState<EditorType[]>([]);
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchEditorData();
-  }
-  ,[]);
+  }, []);
 
   const fetchEditorData = async () => {
     try {
       //api data
       setEditorData(mockData);
-    } catch (error){
+    } catch (error) {
       setError('정보를 불러올 수 없음.');
     }
-  }
-  
-  useEffect(()=> {
-    if(isRefresh) {
+  };
+
+  useEffect(() => {
+    if (isRefresh) {
       fetchEditorData();
       setIsRefresh(false);
-      console.log('새로고침 누름',isRefresh);
+      console.log('새로고침 누름', isRefresh);
     }
-    console.log('isRefresh',isRefresh);
-  },[isRefresh])
-  
+    console.log('isRefresh', isRefresh);
+  }, [isRefresh]);
+
   const handleRefreshClick = () => {
     setIsRefresh(true);
-  }
+  };
 
   return (
     <div className={className}>
@@ -57,13 +85,9 @@ const EditorList: React.FC<EditorListProps> = ({ className }) => {
         </button>
       </div>
 
-
       <div className={styles.editorProfiles}>
-        {editorData && 
-          editorData.map((editor) => (
-            <EditorProfileCard Editor={editor} />
-          ))
-        }
+        {editorData &&
+          editorData.map((editor) => <EditorProfileCard Editor={editor} />)}
       </div>
     </div>
   );
