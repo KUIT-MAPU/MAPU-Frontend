@@ -85,4 +85,18 @@
     font-size: 16px;
   }
   
-  
+  .mapContainaer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-left: 372px;
+    background-color: black;
+  }
+
+  .getMap {
+    width: 492px;
+    min-height: 327px;
+    height: auto;
+    background-color: var(--main);
+    margin: 16px;
+  }

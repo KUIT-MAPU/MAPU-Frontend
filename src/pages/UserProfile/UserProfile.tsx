@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import GlobalNavigationBar from '../components/global/GlobalNavigationBar';
-import styles1 from '../components/global/GlobalNavigationBar.module.scss';
-import UserInfoBar from '../components/userProfile/UserInfoBar';
+import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
+import styles1 from '../../components/global/GlobalNavigationBar.module.scss';
+import UserInfoBar from '../../components/userProfile/UserInfoBar';
 import styles2 from '../components/userProfile/UserInfoBar.module.scss';
-import GetUser from '../components/userProfile/GetUser';
+import GetUser from '../../components/userProfile/GetUser';
 
 const UserProfile = () => {
   const { userId } = useParams();

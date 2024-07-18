@@ -37,6 +37,11 @@ const GetUser = (props: { children?: React.ReactNode }) => {
         </div>
         <div className={styles.newMap}>+ 새로운 지도</div>
       </div>
+      <div className={styles.mapContainer}>
+        <div className={styles.getMap}>1</div>
+        <div className={styles.getMap}>2</div>
+        <div className={styles.getMap}></div>
+      </div>
     </div>
   );
 };
