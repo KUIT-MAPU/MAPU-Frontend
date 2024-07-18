@@ -21,7 +21,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 90.795px;
-  border: 0.908px solid #ebeef2;
+  border: 0.908px solid var(--gray_100);
 }
 
 .editorNameNid {
@@ -35,7 +35,7 @@
 }
 
 .editorId {
-  color: #a3abb3;
+  color: var(--gray_400);
 }
 
 .following {
@@ -49,5 +49,5 @@
   font-size: 14px;
   font-weight: 600;
   line-height: 150%;
-  color: #00bd57;
+  color: var(--main);
 }

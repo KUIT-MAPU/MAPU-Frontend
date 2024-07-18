@@ -21,7 +21,7 @@
   flex-shrink: 0;
 
   font-size: 18px;
-  color: #767d86;
+  color: var(--gray_500);
 
   background-color: transparent;
   border: none;
@@ -44,7 +44,7 @@
   border-radius: 4px;
   background-color: #d3f7e3;
 
-  color: #00bd57;
+  color: var(--main);
   font-weight: 600;
   line-height: 150%;
 }
@@ -57,9 +57,9 @@
   margin-bottom: 12px;
 
   border-radius: 4px;
-  background-color: #f2f5f8;
+  background-color: var(--gray_50);
 
-  color: #111;
+  color: var(--black);
   font-weight: 600;
   line-height: 150%;
 }
@@ -68,7 +68,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #767d86;
+  color: var(--gray_500);
   font-size: 14px;
   line-height: 150%;
 }

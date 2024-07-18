@@ -16,7 +16,7 @@
 
   span {
     font-size: 14px;
-    color: #767d86;
+    color: var(--gray_500);
   }
 }
 .errorValueInfo > span {
@@ -27,15 +27,15 @@
   width: 380px;
   padding: 10px 20px;
   font-size: 18px;
-  background-color: #fbfcfd;
+  background-color: var(--gray_25);
   border-radius: 8px;
-  border: 1px solid #f2f5f8;
+  border: 1px solid var(--gray_50);
 }
 .inputBox:focus {
-  border-color: #00bd57;
+  border-color: var(--main);
 }
 .inputBox::-webkit-input-placeholder {
-  color: #a3abb3;
+  color: var(--gray_400);
 }
 .errorInputBox,
 .errorInputBox:focus {

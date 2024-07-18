@@ -10,7 +10,7 @@
   justify-content: center;
 
   border-radius: 8px;
-  background: #fff;
+  background: var(--white);
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -38,7 +38,7 @@
   }
 
   span {
-    color: #767d86;
+    color: var(--gray_500);
     font-size: 18px;
   }
 }
@@ -69,10 +69,10 @@
   background: #fee102;
 }
 .googleBtn {
-  background: #f2f5f8;
+  background: var(--gray_50);
 }
 .laterBtn {
-  border: 1px solid #ebeef2;
+  border: 1px solid var(--gray_100);
 }
 .socialIcon {
   width: 20px;

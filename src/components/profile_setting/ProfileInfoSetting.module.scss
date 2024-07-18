@@ -43,8 +43,8 @@
   width: 32px;
   height: 32px;
   border-radius: 100%;
-  border: 2px solid #fff;
-  background: #ebeef2;
+  border: 2px solid var(--white);
+  background: var(--gray_100);
 
   img {
     width: 20px;
@@ -62,18 +62,18 @@
 .submitBtn {
   padding: 12px 0;
   border-radius: 8px;
-  background: #00bd57;
+  background: var(--main);
 
   span {
     font-size: 16px;
     font-weight: 600;
-    color: #fff;
+    color: var(--white);
   }
 }
 .submitBtn:hover {
   background: #00a84d;
 }
 .submitBtn:disabled {
-  background: #ced3da;
+  background: var(--gray_200);
   cursor: auto;
 }
