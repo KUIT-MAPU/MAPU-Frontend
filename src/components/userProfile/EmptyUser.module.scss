@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  border-bottom: 1px solid #f2f5f8;
+  border-bottom: 1px solid var(--gray_50);
 }
 
 .iconContainer {
@@ -55,8 +55,8 @@
   width: 1508px;
   align-items: center;
   justify-content: flex-start;
-  color: #a3abb3;
-  background-color: #f2f5f8;
+  color: var(--gray_400);
+  background-color: var(--gray_50);
 }
 
 .search {
@@ -69,7 +69,7 @@
   align-items: center;
   justify-content: flex-end;
   margin-left: auto;
-  border: 1px solid #f2f5f8;
+  border: 1px solid var(--gray_50);
 }
 
 .newMap {
@@ -77,11 +77,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ced3da;
+  background-color: var(--gray_200);
   color: #000;
   padding: 5px 10px;
   border-radius: 8px;
-  color: #ffffff;
+  color: var(--white);
   font-size: 16px;
 }
 

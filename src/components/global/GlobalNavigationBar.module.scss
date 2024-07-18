@@ -5,12 +5,12 @@
 .LeftSideBar {
   width: 72px;
   height: 100vh;
-  background-color: #ffffff;
+  background-color: var(--white);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 8px 8px;
-  border-right: 1px solid #f2f5f8;
+  border-right: 1px solid var(--gray_50);
 }
 
 .iconContainer {
@@ -26,7 +26,7 @@
 .logoIconContainer {
   width: 48px;
   height: 48px;
-  background-color: #00bd57;
+  background-color: var(--main);
   margin-bottom: 12px;
   border-radius: 6px;
   display: flex;
@@ -40,15 +40,15 @@
   bottom: -12px; /* 아이콘 아래로 10px 떨어진 곳에 border 추가 */
   left: 0;
   width: 100%;
-  border-bottom: 1px solid #f2f5f8;
+  border-bottom: 1px solid var(--gray_50);
 }
 
 .userIconContainer {
-  background-color: #f2f5f8;
+  background-color: var(--gray_50);
 }
 
 .icon {
-  color: #fff;
+  color: var(--white);
   font-size: 24px;
 }
 

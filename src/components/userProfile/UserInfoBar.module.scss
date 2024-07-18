@@ -15,18 +15,18 @@
 
 .UserInfoBar {
   width: 300px;
-  background-color: #ffffff;
+  background-color: var(--white);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  border-right: 1px solid #f2f5f8;
+  border-right: 1px solid var(--gray_50);
 }
 
 .UserPhoto {
   width: 120px;
   height: 120px;
-  background-color: #ebeef2;
+  background-color: var(--gray_100);
   margin-top: 72px;
   border-radius: 760px;
   display: flex;
@@ -65,7 +65,7 @@
   font-weight: 400;
   line-height: 27px;
   font: 'Freesentation';
-  color: #767d76;
+  color: var(--gray_500);
 }
 
 .UserProfileNumber {
@@ -99,7 +99,7 @@
   margin-top: 20px;
   width: 260px;
   height: 32px;
-  background-color: #f2f5f8;
+  background-color: var(--gray_50);
   text-align: center;
   display: flex;
   align-items: center;

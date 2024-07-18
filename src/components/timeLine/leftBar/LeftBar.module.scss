@@ -7,14 +7,14 @@
   flex-direction: column;
   align-items: center;
 
-  border-right: 1px solid #f2f5f8;
+  border-right: 1px solid var(--gray_50);
 }
 
 .border {
   width: 360px;
   height: 1px;
 
-  background: #f2f5f8;
+  background: var(--gray_50);
 }
 
 .editorList {
