@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './GetUser.module.scss';
 import { ReactComponent as BackArrow } from '../../assets/BackArrow.svg';
 import { ReactComponent as FrontArrow } from '../../assets/FrontArrow.svg';
@@ -41,73 +42,91 @@ const GetUser = (props: { children?: React.ReactNode }) => {
       </div>
       <div className={styles.mapContainer}>
         <div className={styles.getMap}>
-          <div className={styles.numMap}>
-            <img
-              src={placeholderImage}
-              alt="placeholder"
-              className={styles.image}
-            />
-          </div>
-          <div className={styles.numMap}>
-            <img
-              src={placeholderImage}
-              alt="placeholder"
-              className={styles.image}
-            />
-          </div>
-          <div className={styles.numMap}>
-            <img
-              src={placeholderImage}
-              alt="placeholder"
-              className={styles.image}
-            />
-          </div>
+          <Link to="/map/mapId" className={styles.link}>
+            <div className={styles.numMap}>
+              <img
+                src={placeholderImage}
+                alt="placeholder"
+                className={styles.image}
+              />
+            </div>
+          </Link>
+          <Link to="/map/mapId" className={styles.link}>
+            <div className={styles.numMap}>
+              <img
+                src={placeholderImage}
+                alt="placeholder"
+                className={styles.image}
+              />
+            </div>
+          </Link>
+          <Link to="/map/mapId" className={styles.link}>
+            <div className={styles.numMap}>
+              <img
+                src={placeholderImage}
+                alt="placeholder"
+                className={styles.image}
+              />
+            </div>
+          </Link>
         </div>
         <div className={styles.getMap}>
-          <div className={styles.numMap}>
-            <img
-              src={placeholderImage}
-              alt="placeholder"
-              className={styles.image}
-            />
-          </div>
-          <div className={styles.numMap}>
-            <img
-              src={placeholderImage}
-              alt="placeholder"
-              className={styles.image}
-            />
-          </div>
-          <div className={styles.numMap}>
-            <img
-              src={placeholderImage}
-              alt="placeholder"
-              className={styles.image}
-            />
-          </div>
+          <Link to="/map/mapId" className={styles.link}>
+            <div className={styles.numMap}>
+              <img
+                src={placeholderImage}
+                alt="placeholder"
+                className={styles.image}
+              />
+            </div>
+          </Link>
+          <Link to="/map/mapId" className={styles.link}>
+            <div className={styles.numMap}>
+              <img
+                src={placeholderImage}
+                alt="placeholder"
+                className={styles.image}
+              />
+            </div>
+          </Link>
+          <Link to="/map/mapId" className={styles.link}>
+            <div className={styles.numMap}>
+              <img
+                src={placeholderImage}
+                alt="placeholder"
+                className={styles.image}
+              />
+            </div>
+          </Link>
         </div>
         <div className={styles.getMap}>
-          <div className={styles.numMap}>
-            <img
-              src={placeholderImage}
-              alt="placeholder"
-              className={styles.image}
-            />
-          </div>
-          <div className={styles.numMap}>
-            <img
-              src={placeholderImage}
-              alt="placeholder"
-              className={styles.image}
-            />
-          </div>
-          <div className={styles.numMap}>
-            <img
-              src={placeholderImage}
-              alt="placeholder"
-              className={styles.image}
-            />
-          </div>
+          <Link to="/map/mapId" className={styles.link}>
+            <div className={styles.numMap}>
+              <img
+                src={placeholderImage}
+                alt="placeholder"
+                className={styles.image}
+              />
+            </div>
+          </Link>
+          <Link to="/map/mapId" className={styles.link}>
+            <div className={styles.numMap}>
+              <img
+                src={placeholderImage}
+                alt="placeholder"
+                className={styles.image}
+              />
+            </div>
+          </Link>
+          <Link to="/map/mapId" className={styles.link}>
+            <div className={styles.numMap}>
+              <img
+                src={placeholderImage}
+                alt="placeholder"
+                className={styles.image}
+              />
+            </div>
+          </Link>
         </div>
       </div>
     </div>

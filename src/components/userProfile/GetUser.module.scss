@@ -102,7 +102,7 @@
   height: auto;
   margin: 16px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .image {
@@ -115,6 +115,10 @@
   display: flex;
   width: 492px;
   height: 327px;
-  margin: 16px;
+  margin: 8px;
   background-color: var(--gray_400);
+}
+
+.link {
+  text-decoration: none;
 }
