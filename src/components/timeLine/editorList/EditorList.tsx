@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './EditorList.module.scss';
 import EditorProfileCard from './EditorProfileCard';
 import { EditorType } from '../../../types/EditorType';
@@ -67,9 +67,8 @@ const EditorList: React.FC<EditorListProps> = ({ className }) => {
     if (isRefresh) {
       fetchEditorData();
       setIsRefresh(false);
-      console.log('새로고침 누름', isRefresh);
     }
-    console.log('isRefresh', isRefresh);
+    console.log('에디터 새로고침', isRefresh);
   }, [isRefresh]);
 
   const handleRefreshClick = () => {
@@ -87,7 +86,9 @@ const EditorList: React.FC<EditorListProps> = ({ className }) => {
 
       <div className={styles.editorProfiles}>
         {editorData &&
-          editorData.map((editor) => <EditorProfileCard Editor={editor} />)}
+          editorData.map((editor) => (
+            <EditorProfileCard Editor={editor} key={editor.id} />
+          ))}
       </div>
     </div>
   );
