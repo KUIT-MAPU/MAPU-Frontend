@@ -8,6 +8,8 @@ import { ReactComponent as Gallery } from '../../assets/GalleryView.svg';
 import { ReactComponent as List } from '../../assets/ListView.svg';
 
 const GetUser = (props: { children?: React.ReactNode }) => {
+  const placeholderImage = 'https://via.placeholder.com/150';
+
   return (
     <div className={styles.container}>
       <div className={styles.topBar}>
@@ -38,9 +40,75 @@ const GetUser = (props: { children?: React.ReactNode }) => {
         <div className={styles.newMap}>+ 새로운 지도</div>
       </div>
       <div className={styles.mapContainer}>
-        <div className={styles.getMap}>1</div>
-        <div className={styles.getMap}>2</div>
-        <div className={styles.getMap}></div>
+        <div className={styles.getMap}>
+          <div className={styles.numMap}>
+            <img
+              src={placeholderImage}
+              alt="placeholder"
+              className={styles.image}
+            />
+          </div>
+          <div className={styles.numMap}>
+            <img
+              src={placeholderImage}
+              alt="placeholder"
+              className={styles.image}
+            />
+          </div>
+          <div className={styles.numMap}>
+            <img
+              src={placeholderImage}
+              alt="placeholder"
+              className={styles.image}
+            />
+          </div>
+        </div>
+        <div className={styles.getMap}>
+          <div className={styles.numMap}>
+            <img
+              src={placeholderImage}
+              alt="placeholder"
+              className={styles.image}
+            />
+          </div>
+          <div className={styles.numMap}>
+            <img
+              src={placeholderImage}
+              alt="placeholder"
+              className={styles.image}
+            />
+          </div>
+          <div className={styles.numMap}>
+            <img
+              src={placeholderImage}
+              alt="placeholder"
+              className={styles.image}
+            />
+          </div>
+        </div>
+        <div className={styles.getMap}>
+          <div className={styles.numMap}>
+            <img
+              src={placeholderImage}
+              alt="placeholder"
+              className={styles.image}
+            />
+          </div>
+          <div className={styles.numMap}>
+            <img
+              src={placeholderImage}
+              alt="placeholder"
+              className={styles.image}
+            />
+          </div>
+          <div className={styles.numMap}>
+            <img
+              src={placeholderImage}
+              alt="placeholder"
+              className={styles.image}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
