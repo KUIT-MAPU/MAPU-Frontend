@@ -20,7 +20,7 @@ const Router = () => {
     },
     {
       index: true,
-      path: '/map/:mapId',
+      path: '/map/:mapName',
       element: <Map />,
     },
     {
