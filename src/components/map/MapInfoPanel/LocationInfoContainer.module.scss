@@ -1,0 +1,16 @@
+.locationInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.locationInfo {
+  display: flex;
+  justify-content: space-between;
+  span {
+    font-size: 14px;
+  }
+}
+.location__title {
+  color: var(--gray_400);
+}
