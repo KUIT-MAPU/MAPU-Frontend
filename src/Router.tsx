@@ -30,7 +30,7 @@ const Router = () => {
     },
     {
       index: true,
-      path: '/user/:userId',
+      path: '/user/:profileId',
       element: <UserProfile />,
     },
     {

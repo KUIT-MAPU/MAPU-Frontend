@@ -7,7 +7,7 @@ import styles2 from '../components/userProfile/UserInfoBar.module.scss';
 import GetUser from '../../components/userProfile/GetUser';
 
 const UserProfile = () => {
-  const { userId } = useParams();
+  const { profileId } = useParams();
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0];
