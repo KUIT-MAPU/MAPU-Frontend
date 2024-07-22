@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import styles from './Map.module.scss';
-import MapInfoPanel from '../../components/map/MapInfoanel/MapInfoPanel';
+import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 
 const Map = () => {
   const { mapName } = useParams();
