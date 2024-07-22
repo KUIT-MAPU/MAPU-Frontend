@@ -13,7 +13,11 @@ const mockData: MapProducerInfo = {
 
 const MapProducerConatiner: React.FC<Props> = ({ isMine }) => {
   const [amFollowing, setAmFollowing] = useState<boolean>(false);
-  const [mapProducerInfo, setMapProducerInfo] = useState<MapProducerInfo>();
+  const [mapProducerInfo, setMapProducerInfo] = useState<MapProducerInfo>({
+    profileId: '',
+    profileImgUrl: '',
+    nickname: '',
+  });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -34,8 +38,8 @@ const MapProducerConatiner: React.FC<Props> = ({ isMine }) => {
   return (
     <div className={styles.mapProducerContainer}>
       <div className={styles.mapProducer__info}>
-        <img src={mockData.profileImgUrl} alt="프로필 이미지" />
-        <span>{mockData.nickname}</span>
+        <img src={mapProducerInfo.profileImgUrl} alt="프로필 이미지" />
+        <span>{mapProducerInfo.nickname}</span>
       </div>
       {amFollowing ? (
         <button type="button" className={styles.followBtn} disabled>
