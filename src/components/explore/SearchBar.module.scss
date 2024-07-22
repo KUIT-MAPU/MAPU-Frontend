@@ -1,0 +1,25 @@
+.searchContainer {
+  display: flex;
+  width: 1408px;
+  height: 48px;
+  padding: 10px 1315px 11px 20px;
+  align-items: center;
+  flex-shrink: 0;
+
+  gap: 8px;
+
+  border-radius: 8px;
+  border: 1px solid #f2f5f8;
+  background: #fbfcfd;
+}
+
+.searchInput {
+  color: #A3ABB3;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+
+  border: none;
+  background: #fbfcfd;
+}

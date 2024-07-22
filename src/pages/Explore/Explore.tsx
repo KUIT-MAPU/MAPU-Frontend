@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import SideBar from '../../components/global/GlobalNavigationBar';
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
+import SearchBar from '../../components/explore/SearchBar';
 import styles from './Explore.module.scss';
 import useKeywordStore from '../../stores/keywordStore';
 
@@ -19,6 +20,7 @@ const Explore = () => {
         <div className={styles.leftBarWrapper}>
           <LeftBar />
           <HeaderNavigation>
+            <SearchBar />
             <p>Explore</p>
           </HeaderNavigation>
         </div>

@@ -10,6 +10,7 @@ import { RegisterStatus } from '../../types/RegisterStatus';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
 import AuthContainer from '../../components/login/AuthContainer';
 import { useLocation, useNavigate } from 'react-router-dom';
+import MapCard from '../../components/timeLine/mapList/MapCard';
 
 const TimeLine = () => {
   const { selectedList } = useKeywordStore();
@@ -49,7 +50,7 @@ const TimeLine = () => {
         <div className={styles.leftBarWrapper}>
           <LeftBar />
           <HeaderNavigation>
-            <MapList />
+            <MapCard />
           </HeaderNavigation>
         </div>
       </SideBar>

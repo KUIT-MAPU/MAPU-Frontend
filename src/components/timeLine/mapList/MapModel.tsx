@@ -18,7 +18,7 @@ const mockData: MapType[] = [
     name: '서울의 맛집과 명소 지도',
     address: '서울특별시 강남구',
     img: 'https://via.placeholder.com/400x300',
-    keywords: '서울 타워 야경 관람',
+    keywords: '동대문시장 골목맛집',
     editors: [
       { id: 4, userId: 'editor4', img: 'https://via.placeholder.com/150', name: 'Editor Four', following: false },
       { id: 5, userId: 'editor5', img: 'https://via.placeholder.com/150', name: 'Editor Five', following: false },
@@ -90,7 +90,7 @@ const mockData: MapType[] = [
     name: '서울 여행 스팟 지도',
     address: '서울특별시 마포구',
     img: 'https://via.placeholder.com/400x300',
-    keywords: '홍대 놀이터 스트리트 퍼포먼스',
+    keywords: '동대문시장 골목맛집',
     editors: [
       { id: 22, userId: 'editor22', img: 'https://via.placeholder.com/150', name: 'Editor Twenty-Two', following: false },
       { id: 23, userId: 'editor23', img: 'https://via.placeholder.com/150', name: 'Editor Twenty-Three', following: false },

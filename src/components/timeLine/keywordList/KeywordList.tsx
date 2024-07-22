@@ -19,7 +19,7 @@ const mockData: KeywordType[] = [
 ];
 
 const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
-  const registerStore = useRegisterStore();
+  const { registerStatus } = useRegisterStore();
   const { selectedList, setSelectedList } = useKeywordStore();
 
   const [keywordData, setKeywordData] = useState<KeywordType[]>([]);
@@ -40,12 +40,12 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   useEffect(() => {
     fetchKeywordData();
 
-    if (registerStore.registerStatus === RegisterStatus.LOG_IN) {
+    if (registerStatus === RegisterStatus.LOG_IN) {
       setIsLog(true);
     } else {
       setIsLog(false);
     }
-  }, [registerStore.registerStatus]);
+  }, [registerStatus]);
 
   useEffect(() => {
     if (!isLog && selectedList.length === 0) {
