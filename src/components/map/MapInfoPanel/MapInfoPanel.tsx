@@ -3,6 +3,7 @@ import styles from './MapInfoPanel.module.scss';
 import BlackBackBtn from '../../../assets/back-arrow-black.svg';
 import { useNavigate } from 'react-router-dom';
 import MapProducerConatiner from './MapProducerContainer';
+import MapContentTitle from './MapContentTitleContainer';
 
 const MapInfoPanel = () => {
   const [isMine, setIsMine] = useState<boolean>(true);
@@ -28,6 +29,7 @@ const MapInfoPanel = () => {
         </button>
       </div>
       {!isMine && <MapProducerConatiner isMine={isMine} />}
+      <MapContentTitle />
     </section>
   );
 };
