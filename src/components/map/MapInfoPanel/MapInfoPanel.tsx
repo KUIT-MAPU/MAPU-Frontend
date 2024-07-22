@@ -4,9 +4,10 @@ import BlackBackBtn from '../../../assets/back-arrow-black.svg';
 import { useNavigate } from 'react-router-dom';
 import MapProducerConatiner from './MapProducerContainer';
 import MapContentTitle from './MapContentTitleContainer';
+import useMapInfoStore from '../../../stores/mapInfoStore';
 
 const MapInfoPanel = () => {
-  const [isMine, setIsMine] = useState<boolean>(true);
+  const { isMine } = useMapInfoStore();
 
   const navigate = useNavigate();
 
@@ -28,8 +29,8 @@ const MapInfoPanel = () => {
           <img src={BlackBackBtn} alt="뒤로가기 버튼" onClick={handleGoBack} />
         </button>
       </div>
-      {!isMine && <MapProducerConatiner isMine={isMine} />}
-      <MapContentTitle />
+      {!isMine && <MapProducerConatiner />}
+      <MapContentTitle isMine={isMine} />
     </section>
   );
 };

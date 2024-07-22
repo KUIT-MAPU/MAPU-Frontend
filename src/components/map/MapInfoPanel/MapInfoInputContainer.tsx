@@ -1,52 +1,89 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './MapInfoInputContainer.module.scss';
-import { MapInfo } from '../../../types/MapInfo';
+import useMapInfoStore from '../../../stores/mapInfoStore';
+import { useEffect, useState } from 'react';
 
-interface Props {
-  mapInfo: MapInfo;
-  setMapInfo: React.Dispatch<React.SetStateAction<MapInfo>>;
-}
+import BookmarkDefault from '../../../assets/bookmark-default.svg';
+import BookmarkSelected from '../../../assets/bookmark-selected.svg';
 
-const MapInfoInputContainer: React.FC<Props> = ({ mapInfo, setMapInfo }) => {
+const MapInfoInputContainer = () => {
+  const {
+    mapId,
+    mapTitle,
+    mapDescription,
+    setTitle,
+    setDescription,
+    isMine,
+    isBookmarked,
+    switchIsBookmarked,
+  } = useMapInfoStore();
+  const [editedTitle, setEditedTitle] = useState<string>('');
+  const [editedDescription, setEditedDescription] = useState<string>('');
+
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setEditedTitle(mapTitle);
+    setEditedDescription(mapDescription);
+  }, []);
+
   const handleTitleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newMapInfo = { ...mapInfo, title: e.currentTarget.value };
-    setMapInfo(newMapInfo);
+    setEditedTitle(e.currentTarget.value);
   };
 
   const handleDescriptionOnChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    const newMapInfo = { ...mapInfo, description: e.currentTarget.value };
-    setMapInfo(newMapInfo);
+    setEditedDescription(e.currentTarget.value);
   };
 
   const handleFocusOutTitle = () => {
     //TODO: 지도 제목 저장 api 호출, 응답으로 받은 지도 제목 사용
-    navigate(`/map/${mapInfo.title.replaceAll(' ', '-')}`);
+    setTitle(editedTitle);
+    navigate(`/map/${editedTitle.replaceAll(' ', '-')}`);
   };
 
   const handleFocusOutDescription = () => {
     //TODO: 지도 설명 저장 api 호출
+    setDescription(editedDescription);
+  };
+
+  const handleSwitchIsBookmarked = () => {
+    switchIsBookmarked();
   };
 
   return (
     <div className={styles.mapInfoInputContainer}>
-      <input
-        type="text"
-        name="mapTitle"
-        id={styles.mapTitle}
-        value={mapInfo.title}
-        placeholder="지도 이름"
-        onChange={handleTitleOnChange}
-        onBlur={handleFocusOutTitle}
-      />
+      <div className={styles.titleContainer}>
+        <input
+          type="text"
+          name="mapTitle"
+          id={styles.mapTitle}
+          value={editedTitle}
+          placeholder="지도 이름"
+          onChange={handleTitleOnChange}
+          onBlur={handleFocusOutTitle}
+        />
+        {!isMine &&
+          (isBookmarked ? (
+            <img
+              src={BookmarkSelected}
+              alt="북마크함"
+              onClick={handleSwitchIsBookmarked}
+            />
+          ) : (
+            <img
+              src={BookmarkDefault}
+              alt="북마크하지 않음"
+              onClick={handleSwitchIsBookmarked}
+            />
+          ))}
+      </div>
       <textarea
         name="mapDescription"
         id={styles.mapDescription}
         placeholder="지도 설명"
-        value={mapInfo.description}
+        value={editedDescription}
         onChange={handleDescriptionOnChange}
         onBlur={handleFocusOutDescription}
       />

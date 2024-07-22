@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 import { MapProducerInfo } from '../../../types/MapProducerInfo';
+import useMapInfoStore from '../../../stores/mapInfoStore';
 import styles from './MapProducerContainer.module.scss';
 
-interface Props {
-  isMine: boolean;
-}
 const mockData: MapProducerInfo = {
   profileId: 'mockUser',
   profileImgUrl: 'http://placehold.co/32x32',
   nickname: 'producer',
 };
 
-const MapProducerConatiner: React.FC<Props> = ({ isMine }) => {
+const MapProducerConatiner = () => {
+  const { isMine } = useMapInfoStore();
   const [amFollowing, setAmFollowing] = useState<boolean>(false);
   const [mapProducerInfo, setMapProducerInfo] = useState<MapProducerInfo>({
     profileId: '',

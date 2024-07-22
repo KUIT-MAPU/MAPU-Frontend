@@ -1,9 +1,11 @@
 export interface MapInfo {
-  mapId: number;
+  id: number;
   title: string;
   description: string;
   location: string;
   latitude: number;
   longitude: number;
   isPublished: boolean;
+  isMine: boolean;
+  isBookmarked: boolean;
 }

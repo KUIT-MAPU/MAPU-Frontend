@@ -1,16 +1,14 @@
-import { MapInfo } from '../../../types/MapInfo';
+import useMapInfoStore from '../../../stores/mapInfoStore';
 import styles from './LocationInfoContainer.module.scss';
 
-interface Props {
-  mapInfo: MapInfo;
-}
+const LocationInfoContainer = () => {
+  const { location } = useMapInfoStore();
 
-const LocationInfoContainer: React.FC<Props> = ({ mapInfo }) => {
   return (
     <div className={styles.locationInfoContainer}>
       <div className={styles.locationInfo}>
         <span className={styles.location__title}>위치</span>
-        <span>{mapInfo.location}</span>
+        <span>{location}</span>
       </div>
       <div className={styles.locationInfo}>
         <span className={styles.location__title}>날씨</span>
