@@ -30,7 +30,7 @@ const Login = () => {
     if (isMember) {
       console.log('로그인 성공');
       //회원가입 되어있는 유저
-      setLogIn('true access', 'true refresh');
+      setLogIn('profileId', 'profileImgUrl', 'true access', 'true refresh');
       navigate(prevUrl);
     } else {
       console.log('회원가입 필요');

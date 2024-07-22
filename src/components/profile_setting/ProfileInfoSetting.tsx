@@ -18,7 +18,7 @@ const ProfileInfoSetting = () => {
 
   const handleSignUp = () => {
     //TODO: 회원가입 api 연결
-    setLogIn('true access', 'true refresh'); //아마 얘가 회원가입 api 연결 코드 내부로 이동
+    setLogIn('profileId', 'profileImgUrl', 'true access', 'true refresh'); //아마 얘가 회원가입 api 연결 코드 내부로 이동
     const prevUrl = pathname.split('?')[0];
 
     if (prevUrl === '/') navigate('/timeline');
