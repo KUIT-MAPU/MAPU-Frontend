@@ -5,6 +5,18 @@
   box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
 }
 
+.header {
+  padding: 12px 8px;
+
+  button {
+    height: 48px;
+    width: 48px;
+    padding: 12px;
+  }
+
+  border-bottom: 1px solid var(--gray_50);
+}
+
 .mapProducerContainer {
   padding: 12px 16px;
   display: flex;

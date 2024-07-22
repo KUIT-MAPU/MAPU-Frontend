@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import styles from './MapInfoPanel.module.scss';
+import BlackBackBtn from '../../../assets/back-arrow-black.svg';
 import { MapProducerInfo } from '../../../types/MapProducerInfo';
+import { useNavigate } from 'react-router-dom';
 
 const MapInfoPanel = () => {
   const [isMine, setIsMine] = useState<boolean>(true);
   const [amFollowing, setAmFollowing] = useState<boolean>(false);
   const [mapProducerInfo, setMapProducerInfo] = useState<MapProducerInfo>();
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const mockData: MapProducerInfo = {
     profileId: 'mockUser',
@@ -31,8 +35,17 @@ const MapInfoPanel = () => {
     }
   };
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <section id={styles.mapInfoPanel}>
+      <div className={styles.header}>
+        <button type="button">
+          <img src={BlackBackBtn} alt="뒤로가기 버튼" onClick={handleGoBack} />
+        </button>
+      </div>
       {!isMine && (
         <div className={styles.mapProducerContainer}>
           <div className={styles.mapProducer__info}>
