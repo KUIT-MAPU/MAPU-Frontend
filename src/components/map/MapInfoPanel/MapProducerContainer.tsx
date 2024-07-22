@@ -35,6 +35,10 @@ const MapProducerConatiner: React.FC<Props> = ({ isMine }) => {
     }
   };
 
+  const handleFollowBtn = () => {
+    //TODO: 팔로우 api
+  };
+
   return (
     <div className={styles.mapProducerContainer}>
       <div className={styles.mapProducer__info}>
@@ -46,7 +50,11 @@ const MapProducerConatiner: React.FC<Props> = ({ isMine }) => {
           팔로잉
         </button>
       ) : (
-        <button type="button" className={styles.followBtn}>
+        <button
+          type="button"
+          className={styles.followBtn}
+          onClick={handleFollowBtn}
+        >
           팔로우
         </button>
       )}
