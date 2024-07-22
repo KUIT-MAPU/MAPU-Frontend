@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import styles from './Map.module.scss';
+import MapInfoPanel from '../../components/map/panel/MapInfoPanel';
 
 const Map = () => {
   const { mapName } = useParams();
@@ -11,7 +12,11 @@ const Map = () => {
     titleElement.innerHTML = `${mapName!.replaceAll('-', ' ')} | MAPU`; //TODO: api 호출 -> '지도명 | MAPU' 설정
   }, []);
 
-  return <div>Map</div>;
+  return (
+    <div>
+      <MapInfoPanel />
+    </div>
+  );
 };
 
 export default Map;
