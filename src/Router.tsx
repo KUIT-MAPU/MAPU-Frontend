@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Welcome from './pages/Welcome/Welcome';
 import TimeLine from './pages/TimeLine/TimeLine';
-import Map from './pages/Map';
+import Map from './pages/Map/Map';
 import Explore from './pages/Explore/Explore';
 import UserProfile from './pages/UserProfile/UserProfile';
 import Login from './pages/login/Login';

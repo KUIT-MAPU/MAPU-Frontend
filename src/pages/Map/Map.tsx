@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import styles from './Map.module.scss';
+
 const Map = () => {
   const { mapId } = useParams();
 
