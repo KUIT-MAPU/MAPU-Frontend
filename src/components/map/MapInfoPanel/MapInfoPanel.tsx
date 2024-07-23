@@ -30,7 +30,7 @@ const MapInfoPanel = () => {
         </button>
       </div>
       {!isMine && <MapProducerConatiner />}
-      <MapContentTitle isMine={isMine} />
+      <MapContentTitle />
     </section>
   );
 };
