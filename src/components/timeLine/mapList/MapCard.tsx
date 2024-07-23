@@ -6,13 +6,19 @@ import useKeywordStore from '../../../stores/keywordStore';
 import styles from './MapCard.module.scss';
 
 import userImg from '../../../assets/user.svg';
-import ico_carousel from '../../../assets/ico_carousel.svg';
+import ico_carousel_backward from '../../../assets/ico_carousel_backward.svg';
+import ico_carousel_forward from '../../../assets/ico_carousel_forward.svg';
 import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/RegisterStatus';
+
+interface RenderingMap {
+  [keyword: string]: MapType[];
+}
 
 const MapCard: React.FC = () => {
   const [mapData, setMapData] = useState<MapType[]>([]);
   const [isLog, setIsLog] = useState<Boolean>(false);
+  const [sliceMap,setSliceMap] = useState<RenderingMap>({});
   const { selectedList } = useKeywordStore();
   const { registerStatus } = useRegisterStore();
 
@@ -37,34 +43,96 @@ const MapCard: React.FC = () => {
     fetchMapData();
   }, []);
 
-  const handleForward = () => {
-    
-  }
+  useEffect(() => {
+    if (mapData.length > 0 && selectedList.length > 0) {
+      const updatedMap = selectedList.reduce<RenderingMap>((acc, keyword) => {
+        const filteredMaps = mapData.filter(map =>
+          map.keywords.includes(keyword.title)
+        );
+        acc[keyword.title] = filteredMaps;
+        return acc;
+      }, {});
+      const initialSlice = selectedList.reduce<RenderingMap>((acc, keyword) => {
+        const filteredMaps = updatedMap[keyword.title] || [];
+        acc[keyword.title] = filteredMaps.slice(0, 3); // Initial slice
+        return acc;
+      }, {});
+      setSliceMap(initialSlice);
+    }
+  }, [mapData, selectedList]);
+
+
+  const handleForward = (keyword: string) => {
+    setSliceMap(prevState => {
+      const currentMaps = prevState[keyword] || [];
+      const fullMap = mapData.filter(map =>
+        map.keywords.includes(keyword)
+      );
+      const currentIndex = currentMaps.length;
+      console.log('currnetIndex:',currentIndex);
+      const newSlice = fullMap.slice(currentIndex, currentIndex + 3); // Show 3 items at a time
+
+      console.log(newSlice);
+      console.log('prevState:',prevState);
+      console.log('currentMap:',currentMaps);
+      console.log('fullMap:',fullMap);
+      if (newSlice.length > 0) {
+        return {
+          ...prevState,
+          [keyword]: [...currentMaps, ...newSlice]
+        };
+      }
+      return prevState;
+    });
+  };
+
+  const handleBackward = (keyword: string) => {
+    setSliceMap(prevState => {
+      const currentMaps = prevState[keyword] || [];
+      const fullMap = mapData.filter(map =>
+        map.keywords.includes(keyword)
+      );
+      const currentIndex = currentMaps.length;
+
+      if (currentIndex > 2) {
+        const newSlice = fullMap.slice(currentIndex-1 ,currentIndex + 2); // Show 3 items at a time, back from the previous slice
+        // console.log(newSlice);
+        return {
+          ...prevState,
+          [keyword]: newSlice
+        };
+      }
+      return prevState;
+    });
+  };
 
   return (
     <div className={styles.mapcard}>
-      {selectedList.map((keyword: KeywordType) => {
-        const selectedMap = mapData.filter((map: MapType) =>
-          map.keywords.includes(keyword.title),
-        );
+      {selectedList.map(keyword => {
+        const keywordTitle = keyword.title;
+        const mapsToRender = sliceMap[keywordTitle] || [];
 
         return (
           <div key={keyword.id} className={styles.wrapper}>
-            <div className={styles.keyword}>{keyword.title}</div>
-
+            <div className={styles.keyword}>{keywordTitle}</div>
 
             <div className={styles.mapContainer}>
+              <div className={styles.buttonContainer}>
+                <button
+                  className={styles.forward}
+                  onClick={() => handleForward(keywordTitle)}
+                >
+                  <img src={ico_carousel_forward} alt="Backward" />
+                </button>
 
-            <div className={styles.buttonContainer}>
-              <button className={styles.forward}>
-                <img src={ico_carousel} />
-              </button>
-
-              <button className={styles.backward}>
-                <img src={ico_carousel} />
-              </button>
-            </div>
-              {selectedMap.map((map: MapType) => (
+                <button
+                  className={styles.backward}
+                  onClick={() => handleBackward(keywordTitle)}
+                >
+                  <img src={ico_carousel_backward} alt="Forward" />
+                </button>
+              </div>
+              {mapsToRender.map(map => (
                 <div key={map.id} className={styles.map}>
                   <img
                     src={map.img}
@@ -104,3 +172,4 @@ const MapCard: React.FC = () => {
 };
 
 export default MapCard;
+

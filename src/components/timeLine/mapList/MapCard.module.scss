@@ -1,14 +1,16 @@
 .mapcard {
   display: flex;
   flex-direction: column;
-  width: 1408ps;
+  width: 1408px;
   height: 100%;
 
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 24px;
   gap: 36px;
-  
+
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .wrapper {
@@ -30,7 +32,7 @@
   position: relative;
   flex-direction: row;
   gap: 16px;
-  overflow: hidden;
+  flex-wrap: nowrap;
 }
 
 .map {
@@ -106,7 +108,7 @@
 .buttonContainer {
   display: flex;
   height: 32px;
-  width: 1408px;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   position: absolute;
