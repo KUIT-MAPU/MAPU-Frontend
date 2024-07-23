@@ -2,7 +2,7 @@ import useMapInfoStore from '../../../stores/mapInfoStore';
 import styles from './LocationInfoContainer.module.scss';
 
 const LocationInfoContainer = () => {
-  const { location } = useMapInfoStore();
+  const { location, centerLatitude, centerLongitude } = useMapInfoStore();
 
   return (
     <div className={styles.locationInfoContainer}>

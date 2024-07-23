@@ -10,8 +10,7 @@ const mockData: MapProducerInfo = {
 };
 
 const MapProducerConatiner = () => {
-  const { isMine } = useMapInfoStore();
-  const [amFollowing, setAmFollowing] = useState<boolean>(false);
+  const { isMine, amIFollowing } = useMapInfoStore();
   const [mapProducerInfo, setMapProducerInfo] = useState<MapProducerInfo>({
     profileId: '',
     profileImgUrl: '',
@@ -27,7 +26,7 @@ const MapProducerConatiner = () => {
 
   const fetchMapProducerInfo = async () => {
     try {
-      //api data
+      //TODO: 지도 제작자 정보 api data
       setMapProducerInfo(mockData);
     } catch (error) {
       setError('정보를 불러올 수 없음.');
@@ -44,7 +43,7 @@ const MapProducerConatiner = () => {
         <img src={mapProducerInfo.profileImgUrl} alt="프로필 이미지" />
         <span>{mapProducerInfo.nickname}</span>
       </div>
-      {amFollowing ? (
+      {amIFollowing ? (
         <button type="button" className={styles.followBtn} disabled>
           팔로잉
         </button>

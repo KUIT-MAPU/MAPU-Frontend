@@ -7,15 +7,17 @@ interface State {
   mapTitle: string;
   mapDescription: string;
   location: string;
-  latitude: number;
-  longitude: number;
+  centerLatitude: number;
+  centerLongitude: number;
   isPublished: boolean;
   isMine: boolean;
-  isBookmarked: boolean;
+  amIFollowing?: boolean;
+  isBookmarked?: boolean;
   setMapInfo: (mapInfo: MapInfo) => void;
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
   togglePublish: () => void;
+  switchFollowing: () => void;
   switchIsBookmarked: () => void;
 }
 
@@ -26,32 +28,36 @@ const useMapInfoStore = create(
       mapTitle: '건대 맛집 지도',
       mapDescription: '',
       location: '',
-      latitude: 0.0,
-      longitude: 0.0,
+      centerLatitude: 0.0,
+      centerLongitude: 0.0,
       isPublished: false,
       isMine: false,
-      isBookmarked: false,
       setMapInfo: (mapInfo) =>
         set({
           mapId: mapInfo.id,
           mapTitle: mapInfo.title,
           mapDescription: mapInfo.description,
           location: mapInfo.location,
-          latitude: mapInfo.latitude,
-          longitude: mapInfo.longitude,
+          centerLatitude: mapInfo.latitude,
+          centerLongitude: mapInfo.longitude,
           isPublished: mapInfo.isPublished,
           isMine: mapInfo.isMine,
-          isBookmarked: mapInfo && mapInfo.isBookmarked,
+          amIFollowing: mapInfo.isMine && mapInfo.amIFollowing,
+          isBookmarked: mapInfo.isMine && mapInfo.isBookmarked,
         }),
       setTitle: (title) => set({ mapTitle: title }),
       setDescription: (description) => set({ mapDescription: description }),
       togglePublish: () =>
         set((state) => {
-          return { isPublished: !state.isPublished };
+          return { ...state, isPublished: !state.isPublished };
+        }),
+      switchFollowing: () =>
+        set((state) => {
+          return { ...state, amIFollowing: !state.amIFollowing };
         }),
       switchIsBookmarked: () =>
         set((state) => {
-          return { isBookmarked: !state.isBookmarked };
+          return { ...state, isBookmarked: !state.isBookmarked };
         }),
     }),
     { name: 'registerStatusStorage' },
