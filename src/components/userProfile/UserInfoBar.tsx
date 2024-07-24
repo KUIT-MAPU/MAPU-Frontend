@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from './UserInfoBar.module.scss';
-import { ReactComponent as ProfilePerson } from '../../assets/ProfilePerson.svg';
+import { ReactComponent as ProfilePerson } from '../../assets/img_user_default_profile.svg';
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
   return (
     <div className={styles.UserInfoBar}>
       <div className={styles.UserPhoto}>
-        <ProfilePerson className={styles.ProfilePerson} />
+        <ProfilePerson />
       </div>
       <div className={styles.UserName}>
         <h1>환영해요!</h1>

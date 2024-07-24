@@ -1,13 +1,12 @@
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './ProfileInfoSetting.module.scss';
 import { RegisterStatus } from '../../types/RegisterStatus';
 import useRegisterStore from '../../stores/registerStore';
-import imageCompression from 'browser-image-compression';
-
-import UserDefaultImage from '../../assets/user-default-image.svg';
-import ProfileEditPen from '../../assets/profile-edit-pen.svg';
 import UserDataInputContainer from './UserDataInputContainer';
-import { useLocation, useNavigate } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
+import UserDefaultImage from '../../assets/img_user_default_profile.svg';
+import ProfileEditPen from '../../assets/btn_profile_edit_pen.svg';
 
 const ProfileInfoSetting = () => {
   const { registerStatus, setLogIn } = useRegisterStore();

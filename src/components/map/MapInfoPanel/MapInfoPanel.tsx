@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import styles from './MapInfoPanel.module.scss';
-import BlackBackBtn from '../../../assets/back-arrow-black.svg';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from './MapInfoPanel.module.scss';
 import MapProducerConatiner from './MapProducerContainer';
 import MapContentTitle from './MapContentTitleContainer';
 import useMapInfoStore from '../../../stores/mapInfoStore';
+import BlackBackBtn from '../../../assets/btn_arrow_left_black.svg';
 
 const MapInfoPanel = () => {
   const { isMine } = useMapInfoStore();

@@ -1,10 +1,9 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './MapInfoInputContainer.module.scss';
 import useMapInfoStore from '../../../stores/mapInfoStore';
-import { useEffect, useState } from 'react';
-
-import BookmarkDefault from '../../../assets/bookmark-default.svg';
-import BookmarkSelected from '../../../assets/bookmark-selected.svg';
+import BookmarkDefault from '../../../assets/btn_bookmark_default.svg';
+import BookmarkSelected from '../../../assets/btn_bookmark_selected.svg';
 
 const MapInfoInputContainer = () => {
   const {

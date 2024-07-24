@@ -1,7 +1,6 @@
 import styles from './UserDataInput.module.scss';
-
-import InfoGrayCircle from '../../../assets/info-gray-circle.svg';
-import InfoErrorCircle from '../../../assets/info-error-cricle.svg';
+import InfoGrayCircle from '../../../assets/ico_info_gray.svg';
+import InfoErrorCircle from '../../../assets/ico_info_error_red.svg';
 
 interface Props {
   isIdEmpty: boolean;

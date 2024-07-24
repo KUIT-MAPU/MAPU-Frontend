@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './KeywordList.module.scss';
 import { KeywordType } from '../../../types/KeywordType';
-import ico_info from '../../../assets/ico_info.svg';
+import ico_info from '../../../assets/ico_info_gray.svg';
 import useKeywordStore from '../../../stores/keywordStore';
 import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/RegisterStatus';
