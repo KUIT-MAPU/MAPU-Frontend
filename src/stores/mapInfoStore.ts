@@ -11,13 +11,11 @@ interface State {
   centerLongitude: number;
   isPublished: boolean;
   isMine: boolean;
-  amIFollowing?: boolean;
   isBookmarked?: boolean;
   setMapInfo: (mapInfo: MapInfo) => void;
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
   togglePublish: () => void;
-  switchFollowing: () => void;
   switchIsBookmarked: () => void;
 }
 
@@ -42,7 +40,6 @@ const useMapInfoStore = create(
           centerLongitude: mapInfo.longitude,
           isPublished: mapInfo.isPublished,
           isMine: mapInfo.isMine,
-          amIFollowing: mapInfo.isMine && mapInfo.amIFollowing,
           isBookmarked: mapInfo.isMine && mapInfo.isBookmarked,
         }),
       setTitle: (title) => set({ mapTitle: title }),
@@ -51,16 +48,12 @@ const useMapInfoStore = create(
         set((state) => {
           return { ...state, isPublished: !state.isPublished };
         }),
-      switchFollowing: () =>
-        set((state) => {
-          return { ...state, amIFollowing: !state.amIFollowing };
-        }),
       switchIsBookmarked: () =>
         set((state) => {
           return { ...state, isBookmarked: !state.isBookmarked };
         }),
     }),
-    { name: 'registerStatusStorage' },
+    { name: 'mapInfoStorage' },
   ),
 );
 

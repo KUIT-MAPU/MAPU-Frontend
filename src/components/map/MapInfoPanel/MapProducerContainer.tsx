@@ -7,14 +7,16 @@ const mockData: MapProducerInfo = {
   profileId: 'mockUser',
   profileImgUrl: 'http://placehold.co/32x32',
   nickname: 'producer',
+  amIFollowing: false,
 };
 
 const MapProducerConatiner = () => {
-  const { isMine, amIFollowing } = useMapInfoStore();
+  const { isMine } = useMapInfoStore();
   const [mapProducerInfo, setMapProducerInfo] = useState<MapProducerInfo>({
     profileId: '',
     profileImgUrl: '',
     nickname: '',
+    amIFollowing: false,
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -26,7 +28,7 @@ const MapProducerConatiner = () => {
 
   const fetchMapProducerInfo = async () => {
     try {
-      //TODO: 지도 제작자 정보 api data
+      //TODO: 지도 제작자 정보 api 호출 -> data
       setMapProducerInfo(mockData);
     } catch (error) {
       setError('정보를 불러올 수 없음.');
@@ -43,7 +45,7 @@ const MapProducerConatiner = () => {
         <img src={mapProducerInfo.profileImgUrl} alt="프로필 이미지" />
         <span>{mapProducerInfo.nickname}</span>
       </div>
-      {amIFollowing ? (
+      {mockData.amIFollowing ? (
         <button type="button" className={styles.followBtn} disabled>
           팔로잉
         </button>
