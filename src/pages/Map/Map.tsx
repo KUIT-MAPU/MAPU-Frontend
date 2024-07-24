@@ -7,16 +7,6 @@ const Map = () => {
   const { mapName } = useParams();
 
   //TODO: 지도 정보 api 호출 -> react query의 캐시로 데이터 관리
-  // const fetchMapInfo = async () => {
-  //   try {
-  //   } catch (error) {
-  //     setError('지도 정보를 불러올 수 없음.');
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchMapInfo();
-  // }, []);
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0];
