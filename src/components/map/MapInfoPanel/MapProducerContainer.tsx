@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import styles from './MapProducerContainer.module.scss';
 import { MapProducerInfo } from '../../../types/MapProducerInfo';
 import useMapInfoStore from '../../../stores/mapInfoStore';
-import styles from './MapProducerContainer.module.scss';
 
 const mockData: MapProducerInfo = {
   profileId: 'mockUser',

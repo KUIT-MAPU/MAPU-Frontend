@@ -1,5 +1,5 @@
-import useMapInfoStore from '../../../stores/mapInfoStore';
 import styles from './LocationInfoContainer.module.scss';
+import useMapInfoStore from '../../../stores/mapInfoStore';
 
 const LocationInfoContainer = () => {
   const { location, centerLatitude, centerLongitude } = useMapInfoStore();

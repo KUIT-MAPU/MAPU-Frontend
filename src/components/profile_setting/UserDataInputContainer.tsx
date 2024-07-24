@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-
+import styles from './UserDataInputContainer.module.scss';
 import IdInput from './input/IdInput';
 import NicknameInput from './input/NicknameInput';
-import styles from './UserDataInputContainer.module.scss';
 
 interface Props {
   setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
