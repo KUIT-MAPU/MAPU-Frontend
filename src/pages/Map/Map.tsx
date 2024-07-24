@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
 import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 
 const Map = () => {
   const { mapName } = useParams();
+
+  //TODO: 권한 판단
+  //1. 로그인 여부
+  //2. 지도 제작자 여부
+  //3. 편집자 여부
 
   //TODO: 지도 정보 api 호출 -> react query의 캐시로 데이터 관리
 
