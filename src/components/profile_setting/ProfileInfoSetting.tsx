@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import styles from './ProfileInfoSetting.module.scss';
-import { RegisterStatus } from '../../types/RegisterStatus';
-import useRegisterStore from '../../stores/registerStore';
-import imageCompression from 'browser-image-compression';
-
-import UserDefaultImage from '../../assets/user-default-image.svg';
-import ProfileEditPen from '../../assets/profile-edit-pen.svg';
-import UserDataInputContainer from './UserDataInputContainer';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styles from './ProfileInfoSetting.module.scss';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import useRegisterStore from '../../stores/registerStore';
+import UserDataInputContainer from './UserDataInputContainer';
+import imageCompression from 'browser-image-compression';
+import UserDefaultImage from '../../assets/img_user_default_profile.svg';
+import ProfileEditPen from '../../assets/btn_profile_edit_pen.svg';
 
 const ProfileInfoSetting = () => {
   const { registerStatus, setLogIn } = useRegisterStore();
@@ -18,7 +17,7 @@ const ProfileInfoSetting = () => {
 
   const handleSignUp = () => {
     //TODO: 회원가입 api 연결
-    setLogIn('true access', 'true refresh'); //아마 얘가 회원가입 api 연결 코드 내부로 이동
+    setLogIn('profileId', 'profileImgUrl', 'true access', 'true refresh'); //아마 얘가 회원가입 api 연결 코드 내부로 이동
     const prevUrl = pathname.split('?')[0];
 
     if (prevUrl === '/') navigate('/timeline');

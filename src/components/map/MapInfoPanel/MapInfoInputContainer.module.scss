@@ -1,0 +1,37 @@
+.mapInfoInputContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gray_50);
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#mapTitle {
+  width: calc(100% - 24px);
+  border: none;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#mapDescription {
+  border: none;
+  resize: none;
+  font-size: 14px;
+  overflow: hidden;
+  width: 100%;
+  line-height: 150%;
+  field-sizing: content;
+}
+#mapDescription:focus {
+  outline: none;
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: var(--gray_400);
+}

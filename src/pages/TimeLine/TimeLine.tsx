@@ -6,7 +6,7 @@ import styles from './TimeLine.module.scss';
 import useKeywordStore from '../../stores/keywordStore';
 import MapList from '../../components/timeLine/mapList/MapList';
 import useRegisterStore from '../../stores/registerStore';
-import { RegisterStatus } from '../../types/RegisterStatus';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
 import AuthContainer from '../../components/login/AuthContainer';
 import { useLocation, useNavigate } from 'react-router-dom';

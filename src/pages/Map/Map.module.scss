@@ -1,0 +1,21 @@
+.map {
+  height: 100vh;
+  overflow: hidden;
+
+  ::-webkit-scrollbar {
+    padding: 0 2px;
+    width: 4px;
+    height: 100%;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--gray_100);
+  }
+}
+
+.authContainer {
+  position: absolute;
+  z-index: 1100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

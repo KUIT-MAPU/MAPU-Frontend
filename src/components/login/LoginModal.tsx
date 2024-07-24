@@ -1,9 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './LoginModal.module.scss';
-
-import KakaoLogo from '../../assets/login/kakao.svg';
-import GoogleLogo from '../../assets/login/google.svg';
 import useRegisterStore from '../../stores/registerStore';
+import KakaoLogo from '../../assets/login/ico_kakao.svg';
+import GoogleLogo from '../../assets/login/ico_google.svg';
 
 const LoginModal = () => {
   const navigate = useNavigate();

@@ -1,0 +1,27 @@
+.objectListContainer {
+  display: flex;
+  flex-direction: column;
+  padding-right: 2px;
+}
+
+.objectList__header {
+  padding: 16px;
+  border-bottom: 1px solid var(--gray_50);
+
+  span {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.objectList {
+  height: calc(100vh - 356px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+.notMineList {
+  height: calc(100vh - 412px);
+}

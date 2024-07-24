@@ -1,12 +1,10 @@
-import styles from './ProfileSettingModal.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { RegisterStatus } from '../../types/RegisterStatus';
-
-import ProfileSetting from '../../assets/profile_setting.svg';
-import Close from '../../assets/close.svg';
-
+import styles from './ProfileSettingModal.module.scss';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import useRegisterStore from '../../stores/registerStore';
 import ProfileInfoSetting from './ProfileInfoSetting';
+import ProfileSetting from '../../assets/ico_person.svg';
+import CloseBtn from '../../assets/btn_close.svg';
 
 const ProfileSettingModal = () => {
   const { registerStatus } = useRegisterStore();
@@ -35,7 +33,7 @@ const ProfileSettingModal = () => {
           )}
         </div>
         <button type="button">
-          <img src={Close} alt="취소 버튼" onClick={handelCancel} />
+          <img src={CloseBtn} alt="취소 버튼" onClick={handelCancel} />
         </button>
       </div>
 

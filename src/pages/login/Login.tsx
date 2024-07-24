@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useRegisterStore from '../../stores/registerStore';
-import { RegisterStatus } from '../../types/RegisterStatus';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const Login = () => {
     if (isMember) {
       console.log('로그인 성공');
       //회원가입 되어있는 유저
-      setLogIn('true access', 'true refresh');
+      setLogIn('profileId', 'profileImgUrl', 'true access', 'true refresh');
       navigate(prevUrl);
     } else {
       console.log('회원가입 필요');
