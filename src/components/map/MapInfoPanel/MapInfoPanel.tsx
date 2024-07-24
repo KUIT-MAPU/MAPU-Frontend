@@ -4,6 +4,7 @@ import styles from './MapInfoPanel.module.scss';
 import MapProducerConatiner from './MapProducerContainer';
 import MapContentTitle from './MapContentTitleContainer';
 import useMapInfoStore from '../../../stores/mapInfoStore';
+import ObjectList from './ObjectList';
 import BlackBackBtn from '../../../assets/btn_arrow_left_black.svg';
 
 const MapInfoPanel = () => {
@@ -31,6 +32,7 @@ const MapInfoPanel = () => {
       </div>
       {!isMine && <MapProducerConatiner />}
       <MapContentTitle />
+      <ObjectList />
     </section>
   );
 };

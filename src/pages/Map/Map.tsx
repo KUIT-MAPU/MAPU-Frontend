@@ -60,13 +60,13 @@ const Map = () => {
   if (isMine || (!isMine && amIEditor))
     //지도 에디터
     return (
-      <>
+      <div className={styles.map}>
         {dimmed && (
           <div className={dimmedStyles.background} onClick={handleClose} />
         )}
         {dimmed && <AuthContainer className={styles.authContainer} />}
         <MapInfoPanel />
-      </>
+      </div>
     );
   return <>지도 뷰어</>;
 };
