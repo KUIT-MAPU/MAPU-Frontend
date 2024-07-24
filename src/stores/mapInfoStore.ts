@@ -11,6 +11,7 @@ interface State {
   centerLongitude: number;
   isPublished: boolean;
   isMine: boolean;
+  amIEditor?: boolean;
   isBookmarked?: boolean;
   setMapInfo: (mapInfo: MapInfo) => void;
   setTitle: (title: string) => void;
@@ -30,6 +31,7 @@ const useMapInfoStore = create(
       centerLongitude: 0.0,
       isPublished: false,
       isMine: false,
+      amIEditor: true,
       setMapInfo: (mapInfo) =>
         set({
           mapId: mapInfo.id,
@@ -40,6 +42,7 @@ const useMapInfoStore = create(
           centerLongitude: mapInfo.longitude,
           isPublished: mapInfo.isPublished,
           isMine: mapInfo.isMine,
+          amIEditor: mapInfo.isMine && mapInfo.amIEditor,
           isBookmarked: mapInfo.isMine && mapInfo.isBookmarked,
         }),
       setTitle: (title) => set({ mapTitle: title }),

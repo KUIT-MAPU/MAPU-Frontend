@@ -7,6 +7,6 @@ export interface MapInfo {
   longitude: number;
   isPublished: boolean;
   isMine: boolean;
-  amIFollowing?: boolean;
+  amIEditor?: boolean;
   isBookmarked?: boolean;
 }
