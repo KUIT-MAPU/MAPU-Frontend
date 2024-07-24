@@ -5,7 +5,7 @@ import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
 import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import useMapInfoStore from '../../stores/mapInfoStore';
 import useRegisterStore from '../../stores/registerStore';
-import { RegisterStatus } from '../../types/RegisterStatus';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import AuthContainer from '../../components/login/AuthContainer';
 
 const Map = () => {

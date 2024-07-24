@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './ProfileInfoSetting.module.scss';
-import { RegisterStatus } from '../../types/RegisterStatus';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import useRegisterStore from '../../stores/registerStore';
 import UserDataInputContainer from './UserDataInputContainer';
 import imageCompression from 'browser-image-compression';

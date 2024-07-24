@@ -3,7 +3,7 @@ import styles from './EditorProfileCard.module.scss';
 import dimmedStyles from '../Dimmed.module.scss';
 import { EditorType } from '../../../types/EditorType';
 import useRegisterStore from '../../../stores/registerStore';
-import { RegisterStatus } from '../../../types/RegisterStatus';
+import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 
 import AuthContainer from '../../login/AuthContainer';
 

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { RegisterStatus } from '../types/RegisterStatus';
+import { RegisterStatus } from '../types/enum/RegisterStatus';
 
 interface State {
   registerStatus: RegisterStatus;

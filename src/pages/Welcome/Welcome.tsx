@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Welcome.module.scss';
 import useRegisterStore from '../../stores/registerStore';
-import { RegisterStatus } from '../../types/RegisterStatus';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import AuthContainer from '../../components/login/AuthContainer';
 import WelcomeBanner from '../../assets/welcome/img_welcome_banner.webp';
 import GreenTransparentLogo from '../../assets/logo/ico_logo_transparent_green.svg';

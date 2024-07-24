@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './ProfileSettingModal.module.scss';
-import { RegisterStatus } from '../../types/RegisterStatus';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import useRegisterStore from '../../stores/registerStore';
 import ProfileInfoSetting from './ProfileInfoSetting';
 import ProfileSetting from '../../assets/ico_person.svg';
