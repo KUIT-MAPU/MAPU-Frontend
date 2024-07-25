@@ -18,6 +18,10 @@
   font-size: 20px;
   font-weight: 600;
 }
+#mapTitle:disabled,
+#mapDescription:disabled {
+  background: none;
+}
 
 #mapDescription {
   border: none;
@@ -34,4 +38,8 @@
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
   color: var(--gray_400);
+}
+
+.bookmarkBtn:hover {
+  cursor: pointer;
 }

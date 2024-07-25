@@ -2,10 +2,14 @@ import styles from './MapContentTitleContainer.module.scss';
 import MapInfoInputContainer from './MapInfoInputContainer';
 import LocationInfoContainer from './LocationInfoContainer';
 
-const MapContentTitleContainer = () => {
+interface Props {
+  mode: string;
+}
+
+const MapContentTitleContainer: React.FC<Props> = ({ mode }) => {
   return (
     <div className={styles.mapContentTitleContainer}>
-      <MapInfoInputContainer />
+      <MapInfoInputContainer mode={mode}/>
       <LocationInfoContainer />
     </div>
   );
