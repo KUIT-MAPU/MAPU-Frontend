@@ -19,7 +19,7 @@ interface State {
   setMapInfo: (mapInfo: MapInfo) => void;
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
-  togglePublish: () => void;
+  swithIsPublished: () => void;
   switchIsBookmarked: () => void;
 }
 
@@ -112,7 +112,7 @@ const useMapInfoStore = create(
         }),
       setTitle: (title) => set({ mapTitle: title }),
       setDescription: (description) => set({ mapDescription: description }),
-      togglePublish: () =>
+      swithIsPublished: () =>
         set((state) => {
           return { ...state, isPublished: !state.isPublished };
         }),
