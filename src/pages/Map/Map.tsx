@@ -6,6 +6,7 @@ import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import AuthContainer from '../../components/login/AuthContainer';
+import ObjectInfoPanel from '../../components/map/ObjectInfoPanel/ObjectInfoPanel';
 
 //"editor"
 //마이페이지 > 편집 가능한 지도에서의 접근이므로, 이미 로그인 된 상태일 것.
@@ -66,6 +67,7 @@ const Map = () => {
       )}
       {dimmed && <AuthContainer className={styles.authContainer} />}
       <MapInfoPanel mode={mapMode} />
+      <ObjectInfoPanel mode={mapMode} />
     </div>
   );
 };

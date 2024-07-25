@@ -1,6 +1,7 @@
 .map {
   height: 100vh;
   overflow: hidden;
+  position: relative;
 
   ::-webkit-scrollbar {
     padding: 0 2px;
