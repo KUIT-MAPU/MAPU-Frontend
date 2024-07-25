@@ -6,9 +6,15 @@ import MapContentTitle from './MapContentTitleContainer';
 import useMapInfoStore from '../../../stores/mapInfoStore';
 import ObjectList from './ObjectList';
 import BlackBackBtn from '../../../assets/btn_arrow_left_black.svg';
+import useRegisterStore from '../../../stores/registerStore';
 
-const MapInfoPanel = () => {
+interface Props {
+  mode: string;
+}
+
+const MapInfoPanel: React.FC<Props> = ({ mode }) => {
   const { isMine } = useMapInfoStore();
+  const { loginNeeded } = useRegisterStore();
 
   const navigate = useNavigate();
 
@@ -23,6 +29,26 @@ const MapInfoPanel = () => {
     navigate(-1);
   };
 
+  //viewer
+  if (mode == 'view')
+    return (
+      <section id={styles.mapInfoPanel}>
+        <div className={styles.header}>
+          <button type="button">
+            <img
+              src={BlackBackBtn}
+              alt="뒤로가기 버튼"
+              onClick={handleGoBack}
+            />
+          </button>
+        </div>
+        <MapProducerConatiner />
+        <MapContentTitle mode={mode} />
+        <ObjectList />
+      </section>
+    );
+
+  //editor
   return (
     <section id={styles.mapInfoPanel}>
       <div className={styles.header}>
@@ -31,8 +57,8 @@ const MapInfoPanel = () => {
         </button>
       </div>
       {!isMine && <MapProducerConatiner />}
-      <MapContentTitle />
-      <ObjectList />
+      <MapContentTitle mode={mode} />
+      {!loginNeeded && <ObjectList />}
     </section>
   );
 };

@@ -4,8 +4,14 @@ import styles from './MapInfoInputContainer.module.scss';
 import useMapInfoStore from '../../../stores/mapInfoStore';
 import BookmarkDefault from '../../../assets/btn_bookmark_default.svg';
 import BookmarkSelected from '../../../assets/btn_bookmark_selected.svg';
+import useRegisterStore from '../../../stores/registerStore';
+import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 
-const MapInfoInputContainer = () => {
+interface Props {
+  mode: string;
+}
+
+const MapInfoInputContainer: React.FC<Props> = ({ mode }) => {
   const {
     mapId,
     mapTitle,
@@ -16,6 +22,7 @@ const MapInfoInputContainer = () => {
     isBookmarked,
     switchIsBookmarked,
   } = useMapInfoStore();
+  const { registerStatus, setLoginNeeded } = useRegisterStore();
   const [editedTitle, setEditedTitle] = useState<string>('');
   const [editedDescription, setEditedDescription] = useState<string>('');
 
@@ -48,7 +55,12 @@ const MapInfoInputContainer = () => {
   };
 
   const handleSwitchIsBookmarked = () => {
-    switchIsBookmarked();
+    if (registerStatus !== RegisterStatus.LOG_IN) {
+      setLoginNeeded(true);
+    } else {
+      //TODO: 북마크 설정 api 호출
+      switchIsBookmarked();
+    }
   };
 
   return (
@@ -62,18 +74,21 @@ const MapInfoInputContainer = () => {
           placeholder="지도 이름"
           onChange={handleTitleOnChange}
           onBlur={handleFocusOutTitle}
+          disabled={mode === 'view' ? true : false}
         />
         {!isMine &&
           (isBookmarked ? (
             <img
               src={BookmarkSelected}
               alt="북마크함"
+              className={styles.bookmarkBtn}
               onClick={handleSwitchIsBookmarked}
             />
           ) : (
             <img
               src={BookmarkDefault}
               alt="북마크하지 않음"
+              className={styles.bookmarkBtn}
               onClick={handleSwitchIsBookmarked}
             />
           ))}
@@ -85,6 +100,7 @@ const MapInfoInputContainer = () => {
         value={editedDescription}
         onChange={handleDescriptionOnChange}
         onBlur={handleFocusOutDescription}
+        disabled={mode === 'view' ? true : false}
       />
     </div>
   );

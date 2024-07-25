@@ -20,7 +20,12 @@ const Router = () => {
     },
     {
       index: true,
-      path: '/map/:mapName',
+      path: '/map/:mapName/edit',
+      element: <Map />,
+    },
+    {
+      index: true,
+      path: '/map/:mapName/view',
       element: <Map />,
     },
     {

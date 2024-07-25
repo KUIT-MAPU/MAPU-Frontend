@@ -3,36 +3,26 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './Map.module.scss';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
 import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
-import useMapInfoStore from '../../stores/mapInfoStore';
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import AuthContainer from '../../components/login/AuthContainer';
 
+//"editor"
+//마이페이지 > 편집 가능한 지도에서의 접근이므로, 이미 로그인 된 상태일 것.
+//=> registerStatus 변동 사항 추적 -> 로그인 상태 아니면 딤드 + AuthContainer 모달 띄움
+//에디터에 접근 권한이 있는 사람은 지도의 '게시' 여부와 무관
+//"viewer"
+//공유 링크로 접근시 '게시' 여부 무관
+//홈/탐색/다른사람유저페이지에서 접근시 '게시'여부 유관 -> 백엔드에서 필터링
 const Map = () => {
-  const navigate = useNavigate();
   const pathname = useLocation().pathname;
+  const mapMode = pathname.split('/').pop()!;
+  const navigate = useNavigate();
   const { mapName } = useParams();
-  const { isPublished, isMine, amIEditor } = useMapInfoStore();
-  const { registerStatus, setLoginNeeded } = useRegisterStore();
+  const { registerStatus, loginNeeded, setLoginNeeded } = useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
 
-  //TODO: 권한 판단
-  //[공유 링크, 일반 링크]
-  //1. 지도의 publish 여부
-  //1.1 pulish -> 지도 뷰어 표시 //확인 후 수정
-  //1.2 publish X -> 1.2.1
-  //1.2.1 로그인 여부
-  //1.2.1.1 로그인 O -> 1.2.2
-  //1.2.1.2 로그인 X -> 로그인 모달
-  //1.2.2 지도 제작자 여부
-  //1.2.2.1 지도 제작자 O -> 지도 에디터 표시
-  //1.2.2.2 지도 제작자 X -> 1.2.3
-  //1.2.3 편집자 여부
-  //1.2.3.1 편집자 O -> 지도 데이터 표시(지도 제작자 프로필, 북마크 포함)
-  //1.2.3.2 편집자 X -> 지도 뷰어 표시
-
   //TODO: 지도 정보 api 호출 -> react query의 캐시로 데이터 관리
-
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0];
     //TODO: 지도 제목이 바뀐 경우, 이전으로 갔을 때 오류 반환해야 함
@@ -41,15 +31,23 @@ const Map = () => {
   }, [mapName]);
 
   useEffect(() => {
-    if (!isPublished) {
+    if (mapMode == 'edit') {
+      //editor
       if (registerStatus !== RegisterStatus.LOG_IN) {
+        setDimmed(true);
         setLoginNeeded(true);
+      } else {
+        setDimmed(false);
+      }
+    } else {
+      //viewer
+      if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
         setDimmed(true);
       } else {
         setDimmed(false);
       }
     }
-  }, [isPublished, registerStatus]);
+  }, [registerStatus, loginNeeded]);
 
   const handleClose = () => {
     setLoginNeeded(false);
@@ -57,18 +55,19 @@ const Map = () => {
     navigate(prevUrl);
   };
 
-  if (isMine || (!isMine && amIEditor))
-    //지도 에디터
-    return (
-      <div className={styles.map}>
-        {dimmed && (
-          <div className={dimmedStyles.background} onClick={handleClose} />
-        )}
-        {dimmed && <AuthContainer className={styles.authContainer} />}
-        <MapInfoPanel />
-      </div>
-    );
-  return <>지도 뷰어</>;
+  //map
+  return (
+    <div className={styles.map}>
+      {dimmed && (
+        <div
+          className={dimmedStyles.background}
+          onClick={mapMode === 'view' ? handleClose : undefined}
+        />
+      )}
+      {dimmed && <AuthContainer className={styles.authContainer} />}
+      <MapInfoPanel mode={mapMode} />
+    </div>
+  );
 };
 
 export default Map;
