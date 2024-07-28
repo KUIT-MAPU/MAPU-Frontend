@@ -9,7 +9,6 @@ import userImg from '../../../assets/user.svg';
 import ico_carousel_backward from '../../../assets/ico_carousel_backward.svg';
 import ico_carousel_forward from '../../../assets/ico_carousel_forward.svg';
 import useRegisterStore from '../../../stores/registerStore';
-import { RegisterStatus } from '../../../types/RegisterStatus';
 
 interface MapCardProps {
   mapData:MapType[];

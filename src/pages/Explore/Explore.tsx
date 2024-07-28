@@ -9,8 +9,9 @@ import SearchPopUp from '../../components/explore/SearchPopUp';
 import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useRegisterStore from '../../stores/registerStore';
-import { RegisterStatus } from '../../types/RegisterStatus';
+
 import AuthContainer from '../../components/login/AuthContainer';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 
 const Explore: React.FC = () => {
   const [isCheck, setIsCheck] = useState<string>('random');
