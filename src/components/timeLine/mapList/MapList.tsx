@@ -6,7 +6,7 @@ const MapList: React.FC = () => {
 
   return (
     <>
-      <MapCard />
+      {/* <MapCard /> */}
     </>
   );
 };

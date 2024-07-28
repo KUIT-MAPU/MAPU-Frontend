@@ -11,10 +11,16 @@
   border-radius: 8px;
   border: 1px solid #f2f5f8;
   background: #fbfcfd;
+
+  &.focused {
+    border-radius: 8px;
+    border: 1px solid #00bd57;
+    background: #fbfcfd;
+  }
 }
 
 .searchInput {
-  color: #A3ABB3;
+  color: #a3abb3;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -22,4 +28,8 @@
 
   border: none;
   background: #fbfcfd;
+
+  &.focused::placeholder {
+    color: transparent;
+  }
 }

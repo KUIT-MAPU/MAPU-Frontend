@@ -30,7 +30,7 @@ const mockData: MapType[] = [
     name: '서울 핫플레이스 지도',
     address: '서울특별시 홍익동',
     img: 'https://via.placeholder.com/400x300',
-    keywords: '홍대 놀이터 스트리트 퍼포먼스',
+    keywords: '동대문시장 골목맛집',
     editors: [
       { id: 7, userId: 'editor7', img: 'https://via.placeholder.com/150', name: 'Editor Seven', following: false },
       { id: 8, userId: 'editor8', img: 'https://via.placeholder.com/150', name: 'Editor Eight', following: false },
@@ -42,7 +42,7 @@ const mockData: MapType[] = [
     name: '서울 힐링 여행 지도',
     address: '서울특별시 강남구',
     img: 'https://via.placeholder.com/400x300',
-    keywords: '강남역 카페 투어',
+    keywords: '동대문시장 골목맛집',
     editors: [
       { id: 10, userId: 'editor10', img: 'https://via.placeholder.com/150', name: 'Editor Ten', following: false },
       { id: 11, userId: 'editor11', img: 'https://via.placeholder.com/150', name: 'Editor Eleven', following: false },
@@ -54,7 +54,7 @@ const mockData: MapType[] = [
     name: '서울 문화 탐방 지도',
     address: '서울특별시 삼성동',
     img: 'https://via.placeholder.com/400x300',
-    keywords: '코엑스 쇼핑몰 쇼핑 추천',
+    keywords: '동대문시장 골목맛집',
     editors: [
       { id: 13, userId: 'editor13', img: 'https://via.placeholder.com/150', name: 'Editor Thirteen', following: false },
       { id: 14, userId: 'editor14', img: 'https://via.placeholder.com/150', name: 'Editor Fourteen', following: false },
@@ -78,7 +78,7 @@ const mockData: MapType[] = [
     name: '서울 여행 가이드 지도',
     address: '서울특별시 용산구',
     img: 'https://via.placeholder.com/400x300',
-    keywords: '서울 타워 야경 관람',
+    keywords: '동대문시장 골목맛집',
     editors: [
       { id: 19, userId: 'editor19', img: 'https://via.placeholder.com/150', name: 'Editor Nineteen', following: false },
       { id: 20, userId: 'editor20', img: 'https://via.placeholder.com/150', name: 'Editor Twenty', following: false },
