@@ -1,4 +1,48 @@
+.authContainer {
+  position: absolute;
+  z-index: 1100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .leftBarWrapper {
   display: flex;
   flex-direction: row;
 }
+
+.btnTitle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 28px;
+  padding-top: 28px;
+  gap: 12px;
+}
+
+.btnArrow img {
+  height: 24px;
+  width: 24px;
+}
+.title {
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  gap: 12px;
+}
+
+.searchModule {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  margin-left: 64px;
+}
+
+.searchBar {
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+

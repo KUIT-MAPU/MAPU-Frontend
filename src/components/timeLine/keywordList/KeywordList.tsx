@@ -19,7 +19,7 @@ const mockData: KeywordType[] = [
 ];
 
 const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
-  const registerStore = useRegisterStore();
+  const { registerStatus } = useRegisterStore();
   const { selectedList, setSelectedList } = useKeywordStore();
 
   const [keywordData, setKeywordData] = useState<KeywordType[]>([]);
@@ -40,12 +40,12 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   useEffect(() => {
     fetchKeywordData();
 
-    if (registerStore.registerStatus === RegisterStatus.LOG_IN) {
+    if (registerStatus === RegisterStatus.LOG_IN) {
       setIsLog(true);
     } else {
       setIsLog(false);
     }
-  }, [fetchKeywordData, registerStore.registerStatus]);
+  }, [registerStatus]);
 
   useEffect(() => {
     if (!isLog && selectedList.length === 0) {
@@ -59,15 +59,28 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
 
   useEffect(() => {
     if (isRefresh) {
+      const falseKeyword = keywordData.filter(
+        (keyword: KeywordType) => !keyword.selected,
+      );
       fetchKeywordData();
+
+      const refreshDatas = keywordData.filter(
+        (keyword: KeywordType) =>
+          !falseKeyword.some(
+            (falseKeywordItem: KeywordType) =>
+              falseKeywordItem.id === keyword.id,
+          ),
+      );
+      setKeywordData([...selectedList, ...falseKeyword]);
       setIsRefresh(false);
     }
-  }, [isRefresh]);
+  }, [isRefresh, keywordData, selectedList]);
 
   const handleRefreshClick = () => {
-    setIsRefresh(true);
     if (selectedList.length === 5) {
       setAlert(true);
+    } else {
+      setIsRefresh(true);
     }
   };
 
@@ -91,30 +104,15 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
       </div>
 
       <div className={styles.keywords}>
-        {selectedList?.map((keyword: KeywordType) => (
+        {keywordData.map((keyword: KeywordType) => (
           <button
-            className={styles.selected}
+            className={keyword.selected ? styles.selected : styles.keywordPills}
             key={keyword.id}
             onClick={() => handleSelectPills(keyword)}
           >
             {keyword.title}
           </button>
         ))}
-
-        {keywordData
-          .filter(
-            (keyword: KeywordType) =>
-              !selectedList?.some((selected) => selected.id === keyword.id),
-          )
-          .map((keyword: KeywordType) => (
-            <button
-              className={styles.keywordPills}
-              key={keyword.id}
-              onClick={() => handleSelectPills(keyword)}
-            >
-              {keyword.title}
-            </button>
-          ))}
       </div>
 
       {alert ? (
