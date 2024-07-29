@@ -1,5 +1,5 @@
 import styles from './ObjectOutlineBtn.module.scss';
-import { ObjectOutline } from '../../../types/ObjectOutline';
+import { ObjectOutline } from '../../../types/map/object/ObjectOutline';
 import { ObjectShape } from '../../../types/enum/ObjectShape';
 import Point from '../../../assets/map/ico_point_gray.svg';
 import Line from '../../../assets/map/ico_line_gray.svg';

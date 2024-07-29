@@ -1,4 +1,4 @@
-import { ObjectShape } from './enum/ObjectShape';
+import { ObjectShape } from '../../enum/ObjectShape';
 
 export interface ObjectOutline {
   objectId: number;

@@ -3,7 +3,7 @@ import publicStyles from './ObjectContainerPublicStyle.module.scss';
 import {
   EditorObjectBasicInfo,
   ViewerObjectBasicInfo,
-} from '../../../types/ObjectBasicInfo';
+} from '../../../types/map/object/ObjectBasicInfo';
 import { ObjectShape } from '../../../types/enum/ObjectShape';
 
 interface Props {

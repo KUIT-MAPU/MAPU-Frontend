@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './MapProducerContainer.module.scss';
-import { MapProducerInfo } from '../../../types/MapProducerInfo';
+import { MapProducerInfo } from '../../../types/map/MapProducerInfo';
 import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 
