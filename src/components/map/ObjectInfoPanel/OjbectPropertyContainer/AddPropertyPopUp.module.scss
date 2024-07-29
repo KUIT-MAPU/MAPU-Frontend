@@ -1,0 +1,27 @@
+.addPropertyPopUp {
+  width: 150px;
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: absolute;
+  right: 16px;
+  top: 52px;
+  border-radius: 4px;
+  background: var(--white);
+  box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
+}
+
+.addPropertyBtn {
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: left;
+
+  &:hover {
+    background: var(--gray_25);
+  }
+  &:active {
+    background: var(--gray_50);
+  }
+}

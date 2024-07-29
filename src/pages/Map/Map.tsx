@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './Map.module.scss';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
-import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import useRegisterStore from '../../stores/registerStore';
+import useMapInfoStore from '../../stores/mapInfoStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
-import AuthContainer from '../../components/login/AuthContainer';
+import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import ObjectInfoPanel from '../../components/map/ObjectInfoPanel/ObjectInfoPanel';
+import AuthContainer from '../../components/login/AuthContainer';
 
 //"editor"
 //마이페이지 > 편집 가능한 지도에서의 접근이므로, 이미 로그인 된 상태일 것.
@@ -21,6 +22,7 @@ const Map = () => {
   const navigate = useNavigate();
   const { mapName } = useParams();
   const { registerStatus, loginNeeded, setLoginNeeded } = useRegisterStore();
+  const { showAddPropertPopUp, switchShowAddPropertPopUp } = useMapInfoStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
 
   //TODO: 지도 정보 api 호출 -> react query의 캐시로 데이터 관리
@@ -58,7 +60,10 @@ const Map = () => {
 
   //map
   return (
-    <div className={styles.map}>
+    <div
+      className={styles.map}
+      onClick={() => switchShowAddPropertPopUp(false)}
+    >
       {dimmed && (
         <div
           className={dimmedStyles.background}

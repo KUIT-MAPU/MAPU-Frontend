@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { MapInfo } from '../types/MapInfo';
-import { ObjectOutline } from '../types/ObjectOutline';
+import { MapInfo } from '../types/map/MapInfo';
+import { ObjectOutline } from '../types/map/object/ObjectOutline';
 import { ObjectShape } from '../types/enum/ObjectShape';
 
 interface State {
@@ -16,11 +16,13 @@ interface State {
   isMine: boolean;
   isBookmarked?: boolean;
   objectOutlineList: ObjectOutline[];
+  showAddPropertPopUp: boolean;
   setMapInfo: (mapInfo: MapInfo) => void;
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
   swithIsPublished: () => void;
   switchIsBookmarked: () => void;
+  switchShowAddPropertPopUp: (showAddPropertPopUp: boolean) => void;
 }
 
 const useMapInfoStore = create(
@@ -35,6 +37,7 @@ const useMapInfoStore = create(
       isPublished: false,
       publicLink: 'mapu.com/publicLink',
       isMine: false,
+      showAddPropertPopUp: false,
       objectOutlineList: [
         {
           objectId: 1,
@@ -119,6 +122,10 @@ const useMapInfoStore = create(
       switchIsBookmarked: () =>
         set((state) => {
           return { ...state, isBookmarked: !state.isBookmarked };
+        }),
+      switchShowAddPropertPopUp: (showAddPropertPopUp) =>
+        set((state) => {
+          return { ...state, showAddPropertPopUp: showAddPropertPopUp };
         }),
     }),
     { name: 'mapInfoStorage' },
