@@ -1,3 +1,4 @@
+import ObjectBasicinfoContainer from './ObjectBasicInfoContainer';
 import styles from './ObjectInfoPanel.module.scss';
 import PublishLinkContainer from './PublishLinkContainer';
 
@@ -9,6 +10,7 @@ const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
   return (
     <div id={styles.objectInfoPanel}>
       <PublishLinkContainer mode={mode} />
+      <ObjectBasicinfoContainer mode={mode} />
     </div>
   );
 };

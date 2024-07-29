@@ -1,0 +1,23 @@
+.objectBasicInfoContainer,
+.basicInfoContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.objectBasicInfoContainer {
+  padding: 16px;
+  gap: 20px;
+}
+
+.basicInfoContainer {
+  gap: 16px;
+}
+
+.basicInfoTextContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.infoValue {
+  width: 190px;
+  font-size: 14px;
+}
