@@ -29,7 +29,7 @@ const useMapInfoStore = create(
       mapId: 1,
       mapTitle: '건대 맛집 지도',
       mapDescription: '',
-      location: '',
+      location: '위치',
       centerLatitude: 0.0,
       centerLongitude: 0.0,
       isPublished: false,
