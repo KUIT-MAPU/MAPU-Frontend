@@ -1,28 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import SideBar from '../../components/global/GlobalNavigationBar';
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
 import SearchBar from '../../components/explore/SearchBar';
-import styles from './Explore.module.scss';
-import dimmedStyles from '../../components/timeLine/Dimmed.module.scss'
 import SearchPopUp from '../../components/explore/SearchPopUp';
-import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
-import { useLocation, useNavigate } from 'react-router-dom';
 import useRegisterStore from '../../stores/registerStore';
-
 import AuthContainer from '../../components/login/AuthContainer';
+import MapList from '../../components/explore/MapList';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import mockData from '../../components/timeLine/mapList/MapModel';
 
+import styles from './Explore.module.scss';
+import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
+
+import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
+import { MapType } from '../../types/MapType';
 const Explore: React.FC = () => {
   const [isCheck, setIsCheck] = useState<string>('random');
   const [text, setText] = useState<string>('');
   const [isPopup, setIsPopup] = useState<boolean>(false);
+  const [mapData, setMapData] = useState<MapType[]>([]);
   const outside = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
   const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
-  const [dimmed, setDimmed] = useState<boolean>(false);
+  const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+
+  const fetchMapData = async () => {
+    try {
+      setMapData(mockData);
+    } catch {
+      console.error('error');
+    }
+  };
 
   const handleRandomBtn = () => {
     setIsCheck('random');
@@ -43,10 +56,9 @@ const Explore: React.FC = () => {
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
-      setDimmed(true);
-      console.log('setDimmed(true)');
+      setIsOverlayVisible(true);
     } else {
-      setDimmed(false);
+      setIsOverlayVisible(false);
     }
   }, [loginNeeded, registerStatus]);
 
@@ -74,12 +86,19 @@ const Explore: React.FC = () => {
     };
   }, [isPopup]);
 
+  useEffect(() => {
+    fetchMapData();
+  }, []);
+
   return (
     <>
-      {dimmed && (
-        <div className={dimmedStyles.background} onClick={handleClose} />
+      {isOverlayVisible && (
+        <>
+          <div className={dimmedStyles.background} onClick={handleClose} />
+          <AuthContainer className={styles.authContainer} />
+        </>
       )}
-      {dimmed && <AuthContainer className={styles.authContainer} />}
+
       <SideBar>
         <div className={styles.leftBarWrapper}>
           <LeftBar />
@@ -110,7 +129,11 @@ const Explore: React.FC = () => {
               text={text}
               setText={setText}
             />
-            <p>Explore</p>
+            <div className={styles.main}>
+              {mapData.map((map: MapType) => (
+                <MapList map={map} />
+              ))}
+            </div>
           </HeaderNavigation>
         </div>
       </SideBar>

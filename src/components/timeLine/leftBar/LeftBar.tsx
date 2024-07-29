@@ -1,6 +1,8 @@
 import React from 'react';
+
 import EditorList from '../editorList/EditorList';
 import KeywordList from '../keywordList/KeywordList';
+
 import styles from './LeftBar.module.scss';
 
 const LeftBar: React.FC = () => {

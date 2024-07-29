@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import styles from './EditorProfileCard.module.scss';
-import dimmedStyles from '../Dimmed.module.scss';
+import React from 'react';
+
 import { EditorType } from '../../../types/EditorType';
 import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 
-import AuthContainer from '../../login/AuthContainer';
+import styles from './EditorProfileCard.module.scss';
 
 interface ProfileCardProps {
   Editor: EditorType;
