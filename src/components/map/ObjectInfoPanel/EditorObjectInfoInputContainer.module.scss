@@ -12,34 +12,39 @@
   gap: 12px;
 }
 
-#objectTitle,
-#objectDetailAddress {
+.objectTitleInput,
+.objectDetailAddressInput {
   width: 100%;
   padding: 10px 16px;
   border: none;
   resize: none;
   border-radius: 4px;
-  border: 1px solid var(--gray_50);
   background: var(--gray_25);
+  border: 1px solid var(--gray_50);
   font-size: 18px;
 }
 
-#objectTitle:disabled,
-#objectDetailAddress:disabled {
+.objectTitleInput:disabled,
+.objectDetailAddressInput:disabled {
   background: none;
 }
+.errorTitleInput {
+  border: 1px solid var(--error);
+}
 
-#objectDetailAddress {
+.objectDetailAddressInput {
   overflow: hidden;
   field-sizing: content;
+  border: 1px solid var(--gray_50);
 }
 
-#objectTitle:focus,
-#objectDetailAddress:focus {
-  outline: 1px solid var(--color-main, #00bd57);
+.objectTitleInput:focus,
+.objectDetailAddressInput:focus {
+  outline: none;
+  border: 1px solid var(--color-main, #00bd57);
 }
 
-#objectTitle::-webkit-input-placeholder,
-#objectDetailAddress::-webkit-input-placeholder {
+.objectTitleInput::-webkit-input-placeholder,
+.objectDetailAddressInput::-webkit-input-placeholder {
   color: var(--gray_400);
 }

@@ -4,6 +4,7 @@ import publicStyles from './ObjectContainerPublicStyle.module.scss';
 
 const EditorObjectInfoInputContainer = () => {
   const [editedTitle, setEditedTitle] = useState<string>('작업하기 좋은 카페');
+  const [isTitleEmpty, setIsTitleEmpty] = useState<boolean>(false);
   const [editedDetailAddress, setEditedDetailAddress] =
     useState<string>('작은 틈새로 들어가는 문');
 
@@ -18,7 +19,12 @@ const EditorObjectInfoInputContainer = () => {
   };
 
   const handleFocusOutTitle = () => {
-    //TODO: 객체 이름 저장 api 호출
+    if (editedTitle === '' || editedTitle === null) {
+      setIsTitleEmpty(true);
+    } else {
+      //TODO: 객체 이름 저장 api 호출
+      setIsTitleEmpty(false);
+    }
   };
 
   const handleFocusOutDetailAddress = () => {
@@ -32,9 +38,13 @@ const EditorObjectInfoInputContainer = () => {
         <input
           type="text"
           name="objectTitle"
-          id={styles.objectTitle}
+          className={
+            isTitleEmpty
+              ? `${styles.objectTitleInput} ${styles.errorTitleInput}`
+              : styles.objectTitleInput
+          }
           value={editedTitle}
-          placeholder="객체 이름"
+          placeholder="객체 이름 (필수)"
           onChange={handleTitleOnChange}
           onBlur={handleFocusOutTitle}
         />
@@ -43,9 +53,9 @@ const EditorObjectInfoInputContainer = () => {
         <span className={publicStyles.boxTitle}>상세 주소</span>
         <textarea
           name="objecyDetailAddress"
-          id={styles.objectDetailAddress}
+          className={styles.objectDetailAddressInput}
           value={editedDetailAddress}
-          placeholder="객체 상세 주소"
+          placeholder="객체 상세 주소 (선택)"
           onChange={handleDetailAddressOnChange}
           onBlur={handleFocusOutDetailAddress}
         />
