@@ -3,23 +3,6 @@
   border-bottom: 1px solid var(--gray_50);
 }
 
-.publicTextContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.boxTitle {
-  font-size: 16px;
-  font-weight: 600;
-}
-.publicDescription {
-  font-size: 14px;
-  color: var(--gray_500);
-}
-.cannotPublishBoxTitle,
-.cannotPublishDescription {
-  color: var(--gray_400);
-}
 .publishContainer {
   display: flex;
   justify-content: space-between;

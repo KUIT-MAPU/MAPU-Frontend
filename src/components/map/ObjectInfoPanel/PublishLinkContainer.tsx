@@ -1,4 +1,5 @@
 import styles from './PublishLinkContainer.module.scss';
+import publicStyles from './ObjectContainerPublicStyle.module.scss';
 import useMapInfoStore from '../../../stores/mapInfoStore';
 import PublishBtn from '../../../assets/map/btn_publish.svg';
 import PublishCancelBtn from '../../../assets/map/btn_cancel_publish.svg';
@@ -32,29 +33,29 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
     return (
       <div className={`${styles.objectInfoHeader} ${styles.publishContainer}`}>
         {isPublished ? (
-          <div className={styles.publicTextContainer}>
-            <span className={styles.boxTitle}>지도 게시 취소하기</span>
-            <span className={styles.publicDescription}>
+          <div className={publicStyles.publicTextContainer}>
+            <span className={publicStyles.boxTitle}>지도 게시 취소하기</span>
+            <span className={publicStyles.publicDescription}>
               공개된 지도가 비공개됩니다
             </span>
           </div>
         ) : objectOutlineList.length === 0 ? (
-          <div className={styles.publicTextContainer}>
+          <div className={publicStyles.publicTextContainer}>
             <span
-              className={`${styles.boxTitle} ${styles.cannotPublishBoxTitle}`}
+              className={`${publicStyles.boxTitle} ${publicStyles.cannotPublishBoxTitle}`}
             >
               지도 게시하기
             </span>
             <span
-              className={`${styles.publicDescription} ${styles.cannotPublishDescription}`}
+              className={`${publicStyles.publicDescription} ${publicStyles.cannotPublishDescription}`}
             >
               내 지도가 모두에게 공개됩니다
             </span>
           </div>
         ) : (
-          <div className={styles.publicTextContainer}>
-            <span className={styles.boxTitle}>지도 게시하기</span>
-            <span className={styles.publicDescription}>
+          <div className={publicStyles.publicTextContainer}>
+            <span className={publicStyles.boxTitle}>지도 게시하기</span>
+            <span className={publicStyles.publicDescription}>
               내 지도가 모두에게 공개됩니다
             </span>
           </div>
@@ -90,7 +91,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
   //viewer
   return (
     <div className={`${styles.objectInfoHeader} ${styles.publicLinkContainer}`}>
-      <span className={styles.boxTitle}>지도 링크</span>
+      <span className={publicStyles.boxTitle}>지도 링크</span>
       <div className={styles.linkContainer}>
         <span className={styles.publicLink}>{publicLink}</span>
         <img
