@@ -61,7 +61,7 @@ const ObjectBasicInfoContainer: React.FC<Props> = ({ mode }) => {
   //editor
   if (mode === 'edit')
     return (
-      <div className={styles.objectBasicInfoContainer}>
+      <section className={styles.objectBasicInfoContainer}>
         <span className={publicStyles.boxTitle}>객체 기본 정보</span>
         <div className={styles.basicInfoContainer}>
           <div className={styles.basicInfoTextContainer}>
@@ -101,12 +101,12 @@ const ObjectBasicInfoContainer: React.FC<Props> = ({ mode }) => {
             </>
           )}
         </div>
-      </div>
+      </section>
     );
 
   //viewer
   return (
-    <div className={styles.objectBasicInfoContainer}>
+    <section className={styles.objectBasicInfoContainer}>
       <span className={publicStyles.boxTitle}>객체 기본 정보</span>
       <div className={styles.basicInfoContainer}>
         <div className={styles.basicInfoTextContainer}>
@@ -154,7 +154,7 @@ const ObjectBasicInfoContainer: React.FC<Props> = ({ mode }) => {
           </>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

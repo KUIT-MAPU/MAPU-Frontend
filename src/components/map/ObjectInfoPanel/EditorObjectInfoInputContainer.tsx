@@ -26,7 +26,7 @@ const EditorObjectInfoInputContainer = () => {
   };
 
   return (
-    <div className={styles.editorObjectInfoInputContainer}>
+    <section className={styles.editorObjectInfoInputContainer}>
       <div className={styles.inputTitleContainer}>
         <span className={publicStyles.boxTitle}>이름</span>
         <input
@@ -50,7 +50,7 @@ const EditorObjectInfoInputContainer = () => {
           onBlur={handleFocusOutDetailAddress}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -31,7 +31,9 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
   //editor
   if (mode === 'edit')
     return (
-      <div className={`${styles.objectInfoHeader} ${styles.publishContainer}`}>
+      <section
+        className={`${styles.objectInfoHeader} ${styles.publishContainer}`}
+      >
         {isPublished ? (
           <div className={publicStyles.publicTextContainer}>
             <span className={publicStyles.boxTitle}>지도 게시 취소하기</span>
@@ -85,12 +87,14 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
             <img src={PublishBtn} alt="게시하기" />
           </button>
         )}
-      </div>
+      </section>
     );
 
   //viewer
   return (
-    <div className={`${styles.objectInfoHeader} ${styles.publicLinkContainer}`}>
+    <section
+      className={`${styles.objectInfoHeader} ${styles.publicLinkContainer}`}
+    >
       <span className={publicStyles.boxTitle}>지도 링크</span>
       <div className={styles.linkContainer}>
         <span className={styles.publicLink}>{publicLink}</span>
@@ -101,7 +105,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
           onClick={handleCopyLink}
         />
       </div>
-    </div>
+    </section>
   );
 };
 
