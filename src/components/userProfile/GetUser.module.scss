@@ -1,5 +1,5 @@
 .container {
-  width: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,6 +64,16 @@
   align-items: center;
   margin-left: 20px;
 }
+
+.searchInput {
+  display: flex;
+  width: 1508px;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--gray_400);
+  background-color: var(--gray_50);
+}
+
 .contentView {
   display: flex;
   align-items: center;

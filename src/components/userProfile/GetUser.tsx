@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './GetUser.module.scss';
 import { ReactComponent as BackArrow } from '../../assets/BackArrow.svg';
 import { ReactComponent as FrontArrow } from '../../assets/FrontArrow.svg';
@@ -9,16 +9,17 @@ import { ReactComponent as Gallery } from '../../assets/GalleryView.svg';
 import { ReactComponent as List } from '../../assets/ListView.svg';
 
 const GetUser = (props: { children?: React.ReactNode }) => {
+  const [searchQuery, setSearchQuery] = useState('');
   const placeholderImage = 'https://via.placeholder.com/150';
 
   return (
     <div className={styles.container}>
       <div className={styles.topBar}>
         <div className={styles.iconContainer}>
-          <div className={styles.square}>
+          <div className={styles.square} onClick={() => window.history.back()}>
             <BackArrow />
           </div>
-          <div className={styles.square}>
+          <div className={styles.square} onClick={() => window.history.forward()}>
             <FrontArrow />
           </div>
         </div>
@@ -31,7 +32,13 @@ const GetUser = (props: { children?: React.ReactNode }) => {
         <div className={styles.searchBar}>
           <div className={styles.search}>
             <Search />
-            검색
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="검색"
+              className={styles.search}
+            />
           </div>
         </div>
         <div className={styles.contentView}>
