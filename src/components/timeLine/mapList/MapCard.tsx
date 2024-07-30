@@ -28,11 +28,6 @@ const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
     setRenderMap((prevVisibleItems) => prevVisibleItems + MAP_PER_PAGE);
   };
 
-  useEffect(() => {
-    console.log(mapData);
-    console.log(renderMap);
-  });
-
   return (
     <div className={styles.mapcard}>
       <div className={styles.wrapper}>

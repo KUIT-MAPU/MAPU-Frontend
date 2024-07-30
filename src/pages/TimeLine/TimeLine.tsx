@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
 import SideBar from '../../components/global/GlobalNavigationBar';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
-import useKeywordStore from '../../stores/keywordStore';
+import { useKeywordStore } from '../../stores/keywordStore';
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import AuthContainer from '../../components/login/AuthContainer';

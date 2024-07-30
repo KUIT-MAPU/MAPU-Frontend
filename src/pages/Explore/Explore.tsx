@@ -9,8 +9,9 @@ import SearchPopUp from '../../components/explore/SearchPopUp';
 import useRegisterStore from '../../stores/registerStore';
 import AuthContainer from '../../components/login/AuthContainer';
 import MapList from '../../components/explore/MapList';
+import ErrorPage from '../../components/explore/ErrorPage';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
-import useKeywordStore from '../../stores/keywordStore'
+import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore'
 import mockData from '../../components/timeLine/mapList/MapModel';
 
 import styles from './Explore.module.scss';
@@ -18,12 +19,17 @@ import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
 
 import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
 import { MapType } from '../../types/MapType';
+import { KeywordType } from '../../types/KeywordType';
+
 const Explore: React.FC = () => {
   const [isCheck, setIsCheck] = useState<string>('random');
   const [text, setText] = useState<string>('');
   const [isPopup, setIsPopup] = useState<boolean>(false);
   const [mapData, setMapData] = useState<MapType[]>([]);
-  const { selectedList,setSelectedList,removeSelectedList } = useKeywordStore()
+
+  const { selectedList, setSelectedList, removeSelectedList } = useKeywordStore()
+  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
+
   const outside = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
@@ -38,6 +44,16 @@ const Explore: React.FC = () => {
       console.error('error');
     }
   };
+
+  const fetchKeywordSearch = async (keyword: KeywordType) => {
+    try{
+      //TODO: API
+      const data =mockData.filter((map) => map.keywords === keyword.title);
+      setMapData(data);
+    } catch {
+      console.error('error');
+    }
+  }
 
   const handleRandomBtn = () => {
     setIsCheck('random');
@@ -57,13 +73,21 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    removeSelectedList();
-  },[pathname]);
+    const allKeywords = allKeywordList.map(keyword => ({
+      ...keyword,
+      selected: false,
+    }));
+  
+    setAllKeywordList(allKeywords);
+  
+    const resetSelectedLists = async () => {
+      await removeSelectedList();
+      setSelectedList([]);
+    };
 
-  useEffect(() => {
-    console.log(selectedList);
-    console.log('pathname:',pathname)
-  },[])
+    resetSelectedLists();
+  
+  }, [pathname]);
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -100,6 +124,17 @@ const Explore: React.FC = () => {
   useEffect(() => {
     fetchMapData();
   }, []);
+
+  useEffect(() => {
+    if(selectedList !== null && selectedList.length !== 0) {
+      const keyword = selectedList[0];
+      setText(keyword.title);
+      fetchKeywordSearch(keyword);
+    } else {
+      setText('');
+      fetchMapData();
+    }
+  },[selectedList]);
 
   return (
     <>
@@ -141,9 +176,11 @@ const Explore: React.FC = () => {
               setText={setText}
             />
             <div className={styles.main}>
-              {mapData.map((map: MapType) => (
-                <MapList map={map} key={map.id}/>
-              ))}
+              {mapData !== null && mapData.length !==0 ? (
+                mapData.map((map: MapType) => (
+                  <MapList map={map} key={map.id}/>
+                ))
+              ) : (<ErrorPage text={text} />)}
             </div>
           </HeaderNavigation>
         </div>
