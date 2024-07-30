@@ -1,4 +1,4 @@
-import { EditorType } from "./EditorType"
+import { EditorType } from './EditorType';
 
 export interface MapType {
   id: number;

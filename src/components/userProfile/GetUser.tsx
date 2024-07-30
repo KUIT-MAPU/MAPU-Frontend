@@ -10,6 +10,7 @@ import { ReactComponent as List } from '../../assets/ListView.svg';
 
 const GetUser = (props: { children?: React.ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [view, setView] = useState('gallery'); //gallery를 기본으로 설정
   const placeholderImage = 'https://via.placeholder.com/150';
 
   return (
@@ -19,7 +20,10 @@ const GetUser = (props: { children?: React.ReactNode }) => {
           <div className={styles.square} onClick={() => window.history.back()}>
             <BackArrow />
           </div>
-          <div className={styles.square} onClick={() => window.history.forward()}>
+          <div
+            className={styles.square}
+            onClick={() => window.history.forward()}
+          >
             <FrontArrow />
           </div>
         </div>
@@ -42,99 +46,114 @@ const GetUser = (props: { children?: React.ReactNode }) => {
           </div>
         </div>
         <div className={styles.contentView}>
-          <Gallery />
-          <List />
+          <button
+            onClick={() => setView('gallery')}
+            className={view === 'gallery' ? styles.active : ''}
+          >
+            <Gallery />
+          </button>
+          <button
+            onClick={() => setView('list')}
+            className={view === 'list' ? styles.active : ''}
+          >
+            <List />
+          </button>
         </div>
         <div className={styles.newMap}>+ 새로운 지도</div>
       </div>
       <div className={styles.mapContainer}>
-        <div className={styles.getMap}>
-          <Link to="/map/mapId" className={styles.link}>
-            <div className={styles.numMap}>
-              <img
-                src={placeholderImage}
-                alt="placeholder"
-                className={styles.image}
-              />
+        {view === 'gallery' && (
+          <div>
+            <div className={styles.getMap}>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
             </div>
-          </Link>
-          <Link to="/map/mapId" className={styles.link}>
-            <div className={styles.numMap}>
-              <img
-                src={placeholderImage}
-                alt="placeholder"
-                className={styles.image}
-              />
+            <div className={styles.getMap}>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
             </div>
-          </Link>
-          <Link to="/map/mapId" className={styles.link}>
-            <div className={styles.numMap}>
-              <img
-                src={placeholderImage}
-                alt="placeholder"
-                className={styles.image}
-              />
+            <div className={styles.getMap}>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
             </div>
-          </Link>
-        </div>
-        <div className={styles.getMap}>
-          <Link to="/map/mapId" className={styles.link}>
-            <div className={styles.numMap}>
-              <img
-                src={placeholderImage}
-                alt="placeholder"
-                className={styles.image}
-              />
-            </div>
-          </Link>
-          <Link to="/map/mapId" className={styles.link}>
-            <div className={styles.numMap}>
-              <img
-                src={placeholderImage}
-                alt="placeholder"
-                className={styles.image}
-              />
-            </div>
-          </Link>
-          <Link to="/map/mapId" className={styles.link}>
-            <div className={styles.numMap}>
-              <img
-                src={placeholderImage}
-                alt="placeholder"
-                className={styles.image}
-              />
-            </div>
-          </Link>
-        </div>
-        <div className={styles.getMap}>
-          <Link to="/map/mapId" className={styles.link}>
-            <div className={styles.numMap}>
-              <img
-                src={placeholderImage}
-                alt="placeholder"
-                className={styles.image}
-              />
-            </div>
-          </Link>
-          <Link to="/map/mapId" className={styles.link}>
-            <div className={styles.numMap}>
-              <img
-                src={placeholderImage}
-                alt="placeholder"
-                className={styles.image}
-              />
-            </div>
-          </Link>
-          <Link to="/map/mapId" className={styles.link}>
-            <div className={styles.numMap}>
-              <img
-                src={placeholderImage}
-                alt="placeholder"
-                className={styles.image}
-              />
-            </div>
-          </Link>
-        </div>
+          </div>
+        )}
+        {view === 'list' && <div>aaa</div>}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ interface Props {
 const MapContentTitleContainer: React.FC<Props> = ({ mode }) => {
   return (
     <div className={styles.mapContentTitleContainer}>
-      <MapInfoInputContainer mode={mode}/>
+      <MapInfoInputContainer mode={mode} />
       <LocationInfoContainer />
     </div>
   );
