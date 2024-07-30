@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './GetUser.module.scss';
 import { ReactComponent as BackArrow } from '../../assets/BackArrow.svg';
 import { ReactComponent as FrontArrow } from '../../assets/FrontArrow.svg';
@@ -9,6 +9,7 @@ import { ReactComponent as Gallery } from '../../assets/GalleryView.svg';
 import { ReactComponent as List } from '../../assets/ListView.svg';
 
 const GetUser = (props: { children?: React.ReactNode }) => {
+  const [searchQuery, setSearchQuery] = useState('');
   const placeholderImage = 'https://via.placeholder.com/150';
 
   return (
@@ -31,7 +32,13 @@ const GetUser = (props: { children?: React.ReactNode }) => {
         <div className={styles.searchBar}>
           <div className={styles.search}>
             <Search />
-            검색
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="검색"
+              className={styles.search}
+            />
           </div>
         </div>
         <div className={styles.contentView}>
