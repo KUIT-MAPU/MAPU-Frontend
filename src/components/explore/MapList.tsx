@@ -14,8 +14,8 @@ const MapList: React.FC<MapListProps> = ({ map }) => {
       <div className={styles.Images}>
         <img src={map.img} className={styles.mapImg} />
 
-        <div className={styles.editorImg}>
-          {map.editors.map((editor, index) => {
+        <div className={styles.editor}>
+          {/* {map.editors.map((editor, index) => {
             const offset = index * 15;
             return (
               <div className={styles.editor}>
@@ -24,14 +24,21 @@ const MapList: React.FC<MapListProps> = ({ map }) => {
                   src={userImg}
                   alt={`${editor.name} editor`}
                   style={{ right: `${offset}px`, top: '0px' }}
-                />
+                /> 
                 <div className={styles.editorInfo}>
-                  <span className={styles.editorName}>{editor.name}</span>
-                  <span className={styles.editorId}>{editor.userId}</span>
+                  <img src={map.owner?.img} />
+                  <span className={styles.editorName}>{map.owner?.name}</span>
+                  <span className={styles.editorId}>{map.owner?.userId}</span>
                 </div>
               </div>
             );
-          })}
+          })} */}
+          <img src={userImg} />
+
+          <div className={styles.editorInfo}>
+            <span className={styles.editorName}>{map.owner?.name}</span>
+            <span className={styles.editorId}>{map.owner?.userId}</span>
+          </div>
         </div>
       </div>
 
@@ -46,9 +53,10 @@ const MapList: React.FC<MapListProps> = ({ map }) => {
         </div>
 
         <div className={styles.mapKeyword}>
-          {map.mapKeyword?.map((keyword: string) => (
+          {map.mapKeyword?.map((keyword: string,index: number) => (
             <button
               className={styles.keywordPills}
+              key={index}
               // onClick={() => handleSelectPills(keyword)}
             >
               {keyword}

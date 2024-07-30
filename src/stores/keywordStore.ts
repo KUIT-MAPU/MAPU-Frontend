@@ -1,10 +1,25 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { StateStorage,persist, createJSONStorage } from 'zustand/middleware';
+import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
 import { KeywordType } from '../types/KeywordType';
 
+const cookieStorage: StateStorage = {
+  getItem: (name: string) => {
+    const cookie = getCookie(name);
+    return cookie ? JSON.parse(cookie) : null;
+  },
+  setItem: (name: string, value:any) => {
+    setCookie(name, JSON.stringify(value), {path:'/'})
+  },
+
+  removeItem: (name:string) => {
+    removeCookie(name);
+  }
+}
 interface KeywordStore {
   selectedList: KeywordType[];
   setSelectedList: (selectedList: KeywordType[]) => void;
+  removeSelectedList: () => void;
 }
 
 const useKeywordStore = create<KeywordStore>()(
@@ -12,10 +27,14 @@ const useKeywordStore = create<KeywordStore>()(
     (set) => ({
       selectedList: [],
       setSelectedList: (selectedList: KeywordType[]) => set({ selectedList }),
+      removeSelectedList: () => {
+        cookieStorage.removeItem('keyword-store');
+        set({ selectedList: [] });
+      },
     }),
     {
       name: 'keyword-store',
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => cookieStorage),
     },
   ),
 );

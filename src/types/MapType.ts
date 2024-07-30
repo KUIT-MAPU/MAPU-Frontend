@@ -9,4 +9,5 @@ export interface MapType {
   editors: EditorType[];
   discription?:string;
   mapKeyword?: string[];
+  owner?:EditorType;
 }

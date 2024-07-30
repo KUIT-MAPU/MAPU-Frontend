@@ -10,6 +10,7 @@ import useRegisterStore from '../../stores/registerStore';
 import AuthContainer from '../../components/login/AuthContainer';
 import MapList from '../../components/explore/MapList';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import useKeywordStore from '../../stores/keywordStore'
 import mockData from '../../components/timeLine/mapList/MapModel';
 
 import styles from './Explore.module.scss';
@@ -22,6 +23,7 @@ const Explore: React.FC = () => {
   const [text, setText] = useState<string>('');
   const [isPopup, setIsPopup] = useState<boolean>(false);
   const [mapData, setMapData] = useState<MapType[]>([]);
+  const { selectedList,setSelectedList,removeSelectedList } = useKeywordStore()
   const outside = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
@@ -53,6 +55,15 @@ const Explore: React.FC = () => {
     const titleElement = document.getElementsByTagName('title')[0];
     titleElement.innerHTML = `탐색 | MAPU`;
   }, []);
+
+  useEffect(() => {
+    removeSelectedList();
+  },[pathname]);
+
+  useEffect(() => {
+    console.log(selectedList);
+    console.log('pathname:',pathname)
+  },[])
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -131,7 +142,7 @@ const Explore: React.FC = () => {
             />
             <div className={styles.main}>
               {mapData.map((map: MapType) => (
-                <MapList map={map} />
+                <MapList map={map} key={map.id}/>
               ))}
             </div>
           </HeaderNavigation>

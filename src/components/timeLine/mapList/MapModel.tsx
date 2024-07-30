@@ -13,7 +13,8 @@ const mockData: MapType[] = [
       { id: 3, userId: 'editor3', img: 'https://via.placeholder.com/150', name: 'Editor Three', following: false },
     ],
     discription:'서울 관광 명소에 대한 설명',
-    mapKeyword:['서울','관광','명소']
+    mapKeyword:['서울','관광','명소'],
+    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
   },
   {
     id: 2,
@@ -27,7 +28,8 @@ const mockData: MapType[] = [
       { id: 6, userId: 'editor6', img: 'https://via.placeholder.com/150', name: 'Editor Six', following: false },
     ],
     discription:'서울의 맛집과 명소 지도에 대한 설명',
-    mapKeyword:['서울','맛집','명소']
+    mapKeyword:['서울','맛집','명소'],
+    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
   },
   {
     id: 3,
@@ -41,7 +43,8 @@ const mockData: MapType[] = [
       { id: 9, userId: 'editor9', img: 'https://via.placeholder.com/150', name: 'Editor Nine', following: false },
     ],
     discription:'서울 핫플레이스 지도에 대한 설명',
-    mapKeyword:['서울','핫플레이스']
+    mapKeyword:['서울','핫플레이스'],
+    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
   },
   {
     id: 4,
@@ -55,7 +58,8 @@ const mockData: MapType[] = [
       { id: 12, userId: 'editor12', img: 'https://via.placeholder.com/150', name: 'Editor Twelve', following: false },
     ],
     discription:'서울 힐링 여행 지도에 대한 설명',
-    mapKeyword:['서울','힐링','여행']
+    mapKeyword:['서울','힐링','여행'],
+    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
   },
   {
     id: 5,
