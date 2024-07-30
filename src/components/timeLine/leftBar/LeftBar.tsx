@@ -4,7 +4,6 @@ import KeywordList from '../keywordList/KeywordList';
 import styles from './LeftBar.module.scss';
 
 const LeftBar: React.FC = () => {
-
   return (
     <>
       <div className={styles.leftBar}>

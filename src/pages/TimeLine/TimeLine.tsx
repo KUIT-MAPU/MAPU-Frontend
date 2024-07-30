@@ -13,7 +13,7 @@ import MapCard from '../../components/timeLine/mapList/MapCard';
 import { MapType } from '../../types/MapType';
 import mockData from '../../components/timeLine/mapList/MapModel';
 
-const TimeLine:React.FC = () => {
+const TimeLine: React.FC = () => {
   const [mapData, setMapData] = useState<{ [key: string]: MapType[] }>({});
   const [isLog, setIsLog] = useState<Boolean>(false);
   const { selectedList } = useKeywordStore();
@@ -31,7 +31,7 @@ const TimeLine:React.FC = () => {
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
       setDimmed(true);
-      setIsLog(false)
+      setIsLog(false);
       console.log('setDimmed(true)');
     } else {
       setIsLog(true);
@@ -39,7 +39,6 @@ const TimeLine:React.FC = () => {
     }
   }, [loginNeeded, registerStatus]);
 
-  
   const fetchMapData = async (keyword: string) => {
     try {
       // 실제 API 요청을 통해 키워드에 해당하는 데이터를 가져옵니다.
@@ -49,19 +48,18 @@ const TimeLine:React.FC = () => {
       //     .then(data => data) // 필요한 경우 데이터 가공
       // );
       // const data = await Promise.all(keywordPromises);
-      const data = mockData.filter(map => map.keywords.includes(keyword)); // mockData에서 필터링
-      setMapData(prevState => ({ ...prevState, [keyword]: data }));
+      const data = mockData.filter((map) => map.keywords.includes(keyword)); // mockData에서 필터링
+      setMapData((prevState) => ({ ...prevState, [keyword]: data }));
     } catch {
       console.error(`Failed to fetch map data for keyword: ${keyword}`);
     }
   };
 
   useEffect(() => {
-    selectedList.forEach(keyword => {
+    selectedList.forEach((keyword) => {
       fetchMapData(keyword.title);
     });
   }, [selectedList]);
-
 
   const handleClose = () => {
     setLoginNeeded(false);
@@ -79,8 +77,13 @@ const TimeLine:React.FC = () => {
         <div className={styles.leftBarWrapper}>
           <LeftBar />
           <HeaderNavigation>
-          {selectedList.map(keyword => (
-              <MapCard key={keyword.id} keyword={keyword.title} mapData={mapData[keyword.title] || []} isLog={isLog} />
+            {selectedList.map((keyword) => (
+              <MapCard
+                key={keyword.id}
+                keyword={keyword.title}
+                mapData={mapData[keyword.title] || []}
+                isLog={isLog}
+              />
             ))}
           </HeaderNavigation>
         </div>

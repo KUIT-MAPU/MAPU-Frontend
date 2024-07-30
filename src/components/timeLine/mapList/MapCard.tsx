@@ -11,19 +11,19 @@ import ico_carousel_forward from '../../../assets/ico_carousel_forward.svg';
 import useRegisterStore from '../../../stores/registerStore';
 
 interface MapCardProps {
-  mapData:MapType[];
-  isLog:Boolean;
-  keyword:string;
+  mapData: MapType[];
+  isLog: Boolean;
+  keyword: string;
 }
 
 interface RenderingMap {
   [keyword: string]: MapType[];
 }
 
-const MapCard: React.FC<MapCardProps> = ({mapData,isLog, keyword}) => {
+const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
   // const [mapData, setMapData] = useState<MapType[]>([]);
   // const [isLog, setIsLog] = useState<Boolean>(false);
-  const [sliceMap,setSliceMap] = useState<RenderingMap>({});
+  const [sliceMap, setSliceMap] = useState<RenderingMap>({});
   // const { selectedList } = useKeywordStore();
   // const { registerStatus } = useRegisterStore();
 
@@ -66,25 +66,22 @@ const MapCard: React.FC<MapCardProps> = ({mapData,isLog, keyword}) => {
   //   }
   // }, [mapData, selectedList]);
 
-
   const handleForward = (keyword: string) => {
-    setSliceMap(prevState => {
+    setSliceMap((prevState) => {
       const currentMaps = prevState[keyword] || [];
-      const fullMap = mapData.filter(map =>
-        map.keywords.includes(keyword)
-      );
+      const fullMap = mapData.filter((map) => map.keywords.includes(keyword));
       const currentIndex = currentMaps.length;
-      console.log('currnetIndex:',currentIndex);
+      console.log('currnetIndex:', currentIndex);
       const newSlice = fullMap.slice(currentIndex, currentIndex + 3); // Show 3 items at a time
 
       console.log(newSlice);
-      console.log('prevState:',prevState);
-      console.log('currentMap:',currentMaps);
-      console.log('fullMap:',fullMap);
+      console.log('prevState:', prevState);
+      console.log('currentMap:', currentMaps);
+      console.log('fullMap:', fullMap);
       if (newSlice.length > 0) {
         return {
           ...prevState,
-          [keyword]: [...currentMaps, ...newSlice]
+          [keyword]: [...currentMaps, ...newSlice],
         };
       }
       return prevState;
@@ -92,19 +89,17 @@ const MapCard: React.FC<MapCardProps> = ({mapData,isLog, keyword}) => {
   };
 
   const handleBackward = (keyword: string) => {
-    setSliceMap(prevState => {
+    setSliceMap((prevState) => {
       const currentMaps = prevState[keyword] || [];
-      const fullMap = mapData.filter(map =>
-        map.keywords.includes(keyword)
-      );
+      const fullMap = mapData.filter((map) => map.keywords.includes(keyword));
       const currentIndex = currentMaps.length;
 
       if (currentIndex > 2) {
-        const newSlice = fullMap.slice(currentIndex-1 ,currentIndex + 2); // Show 3 items at a time, back from the previous slice
+        const newSlice = fullMap.slice(currentIndex - 1, currentIndex + 2); // Show 3 items at a time, back from the previous slice
         // console.log(newSlice);
         return {
           ...prevState,
-          [keyword]: newSlice
+          [keyword]: newSlice,
         };
       }
       return prevState;
@@ -113,61 +108,60 @@ const MapCard: React.FC<MapCardProps> = ({mapData,isLog, keyword}) => {
 
   return (
     <div className={styles.mapcard}>
-          <div className={styles.wrapper}>
-            <div className={styles.keyword}>{keyword}</div>
+      <div className={styles.wrapper}>
+        <div className={styles.keyword}>{keyword}</div>
 
-            <div className={styles.mapContainer}>
-              <div className={styles.buttonContainer}>
-                <button
-                  className={styles.forward}
-                  onClick={() => handleForward(keyword)}
-                >
-                  <img src={ico_carousel_forward} alt="Backward" />
-                </button>
+        <div className={styles.mapContainer}>
+          <div className={styles.buttonContainer}>
+            <button
+              className={styles.forward}
+              onClick={() => handleForward(keyword)}
+            >
+              <img src={ico_carousel_forward} alt="Backward" />
+            </button>
 
-                <button
-                  className={styles.backward}
-                  onClick={() => handleBackward(keyword)}
-                >
-                  <img src={ico_carousel_backward} alt="Forward" />
-                </button>
-              </div>
-              {mapData.map(map => (
-                <div key={map.id} className={styles.map}>
-                  <img
-                    src={map.img}
-                    className={styles.mapImg}
-                    alt={`${map.name} map`}
-                  />
-
-                  <div className={styles.info}>
-                    <div className={styles.mapInfo}>
-                      <div className={styles.title}>{map.name}</div>
-
-                      <div className={styles.address}>{map.address}</div>
-                    </div>
-
-                    <div className={styles.editorImg}>
-                      {map.editors.map((editor, index) => {
-                        const offset = index * 15;
-                        return (
-                          <img
-                            key={index}
-                            src={userImg}
-                            alt={`${editor.name} editor`}
-                            style={{ right: `${offset}px`, top: '0px' }}
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <button
+              className={styles.backward}
+              onClick={() => handleBackward(keyword)}
+            >
+              <img src={ico_carousel_backward} alt="Forward" />
+            </button>
           </div>
+          {mapData.map((map) => (
+            <div key={map.id} className={styles.map}>
+              <img
+                src={map.img}
+                className={styles.mapImg}
+                alt={`${map.name} map`}
+              />
+
+              <div className={styles.info}>
+                <div className={styles.mapInfo}>
+                  <div className={styles.title}>{map.name}</div>
+
+                  <div className={styles.address}>{map.address}</div>
+                </div>
+
+                <div className={styles.editorImg}>
+                  {map.editors.map((editor, index) => {
+                    const offset = index * 15;
+                    return (
+                      <img
+                        key={index}
+                        src={userImg}
+                        alt={`${editor.name} editor`}
+                        style={{ right: `${offset}px`, top: '0px' }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
 export default MapCard;
-

@@ -4,7 +4,7 @@ import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderN
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
 import SearchBar from '../../components/explore/SearchBar';
 import styles from './Explore.module.scss';
-import dimmedStyles from '../../components/timeLine/Dimmed.module.scss'
+import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
 import SearchPopUp from '../../components/explore/SearchPopUp';
 import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
 import { useLocation, useNavigate } from 'react-router-dom';

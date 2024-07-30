@@ -8,8 +8,6 @@ interface EditorListProps {
   className?: string;
 }
 
-
-
 const EditorList: React.FC<EditorListProps> = ({ className }) => {
   const [editorData, setEditorData] = useState<EditorType[]>([]);
   const [isRefresh, setIsRefresh] = useState<boolean>(false);

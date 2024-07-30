@@ -17,14 +17,14 @@ const SearchPopUp: React.FC<SearchPopUpProps> = ({
 }) => {
   return (
     <div className={`${className} ${styles.root}`}>
-        <button className={styles.random} onClick={handleRandomBtn}>
-          랜덤순 탐색
-          {isCheck === 'random' && <img src={check} alt="check" />}
-        </button>
-        <button className={styles.recent} onClick={handleRecentBtn}>
-          날짜순 탐색
-          {isCheck === 'recent' && <img src={check} alt="check" />}
-        </button>
+      <button className={styles.random} onClick={handleRandomBtn}>
+        랜덤순 탐색
+        {isCheck === 'random' && <img src={check} alt="check" />}
+      </button>
+      <button className={styles.recent} onClick={handleRecentBtn}>
+        날짜순 탐색
+        {isCheck === 'recent' && <img src={check} alt="check" />}
+      </button>
     </div>
   );
 };
