@@ -12,7 +12,7 @@ interface State {
   centerLatitude: number;
   centerLongitude: number;
   isPublished: boolean;
-  publicLink?: string;
+  publicLink: string;
   isMine: boolean;
   isBookmarked?: boolean;
   objectOutlineList: ObjectOutline[];
