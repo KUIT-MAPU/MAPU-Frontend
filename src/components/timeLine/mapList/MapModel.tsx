@@ -30,6 +30,9 @@ const mockData: MapType[] = [
         following: false,
       },
     ],
+    discription:'서울 관광 명소에 대한 설명',
+    mapKeyword:['서울','관광','명소'],
+    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
   },
   {
     id: 2,
@@ -60,6 +63,9 @@ const mockData: MapType[] = [
         following: false,
       },
     ],
+    discription:'서울의 맛집과 명소 지도에 대한 설명',
+    mapKeyword:['서울','맛집','명소'],
+    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
   },
   {
     id: 3,
@@ -90,6 +96,9 @@ const mockData: MapType[] = [
         following: false,
       },
     ],
+    discription:'서울 핫플레이스 지도에 대한 설명',
+    mapKeyword:['서울','핫플레이스'],
+    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
   },
   {
     id: 4,
@@ -120,6 +129,9 @@ const mockData: MapType[] = [
         following: false,
       },
     ],
+    discription:'서울 힐링 여행 지도에 대한 설명',
+    mapKeyword:['서울','힐링','여행'],
+    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
   },
   {
     id: 5,
@@ -156,7 +168,7 @@ const mockData: MapType[] = [
     name: '서울 자연과 함께하는 지도',
     address: '서울특별시 동대문구',
     img: 'https://via.placeholder.com/400x300',
-    keywords: '동대문시장 골목맛집',
+    keywords: '서울 타워 야경 관람',
     editors: [
       {
         id: 16,
@@ -186,7 +198,7 @@ const mockData: MapType[] = [
     name: '서울 여행 가이드 지도',
     address: '서울특별시 용산구',
     img: 'https://via.placeholder.com/400x300',
-    keywords: '동대문시장 골목맛집',
+    keywords: '서울 타워 야경 관람',
     editors: [
       {
         id: 19,
@@ -216,7 +228,7 @@ const mockData: MapType[] = [
     name: '서울 여행 스팟 지도',
     address: '서울특별시 마포구',
     img: 'https://via.placeholder.com/400x300',
-    keywords: '동대문시장 골목맛집',
+    keywords: '서울 타워 야경 관람',
     editors: [
       {
         id: 22,

@@ -19,8 +19,18 @@
   }
 }
 
+.searchIcon {
+  padding-top: 1.5px;
+  padding-bottom: 1.5px;
+  
+}
+.searchIcon img {
+  width: 24px;
+  height: 24px;
+}
+
 .searchInput {
-  color: #a3abb3;
+  color: #111;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -30,6 +40,6 @@
   background: #fbfcfd;
 
   &.focused::placeholder {
-    color: transparent;
+    color: #a3abb3;
   }
 }

@@ -1,28 +1,59 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import SideBar from '../../components/global/GlobalNavigationBar';
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
 import SearchBar from '../../components/explore/SearchBar';
+import SearchPopUp from '../../components/explore/SearchPopUp';
+import useRegisterStore from '../../stores/registerStore';
+import AuthContainer from '../../components/login/AuthContainer';
+import MapList from '../../components/explore/MapList';
+import ErrorPage from '../../components/explore/ErrorPage';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore'
+import mockData from '../../components/timeLine/mapList/MapModel';
+
 import styles from './Explore.module.scss';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
-import SearchPopUp from '../../components/explore/SearchPopUp';
-import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
-import { useLocation, useNavigate } from 'react-router-dom';
-import useRegisterStore from '../../stores/registerStore';
 
-import AuthContainer from '../../components/login/AuthContainer';
-import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
+import { MapType } from '../../types/MapType';
+import { KeywordType } from '../../types/KeywordType';
 
 const Explore: React.FC = () => {
   const [isCheck, setIsCheck] = useState<string>('random');
   const [text, setText] = useState<string>('');
   const [isPopup, setIsPopup] = useState<boolean>(false);
+  const [mapData, setMapData] = useState<MapType[]>([]);
+
+  const { selectedList, setSelectedList, removeSelectedList } = useKeywordStore()
+  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
+
   const outside = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
   const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
-  const [dimmed, setDimmed] = useState<boolean>(false);
+  const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+
+  const fetchMapData = async () => {
+    try {
+      setMapData(mockData);
+    } catch {
+      console.error('error');
+    }
+  };
+
+  const fetchKeywordSearch = async (keyword: KeywordType) => {
+    try{
+      //TODO: API
+      const data =mockData.filter((map) => map.keywords === keyword.title);
+      setMapData(data);
+    } catch {
+      console.error('error');
+    }
+  }
 
   const handleRandomBtn = () => {
     setIsCheck('random');
@@ -42,11 +73,27 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const allKeywords = allKeywordList.map(keyword => ({
+      ...keyword,
+      selected: false,
+    }));
+  
+    setAllKeywordList(allKeywords);
+  
+    const resetSelectedLists = async () => {
+      await removeSelectedList();
+      setSelectedList([]);
+    };
+
+    resetSelectedLists();
+  
+  }, [pathname]);
+
+  useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
-      setDimmed(true);
-      console.log('setDimmed(true)');
+      setIsOverlayVisible(true);
     } else {
-      setDimmed(false);
+      setIsOverlayVisible(false);
     }
   }, [loginNeeded, registerStatus]);
 
@@ -74,12 +121,30 @@ const Explore: React.FC = () => {
     };
   }, [isPopup]);
 
+  useEffect(() => {
+    fetchMapData();
+  }, []);
+
+  useEffect(() => {
+    if(selectedList !== null && selectedList.length !== 0) {
+      const keyword = selectedList[0];
+      setText(keyword.title);
+      fetchKeywordSearch(keyword);
+    } else {
+      setText('');
+      fetchMapData();
+    }
+  },[selectedList]);
+
   return (
     <>
-      {dimmed && (
-        <div className={dimmedStyles.background} onClick={handleClose} />
+      {isOverlayVisible && (
+        <>
+          <div className={dimmedStyles.background} onClick={handleClose} />
+          <AuthContainer className={styles.authContainer} />
+        </>
       )}
-      {dimmed && <AuthContainer className={styles.authContainer} />}
+
       <SideBar>
         <div className={styles.leftBarWrapper}>
           <LeftBar />
@@ -110,7 +175,13 @@ const Explore: React.FC = () => {
               text={text}
               setText={setText}
             />
-            <p>Explore</p>
+            <div className={styles.main}>
+              {mapData !== null && mapData.length !==0 ? (
+                mapData.map((map: MapType) => (
+                  <MapList map={map} key={map.id}/>
+                ))
+              ) : (<ErrorPage text={text} />)}
+            </div>
           </HeaderNavigation>
         </div>
       </SideBar>

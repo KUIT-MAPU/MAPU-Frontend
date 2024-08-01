@@ -1,12 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import styles from './EditorList.module.scss';
+import React, { useEffect, useState } from 'react';
+
 import EditorProfileCard from './EditorProfileCard';
 import { EditorType } from '../../../types/EditorType';
 import mockData from './EditorModel';
 
+import styles from './EditorList.module.scss';
+
 interface EditorListProps {
   className?: string;
 }
+
 
 const EditorList: React.FC<EditorListProps> = ({ className }) => {
   const [editorData, setEditorData] = useState<EditorType[]>([]);

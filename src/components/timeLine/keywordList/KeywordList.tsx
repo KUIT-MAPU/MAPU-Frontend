@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import styles from './KeywordList.module.scss';
+
 import { KeywordType } from '../../../types/KeywordType';
-import ico_info from '../../../assets/ico_info_gray.svg';
-import useKeywordStore from '../../../stores/keywordStore';
+import { useKeywordStore, useAllKeywordStore } from '../../../stores/keywordStore';
 import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/enum/RegisterStatus';
+
+import styles from './KeywordList.module.scss';
+
+import ico_info from '../../../assets/ico_info_gray.svg';
 
 interface KeywordListProps {
   className?: string;
@@ -21,8 +24,7 @@ const mockData: KeywordType[] = [
 const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   const { registerStatus } = useRegisterStore();
   const { selectedList, setSelectedList } = useKeywordStore();
-
-  const [keywordData, setKeywordData] = useState<KeywordType[]>([]);
+  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
   const [alert, setAlert] = useState<boolean>(false);
 
@@ -31,7 +33,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   const fetchKeywordData = async () => {
     try {
       // TODO: 실제 API 호출로 데이터 받아오기
-      setKeywordData(mockData);
+      setAllKeywordList(mockData);
     } catch (error) {
       console.error('정보를 불러올 수 없음.');
     }
@@ -49,32 +51,41 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
 
   useEffect(() => {
     if (!isLog && selectedList.length === 0) {
-      const selectedInit = keywordData.slice(0, 2).map((item: KeywordType) => {
+      const selectedInit = allKeywordList.slice(0, 2).map((item: KeywordType) => {
         item.selected = !item.selected;
         return item;
       });
       setSelectedList(selectedInit);
     }
-  }, [isLog, keywordData]);
+  }, [isLog, allKeywordList]);
 
   useEffect(() => {
     if (isRefresh) {
-      const falseKeyword = keywordData.filter(
+      const falseKeyword = allKeywordList.filter(
         (keyword: KeywordType) => !keyword.selected,
       );
-      fetchKeywordData();
 
-      const refreshDatas = keywordData.filter(
+      const refreshDatas = allKeywordList.filter(
         (keyword: KeywordType) =>
           !falseKeyword.some(
             (falseKeywordItem: KeywordType) =>
               falseKeywordItem.id === keyword.id,
           ),
       );
-      setKeywordData([...selectedList, ...falseKeyword]);
+
+      const updatedKeywordList = [...selectedList, ...falseKeyword];
+
+      if (JSON.stringify(allKeywordList) !== JSON.stringify(updatedKeywordList)) {
+        setAllKeywordList(updatedKeywordList);
+      }
+
       setIsRefresh(false);
     }
-  }, [isRefresh, keywordData, selectedList]);
+  }, [isRefresh]);
+
+  // useEffect(() => {
+  //   setSelectedList(selectedList); // 쿠키 업데이트를 위해 상태를 설정합니다.
+  // }, [selectedList, setSelectedList]);
 
   const handleRefreshClick = () => {
     if (selectedList.length === 5) {
@@ -85,8 +96,10 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   };
 
   const handleSelectPills = (selectedKeyword: KeywordType) => {
-    selectedKeyword.selected = !selectedKeyword.selected;
-    const updatedList = keywordData.filter((item) => item.selected);
+    selectedKeyword.selected = !selectedKeyword.selected; // toogle
+    console.log('keyword data:', allKeywordList);
+    const updatedList = allKeywordList.filter((item) => item.selected);
+    setAllKeywordList(allKeywordList);
     setSelectedList(updatedList);
 
     if (updatedList.length < 5) {
@@ -104,7 +117,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
       </div>
 
       <div className={styles.keywords}>
-        {keywordData.map((keyword: KeywordType) => (
+        {allKeywordList.map((keyword: KeywordType) => (
           <button
             className={keyword.selected ? styles.selected : styles.keywordPills}
             key={keyword.id}
