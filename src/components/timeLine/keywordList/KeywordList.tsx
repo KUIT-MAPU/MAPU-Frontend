@@ -8,6 +8,7 @@ import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 import styles from './KeywordList.module.scss';
 
 import ico_info from '../../../assets/ico_info_gray.svg';
+import { useLocation } from 'react-router-dom';
 
 interface KeywordListProps {
   className?: string;
@@ -27,8 +28,10 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
   const [alert, setAlert] = useState<boolean>(false);
-
   const [isLog, setIsLog] = useState<boolean>(false);
+  const [isPath, setIsPath] = useState<string>('');
+
+  const location = useLocation();
 
   const fetchKeywordData = async () => {
     try {
@@ -83,9 +86,10 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
     }
   }, [isRefresh]);
 
-  // useEffect(() => {
-  //   setSelectedList(selectedList); // 쿠키 업데이트를 위해 상태를 설정합니다.
-  // }, [selectedList, setSelectedList]);
+  useEffect(() => {
+    console.log('현재 경로:',location.pathname);
+    setIsPath(location.pathname);
+  }, [location.pathname]);
 
   const handleRefreshClick = () => {
     if (selectedList.length === 5) {
@@ -96,8 +100,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   };
 
   const handleSelectPills = (selectedKeyword: KeywordType) => {
-    selectedKeyword.selected = !selectedKeyword.selected; // toogle
-    console.log('keyword data:', allKeywordList);
+    selectedKeyword.selected = !selectedKeyword.selected;
     const updatedList = allKeywordList.filter((item) => item.selected);
     setAllKeywordList(allKeywordList);
     setSelectedList(updatedList);
@@ -122,6 +125,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
             className={keyword.selected ? styles.selected : styles.keywordPills}
             key={keyword.id}
             onClick={() => handleSelectPills(keyword)}
+            disabled={isPath === '/explore' && selectedList.length === 1 && !(keyword.selected) ? true : false}
           >
             {keyword.title}
           </button>

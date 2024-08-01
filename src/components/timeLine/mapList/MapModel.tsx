@@ -30,9 +30,43 @@ const mockData: MapType[] = [
         following: false,
       },
     ],
-    discription:'서울 관광 명소에 대한 설명',
-    mapKeyword:['서울','관광','명소'],
-    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
+    discription: '서울 관광 명소에 대한 설명',
+    mapKeyword: [
+      {
+        keyword: '서울',
+        img: {
+          '키워드1':'https://via.placeholder.com/150',
+          '키워드2':'https://via.placeholder.com/150',
+          '키워드3':'https://via.placeholder.com/150',
+          '키워드4':'https://via.placeholder.com/150',
+        },
+      },
+      {
+        keyword: '관광',
+        img: {
+          '키워드5':'https://via.placeholder.com/150',
+          '키워드6':'https://via.placeholder.com/150',
+          '키워드7':'https://via.placeholder.com/150',
+          '키워드8':'https://via.placeholder.com/150',
+        },
+      },
+      {
+        keyword: '명소',
+        img: {
+          '키워드9':'https://via.placeholder.com/150',
+          '키워드10':'https://via.placeholder.com/150',
+          '키워드11':'https://via.placeholder.com/150',
+          '키워드12':'https://via.placeholder.com/150',
+        },
+      },
+    ],
+    owner: {
+      id: 1,
+      userId: 'editor1',
+      img: 'https://via.placeholder.com/150',
+      name: 'Editor One',
+      following: false,
+    },
   },
   {
     id: 2,
@@ -63,9 +97,43 @@ const mockData: MapType[] = [
         following: false,
       },
     ],
-    discription:'서울의 맛집과 명소 지도에 대한 설명',
-    mapKeyword:['서울','맛집','명소'],
-    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
+    discription: '서울의 맛집과 명소 지도에 대한 설명',
+    mapKeyword: [
+      {
+        keyword: '서울',
+        img: {
+          '키워드1':'https://via.placeholder.com/150',
+          '키워드2':'https://via.placeholder.com/150',
+          '키워드3':'https://via.placeholder.com/150',
+          '키워드4':'https://via.placeholder.com/150',
+        },
+      },
+      {
+        keyword: '맛집',
+        img: {
+          '키워드1':'https://via.placeholder.com/150',
+          '키워드2':'https://via.placeholder.com/150',
+          '키워드3':'https://via.placeholder.com/150',
+          '키워드4':'https://via.placeholder.com/150',
+        },
+      },
+      {
+        keyword: '명소',
+        img: {
+          '키워드1':'https://via.placeholder.com/150',
+          '키워드2':'https://via.placeholder.com/150',
+          '키워드3':'https://via.placeholder.com/150',
+          '키워드4':'https://via.placeholder.com/150',
+        },
+      },
+    ],
+    owner: {
+      id: 1,
+      userId: 'editor1',
+      img: 'https://via.placeholder.com/150',
+      name: 'Editor One',
+      following: false,
+    },
   },
   {
     id: 3,
@@ -96,9 +164,34 @@ const mockData: MapType[] = [
         following: false,
       },
     ],
-    discription:'서울 핫플레이스 지도에 대한 설명',
-    mapKeyword:['서울','핫플레이스'],
-    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
+    discription: '서울 핫플레이스 지도에 대한 설명',
+    mapKeyword: [
+      {
+        keyword: '서울',
+        img: {
+          '키워드1':'https://via.placeholder.com/150',
+          '키워드2':'https://via.placeholder.com/150',
+          '키워드3':'https://via.placeholder.com/150',
+          '키워드4':'https://via.placeholder.com/150',
+        },
+      },
+      {
+        keyword: '핫플레이스',
+        img: {
+          '키워드1':'https://via.placeholder.com/150',
+          '키워드2':'https://via.placeholder.com/150',
+          '키워드3':'https://via.placeholder.com/150',
+          '키워드4':'https://via.placeholder.com/150',
+        },
+      },
+    ],
+    owner: {
+      id: 1,
+      userId: 'editor1',
+      img: 'https://via.placeholder.com/150',
+      name: 'Editor One',
+      following: false,
+    },
   },
   {
     id: 4,
@@ -129,9 +222,43 @@ const mockData: MapType[] = [
         following: false,
       },
     ],
-    discription:'서울 힐링 여행 지도에 대한 설명',
-    mapKeyword:['서울','힐링','여행'],
-    owner:{ id: 1, userId: 'editor1', img: 'https://via.placeholder.com/150', name: 'Editor One', following: false }
+    discription: '서울 힐링 여행 지도에 대한 설명',
+    mapKeyword: [
+      {
+        keyword: '서울',
+        img: {
+          '키워드1':'https://via.placeholder.com/150',
+          '키워드2':'https://via.placeholder.com/150',
+          '키워드3':'https://via.placeholder.com/150',
+          '키워드4':'https://via.placeholder.com/150',
+        },
+      },
+      {
+        keyword: '힐링',
+        img: {
+          '키워드5':'https://via.placeholder.com/150',
+          '키워드6':'https://via.placeholder.com/150',
+          '키워드7':'https://via.placeholder.com/150',
+          '키워드8':'https://via.placeholder.com/150',
+        },
+      },
+      {
+        keyword: '여행',
+        img: {
+          '키워드9':'https://via.placeholder.com/150',
+          '키워드10':'https://via.placeholder.com/150',
+          '키워드11':'https://via.placeholder.com/150',
+          '키워드12':'https://via.placeholder.com/150',
+        },
+      },
+    ],
+    owner: {
+      id: 1,
+      userId: 'editor1',
+      img: 'https://via.placeholder.com/150',
+      name: 'Editor One',
+      following: false,
+    },
   },
   {
     id: 5,

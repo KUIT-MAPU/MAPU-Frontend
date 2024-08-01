@@ -178,7 +178,7 @@ const Explore: React.FC = () => {
             <div className={styles.main}>
               {mapData !== null && mapData.length !==0 ? (
                 mapData.map((map: MapType) => (
-                  <MapList map={map} key={map.id}/>
+                  <MapList map={map} key={map.id} keyword={map.mapKeyword ?? []} />
                 ))
               ) : (<ErrorPage text={text} />)}
             </div>
