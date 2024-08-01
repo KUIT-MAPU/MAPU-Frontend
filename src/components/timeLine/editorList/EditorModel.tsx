@@ -1,4 +1,4 @@
-import { EditorType } from "../../../types/EditorType";
+import { EditorType } from '../../../types/EditorType';
 
 const mockData: EditorType[] = [
   {
@@ -33,7 +33,7 @@ const mockData: EditorType[] = [
         img: 'https://via.placeholder.com/150',
         name: 'Alice',
         follower: [],
-        map: []
+        map: [],
       },
       {
         id: 2,
@@ -41,8 +41,8 @@ const mockData: EditorType[] = [
         img: 'https://via.placeholder.com/150',
         name: 'Bob',
         follower: [],
-        map: []
-      }
+        map: [],
+      },
     ],
     map: [
       // Add map data relevant to Charlie here if needed
@@ -66,11 +66,11 @@ const mockData: EditorType[] = [
             img: 'https://via.placeholder.com/150',
             name: 'Alice',
             follower: [],
-            map: []
-          }
+            map: [],
+          },
         ],
-        map: []
-      }
+        map: [],
+      },
     ],
     map: [
       // Add map data relevant to David here if needed
@@ -88,8 +88,8 @@ const mockData: EditorType[] = [
         img: 'https://via.placeholder.com/150',
         name: 'Alice',
         follower: [],
-        map: []
-      }
+        map: [],
+      },
     ],
     map: [
       // Add map data relevant to Eva here if needed

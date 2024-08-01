@@ -32,6 +32,8 @@ const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
     <div className={styles.mapcard}>
       <div className={styles.wrapper}>
         <div className={styles.keyword}>{keyword}</div>
+      <div className={styles.wrapper}>
+        <div className={styles.keyword}>{keyword}</div>
 
         <div className={styles.mapContainer}>
           <div className={styles.buttonContainer}>
@@ -58,10 +60,33 @@ const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
               <div className={styles.info}>
                 <div className={styles.mapInfo}>
                   <div className={styles.title}>{map.name}</div>
+              <div className={styles.info}>
+                <div className={styles.mapInfo}>
+                  <div className={styles.title}>{map.name}</div>
 
                   <div className={styles.address}>{map.address}</div>
                 </div>
+                  <div className={styles.address}>{map.address}</div>
+                </div>
 
+                <div className={styles.editorImg}>
+                  {map.editors.map((editor, index) => {
+                    const offset = index * 15;
+                    return (
+                      <img
+                        key={index}
+                        src={userImg}
+                        alt={`${editor.name} editor`}
+                        style={{ right: `${offset}px`, top: '0px' }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
                 <div className={styles.editorImg}>
                   {map.editors.map((editor, index) => {
                     const offset = index * 15;

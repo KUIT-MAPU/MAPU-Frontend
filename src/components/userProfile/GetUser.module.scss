@@ -1,5 +1,5 @@
 .container {
-  width: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,6 +64,7 @@
   align-items: center;
   margin-left: 20px;
 }
+
 .contentView {
   display: flex;
   align-items: center;
@@ -85,11 +86,11 @@
   font-size: 16px;
 }
 
-.mapContainaer {
+.mapContainer {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 16px;
-  margin-left: 372px;
   max-height: 600px;
   overflow-y: auto;
 }
@@ -117,6 +118,46 @@
   height: 327px;
   margin: 8px;
   background-color: var(--gray_400);
+}
+
+.listInfo {
+  display: flex;
+  width: 100%;
+  height: 21px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--gray_500);
+}
+
+.mapInfo {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  margin-left: 637px;
+  justify-content: space-between;
+}
+
+.listContainer {
+  display: flex;
+  width: 100%;
+  margin-left: 20px;
+  flex-direction: column;
+}
+
+.mapList {
+  display: flex;
+  width: 100%;
+  height: 102px;
+}
+
+.mapListInfo {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  margin-left: 637px;
+  justify-content: space-between;
 }
 
 .link {

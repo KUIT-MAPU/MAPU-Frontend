@@ -41,6 +41,7 @@ const TimeLine: React.FC = () => {
     }
   }, [loginNeeded, registerStatus]);
 
+
   const fetchMapData = async (keyword: string) => {
     try {
       // 실제 API 요청을 통해 키워드에 해당하는 데이터를 가져옵니다.
@@ -52,12 +53,15 @@ const TimeLine: React.FC = () => {
       // const data = await Promise.all(keywordPromises);
       const data = mockData.filter((map) => map.keywords.includes(keyword)); // mockData에서 필터링
       setMapData((prevState) => ({ ...prevState, [keyword]: data }));
+      const data = mockData.filter((map) => map.keywords.includes(keyword)); // mockData에서 필터링
+      setMapData((prevState) => ({ ...prevState, [keyword]: data }));
     } catch {
       console.error(`Failed to fetch map data for keyword: ${keyword}`);
     }
   };
 
   useEffect(() => {
+    selectedList.forEach((keyword) => {
     selectedList.forEach((keyword) => {
       fetchMapData(keyword.title);
     });
