@@ -3,10 +3,10 @@ import styles from './ObjectPropertyContainer.module.scss';
 import publicStyles from '../ObjectContainerPublicStyle.module.scss';
 import AddPropertyPopUp from './AddPropertyPopUp';
 import PlusBtn from '../../../../assets/btn_plus_black.svg';
-import useMapInfoStore from '../../../../stores/mapInfoStore';
 import { ObjectShape } from '../../../../types/enum/ObjectShape';
 import { ObjectInfo } from '../../../../types/map/object/ObjectInfo';
-import ObjectConnectionContainer from './ObjectConnectionContainer';
+import ObjectPropertyBox from './ObjectPropertyBox';
+import { ObjectPropertyType } from '../../../../types/enum/ObjectPropertyType';
 
 interface Props {
   mode: string;
@@ -80,7 +80,26 @@ const OjbectPropertyContainer: React.FC<Props> = ({ mode, object }) => {
           </div>
         )}
       </div>
-      <div className={styles.objectPropertyList}></div>
+      <div className={styles.objectPropertyList}>
+        {object.connections.length !== 0 && (
+          <ObjectPropertyBox
+            type={ObjectPropertyType.CONNECTION}
+            values={object.connections}
+          />
+        )}
+        {object.tags.length !== 0 && (
+          <ObjectPropertyBox
+            type={ObjectPropertyType.TAG}
+            values={object.tags}
+          />
+        )}
+        {object.starRatings.length !== 0 && (
+          <ObjectPropertyBox
+            type={ObjectPropertyType.STAR_RATING}
+            values={object.starRatings}
+          />
+        )}
+      </div>
     </section>
   );
 };
