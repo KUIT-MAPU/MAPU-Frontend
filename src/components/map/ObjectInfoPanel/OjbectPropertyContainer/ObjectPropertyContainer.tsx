@@ -1,26 +1,47 @@
+import { useEffect, useRef, useState } from 'react';
 import styles from './ObjectPropertyContainer.module.scss';
 import publicStyles from '../ObjectContainerPublicStyle.module.scss';
 import AddPropertyPopUp from './AddPropertyPopUp';
 import PlusBtn from '../../../../assets/btn_plus_black.svg';
 import useMapInfoStore from '../../../../stores/mapInfoStore';
 import { ObjectShape } from '../../../../types/enum/ObjectShape';
+import { ObjectInfo } from '../../../../types/map/object/ObjectInfo';
+import ObjectConnectionContainer from './ObjectConnectionContainer';
 
 interface Props {
   mode: string;
-  shape: ObjectShape;
+  object: ObjectInfo;
 }
 
-const OjbectPropertyContainer: React.FC<Props> = ({ mode, shape }) => {
-  const { showAddPropertPopUp, switchShowAddPropertPopUp } = useMapInfoStore();
+const OjbectPropertyContainer: React.FC<Props> = ({ mode, object }) => {
+  const outside = useRef<HTMLDivElement>(null);
+  const [isPopUp, setIsPopUp] = useState<boolean>(false);
 
   const handleAddProperty = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    switchShowAddPropertPopUp(true);
+    setIsPopUp(true);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (outside.current && !outside.current.contains(event.target as Node)) {
+        setIsPopUp(false);
+      }
+    };
+
+    if (isPopUp) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isPopUp]);
 
   const getContainerClassName = () => {
     if (mode === 'edit') {
-      switch (shape) {
+      switch (object.shape) {
         case ObjectShape.POINT:
           return `${styles.objectPropertyContainer} ${styles.editorPointContainer}`;
         case ObjectShape.LINE:
@@ -29,7 +50,7 @@ const OjbectPropertyContainer: React.FC<Props> = ({ mode, shape }) => {
           return `${styles.objectPropertyContainer} ${styles.editorPlainContainer}`;
       }
     } else {
-      switch (shape) {
+      switch (object.shape) {
         case ObjectShape.POINT:
           return `${styles.objectPropertyContainer} ${styles.viewerPointContainer}`;
         case ObjectShape.LINE:
@@ -53,7 +74,11 @@ const OjbectPropertyContainer: React.FC<Props> = ({ mode, shape }) => {
             <img src={PlusBtn} alt="속성 추가" />
           </button>
         )}
-        {showAddPropertPopUp && <AddPropertyPopUp />}
+        {isPopUp && (
+          <div ref={outside} className={styles.addPropertyPopUp}>
+            <AddPropertyPopUp />
+          </div>
+        )}
       </div>
       <div className={styles.objectPropertyList}></div>
     </section>
