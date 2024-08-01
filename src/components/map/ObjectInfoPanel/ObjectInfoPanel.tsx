@@ -58,6 +58,7 @@ const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
           detailAddress={objectMockData.detailAddress}
         />
       )}
+      <OjbectPropertyContainer mode={mode} shape={objectMockData.shape} />
     </div>
   );
 };
