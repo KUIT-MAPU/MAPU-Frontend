@@ -1,40 +1,36 @@
-import React from 'react';
-
 import { MapType } from '../../types/MapType';
 import userImg from '../../assets/user.svg';
 
 import styles from './MapList.module.scss';
+import { MapKeywordType } from '../../types/MapKeywordType';
+import MapKeywordCard from './MapKeywordCard';
+import { useEffect, useState } from 'react';
 
 interface MapListProps {
   map: MapType;
+  keyword: MapKeywordType[];
 }
-const MapList: React.FC<MapListProps> = ({ map }) => {
+
+const MapList: React.FC<MapListProps> = ({ map, keyword }) => {
+  const [selectedKeyword, setSelectedKeyword] = useState<MapKeywordType | null>(
+    null,
+  );
+
+  const handleSelectPills = (mapKeyword: MapKeywordType) => {
+    if (selectedKeyword?.keyword === mapKeyword.keyword) {
+      setSelectedKeyword(null);
+    } else {
+      setSelectedKeyword(mapKeyword);
+    }
+  };
+
   return (
     <div className={styles.MapListRoot}>
       <div className={styles.Images}>
-        <img src={map.img} className={styles.mapImg} />
+        <img src={map.img} className={styles.mapImg} alt="Map" />
 
         <div className={styles.editor}>
-          {/* {map.editors.map((editor, index) => {
-            const offset = index * 15;
-            return (
-              <div className={styles.editor}>
-                <img
-                  key={index}
-                  src={userImg}
-                  alt={`${editor.name} editor`}
-                  style={{ right: `${offset}px`, top: '0px' }}
-                /> 
-                <div className={styles.editorInfo}>
-                  <img src={map.owner?.img} />
-                  <span className={styles.editorName}>{map.owner?.name}</span>
-                  <span className={styles.editorId}>{map.owner?.userId}</span>
-                </div>
-              </div>
-            );
-          })} */}
-          <img src={userImg} />
-
+          <img src={userImg} alt="User" />
           <div className={styles.editorInfo}>
             <span className={styles.editorName}>{map.owner?.name}</span>
             <span className={styles.editorId}>{map.owner?.userId}</span>
@@ -53,15 +49,27 @@ const MapList: React.FC<MapListProps> = ({ map }) => {
         </div>
 
         <div className={styles.mapKeyword}>
-          {map.mapKeyword?.map((keyword: string,index: number) => (
+          {keyword?.map((mapKeyword: MapKeywordType, index: number) => (
             <button
-              className={styles.keywordPills}
+              className={
+                selectedKeyword?.keyword === mapKeyword.keyword
+                  ? styles.selected
+                  : styles.keywordPills
+              }
               key={index}
-              // onClick={() => handleSelectPills(keyword)}
+              onClick={() => handleSelectPills(mapKeyword)}
             >
-              {keyword}
+              {mapKeyword.keyword}
             </button>
           ))}
+        </div>
+        <div className={styles.keywordContainer}>
+          {selectedKeyword && (
+            <MapKeywordCard
+              isSelect={!!selectedKeyword}
+              keyword={selectedKeyword}
+            />
+          )}
         </div>
       </div>
     </div>

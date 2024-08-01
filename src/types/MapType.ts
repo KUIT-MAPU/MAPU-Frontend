@@ -1,4 +1,5 @@
 import { EditorType } from './EditorType';
+import { MapKeywordType } from './MapKeywordType';
 
 export interface MapType {
   id: number;
@@ -8,6 +9,6 @@ export interface MapType {
   keywords: string;
   editors: EditorType[];
   discription?:string;
-  mapKeyword?: string[];
+  mapKeyword?: MapKeywordType[];
   owner?:EditorType;
 }
