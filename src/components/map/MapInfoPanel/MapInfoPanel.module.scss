@@ -1,5 +1,6 @@
 #mapInfoPanel {
-  margin-left: 72px;
+  position: fixed;
+  left: 72px;
   height: 100vh;
   width: 300px;
   background: var(--white);

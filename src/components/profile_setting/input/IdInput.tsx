@@ -17,13 +17,13 @@ const IdInput: React.FC<Props> = ({
   setIsIdEmpty,
   setIsValidId,
 }) => {
-  const onChangeIdHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     const idValue = e.target.value;
     setId(idValue);
-    idCheckHandler(idValue);
+    checkId(idValue);
   };
 
-  const idCheckHandler = async (id: string) => {
+  const checkId = async (id: string) => {
     //영문 소문자, 숫자, 마침표, 언더바 4종류 / 3~20자
     const idRegex = /^[a-z\d._]{3,20}$/;
     if (id !== '' && id !== null) setIsIdEmpty(false);
@@ -47,7 +47,7 @@ const IdInput: React.FC<Props> = ({
         type="text"
         placeholder="아이디를 입력하세요."
         required
-        onChange={onChangeIdHandler}
+        onChange={onChangeId}
         name="id"
         onBlur={handleFocusOut}
         className={

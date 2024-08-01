@@ -1,0 +1,45 @@
+.objectPropertyContainer {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  margin-right: 2px;
+}
+.editorPointContainer {
+  height: calc(100vh - 451px);
+}
+.editorLineContainer {
+  height: calc(100vh - 488px);
+}
+.editorPlainContainer {
+  height: calc(100vh - 525px);
+}
+.viewerPointContainer {
+  height: calc(100vh - 326px);
+}
+.viewerLineContainer {
+  height: calc(100vh - 363px);
+}
+.viewerPlainContainer {
+  height: calc(100vh - 400px);
+}
+
+.propertyContainerTitleBox {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--gray_50);
+  position: relative;
+
+  .plusBtnContainer {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.objectPropertyList {
+  padding: 16px 10px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

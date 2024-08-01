@@ -17,13 +17,13 @@ const NicknameInput: React.FC<Props> = ({
   setIsNicknameEmpty,
   setIsValidNickname,
 }) => {
-  const onChangeNicknameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nicknameValue = e.target.value;
     setNickname(nicknameValue);
-    nicknameCheckHandler(nicknameValue);
+    checkNickname(nicknameValue);
   };
 
-  const nicknameCheckHandler = async (nickname: string) => {
+  const checkNickname = async (nickname: string) => {
     //한글, 영문, 숫자, 마침표, 언더바 5종류 / 3~12자
     const nicknameRegex = /^[ㄱ-ㅎㅏ-ㅣ가-힣A-Za-z\d._]{3,12}$/;
     if (nickname !== '' && nickname !== null) setIsNicknameEmpty(false);
@@ -48,7 +48,7 @@ const NicknameInput: React.FC<Props> = ({
         placeholder="닉네임을 입력하세요."
         required
         autoFocus
-        onChange={onChangeNicknameHandler}
+        onChange={onChangeNickname}
         onBlur={handleFocusOut}
         name="nickname"
         className={

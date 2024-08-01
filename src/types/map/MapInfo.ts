@@ -6,6 +6,7 @@ export interface MapInfo {
   latitude: number;
   longitude: number;
   isPublished: boolean;
+  publicLink?: string;
   isMine: boolean;
   isBookmarked?: boolean;
 }
