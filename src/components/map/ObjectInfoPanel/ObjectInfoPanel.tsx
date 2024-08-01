@@ -3,7 +3,7 @@ import PublishLinkContainer from './PublishLinkContainer';
 import ObjectBasicInfoContainer from './ObjectBasicInfoContainer';
 import EditorObjectInfoInputContainer from './EditorObjectInfoInputContainer';
 import OjbectPropertyContainer from './OjbectPropertyContainer/ObjectPropertyContainer';
-import { ObjectBasicInfo } from '../../../types/map/object/ObjectBasicInfo';
+import { ObjectInfo } from '../../../types/map/object/ObjectInfo';
 import { ObjectShape } from '../../../types/enum/ObjectShape';
 
 interface Props {
@@ -40,13 +40,23 @@ const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
   //   detailAddress: '건대 중문에서 시작',
   //   length: '200m',
   // };
-  const objectMockData: ObjectBasicInfo = {
+  const objectMockData: ObjectInfo = {
     shape: ObjectShape.PLANE,
     name: '마우스래빗',
     roadNameAddress: '서울시 광진구 능동로 120',
     detailAddress: '메가커피 골목 안쪽',
     perimeter: '100m',
     area: '100㎡',
+    connections: [
+      {
+        objectId: 1,
+        shape: ObjectShape.POINT,
+        name: '용용선생',
+        roadNameAddress: '광진구 능동로 120',
+      },
+    ],
+    tags: [],
+    starRatings: [],
   };
   return (
     <div id={styles.objectInfoPanel}>
@@ -58,7 +68,7 @@ const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
           detailAddress={objectMockData.detailAddress}
         />
       )}
-      <OjbectPropertyContainer mode={mode} shape={objectMockData.shape} />
+      <OjbectPropertyContainer mode={mode} object={objectMockData} />
     </div>
   );
 };
