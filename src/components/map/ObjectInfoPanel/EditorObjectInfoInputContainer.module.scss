@@ -6,13 +6,13 @@
   gap: 20px;
 }
 
-.inputTitleContainer {
+.inputContainer {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.objectTitleInput,
+.objectNameInput,
 .objectDetailAddressInput {
   width: 100%;
   padding: 10px 16px;
@@ -24,11 +24,11 @@
   font-size: 18px;
 }
 
-.objectTitleInput:disabled,
+.objectNameInput:disabled,
 .objectDetailAddressInput:disabled {
   background: none;
 }
-.errorTitleInput {
+.errorNameInput {
   border: 1px solid var(--error);
 }
 
@@ -38,13 +38,13 @@
   border: 1px solid var(--gray_50);
 }
 
-.objectTitleInput:focus,
+.objectNameInput:focus,
 .objectDetailAddressInput:focus {
   outline: none;
   border: 1px solid var(--color-main, #00bd57);
 }
 
-.objectTitleInput::-webkit-input-placeholder,
+.objectNameInput::-webkit-input-placeholder,
 .objectDetailAddressInput::-webkit-input-placeholder {
   color: var(--gray_400);
 }
