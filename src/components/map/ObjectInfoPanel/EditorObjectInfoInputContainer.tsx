@@ -1,15 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './EditorObjectInfoInputContainer.module.scss';
 import publicStyles from './ObjectContainerPublicStyle.module.scss';
 
-const EditorObjectInfoInputContainer = () => {
-  const [editedTitle, setEditedTitle] = useState<string>('작업하기 좋은 카페');
-  const [isTitleEmpty, setIsTitleEmpty] = useState<boolean>(false);
-  const [editedDetailAddress, setEditedDetailAddress] =
-    useState<string>('작은 틈새로 들어가는 문');
+interface Props {
+  name: string;
+  detailAddress: string;
+}
 
-  const handleTitleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedTitle(e.currentTarget.value);
+const EditorObjectInfoInputContainer: React.FC<Props> = ({
+  name,
+  detailAddress,
+}) => {
+  const [editedName, setEditedName] = useState<string>();
+  const [isNameEmpty, setIsNameEmpty] = useState<boolean>(false);
+  const [editedDetailAddress, setEditedDetailAddress] = useState<string>();
+
+  useEffect(() => {
+    setEditedName(name);
+    setEditedDetailAddress(detailAddress);
+  }, []);
+
+  const handleNameOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedName(e.currentTarget.value);
   };
 
   const handleDetailAddressOnChange = (
@@ -18,12 +30,12 @@ const EditorObjectInfoInputContainer = () => {
     setEditedDetailAddress(e.currentTarget.value);
   };
 
-  const handleFocusOutTitle = () => {
-    if (editedTitle === '' || editedTitle === null) {
-      setIsTitleEmpty(true);
+  const handleFocusOutName = () => {
+    if (editedName === '' || editedName === null) {
+      setIsNameEmpty(true);
     } else {
       //TODO: 객체 이름 저장 api 호출
-      setIsTitleEmpty(false);
+      setIsNameEmpty(false);
     }
   };
 
@@ -33,23 +45,23 @@ const EditorObjectInfoInputContainer = () => {
 
   return (
     <section className={styles.editorObjectInfoInputContainer}>
-      <div className={styles.inputTitleContainer}>
+      <div className={styles.inputContainer}>
         <span className={publicStyles.boxTitle}>이름</span>
         <input
           type="text"
           name="objectTitle"
           className={
-            isTitleEmpty
-              ? `${styles.objectTitleInput} ${styles.errorTitleInput}`
-              : styles.objectTitleInput
+            isNameEmpty
+              ? `${styles.objectNameInput} ${styles.errorNameInput}`
+              : styles.objectNameInput
           }
-          value={editedTitle}
+          value={editedName}
           placeholder="객체 이름 (필수)"
-          onChange={handleTitleOnChange}
-          onBlur={handleFocusOutTitle}
+          onChange={handleNameOnChange}
+          onBlur={handleFocusOutName}
         />
       </div>
-      <div className={styles.inputTitleContainer}>
+      <div className={styles.inputContainer}>
         <span className={publicStyles.boxTitle}>상세 주소</span>
         <textarea
           name="objecyDetailAddress"
