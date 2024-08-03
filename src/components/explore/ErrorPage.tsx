@@ -7,7 +7,6 @@ interface ErrorPageProps {
 }
 
 const ErrorPage: React.FC<ErrorPageProps> = ({ text }) => {
-
   return (
     <div className={styles.errorPageRoot}>
       {text && <span>'{text}'지도를 찾을 수 없어요.</span>}

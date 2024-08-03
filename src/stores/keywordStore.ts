@@ -53,7 +53,10 @@ const useAllKeywordStore = create<AllKeywordStore>()(
       allKeywordList: [],
       setAllKeywordList: (allKeywordList: KeywordType[]) => {
         set({ allKeywordList });
-        cookieStorage.setItem('all-keyword-store', JSON.stringify(allKeywordList));
+        cookieStorage.setItem(
+          'all-keyword-store',
+          JSON.stringify(allKeywordList),
+        );
       },
     }),
     {
