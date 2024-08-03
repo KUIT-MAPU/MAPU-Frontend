@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styles from './UserInfoBar.module.scss';
 import { ReactComponent as ProfilePerson } from '../../assets/img_user_default_profile.svg';
 import Following from './followModal/Following'
+import Follower from './followModal/Follower';
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
   const [isFollowingOpen, setIsFollowingOpen] = useState(false);
+  const [isFollowerOpen, setIsFollowerOpen] = useState(false);
 
   const openFollowing = () =>{
     setIsFollowingOpen(true);
@@ -14,6 +16,14 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
     setIsFollowingOpen(false);
   }
   
+  const openFollower = () =>{
+    setIsFollowerOpen(true);
+  }
+
+  const closeFollower = () =>{
+    setIsFollowerOpen(false);
+  }
+
   return (
     <div className={styles.UserInfoBar}>
       <div className={styles.UserPhoto}>
@@ -28,7 +38,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
           <div>내 지도</div>
           <span>0</span>
         </div>
-        <div className={styles.UserProfileBox}>
+        <div className={styles.UserProfileBox} onClick={openFollower}>
           <div>팔로워</div>
           <span>0</span>
         </div>
@@ -40,6 +50,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
       <div className={styles.ProfileBottom}>로그인하기</div>
 
       {isFollowingOpen && <Following onClose={closeFollowing} />}
+      {isFollowerOpen && <Follower onClose={closeFollower} />}
     </div>
   );
 };
