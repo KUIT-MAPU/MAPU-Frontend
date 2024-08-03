@@ -1,0 +1,57 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #fff;
+  width: 412px;
+  height: 430px;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalTop {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 600;
+  color: #111;
+  border-bottom: 1px solid #f2f5f8;
+  margin-bottom: 8px;
+}
+
+.searchBar {
+  display: flex;
+  width: 380px;
+  height: 48px;
+  border-radius: 8px;
+  background-color: var(--gray_50);
+  align-items: center;
+}
+
+.searchBarText {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-left: 12px;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--gray_400);
+}
