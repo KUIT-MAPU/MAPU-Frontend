@@ -16,6 +16,7 @@
     "browser-image-compression": "^2.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-kakao-maps-sdk": "^1.1.27",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.24.0",
     "sass": "^1.77.6",

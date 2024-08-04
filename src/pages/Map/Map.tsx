@@ -8,6 +8,9 @@ import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import ObjectInfoPanel from '../../components/map/ObjectInfoPanel/ObjectInfoPanel';
 import AuthContainer from '../../components/login/AuthContainer';
+import BaseMap from '../../components/map/BaseMap/BaseMap';
+import EditDesignPanel from '../../components/map/BaseMap/EditDesignPanel';
+import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 
 //"editor"
 //마이페이지 > 편집 가능한 지도에서의 접근이므로, 이미 로그인 된 상태일 것.
@@ -64,15 +67,18 @@ const Map = () => {
       className={styles.map}
       onClick={() => switchShowAddPropertPopUp(false)}
     >
-      {dimmed && (
+      {/* {dimmed && (
         <div
           className={dimmedStyles.background}
           onClick={mapMode === 'view' ? handleClose : undefined}
         />
       )}
-      {dimmed && <AuthContainer className={styles.authContainer} />}
-      <MapInfoPanel mode={mapMode} />
-      <ObjectInfoPanel mode={mapMode} />
+      {dimmed && <AuthContainer className={styles.authContainer} />} */}
+      <GlobalNavigationBar>
+        <MapInfoPanel mode={mapMode} />
+        <BaseMap mode={mapMode} />
+        <ObjectInfoPanel mode={mapMode} />
+      </GlobalNavigationBar>
     </div>
   );
 };
