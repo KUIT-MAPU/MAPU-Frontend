@@ -6,3 +6,26 @@
   background: var(--gray_25);
   border: 1px solid var(--gray_50);
 }
+
+.propertyTitleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 12px 20px 20px;
+
+  .propertyTitle {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .propertyMenuBtn {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.propertyBox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
