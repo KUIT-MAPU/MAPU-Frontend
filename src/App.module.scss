@@ -201,3 +201,9 @@ input,
 textarea {
   line-height: 150%;
 }
+
+span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
