@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './MapInfoInputContainer.module.scss';
-import useMapInfoStore from '../../../stores/mapInfoStore';
-import BookmarkDefault from '../../../assets/btn_bookmark_default.svg';
-import BookmarkSelected from '../../../assets/btn_bookmark_selected.svg';
-import useRegisterStore from '../../../stores/registerStore';
-import { RegisterStatus } from '../../../types/enum/RegisterStatus';
+import styles from './MapTitleAndDescriptionInputContainer.module.scss';
+import useMapInfoStore from '../../../../../stores/mapInfoStore';
+import BookmarkDefault from '../../../../../assets/btn_bookmark_default.svg';
+import BookmarkSelected from '../../../../../assets/btn_bookmark_selected.svg';
+import useRegisterStore from '../../../../../stores/registerStore';
+import { RegisterStatus } from '../../../../../types/enum/RegisterStatus';
 
 interface Props {
   mode: string;
 }
 
-const MapInfoInputContainer: React.FC<Props> = ({ mode }) => {
+const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
   const {
     mapId,
     mapTitle,
@@ -106,4 +106,4 @@ const MapInfoInputContainer: React.FC<Props> = ({ mode }) => {
   );
 };
 
-export default MapInfoInputContainer;
+export default MapTitleAndDescriptionInputContainer;

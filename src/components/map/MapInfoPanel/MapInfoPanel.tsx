@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './MapInfoPanel.module.scss';
-import MapProducerConatiner from './MapProducerContainer';
-import MapContentTitle from './MapContentTitleContainer';
+import MapProducerConatiner from './MapBasicInfo/MapProducerContainer/MapProducerContainer';
+import MapBasicInfoContainer from './MapBasicInfo/MapBasicInfoContainer/MapBasicInfoContainer';
 import useMapInfoStore from '../../../stores/mapInfoStore';
 import ObjectList from './ObjectOutlineList/ObjectList';
 import BlackBackBtn from '../../../assets/btn_arrow_left_black.svg';
@@ -43,7 +43,7 @@ const MapInfoPanel: React.FC<Props> = ({ mode }) => {
           </button>
         </div>
         <MapProducerConatiner />
-        <MapContentTitle mode={mode} />
+        <MapBasicInfoContainer mode={mode} />
         <ObjectList />
       </section>
     );
@@ -57,7 +57,7 @@ const MapInfoPanel: React.FC<Props> = ({ mode }) => {
         </button>
       </div>
       {!isMine && <MapProducerConatiner />}
-      <MapContentTitle mode={mode} />
+      <MapBasicInfoContainer mode={mode} />
       {!loginNeeded && <ObjectList />}
     </section>
   );
