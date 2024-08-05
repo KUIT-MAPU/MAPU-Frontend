@@ -54,9 +54,18 @@ const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
         name: '용용선생',
         roadNameAddress: '광진구 능동로 120',
       },
+      {
+        objectId: 2,
+        shape: ObjectShape.LINE,
+        name: '식후 건대 호수 한 바퀴',
+        roadNameAddress: '광진구 능동로 120',
+      },
     ],
-    tags: [],
-    starRatings: [],
+    tags: ['양갈비', '마라샹궈', '꿔바로우'],
+    starRatings: [
+      { name: '미슐랭 가이드', star: 4 },
+      { name: '내 점수', star: 5 },
+    ],
   };
   return (
     <div id={styles.objectInfoPanel}>
