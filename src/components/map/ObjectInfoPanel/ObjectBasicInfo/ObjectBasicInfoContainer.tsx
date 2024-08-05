@@ -1,7 +1,7 @@
 import styles from './ObjectBasicInfoContainer.module.scss';
-import publicStyles from './ObjectContainerPublicStyle.module.scss';
-import { ObjectShape } from '../../../types/enum/ObjectShape';
-import { ObjectInfo } from '../../../types/map/object/ObjectInfo';
+import publicStyles from '../ObjectContainerPublicStyle.module.scss';
+import { ObjectShape } from '../../../../types/enum/ObjectShape';
+import { ObjectInfo } from '../../../../types/map/object/ObjectInfo';
 
 interface Props {
   mode: string;

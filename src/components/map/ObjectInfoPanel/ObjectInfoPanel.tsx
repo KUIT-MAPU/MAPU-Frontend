@@ -1,7 +1,7 @@
 import styles from './ObjectInfoPanel.module.scss';
-import PublishLinkContainer from './PublishLinkContainer';
-import ObjectBasicInfoContainer from './ObjectBasicInfoContainer';
-import EditorObjectInfoInputContainer from './EditorObjectInfoInputContainer';
+import PublishLinkContainer from './PublishLinkContainer/PublishLinkContainer';
+import ObjectBasicInfoContainer from './ObjectBasicInfo/ObjectBasicInfoContainer';
+import EditorObjectInfoInputContainer from './ObjectBasicInfo/EditorObjectInfoInputContainer';
 import OjbectPropertyContainer from './OjbectPropertyContainer/ObjectPropertyContainer';
 import { ObjectInfo } from '../../../types/map/object/ObjectInfo';
 import { ObjectShape } from '../../../types/enum/ObjectShape';
