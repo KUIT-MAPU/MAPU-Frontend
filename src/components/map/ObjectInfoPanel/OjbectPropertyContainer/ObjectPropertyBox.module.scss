@@ -62,3 +62,34 @@
     }
   }
 }
+
+.tagInputContainer {
+  padding: 4px 4px 4px 16px;
+  background-color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid var(--gray_50);
+
+  .tagInput {
+    width: calc(100% - 60px);
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 18px;
+  }
+  .addTagBtn {
+    width: 44px;
+    height: 40px;
+    padding: 9.5px 11px;
+    border-radius: 4px;
+    background: var(--main);
+
+    span {
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+}

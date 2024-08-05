@@ -7,8 +7,10 @@ import MenuBtn from '../../../../assets/btn_menu_gray.svg';
 import Point from '../../../../assets/map/ico_point.svg';
 import Line from '../../../../assets/map/ico_line.svg';
 import Plane from '../../../../assets/map/ico_point.svg';
+import { MapMode } from '../../../../types/enum/MapMode';
 
 interface Props {
+  mode: MapMode;
   type: ObjectPropertyType;
   values: ObjectOutline[] | string[] | StarRating[];
 }
@@ -32,7 +34,11 @@ const isStarRatingArray = (
   return (values as StarRating[])[0] !== undefined;
 };
 
-const ObjectPropertyBox: React.FC<Props> = ({ type, values }) => {
+const ObjectPropertyBox: React.FC<Props> = ({ mode, type, values }) => {
+  const handleAddTag = () => {
+    //TODO: 태그 추가 api
+  };
+
   //connections
   if (type === ObjectPropertyType.CONNECTION && isObjectOutlineArray(values))
     return (
@@ -79,7 +85,20 @@ const ObjectPropertyBox: React.FC<Props> = ({ type, values }) => {
             <img src={MenuBtn} alt="메뉴" />
           </button>
         </div>
-        <div className={styles.propertyBox}></div>
+        <div className={styles.propertyBox}>
+          {mode === MapMode.EDIT && (
+            <div className={styles.tagInputContainer}>
+              <input type="text" className={styles.tagInput} maxLength={10} />
+              <button
+                type="button"
+                className={styles.addTagBtn}
+                onClick={handleAddTag}
+              >
+                <span>추가</span>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     );
 
