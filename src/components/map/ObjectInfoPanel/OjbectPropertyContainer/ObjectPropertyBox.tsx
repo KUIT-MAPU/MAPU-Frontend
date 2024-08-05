@@ -3,11 +3,12 @@ import { ObjectOutline } from '../../../../types/map/object/ObjectOutline';
 import { StarRating } from '../../../../types/map/object/StarRating';
 import { ObjectPropertyType } from '../../../../types/enum/ObjectPropertyType';
 import { ObjectShape } from '../../../../types/enum/ObjectShape';
+import { MapMode } from '../../../../types/enum/MapMode';
 import MenuBtn from '../../../../assets/btn_menu_gray.svg';
 import Point from '../../../../assets/map/ico_point.svg';
 import Line from '../../../../assets/map/ico_line.svg';
 import Plane from '../../../../assets/map/ico_point.svg';
-import { MapMode } from '../../../../types/enum/MapMode';
+import DeleteBtn from '../../../../assets/btn_delete.svg';
 
 interface Props {
   mode: MapMode;
@@ -37,6 +38,10 @@ const isStarRatingArray = (
 const ObjectPropertyBox: React.FC<Props> = ({ mode, type, values }) => {
   const handleAddTag = () => {
     //TODO: 태그 추가 api
+  };
+
+  const handleDeleteTag = () => {
+    //TODO: 태그 삭제 api
   };
 
   //connections
@@ -98,6 +103,22 @@ const ObjectPropertyBox: React.FC<Props> = ({ mode, type, values }) => {
               </button>
             </div>
           )}
+          <div className={styles.tagContainer}>
+            {values.map((tag) => (
+              <div className={mode === MapMode.EDIT ? styles.tagBox : `${styles.tagBox} ${styles.viewerTagBox}`}>
+                <span className={styles.tagName}>{tag}</span>
+                {mode === MapMode.EDIT && (
+                  <button
+                    type="button"
+                    className={styles.deleteTagBtn}
+                    onClick={handleDeleteTag}
+                  >
+                    <img src={DeleteBtn} alt="태그 지우기" />
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );

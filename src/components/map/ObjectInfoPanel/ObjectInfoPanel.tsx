@@ -62,7 +62,7 @@ const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
         roadNameAddress: '광진구 능동로 120',
       },
     ],
-    tags: ['양갈비', '마라샹궈', '꿔바로우'],
+    tags: ['양갈비', '마라샹궈', '건대중국집중에최고', '꿔바로우', '칭따오'],
     starRatings: [
       { name: '미슐랭 가이드', star: 4 },
       { name: '내 점수', star: 5 },

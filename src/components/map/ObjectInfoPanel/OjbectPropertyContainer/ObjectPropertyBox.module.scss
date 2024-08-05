@@ -93,3 +93,40 @@
     }
   }
 }
+
+.tagContainer {
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--white);
+  border: 1px solid var(--gray_50);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  .tagBox {
+    padding: 3.5px 5px 3.5px 8px;
+    border-radius: 4px;
+    background: var(--gray_100);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .tagName {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .deleteTagBtn {
+      padding: 0;
+      height: 20px;
+      width: 20px;
+      img {
+        height: 20px;
+        width: 20px;
+      }
+    }
+  }
+  .viewerTagBox {
+    padding: 3.5px 8px;
+  }
+}
