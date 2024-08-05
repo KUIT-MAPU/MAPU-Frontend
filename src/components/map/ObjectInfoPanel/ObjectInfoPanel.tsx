@@ -5,9 +5,10 @@ import EditorObjectInfoInputContainer from './ObjectBasicInfo/EditorObjectInfoIn
 import OjbectPropertyContainer from './OjbectPropertyContainer/ObjectPropertyContainer';
 import { ObjectInfo } from '../../../types/map/object/ObjectInfo';
 import { ObjectShape } from '../../../types/enum/ObjectShape';
+import { MapMode } from '../../../types/enum/MapMode';
 
 interface Props {
-  mode: string;
+  mode: MapMode;
 }
 
 const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
@@ -71,7 +72,7 @@ const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
     <div id={styles.objectInfoPanel}>
       <PublishLinkContainer mode={mode} />
       <ObjectBasicInfoContainer mode={mode} object={objectMockData} />
-      {mode === 'edit' && (
+      {mode === MapMode.EDIT && (
         <EditorObjectInfoInputContainer
           name={objectMockData.name}
           detailAddress={objectMockData.detailAddress}

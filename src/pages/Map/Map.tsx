@@ -7,6 +7,7 @@ import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import ObjectInfoPanel from '../../components/map/ObjectInfoPanel/ObjectInfoPanel';
 import AuthContainer from '../../components/login/AuthContainer';
+import { MapMode } from '../../types/enum/MapMode';
 
 //"editor"
 //마이페이지 > 편집 가능한 지도에서의 접근이므로, 이미 로그인 된 상태일 것.
@@ -17,11 +18,22 @@ import AuthContainer from '../../components/login/AuthContainer';
 //홈/탐색/다른사람유저페이지에서 접근시 '게시'여부 유관 -> 백엔드에서 필터링
 const Map = () => {
   const pathname = useLocation().pathname;
-  const mapMode = pathname.split('/').pop()!;
+  const mapMode =
+    pathname.split('/').pop()! === MapMode.EDIT
+      ? MapMode.EDIT
+      : pathname.split('/').pop()! === MapMode.VIEW
+        ? MapMode.VIEW
+        : MapMode.UNVALID; //error;
   const navigate = useNavigate();
   const { mapName } = useParams();
   const { registerStatus, loginNeeded, setLoginNeeded } = useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (mapMode === MapMode.UNVALID) {
+      //TODO: error 잘못된 접근 (모드)
+    }
+  }, []);
 
   //TODO: 지도 정보 api 호출 -> react query의 캐시로 데이터 관리
   useEffect(() => {
@@ -32,7 +44,7 @@ const Map = () => {
   }, [mapName]);
 
   useEffect(() => {
-    if (mapMode == 'edit') {
+    if (mapMode === MapMode.EDIT) {
       //editor
       if (registerStatus !== RegisterStatus.LOG_IN) {
         setDimmed(true);
@@ -40,7 +52,8 @@ const Map = () => {
       } else {
         setDimmed(false);
       }
-    } else {
+    }
+    if (mapMode === MapMode.VIEW) {
       //viewer
       if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
         setDimmed(true);
@@ -48,6 +61,7 @@ const Map = () => {
         setDimmed(false);
       }
     }
+    //else: 잘못된 접근(모드)
   }, [registerStatus, loginNeeded]);
 
   const handleClose = () => {
@@ -62,7 +76,7 @@ const Map = () => {
       {dimmed && (
         <div
           className={dimmedStyles.background}
-          onClick={mapMode === 'view' ? handleClose : undefined}
+          onClick={mapMode === MapMode.VIEW ? handleClose : undefined}
         />
       )}
       {dimmed && <AuthContainer className={styles.authContainer} />}
