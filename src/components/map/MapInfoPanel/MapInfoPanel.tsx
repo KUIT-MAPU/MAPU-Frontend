@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './MapInfoPanel.module.scss';
-import MapProducerConatiner from './MapProducerContainer';
-import MapContentTitle from './MapContentTitleContainer';
+import MapProducerConatiner from './MapBasicInfo/MapProducerContainer/MapProducerContainer';
+import MapBasicInfoContainer from './MapBasicInfo/MapBasicInfoContainer/MapBasicInfoContainer';
 import useMapInfoStore from '../../../stores/mapInfoStore';
-import ObjectList from './ObjectList';
+import ObjectList from './ObjectOutlineList/ObjectList';
+import { MapMode } from '../../../types/enum/MapMode';
 import BlackBackBtn from '../../../assets/btn_arrow_left_black.svg';
 import useRegisterStore from '../../../stores/registerStore';
 
 interface Props {
-  mode: string;
+  mode: MapMode;
 }
 
 const MapInfoPanel: React.FC<Props> = ({ mode }) => {
@@ -30,7 +31,7 @@ const MapInfoPanel: React.FC<Props> = ({ mode }) => {
   };
 
   //viewer
-  if (mode == 'view')
+  if (mode == MapMode.VIEW)
     return (
       <section id={styles.mapInfoPanel}>
         <div className={styles.header}>
@@ -43,24 +44,32 @@ const MapInfoPanel: React.FC<Props> = ({ mode }) => {
           </button>
         </div>
         <MapProducerConatiner />
-        <MapContentTitle mode={mode} />
+        <MapBasicInfoContainer mode={mode} />
         <ObjectList />
       </section>
     );
 
   //editor
-  return (
-    <section id={styles.mapInfoPanel}>
-      <div className={styles.header}>
-        <button type="button">
-          <img src={BlackBackBtn} alt="뒤로가기 버튼" onClick={handleGoBack} />
-        </button>
-      </div>
-      {!isMine && <MapProducerConatiner />}
-      <MapContentTitle mode={mode} />
-      {!loginNeeded && <ObjectList />}
-    </section>
-  );
+  if (mode === MapMode.EDIT)
+    return (
+      <section id={styles.mapInfoPanel}>
+        <div className={styles.header}>
+          <button type="button">
+            <img
+              src={BlackBackBtn}
+              alt="뒤로가기 버튼"
+              onClick={handleGoBack}
+            />
+          </button>
+        </div>
+        {!isMine && <MapProducerConatiner />}
+        <MapBasicInfoContainer mode={mode} />
+        {!loginNeeded && <ObjectList />}
+      </section>
+    );
+
+  //잘못된 모드
+  return <></>;
 };
 
 export default MapInfoPanel;

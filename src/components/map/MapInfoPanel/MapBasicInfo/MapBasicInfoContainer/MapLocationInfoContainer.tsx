@@ -1,7 +1,7 @@
-import styles from './LocationInfoContainer.module.scss';
-import useMapInfoStore from '../../../stores/mapInfoStore';
+import styles from './MapLocationInfoContainer.module.scss';
+import useMapInfoStore from '../../../../../stores/mapInfoStore';
 
-const LocationInfoContainer = () => {
+const MapLocationInfoContainer = () => {
   const { location, centerLatitude, centerLongitude } = useMapInfoStore();
 
   return (
@@ -22,4 +22,4 @@ const LocationInfoContainer = () => {
   );
 };
 
-export default LocationInfoContainer;
+export default MapLocationInfoContainer;

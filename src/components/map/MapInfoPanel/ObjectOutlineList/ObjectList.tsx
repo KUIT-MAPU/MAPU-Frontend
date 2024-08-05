@@ -1,6 +1,6 @@
 import styles from './ObjectList.module.scss';
 import ObjectOutlineBtn from './ObjectOutlineBtn';
-import useMapInfoStore from '../../../stores/mapInfoStore';
+import useMapInfoStore from '../../../../stores/mapInfoStore';
 
 const ObjectList = () => {
   const { isMine, objectOutlineList } = useMapInfoStore();

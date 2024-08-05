@@ -8,4 +8,8 @@
   span {
     font-size: 14px;
   }
+
+  &:hover {
+    background: var(--gray_25);
+  }
 }
