@@ -50,9 +50,11 @@ const ObjectPropertyBox: React.FC<Props> = ({ mode, type, values }) => {
       <div className={styles.objectPropertyBox}>
         <div className={styles.propertyTitleContainer}>
           <span className={styles.propertyTitle}>객체 연결</span>
-          <button type="button" className={styles.propertyMenuBtn}>
-            <img src={MenuBtn} alt="메뉴" />
-          </button>
+          {mode === MapMode.EDIT && (
+            <button type="button" className={styles.propertyMenuBtn}>
+              <img src={MenuBtn} alt="메뉴" />
+            </button>
+          )}
         </div>
         <div className={styles.propertyBox}>
           {values.map((connectionObject) => (
@@ -86,9 +88,11 @@ const ObjectPropertyBox: React.FC<Props> = ({ mode, type, values }) => {
       <div className={styles.objectPropertyBox}>
         <div className={styles.propertyTitleContainer}>
           <span className={styles.propertyTitle}>태그</span>
-          <button type="button" className={styles.propertyMenuBtn}>
-            <img src={MenuBtn} alt="메뉴" />
-          </button>
+          {mode === MapMode.EDIT && (
+            <button type="button" className={styles.propertyMenuBtn}>
+              <img src={MenuBtn} alt="메뉴" />
+            </button>
+          )}
         </div>
         <div className={styles.propertyBox}>
           {mode === MapMode.EDIT && (
@@ -105,7 +109,13 @@ const ObjectPropertyBox: React.FC<Props> = ({ mode, type, values }) => {
           )}
           <div className={styles.tagContainer}>
             {values.map((tag) => (
-              <div className={mode === MapMode.EDIT ? styles.tagBox : `${styles.tagBox} ${styles.viewerTagBox}`}>
+              <div
+                className={
+                  mode === MapMode.EDIT
+                    ? styles.tagBox
+                    : `${styles.tagBox} ${styles.viewerTagBox}`
+                }
+              >
                 <span className={styles.tagName}>{tag}</span>
                 {mode === MapMode.EDIT && (
                   <button
@@ -129,9 +139,11 @@ const ObjectPropertyBox: React.FC<Props> = ({ mode, type, values }) => {
       <div className={styles.objectPropertyBox}>
         <div className={styles.propertyTitleContainer}>
           <span className={styles.propertyTitle}>별점</span>
-          <button type="button" className={styles.propertyMenuBtn}>
-            <img src={MenuBtn} alt="메뉴" />
-          </button>
+          {mode === MapMode.EDIT && (
+            <button type="button" className={styles.propertyMenuBtn}>
+              <img src={MenuBtn} alt="메뉴" />
+            </button>
+          )}
         </div>
         <div className={styles.propertyBox}></div>
       </div>
