@@ -7,6 +7,9 @@ import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import ObjectInfoPanel from '../../components/map/ObjectInfoPanel/ObjectInfoPanel';
 import AuthContainer from '../../components/login/AuthContainer';
+import BaseMap from '../../components/map/BaseMap/BaseMap';
+import EditDesignPanel from '../../components/map/BaseMap/EditDesignPanel';
+import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import { MapMode } from '../../types/enum/MapMode';
 
 //"editor"
@@ -80,8 +83,11 @@ const Map = () => {
         />
       )}
       {dimmed && <AuthContainer className={styles.authContainer} />}
-      <MapInfoPanel mode={mapMode} />
-      <ObjectInfoPanel mode={mapMode} />
+      <GlobalNavigationBar>
+        <MapInfoPanel mode={mapMode} />
+        <BaseMap mode={mapMode} />
+        <ObjectInfoPanel mode={mapMode} />
+      </GlobalNavigationBar>
     </div>
   );
 };

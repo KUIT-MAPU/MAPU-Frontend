@@ -1,0 +1,226 @@
+.root {
+  position: fixed;
+  bottom: 12px;
+  width: 351px;
+  height: 64px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  background-color: transparent;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.markerRoot {
+  position: fixed;
+  bottom: 12px;
+  width: 720px;
+  height: 64px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  background-color: transparent;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.polylineRoot {
+  position: fixed;
+  bottom: 12px;
+  width: 720px;
+  height: 64px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  background-color: transparent;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.polygonRoot {
+  position: fixed;
+  bottom: 12px;
+  width: 818px;
+  height: 64px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  background-color: transparent;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.border {
+  width: 1px;
+  height: 32px;
+  background-color: #ebeef2;
+}
+
+.bottom {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+
+}
+
+.activeBtn {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background: #f2f5f8;
+}
+
+.design {
+  width: 151px;
+  height: 64px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
+}
+
+.markerDesign,
+.polylineDesign {
+  width: 520px;
+  height: 64px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
+}
+
+.polygonDesign {
+  width: 618px;
+  height: 64px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
+}
+
+.noShape {
+  width: 148px;
+  height: 100%;
+  padding: 12px 15px 12px 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.shape {
+  width: 148px;
+  height: 100%;
+  border-right: 1px solid #ebeef2;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.shapeBtn {
+  width: 124px;
+  height: 40px;
+  gap: 2px;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.line {
+  width: 102px;
+  height: 100%;
+  display: flex;
+  padding: 12px 8px 12px 12px;
+}
+
+.transparent {
+  width: 98px;
+  height: 100%;
+  display: flex;
+  padding: 12px 8px 12px 8px;
+}
+
+.lineBtn,
+.transparentBtn {
+  width: 82px;
+  height: 40px;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+}
+
+.color {
+  width: 270px;
+  height: 100%;
+  display: flex;
+  padding: 12px 8px 12px 8px;
+}
+
+.colorBtn {
+  width: 250px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.move {
+  width: 120px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
+  gap: 8px;
+  justify-content: space-evenly;
+}
+
+.share {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  padding: 12px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
+}
