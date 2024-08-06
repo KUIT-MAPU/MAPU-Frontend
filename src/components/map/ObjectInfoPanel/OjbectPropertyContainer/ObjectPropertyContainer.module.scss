@@ -1,7 +1,6 @@
 .objectPropertyContainer {
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
   margin-right: 2px;
 }
 .editorPointContainer {
@@ -41,5 +40,11 @@
   padding: 16px 10px 16px 16px;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
   gap: 16px;
+}
+.addPropertyPopUp {
+  position: absolute;
+  right: 16px;
+  top: 52px;
 }

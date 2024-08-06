@@ -1,11 +1,11 @@
 import styles from './ObjectBasicInfoContainer.module.scss';
-import publicStyles from './ObjectContainerPublicStyle.module.scss';
-import { ObjectShape } from '../../../types/enum/ObjectShape';
-import { ObjectBasicInfo } from '../../../types/map/object/ObjectBasicInfo';
+import publicStyles from '../ObjectContainerPublicStyle.module.scss';
+import { ObjectShape } from '../../../../types/enum/ObjectShape';
+import { ObjectInfo } from '../../../../types/map/object/ObjectInfo';
 
 interface Props {
   mode: string;
-  object: ObjectBasicInfo;
+  object: ObjectInfo;
 }
 
 const ObjectBasicInfoContainer: React.FC<Props> = ({ mode, object }) => {

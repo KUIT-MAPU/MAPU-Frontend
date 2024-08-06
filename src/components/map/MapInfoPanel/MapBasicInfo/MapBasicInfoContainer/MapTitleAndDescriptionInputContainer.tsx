@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './MapInfoInputContainer.module.scss';
-import useMapInfoStore from '../../../stores/mapInfoStore';
-import BookmarkDefault from '../../../assets/btn_bookmark_default.svg';
-import BookmarkSelected from '../../../assets/btn_bookmark_selected.svg';
-import useRegisterStore from '../../../stores/registerStore';
-import { RegisterStatus } from '../../../types/enum/RegisterStatus';
+import styles from './MapTitleAndDescriptionInputContainer.module.scss';
+import useMapInfoStore from '../../../../../stores/mapInfoStore';
+import BookmarkDefault from '../../../../../assets/btn_bookmark_default.svg';
+import BookmarkSelected from '../../../../../assets/btn_bookmark_selected.svg';
+import useRegisterStore from '../../../../../stores/registerStore';
+import { RegisterStatus } from '../../../../../types/enum/RegisterStatus';
+import { MapMode } from '../../../../../types/enum/MapMode';
 
 interface Props {
-  mode: string;
+  mode: MapMode;
 }
 
-const MapInfoInputContainer: React.FC<Props> = ({ mode }) => {
+const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
   const {
     mapId,
     mapTitle,
@@ -74,7 +75,7 @@ const MapInfoInputContainer: React.FC<Props> = ({ mode }) => {
           placeholder="지도 이름"
           onChange={handleTitleOnChange}
           onBlur={handleFocusOutTitle}
-          disabled={mode === 'view' ? true : false}
+          disabled={mode === MapMode.VIEW ? true : false}
         />
         {!isMine &&
           (isBookmarked ? (
@@ -100,10 +101,10 @@ const MapInfoInputContainer: React.FC<Props> = ({ mode }) => {
         value={editedDescription}
         onChange={handleDescriptionOnChange}
         onBlur={handleFocusOutDescription}
-        disabled={mode === 'view' ? true : false}
+        disabled={mode === MapMode.VIEW ? true : false}
       />
     </div>
   );
 };
 
-export default MapInfoInputContainer;
+export default MapTitleAndDescriptionInputContainer;

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styles from './MapProducerContainer.module.scss';
-import { MapProducerInfo } from '../../../types/map/MapProducerInfo';
-import useRegisterStore from '../../../stores/registerStore';
-import { RegisterStatus } from '../../../types/enum/RegisterStatus';
+import { MapProducerInfo } from '../../../../../types/map/MapProducerInfo';
+import useRegisterStore from '../../../../../stores/registerStore';
+import { RegisterStatus } from '../../../../../types/enum/RegisterStatus';
 
 const MapProducerConatiner = () => {
   const [mockData, setMockData] = useState<MapProducerInfo>({

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './EditorObjectInfoInputContainer.module.scss';
-import publicStyles from './ObjectContainerPublicStyle.module.scss';
+import publicStyles from '../ObjectContainerPublicStyle.module.scss';
 
 interface Props {
   name: string;

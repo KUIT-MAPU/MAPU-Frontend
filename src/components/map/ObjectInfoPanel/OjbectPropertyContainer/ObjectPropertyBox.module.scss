@@ -1,0 +1,132 @@
+.objectPropertyBox {
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  background: var(--gray_25);
+  border: 1px solid var(--gray_50);
+}
+
+.propertyTitleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 12px 20px 20px;
+
+  .propertyTitle {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .propertyMenuBtn {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.propertyBox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.connectionBox {
+  display: flex;
+  border-radius: 4px;
+  border: 1px solid var(--gray_50);
+  overflow: hidden;
+
+  .objectShapeBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 60px;
+    border-right: 1px solid var(--gray_50);
+  }
+
+  .objectOutlineBox {
+    width: calc(100% - 60px);
+    padding: 0 16px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+
+    .objectName {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .objectRoadNameAddress {
+      font-size: 14px;
+    }
+  }
+}
+
+.tagInputContainer {
+  padding: 4px 4px 4px 16px;
+  background-color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid var(--gray_50);
+
+  .tagInput {
+    width: calc(100% - 60px);
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 18px;
+  }
+  .addTagBtn {
+    width: 44px;
+    height: 40px;
+    padding: 9.5px 11px;
+    border-radius: 4px;
+    background: var(--main);
+
+    span {
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+}
+
+.tagContainer {
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--white);
+  border: 1px solid var(--gray_50);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  .tagBox {
+    padding: 3.5px 5px 3.5px 8px;
+    border-radius: 4px;
+    background: var(--gray_100);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .tagName {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .deleteTagBtn {
+      padding: 0;
+      height: 20px;
+      width: 20px;
+      img {
+        height: 20px;
+        width: 20px;
+      }
+    }
+  }
+  .viewerTagBox {
+    padding: 3.5px 8px;
+  }
+}

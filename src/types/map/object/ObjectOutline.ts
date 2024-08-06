@@ -4,4 +4,5 @@ export interface ObjectOutline {
   objectId: number;
   shape: ObjectShape;
   name: string;
+  roadNameAddress: string;
 }

@@ -1,9 +1,9 @@
 import styles from './PublishLinkContainer.module.scss';
-import publicStyles from './ObjectContainerPublicStyle.module.scss';
-import useMapInfoStore from '../../../stores/mapInfoStore';
-import PublishBtn from '../../../assets/map/btn_publish.svg';
-import PublishCancelBtn from '../../../assets/map/btn_cancel_publish.svg';
-import CopyLinkBtn from '../../../assets/map/btn_link_copy.svg';
+import publicStyles from '../ObjectContainerPublicStyle.module.scss';
+import useMapInfoStore from '../../../../stores/mapInfoStore';
+import PublishBtn from '../../../../assets/map/btn_publish.svg';
+import PublishCancelBtn from '../../../../assets/map/btn_cancel_publish.svg';
+import CopyLinkBtn from '../../../../assets/map/btn_link_copy.svg';
 
 interface Props {
   mode: string;
