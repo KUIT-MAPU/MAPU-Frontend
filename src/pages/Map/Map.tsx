@@ -67,13 +67,13 @@ const Map = () => {
       className={styles.map}
       onClick={() => switchShowAddPropertPopUp(false)}
     >
-      {/* {dimmed && (
+      {dimmed && (
         <div
           className={dimmedStyles.background}
           onClick={mapMode === 'view' ? handleClose : undefined}
         />
       )}
-      {dimmed && <AuthContainer className={styles.authContainer} />} */}
+      {dimmed && <AuthContainer className={styles.authContainer} />}
       <GlobalNavigationBar>
         <MapInfoPanel mode={mapMode} />
         <BaseMap mode={mapMode} />

@@ -10,7 +10,7 @@
 
   background-color: transparent;
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
 }
 
 .markerRoot {
@@ -25,7 +25,7 @@
 
   background-color: transparent;
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
 }
 
 .polylineRoot {
@@ -40,7 +40,7 @@
 
   background-color: transparent;
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
 }
 
 .polygonRoot {
@@ -55,7 +55,7 @@
 
   background-color: transparent;
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
 }
 
 .border {
@@ -77,9 +77,18 @@
   background-color: transparent;
   border: none;
 
-  :hover{
-    background-color: aqua;
-  }
+}
+
+.activeBtn {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  background: #f2f5f8;
 }
 
 .design {
@@ -90,13 +99,13 @@
   flex-direction: row;
   align-items: center;
 
-
   border-radius: 6px;
   background: #fff;
   box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
 }
 
-.markerDesign, .polylineDesign {
+.markerDesign,
+.polylineDesign {
   width: 520px;
   height: 64px;
 
@@ -104,20 +113,18 @@
   flex-direction: row;
   align-items: center;
 
-
   border-radius: 6px;
   background: #fff;
   box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
 }
 
-.polygonDesign{
+.polygonDesign {
   width: 618px;
   height: 64px;
 
   display: flex;
   flex-direction: row;
   align-items: center;
-
 
   border-radius: 6px;
   background: #fff;
@@ -167,7 +174,8 @@
   padding: 12px 8px 12px 8px;
 }
 
-.lineBtn, .transparentBtn {
+.lineBtn,
+.transparentBtn {
   width: 82px;
   height: 40px;
   display: flex;

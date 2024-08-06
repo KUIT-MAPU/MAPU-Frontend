@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Map, DrawingManager } from 'react-kakao-maps-sdk';
 import useKakaoLoader from '../../../hooks/useKakaoLoader';
 import styles from './BaseMap.module.scss';
@@ -24,58 +24,104 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   const [isObject, setIsObject] = useState<string>('');
   const [strokeWeight, setStrokeWeight] = useState<number>(1.5);
 
+  // const managerRef = useRef<kakao.maps.drawing.DrawingManager<|kakao.maps.drawing.OverlayType.POLYLINE
+
   const managerRef =
     useRef<
       kakao.maps.drawing.DrawingManager<
-        | kakao.maps.drawing.OverlayType.ARROW
-        | kakao.maps.drawing.OverlayType.CIRCLE
-        | kakao.maps.drawing.OverlayType.ELLIPSE
         | kakao.maps.drawing.OverlayType.MARKER
         | kakao.maps.drawing.OverlayType.POLYLINE
-        | kakao.maps.drawing.OverlayType.RECTANGLE
         | kakao.maps.drawing.OverlayType.POLYGON
       >
     >(null);
 
-  const handleShapeButtonClick = (type: 'marker' | 'polyline' | 'polygon') => {
-    const manager = managerRef.current;
+  const mapRef = useRef<kakao.maps.Map>(null);
 
+  type OverlayTypeString = 'marker' | 'polyline' | 'polygon';
+
+  const handleShapeButtonClick = (type: OverlayTypeString) => {
+    const manager = managerRef.current;
+    setIsObject(type);
     if (manager) {
-      setIsObject(type);
-      const overlayType =
-        kakao.maps.drawing.OverlayType[
-          type.toUpperCase() as keyof typeof kakao.maps.drawing.OverlayType
-        ];
-      if (overlayType) {
-        manager.cancel();
-        manager.select(overlayType);
-      }
+      manager.cancel();
+      manager.select(type);
     }
   };
 
   const handleLineButtonClick = (label: 'line thin' | 'line thick') => {
     const weight = label === 'line thin' ? 1.5 : 4.5;
-    setStrokeWeight(weight);
+    const manager = managerRef.current;
+    manager?.setStrokeWeight(weight);
   };
 
-  useEffect(() => {
-    console.log(isObject);
-    console.log(strokeWeight);
-  }, [isObject]);
+  const handleTransparentButtonClick = (
+    label: 'face transparent 15' | 'face transparent 30',
+  ) => {
+    const transparent = label === 'face transparent 15' ? 0.2 : 0.5;
+    const manager = managerRef.current;
+    manager?.setStyle(
+      kakao.maps.drawing.OverlayType.POLYGON,
+      'fillOpacity',
+      transparent,
+    );
+  };
+
+  const handleColorButtonClick = (
+    label: 'black' | 'red' | 'yellow' | 'green' | 'blue' | 'purple',
+  ) => {
+    let color: string;
+
+    switch (label) {
+      case 'black':
+        color = '#111111';
+        break;
+      case 'red':
+        color = '#FF4B12';
+        break;
+      case 'yellow':
+        color = '#FFA011';
+        break;
+      case 'green':
+        color = '#00BD57';
+        break;
+      case 'blue':
+        color = '#0085FF';
+        break;
+      case 'purple':
+        color = '#821FFF';
+        break;
+      default:
+        color = '#111111'; // 기본 색상으로 설정
+    }
+
+    const manager = managerRef.current;
+    manager?.setStrokeColor(label);
+    manager?.setStyle(
+      kakao.maps.drawing.OverlayType.POLYGON,
+      'fillColor',
+      color,
+    );
+  };
+
+  const handleMoveButtonClick = (label: 'expansion' | 'reduction') => {
+    const map = mapRef.current;
+    console.log('map:', map);
+    if (label === 'expansion') {
+      map?.setLevel(map.getLevel() - 1);
+    } else {
+      map?.setLevel(map.getLevel() + 1);
+    }
+  };
 
   return (
     <>
-      <Map center={position} className={styles.map} level={3}>
+      <Map ref={mapRef} center={position} className={styles.map} level={3}>
         <DrawingManager
           ref={managerRef}
           drawingMode={[
-            'arrow',
-            'circle',
-            'ellipse',
-            'marker',
-            'polyline',
-            'rectangle',
-            'polygon',
+            kakao.maps.drawing.OverlayType.MARKER,
+            kakao.maps.drawing.OverlayType.POLYLINE,
+            kakao.maps.drawing.OverlayType.POLYGON,
           ]}
           guideTooltip={['draw', 'drag', 'edit']}
           markerOptions={{
@@ -91,22 +137,6 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
             hintStrokeStyle: 'dash',
             hintStrokeOpacity: 0.5,
           }}
-          rectangleOptions={{
-            draggable: true,
-            removable: true,
-            editable: true,
-            strokeColor: '#1111',
-            fillColor: '#1111',
-            fillOpacity: 0.2,
-          }}
-          circleOptions={{
-            draggable: true,
-            removable: true,
-            editable: true,
-            strokeColor: '#39f',
-            fillColor: '#39f',
-            fillOpacity: 0.5,
-          }}
           polygonOptions={{
             draggable: false,
             removable: true,
@@ -118,30 +148,19 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
             hintStrokeStyle: 'dash',
             hintStrokeOpacity: 0.5,
           }}
-          arrowOptions={{
-            draggable: true,
-            removable: true,
-            editable: true,
-            strokeColor: '#39f',
-            hintStrokeStyle: 'dash',
-            hintStrokeOpacity: 0.5,
-          }}
-          ellipseOptions={{
-            draggable: true,
-            removable: true,
-            editable: true,
-            strokeColor: '#39f',
-            fillColor: '#39f',
-            fillOpacity: 0.5,
-          }}
         />
       </Map>
-      <EditDesignPanel
-        mode={mode}
-        object={isObject}
-        handleShapeButtonClick={handleShapeButtonClick}
-        handleLineButtonClick={handleLineButtonClick}
-      />
+      {mode === 'edit' ? (
+        <EditDesignPanel
+          mode={mode}
+          object={isObject}
+          handleShapeButtonClick={handleShapeButtonClick}
+          handleLineButtonClick={handleLineButtonClick}
+          handleTransparentButtonClick={handleTransparentButtonClick}
+          handleColorButtonClick={handleColorButtonClick}
+          handleMoveButtonClick={handleMoveButtonClick}
+        />
+      ) : null}
     </>
   );
 };
