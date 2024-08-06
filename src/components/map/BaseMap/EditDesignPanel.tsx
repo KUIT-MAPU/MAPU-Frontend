@@ -27,6 +27,13 @@ import styles from './EditDesignPanel.module.scss';
 interface EditDesignPanelProps {
   mode: string;
   object: string;
+  managerRef: React.RefObject<
+  kakao.maps.drawing.DrawingManager<
+    | kakao.maps.drawing.OverlayType.MARKER
+    | kakao.maps.drawing.OverlayType.POLYLINE
+    | kakao.maps.drawing.OverlayType.POLYGON
+  >
+>;
   handleShapeButtonClick: (type: 'marker' | 'polyline' | 'polygon') => void;
   handelDotButtonClick?: () => void;
   handleLineButtonClick: (label: 'line thin' | 'line thick') => void;
@@ -43,6 +50,7 @@ interface EditDesignPanelProps {
 const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
   mode,
   object,
+  managerRef,
   handleShapeButtonClick,
   handelDotButtonClick,
   handleLineButtonClick,
@@ -56,6 +64,13 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
   const [activeTransparent, setActiveTransperent] = useState<string>('');
   const [activeColor, setActiveColor] = useState<string>('');
 
+  managerRef.current?.addListener('drawend', () => {
+    setActiveShape('');
+    setActiveColor('');
+    setActiveLine('');
+    setActiveTransperent('');
+  });
+  
   const handleShapeButton = (type: 'marker' | 'polyline' | 'polygon') => {
     handleShapeButtonClick(type);
     setActiveShape(type);
