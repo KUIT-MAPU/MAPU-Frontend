@@ -24,8 +24,6 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   const [isObject, setIsObject] = useState<string>('');
   const [strokeWeight, setStrokeWeight] = useState<number>(1.5);
 
-  // const managerRef = useRef<kakao.maps.drawing.DrawingManager<|kakao.maps.drawing.OverlayType.POLYLINE
-
   const managerRef =
     useRef<
       kakao.maps.drawing.DrawingManager<
@@ -113,6 +111,11 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     }
   };
 
+  const manager = managerRef.current;
+  manager?.addListener('drawend',()=>{
+    setIsObject('')
+  })
+
   return (
     <>
       <Map ref={mapRef} center={position} className={styles.map} level={3}>
@@ -154,6 +157,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
         <EditDesignPanel
           mode={mode}
           object={isObject}
+          managerRef={managerRef}
           handleShapeButtonClick={handleShapeButtonClick}
           handleLineButtonClick={handleLineButtonClick}
           handleTransparentButtonClick={handleTransparentButtonClick}
