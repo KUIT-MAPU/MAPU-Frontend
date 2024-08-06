@@ -31,10 +31,10 @@ interface EditDesignPanelProps {
   handelDotButtonClick?: () => void;
   handleLineButtonClick: (label: 'line thin' | 'line thick') => void;
   handleTransparentButtonClick: (
-    label: 'face transparent 15' | 'face transparent 30'
+    label: 'face transparent 15' | 'face transparent 30',
   ) => void;
   handleColorButtonClick: (
-    label: 'black' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'
+    label: 'black' | 'red' | 'yellow' | 'green' | 'blue' | 'purple',
   ) => void;
   handleMoveButtonClick: (label: 'expansion' | 'reduction') => void;
   handleShareButtonClick?: () => void;
@@ -53,29 +53,34 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
 }) => {
   const [activeShape, setActiveShape] = useState<string>('');
   const [activeLine, setActiveLine] = useState<string>('');
-  const [activeTransparent , setActiveTransperent] = useState<string>('');
+  const [activeTransparent, setActiveTransperent] = useState<string>('');
   const [activeColor, setActiveColor] = useState<string>('');
 
   const handleShapeButton = (type: 'marker' | 'polyline' | 'polygon') => {
     handleShapeButtonClick(type);
     setActiveShape(type);
-  }
+  };
 
   const handleLineButton = (label: 'line thin' | 'line thick') => {
     handleLineButtonClick(label);
-    setActiveLine(label)
-  }
+    setActiveLine(label);
+  };
 
-  const handleTransparentButton=(label: 'face transparent 15' | 'face transparent 30') => {
+  const handleTransparentButton = (
+    label: 'face transparent 15' | 'face transparent 30',
+  ) => {
     handleTransparentButtonClick(label);
-    setActiveTransperent(label)
-  }
+    setActiveTransperent(label);
+  };
 
-  const handleColorButton=(label: 'black' | 'red' | 'yellow' | 'green' | 'blue' | 'purple') => {
+  const handleColorButton = (
+    label: 'black' | 'red' | 'yellow' | 'green' | 'blue' | 'purple',
+  ) => {
     handleColorButtonClick(label);
-    setActiveColor(label)
-  }
-
+    setActiveColor(label);
+    console.log(label);
+    console.log(activeColor);
+  };
 
   return (
     <div
@@ -87,19 +92,19 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
         <div className={`${object ? styles.shape : styles.noShape}`}>
           <div className={styles.shapeBtn}>
             <button
-              className={`${ activeShape === 'marker' ? styles.activeBtn : styles.button}`}
+              className={`${activeShape === 'marker' ? styles.activeBtn : styles.button}`}
               onClick={() => handleShapeButton('marker')}
             >
               <img src={ico_dot} alt="marker" />
             </button>
             <button
-              className={`${ activeShape === 'polyline' ? styles.activeBtn : styles.button}`}
+              className={`${activeShape === 'polyline' ? styles.activeBtn : styles.button}`}
               onClick={() => handleShapeButton('polyline')}
             >
               <img src={ico_line} alt="polyline" />
             </button>
             <button
-              className={`${ activeShape === 'polygon' ? styles.activeBtn : styles.button}`}
+              className={`${activeShape === 'polygon' ? styles.activeBtn : styles.button}`}
               onClick={() => handleShapeButton('polygon')}
             >
               <img src={ico_face} alt="polygon" />
@@ -129,13 +134,13 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
             {object === 'polyline' && (
               <div className={styles.lineBtn}>
                 <button
-                  className={`${ activeLine === 'line thin' ? styles.activeBtn : styles.button}`}
+                  className={`${activeLine === 'line thin' ? styles.activeBtn : styles.button}`}
                   onClick={() => handleLineButton('line thin')}
                 >
                   <img src={ico_line_thin} alt="line thin" />
                 </button>
                 <button
-                  className={`${ activeLine === 'line thick' ? styles.activeBtn : styles.button}`}
+                  className={`${activeLine === 'line thick' ? styles.activeBtn : styles.button}`}
                   onClick={() => handleLineButton('line thick')}
                 >
                   <img src={ico_line_thick} alt="line thick" />
@@ -146,13 +151,13 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
             {object === 'polygon' && (
               <div className={styles.lineBtn}>
                 <button
-                  className={`${ activeLine === 'line thin' ? styles.activeBtn : styles.button}`}
+                  className={`${activeLine === 'line thin' ? styles.activeBtn : styles.button}`}
                   onClick={() => handleLineButton('line thin')}
                 >
                   <img src={ico_face_thin} alt="face thin" />
                 </button>
                 <button
-                  className={`${ activeLine === 'line thick' ? styles.activeBtn : styles.button}`}
+                  className={`${activeLine === 'line thick' ? styles.activeBtn : styles.button}`}
                   onClick={() => handleLineButton('line thick')}
                 >
                   <img src={ico_face_thick} alt="face thick" />
@@ -167,18 +172,14 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
           <div className={styles.transparent}>
             <div className={styles.transparentBtn}>
               <button
-                className={`${ activeTransparent === 'face transparent 15' ? styles.activeBtn : styles.button}`}
-                onClick={() =>
-                  handleTransparentButton('face transparent 15')
-                }
+                className={`${activeTransparent === 'face transparent 15' ? styles.activeBtn : styles.button}`}
+                onClick={() => handleTransparentButton('face transparent 15')}
               >
                 <img src={ico_face_transparent_15} alt="face transparent 15" />
               </button>
               <button
-                className={`${ activeTransparent === 'face transparent 30' ? styles.activeBtn : styles.button}`}
-                onClick={() =>
-                  handleTransparentButton('face transparent 30')
-                }
+                className={`${activeTransparent === 'face transparent 30' ? styles.activeBtn : styles.button}`}
+                onClick={() => handleTransparentButton('face transparent 30')}
               >
                 <img src={ico_face_transparent_30} alt="face transparent 30" />
               </button>
@@ -191,37 +192,37 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
           <div className={styles.color}>
             <div className={styles.colorBtn}>
               <button
-                className={`${ activeColor === 'black' ? styles.activeBtn : styles.button}`}
+                className={`${activeColor === 'black' ? styles.activeBtn : styles.button}`}
                 onClick={() => handleColorButton('black')}
               >
                 <img src={ico_color_black} alt="color black" />
               </button>
               <button
-                className={`${ activeColor === 'red' ? styles.activeBtn : styles.button}`}
+                className={`${activeColor === 'red' ? styles.activeBtn : styles.button}`}
                 onClick={() => handleColorButton('red')}
               >
                 <img src={ico_color_red} alt="color red" />
               </button>
               <button
-                className={`${ activeColor === 'yellow' ? styles.activeBtn : styles.button}`}
-                onClick={() => handleColorButtonClick('yellow')}
+                className={`${activeColor === 'yellow' ? styles.activeBtn : styles.button}`}
+                onClick={() => handleColorButton('yellow')}
               >
                 <img src={ico_color_yellow} alt="color yellow" />
               </button>
               <button
-                className={`${ activeColor === 'green' ? styles.activeBtn : styles.button}`}
+                className={`${activeColor === 'green' ? styles.activeBtn : styles.button}`}
                 onClick={() => handleColorButton('green')}
               >
                 <img src={ico_color_green} alt="color green" />
               </button>
               <button
-                className={`${ activeColor === 'blue' ? styles.activeBtn : styles.button}`}
+                className={`${activeColor === 'blue' ? styles.activeBtn : styles.button}`}
                 onClick={() => handleColorButton('blue')}
               >
                 <img src={ico_color_blue} alt="color blue" />
               </button>
               <button
-                className={`${ activeColor === 'purple' ? styles.activeBtn : styles.button}`}
+                className={`${activeColor === 'purple' ? styles.activeBtn : styles.button}`}
                 onClick={() => handleColorButton('purple')}
               >
                 <img src={ico_color_purple} alt="color purple" />
