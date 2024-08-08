@@ -9,13 +9,13 @@ const instance = axios.create({
 // 요청 인터셉터
 instance.interceptors.request.use(
   (config) => {
-    const accessToken = useRegisterStore().accessToken;
-    // console.log(accessToken);
+    // const accessToken = useRegisterStore().accessToken;
+    // // console.log(accessToken);
 
-    if (accessToken !== null && accessToken !== '') {
-      config.headers['Authorization'] = `Bearer ${accessToken}`;
-    }
-    console.log('axios config : ', config);
+    // if (accessToken !== null && accessToken !== '') {
+    //   config.headers['Authorization'] = `Bearer ${accessToken}`;
+    // }
+    // console.log('axios config : ', config);
     return config;
   },
   (error) => {
@@ -27,12 +27,13 @@ instance.interceptors.request.use(
 // 응답 인터셉터
 instance.interceptors.response.use(
   (response) => {
+    console.log(response);
     return response;
   },
-  (error) => {
-    // 응답 에러 처리
-    throw new Error(' data error');
-  },
+  // (error) => {
+  //   // 응답 에러 처리
+  //   throw new Error(' data error');
+  // },
 );
 
 export default instance;
