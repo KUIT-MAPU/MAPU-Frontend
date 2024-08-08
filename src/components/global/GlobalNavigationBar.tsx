@@ -26,7 +26,7 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
             <Explore className={styles.icon} />
           </div>
         </Link>
-        <Link to="/user" className={styles.link}>
+        <Link to="/user/:userId" className={styles.link}>
           <div
             className={`${styles.iconContainer} ${styles.userIconContainer}`}
           >
