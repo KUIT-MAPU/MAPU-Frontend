@@ -14,7 +14,6 @@ const KakaoLogin = () => {
     redirectUrl.searchParams.get('state') || '/',
   );
   const code = redirectUrl.searchParams.get('code');
-  console.log(code);
 
   const { kakaoUserData, isKakaoUserDataLoading } = useKakaoUserDataQuery(
     code!,

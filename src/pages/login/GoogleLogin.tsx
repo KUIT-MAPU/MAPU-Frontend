@@ -14,6 +14,7 @@ const GoogleLogin = () => {
     redirectUrl.searchParams.get('state') || '/',
   );
   const code = redirectUrl.searchParams.get('code');
+
   const { googleUserData, isGoogleUserDataLoading } = useGoogleUserDataQuery(
     code!,
   );
