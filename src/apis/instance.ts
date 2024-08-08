@@ -13,7 +13,7 @@ instance.interceptors.request.use(
     // console.log(accessToken);
 
     if (accessToken !== null && accessToken !== '') {
-      config.headers['Authorization'] = accessToken;
+      config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     console.log('axios config : ', config);
     return config;
