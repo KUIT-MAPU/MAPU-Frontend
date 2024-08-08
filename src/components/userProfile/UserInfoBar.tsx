@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import styles from './UserInfoBar.module.scss';
 import { ReactComponent as ProfilePerson } from '../../assets/img_user_default_profile.svg';
-import Following from './followModal/Following'
+import Following from './followModal/Following';
 import Follower from './followModal/Follower';
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
   const [isFollowingOpen, setIsFollowingOpen] = useState(false);
   const [isFollowerOpen, setIsFollowerOpen] = useState(false);
 
-  const openFollowing = () =>{
+  const openFollowing = () => {
     setIsFollowingOpen(true);
-  }
+  };
 
-  const closeFollowing = () =>{
+  const closeFollowing = () => {
     setIsFollowingOpen(false);
-  }
-  
-  const openFollower = () =>{
-    setIsFollowerOpen(true);
-  }
+  };
 
-  const closeFollower = () =>{
+  const openFollower = () => {
+    setIsFollowerOpen(true);
+  };
+
+  const closeFollower = () => {
     setIsFollowerOpen(false);
-  }
+  };
 
   return (
     <div className={styles.UserInfoBar}>

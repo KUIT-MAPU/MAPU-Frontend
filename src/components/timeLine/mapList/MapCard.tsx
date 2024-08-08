@@ -50,7 +50,11 @@ const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
           </div>
           {mapData.slice(renderMap - INIT_RENDER, renderMap).map((map) => (
             <div key={map.id} className={styles.map}>
-              <img src={map.img} className={styles.mapImg} alt={`${map.name}`} />
+              <img
+                src={map.img}
+                className={styles.mapImg}
+                alt={`${map.name}`}
+              />
 
               <div className={styles.info}>
                 <div className={styles.mapInfo}>

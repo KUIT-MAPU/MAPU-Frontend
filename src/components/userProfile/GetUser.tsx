@@ -7,11 +7,21 @@ import { ReactComponent as DownArrow } from '../../assets/DownArrow.svg';
 import { ReactComponent as Search } from '../../assets/Search.svg';
 import { ReactComponent as Gallery } from '../../assets/GalleryView.svg';
 import { ReactComponent as List } from '../../assets/ListView.svg';
+import NewMap from './getNewMap/NewMap';
 
 const GetUser = (props: { children?: React.ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [view, setView] = useState('gallery'); //gallery를 기본으로 설정
+  const [isNewMapOpen, setIsNewMapOpen] = useState(false);
   const placeholderImage = 'https://via.placeholder.com/150';
+
+  const openNewMap = () => {
+    setIsNewMapOpen(true);
+  };
+
+  const closeNewMap = () => {
+    setIsNewMapOpen(false);
+  };
 
   const mapData = [
     {
@@ -118,7 +128,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
             <List />
           </button>
         </div>
-        <div className={styles.newMap}>+ 새로운 지도</div>
+        <div className={styles.newMap} onClick={openNewMap}>+ 새로운 지도</div>
       </div>
       <div className={styles.mapContainer}>
         {view === 'gallery' && (
@@ -237,6 +247,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
           ))}
         </div>
       </div>
+      {isNewMapOpen && <NewMap onClose={closeNewMap} />}
     </div>
   );
 };

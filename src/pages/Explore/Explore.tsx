@@ -11,7 +11,7 @@ import AuthContainer from '../../components/login/AuthContainer';
 import MapList from '../../components/explore/MapList';
 import ErrorPage from '../../components/explore/ErrorPage';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
-import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore'
+import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore';
 import mockData from '../../components/timeLine/mapList/MapModel';
 
 import styles from './Explore.module.scss';
@@ -27,7 +27,8 @@ const Explore: React.FC = () => {
   const [isPopup, setIsPopup] = useState<boolean>(false);
   const [mapData, setMapData] = useState<MapType[]>([]);
 
-  const { selectedList, setSelectedList, removeSelectedList } = useKeywordStore()
+  const { selectedList, setSelectedList, removeSelectedList } =
+    useKeywordStore();
   const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
 
   const outside = useRef<HTMLDivElement>(null);
@@ -46,14 +47,14 @@ const Explore: React.FC = () => {
   };
 
   const fetchKeywordSearch = async (keyword: KeywordType) => {
-    try{
+    try {
       //TODO: API
-      const data =mockData.filter((map) => map.keywords === keyword.title);
+      const data = mockData.filter((map) => map.keywords === keyword.title);
       setMapData(data);
     } catch {
       console.error('error');
     }
-  }
+  };
 
   const handleRandomBtn = () => {
     setIsCheck('random');
@@ -73,20 +74,19 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const allKeywords = allKeywordList.map(keyword => ({
+    const allKeywords = allKeywordList.map((keyword) => ({
       ...keyword,
       selected: false,
     }));
-  
+
     setAllKeywordList(allKeywords);
-  
+
     const resetSelectedLists = async () => {
       await removeSelectedList();
       setSelectedList([]);
     };
 
     resetSelectedLists();
-  
   }, [pathname]);
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if(selectedList !== null && selectedList.length !== 0) {
+    if (selectedList !== null && selectedList.length !== 0) {
       const keyword = selectedList[0];
       setText(keyword.title);
       fetchKeywordSearch(keyword);
@@ -134,7 +134,7 @@ const Explore: React.FC = () => {
       setText('');
       fetchMapData();
     }
-  },[selectedList]);
+  }, [selectedList]);
 
   return (
     <>
@@ -176,11 +176,17 @@ const Explore: React.FC = () => {
               setText={setText}
             />
             <div className={styles.main}>
-              {mapData !== null && mapData.length !==0 ? (
+              {mapData !== null && mapData.length !== 0 ? (
                 mapData.map((map: MapType) => (
-                  <MapList map={map} key={map.id} keyword={map.mapKeyword ?? []} />
+                  <MapList
+                    map={map}
+                    key={map.id}
+                    keyword={map.mapKeyword ?? []}
+                  />
                 ))
-              ) : (<ErrorPage text={text} />)}
+              ) : (
+                <ErrorPage text={text} />
+              )}
             </div>
           </HeaderNavigation>
         </div>

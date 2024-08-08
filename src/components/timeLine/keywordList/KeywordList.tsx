@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import { KeywordType } from '../../../types/KeywordType';
-import { useKeywordStore, useAllKeywordStore } from '../../../stores/keywordStore';
+import {
+  useKeywordStore,
+  useAllKeywordStore,
+} from '../../../stores/keywordStore';
 import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 
@@ -54,10 +57,12 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
 
   useEffect(() => {
     if (!isLog && selectedList.length === 0) {
-      const selectedInit = allKeywordList.slice(0, 2).map((item: KeywordType) => {
-        item.selected = !item.selected;
-        return item;
-      });
+      const selectedInit = allKeywordList
+        .slice(0, 2)
+        .map((item: KeywordType) => {
+          item.selected = !item.selected;
+          return item;
+        });
       setSelectedList(selectedInit);
     }
   }, [isLog, allKeywordList]);
@@ -78,7 +83,9 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
 
       const updatedKeywordList = [...selectedList, ...falseKeyword];
 
-      if (JSON.stringify(allKeywordList) !== JSON.stringify(updatedKeywordList)) {
+      if (
+        JSON.stringify(allKeywordList) !== JSON.stringify(updatedKeywordList)
+      ) {
         setAllKeywordList(updatedKeywordList);
       }
 
@@ -87,7 +94,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   }, [isRefresh]);
 
   useEffect(() => {
-    console.log('현재 경로:',location.pathname);
+    console.log('현재 경로:', location.pathname);
     setIsPath(location.pathname);
   }, [location.pathname]);
 
@@ -125,7 +132,13 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
             className={keyword.selected ? styles.selected : styles.keywordPills}
             key={keyword.id}
             onClick={() => handleSelectPills(keyword)}
-            disabled={isPath === '/explore' && selectedList.length === 1 && !(keyword.selected) ? true : false}
+            disabled={
+              isPath === '/explore' &&
+              selectedList.length === 1 &&
+              !keyword.selected
+                ? true
+                : false
+            }
           >
             {keyword.title}
           </button>
