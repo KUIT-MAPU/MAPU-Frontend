@@ -1,11 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Map, DrawingManager, MapMarker } from 'react-kakao-maps-sdk';
 import useKakaoLoader from '../../../hooks/useKakaoLoader';
 import styles from './BaseMap.module.scss';
 import EditDesignPanel from './EditDesignPanel';
-import ico_dot from '../../../assets/map/ico_dot.svg';
-import ico_dot_thick from '../../../assets/map/ico_dot_thick.svg';
-import ico_dot_thin from '../../../assets/map/ico_dot_thin.svg';
+import {ReactComponent as IconDot} from '../../../assets/map/ico_dot.svg';
+import {ReactComponent as DotThick} from '../../../assets/map/ico_dot_thick.svg';
+import {ReactComponent as DotThin} from '../../../assets/map/ico_dot_thin.svg';
 
 interface BaseMapProps {
   mode: string;
@@ -16,6 +16,11 @@ interface Position {
   lng: number;
 }
 
+interface Marker {
+  img: React.ReactNode;
+  pos: Position;
+}
+
 const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   useKakaoLoader();
 
@@ -23,13 +28,12 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     lat: 33.450701,
     lng: 126.570667,
   }); // 첫 지도 이미지
-  const [markerPosition, setMarkerPosition] = useState<Position> ({lat:0,lng:0})
 
-  const [marker, setMarker] = useState<{ img: string; pos: Position } | null>(null);
+  const [marker, setMarker] = useState<Marker[] | null>(null);
 
   const [isObject, setIsObject] = useState<string>('');
   const [strokeWeight, setStrokeWeight] = useState<number>(1.5);
-  const [dot, setDot] = useState<string>(ico_dot);
+  const [dot, setDot] = useState<React.ReactNode>(<IconDot />);
   const [dotShape, setDotShape] = useState<boolean>(false);
 
   const managerRef =
@@ -41,7 +45,6 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     >(null);
 
   const mapRef = useRef<kakao.maps.Map>(null);
-
 
   type OverlayTypeString = 'polyline' | 'polygon';
 
@@ -127,42 +130,23 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   };
 
   const handleDotButtonClick = (label: 'dot thin' | 'dot thick') => {
-    const dotImg = label === 'dot thin' ? ico_dot_thin : ico_dot_thick;
-    setMarker((pre) => ({
-      ...pre,
-      img: dotImg,
-      pos: markerPosition,
-    }));
+    const dotImg = label === 'dot thin' ? <DotThin /> : <DotThick />;
+    setDot(dotImg);
+  };
+
+  const getMarker = (position: Position) => {
+    const pre = marker;
+    if (pre) {
+      setMarker([...pre, { img: dot, pos: position }]);
+    } else {
+      setMarker([{ img: dot, pos: position }]);
+    }
   };
 
   const manager = managerRef.current;
   manager?.addListener('drawend', () => {
     setIsObject('');
   });
-
-  const icon: kakao.maps.drawing.MarkerImageOption = {
-    src: dot,
-    width: 24,
-    height: 24,
-    offsetX: 12,
-    offsetY: 24,
-    spriteWidth: 24,
-    spriteHeight: 24,
-    spriteOriginX: 0,
-    spriteOriginY: 0,
-    shape: 'circle',
-    coords: kakao.maps.services.Coords.WGS84,
-  };
-
-  const image: kakao.maps.drawing.MarkerImageOptions = {
-    ...icon,
-    hoverImage: {
-      ...icon,
-    },
-    dragImage: {
-      ...icon,
-    },
-  };
 
   return (
     <>
@@ -173,14 +157,14 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
         level={3}
         onClick={(_, mouseEvent) => {
           const latlng = mouseEvent.latLng;
-          setMarkerPosition({ lat: latlng.getLat(), lng: latlng.getLng() });
+          getMarker({ lat: latlng.getLat(), lng: latlng.getLng() });
         }}
       >
-        {marker && (
+        {marker?.map((item) => (
           <MapMarker
-            position={marker.pos}
+            position={item.pos}
             image={{
-              src: marker.img,
+              src: item.img as unknown as string,
               size: {
                 width: 24,
                 height: 24,
@@ -190,7 +174,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
               marker.setMap(null);
             }}
           />
-        )}
+        ))}
         <DrawingManager
           ref={managerRef}
           drawingMode={[

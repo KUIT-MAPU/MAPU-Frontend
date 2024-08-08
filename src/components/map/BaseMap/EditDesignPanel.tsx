@@ -144,13 +144,13 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
             {object === 'marker' && (
               <div className={styles.lineBtn}>
                 <button
-                  className={styles.button}
+                  className={`${activeDot === 'dot thin' ? styles.activeBtn : styles.button}`}
                   onClick={() => handleDotButton('dot thin')}
                 >
                   <img src={ico_dot_thin} alt="dot thin" />
                 </button>
                 <button
-                  className={styles.button}
+                  className={`${activeDot === 'dot thick' ? styles.activeBtn : styles.button}`}
                   onClick={() => handleDotButton('dot thick')}
                 >
                   <img src={ico_dot_thick} alt="dot thick" />
