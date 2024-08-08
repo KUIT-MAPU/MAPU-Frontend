@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import { useKakaoUserDataQuery } from '../../apis/auth/socialLogin';
 
-const Login = () => {
+const KakaoLogin = () => {
   const navigate = useNavigate();
   const [isMember, setIsMember] = useState<boolean>();
   const { setLogIn, setRegisterStatus } = useRegisterStore();
@@ -13,14 +14,19 @@ const Login = () => {
     redirectUrl.searchParams.get('state') || '/',
   );
   const code = redirectUrl.searchParams.get('code');
-  const social = redirectUrl.pathname.toLowerCase();
+  console.log(code);
+
+  const { kakaoUserData, isKakaoUserDataLoading } = useKakaoUserDataQuery(
+    code!,
+  );
 
   useEffect(() => {
     if (code) {
       //TODO: social에 따라 login api 호출 후, 서비스 가입 여부에 따라 회원가입중/로그인으로 상태 바꾸기
-      setIsMember(false);
+      console.log(kakaoUserData);
+      // setIsMember(false);
     } else {
-      console.log(`${social} 로그인에 실패하였습니다.`);
+      console.log(`카카오 로그인에 실패하였습니다.`);
       navigate(`${prevUrl === '/' ? prevUrl : prevUrl + '?authState=login'}`);
     }
   }, []);
@@ -43,4 +49,4 @@ const Login = () => {
   return <></>;
 };
 
-export default Login;
+export default KakaoLogin;
