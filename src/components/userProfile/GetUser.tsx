@@ -128,7 +128,9 @@ const GetUser = (props: { children?: React.ReactNode }) => {
             <List />
           </button>
         </div>
-        <div className={styles.newMap} onClick={openNewMap}>+ 새로운 지도</div>
+        <div className={styles.newMap} onClick={openNewMap}>
+          + 새로운 지도
+        </div>
       </div>
       <div className={styles.mapContainer}>
         {view === 'gallery' && (

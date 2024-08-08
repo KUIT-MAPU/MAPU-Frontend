@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AuthContainer from '../login/AuthContainer';
 import useRegisterStore from '../../stores/registerStore';
-import { RegisterStatus } from '../../types/enum/RegisterStatus'
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 
 import styles from './UserInfoBar.module.scss';
 import { ReactComponent as ProfilePerson } from '../../assets/img_user_default_profile.svg';
@@ -33,16 +33,16 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if(registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
+    if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
       setIsLog(false);
       setIsOverlayVisible(true);
       console.log('setDimmed(true');
-    }else{
+    } else {
       setIsLog(true);
       setIsOverlayVisible(false);
       console.log('setDimmed(false)');
     }
-  },[loginNeeded,registerStatus]);
+  }, [loginNeeded, registerStatus]);
 
   const handleClose = () => {
     setLoginNeeded(false);
@@ -52,7 +52,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
   const handleLoginClick = () => {
     setLoginNeeded(true);
     setIsOverlayVisible(true);
-  }
+  };
 
   return (
     <div className={styles.UserInfoBar}>
@@ -77,7 +77,9 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
           <span>0</span>
         </div>
       </div>
-      <div className={styles.ProfileBottom} onClick={handleLoginClick}>로그인하기</div>
+      <div className={styles.ProfileBottom} onClick={handleLoginClick}>
+        로그인하기
+      </div>
 
       {isFollowingOpen && <Following onClose={closeFollowing} />}
       {isFollowerOpen && <Follower onClose={closeFollower} />}
