@@ -34,7 +34,8 @@ interface EditDesignPanelProps {
     | kakao.maps.drawing.OverlayType.POLYGON
   >
 >;
-  handleShapeButtonClick: (type: 'marker' | 'polyline' | 'polygon') => void;
+  handleShapeButtonClick: (type:'polyline' | 'polygon') => void;
+  handleDotShapeButtonClick: (label: boolean) => void
   handleDotButtonClick: (label: 'dot thin' | 'dot thick') => void;
   handleLineButtonClick: (label: 'line thin' | 'line thick') => void;
   handleTransparentButtonClick: (
@@ -52,6 +53,7 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
   object,
   managerRef,
   handleShapeButtonClick,
+  handleDotShapeButtonClick,
   handleDotButtonClick,
   handleLineButtonClick,
   handleTransparentButtonClick,
@@ -73,10 +75,15 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
     setActiveDot('');
   });
   
-  const handleShapeButton = (type: 'marker' | 'polyline' | 'polygon') => {
+  const handleShapeButton = (type:'polyline' | 'polygon') => {
     handleShapeButtonClick(type);
     setActiveShape(type);
   };
+
+  const handleDotShapeButton = (label: boolean) => {
+    handleDotShapeButtonClick(label);
+    setActiveShape('marker');
+  }
 
   const handleLineButton = (label: 'line thin' | 'line thick') => {
     handleLineButtonClick(label);
@@ -95,8 +102,6 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
   ) => {
     handleColorButtonClick(label);
     setActiveColor(label);
-    console.log(label);
-    console.log(activeColor);
   };
 
   const handleDotButton = (label: 'dot thin'|'dot thick') => {
@@ -115,7 +120,7 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
           <div className={styles.shapeBtn}>
             <button
               className={`${activeShape === 'marker' ? styles.activeBtn : styles.button}`}
-              onClick={() => handleShapeButton('marker')}
+              onClick={() => handleDotShapeButton(true)}
             >
               <img src={ico_dot} alt="marker" />
             </button>
