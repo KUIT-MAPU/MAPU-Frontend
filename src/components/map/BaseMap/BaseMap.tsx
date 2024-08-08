@@ -112,9 +112,9 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   };
 
   const manager = managerRef.current;
-  manager?.addListener('drawend',()=>{
-    setIsObject('')
-  })
+  manager?.addListener('drawend', () => {
+    setIsObject('');
+  });
 
   return (
     <>

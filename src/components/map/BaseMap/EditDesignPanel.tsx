@@ -28,12 +28,12 @@ interface EditDesignPanelProps {
   mode: string;
   object: string;
   managerRef: React.RefObject<
-  kakao.maps.drawing.DrawingManager<
-    | kakao.maps.drawing.OverlayType.MARKER
-    | kakao.maps.drawing.OverlayType.POLYLINE
-    | kakao.maps.drawing.OverlayType.POLYGON
-  >
->;
+    kakao.maps.drawing.DrawingManager<
+      | kakao.maps.drawing.OverlayType.MARKER
+      | kakao.maps.drawing.OverlayType.POLYLINE
+      | kakao.maps.drawing.OverlayType.POLYGON
+    >
+  >;
   handleShapeButtonClick: (type: 'marker' | 'polyline' | 'polygon') => void;
   handelDotButtonClick?: () => void;
   handleLineButtonClick: (label: 'line thin' | 'line thick') => void;
@@ -70,7 +70,7 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
     setActiveLine('');
     setActiveTransperent('');
   });
-  
+
   const handleShapeButton = (type: 'marker' | 'polyline' | 'polygon') => {
     handleShapeButtonClick(type);
     setActiveShape(type);
