@@ -3,13 +3,10 @@ import instance from '../instance';
 import { BaseResponse } from '../../types/BaseResponse';
 
 export const kakaoLogin = async (code: string) => {
-  console.log('kakaoLogin');
-  const response = await instance.get<BaseResponse>('/user/signin/kakao', {
-    params: {
-      code: code,
-      timeout: 5000,
-    },
-  });
+  // console.log('kakaoLogin');
+  const response = await instance.get<BaseResponse>(
+    `/user/signin/kakao?code=${code}`,
+  );
   console.log(response);
   console.log(response.data);
   return response.data;
@@ -17,12 +14,9 @@ export const kakaoLogin = async (code: string) => {
 
 export const googleLogin = async (code: string) => {
   console.log('googleLogin');
-  const response = await instance.get<BaseResponse>('/user/signin/google', {
-    params: {
-      code: code,
-      timeout: 5000,
-    },
-  });
+  const response = await instance.get<BaseResponse>(
+    `/user/signin/google?code=${code}`,
+  );
   console.log(response);
   console.log(response.data);
   return response.data;
