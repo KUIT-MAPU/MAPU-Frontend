@@ -35,7 +35,7 @@ interface EditDesignPanelProps {
   >
 >;
   handleShapeButtonClick: (type: 'marker' | 'polyline' | 'polygon') => void;
-  handelDotButtonClick?: () => void;
+  handleDotButtonClick: (label: 'dot thin' | 'dot thick') => void;
   handleLineButtonClick: (label: 'line thin' | 'line thick') => void;
   handleTransparentButtonClick: (
     label: 'face transparent 15' | 'face transparent 30',
@@ -52,7 +52,7 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
   object,
   managerRef,
   handleShapeButtonClick,
-  handelDotButtonClick,
+  handleDotButtonClick,
   handleLineButtonClick,
   handleTransparentButtonClick,
   handleColorButtonClick,
@@ -63,12 +63,14 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
   const [activeLine, setActiveLine] = useState<string>('');
   const [activeTransparent, setActiveTransperent] = useState<string>('');
   const [activeColor, setActiveColor] = useState<string>('');
+  const [activeDot, setActiveDot] = useState<string>('');
 
   managerRef.current?.addListener('drawend', () => {
     setActiveShape('');
     setActiveColor('');
     setActiveLine('');
     setActiveTransperent('');
+    setActiveDot('');
   });
   
   const handleShapeButton = (type: 'marker' | 'polyline' | 'polygon') => {
@@ -96,6 +98,11 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
     console.log(label);
     console.log(activeColor);
   };
+
+  const handleDotButton = (label: 'dot thin'|'dot thick') => {
+    handleDotButtonClick(label);
+    setActiveDot(label);
+  }
 
   return (
     <div
@@ -133,13 +140,13 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
               <div className={styles.lineBtn}>
                 <button
                   className={styles.button}
-                  onClick={handelDotButtonClick}
+                  onClick={() => handleDotButton('dot thin')}
                 >
                   <img src={ico_dot_thin} alt="dot thin" />
                 </button>
                 <button
                   className={styles.button}
-                  onClick={handelDotButtonClick}
+                  onClick={() => handleDotButton('dot thick')}
                 >
                   <img src={ico_dot_thick} alt="dot thick" />
                 </button>

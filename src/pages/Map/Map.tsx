@@ -76,13 +76,13 @@ const Map = () => {
   //map
   return (
     <div className={styles.map}>
-      {dimmed && (
+      {/* {dimmed && (
         <div
           className={dimmedStyles.background}
           onClick={mapMode === MapMode.VIEW ? handleClose : undefined}
         />
       )}
-      {dimmed && <AuthContainer className={styles.authContainer} />}
+      {dimmed && <AuthContainer className={styles.authContainer} />} */}
       <GlobalNavigationBar>
         <MapInfoPanel mode={mapMode} />
         <BaseMap mode={mapMode} />

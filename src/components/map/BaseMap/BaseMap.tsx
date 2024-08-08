@@ -3,6 +3,10 @@ import { Map, DrawingManager } from 'react-kakao-maps-sdk';
 import useKakaoLoader from '../../../hooks/useKakaoLoader';
 import styles from './BaseMap.module.scss';
 import EditDesignPanel from './EditDesignPanel';
+import ico_dot from '../../../assets/map/ico_dot.svg';
+import ico_dot_thick from '../../../assets/map/ico_dot_thick.svg';
+import ico_dot_thin from '../../../assets/map/ico_dot_thin.svg';
+import ico_share from '../../../assets/map/ico_share.svg';
 
 interface BaseMapProps {
   mode: string;
@@ -23,6 +27,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
 
   const [isObject, setIsObject] = useState<string>('');
   const [strokeWeight, setStrokeWeight] = useState<number>(1.5);
+  const [dot, setDot] = useState<string>(ico_dot);
 
   const managerRef =
     useRef<
@@ -34,6 +39,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     >(null);
 
   const mapRef = useRef<kakao.maps.Map>(null);
+  const markerRef = useRef<kakao.maps.Marker>(null);
 
   type OverlayTypeString = 'marker' | 'polyline' | 'polygon';
 
@@ -111,10 +117,62 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     }
   };
 
-  const manager = managerRef.current;
-  manager?.addListener('drawend',()=>{
-    setIsObject('')
-  })
+  const handleDotButtonClick = (label: 'dot thin' | 'dot thick') => {
+    const dotImg = label === 'dot thin' ? ico_dot_thin : ico_share;
+    setDot(dotImg);
+
+    const manager = managerRef.current;
+    if(manager) {
+      const icon : kakao.maps.drawing.MarkerImageOption = {
+        src: dotImg,
+        width:24,
+        height: 24,
+        offsetX: 12,
+        offsetY: 24,
+        spriteWidth: 24,
+        spriteHeight: 24,
+        spriteOriginX: 0,
+        spriteOriginY: 0,
+        shape: 'circle',
+        coords:kakao.maps.services.Coords.WGS84
+      }
+
+      const image : kakao.maps.drawing.MarkerImageOptions = {
+        ...icon,
+        hoverImage: {
+          ...icon
+        },
+        dragImage: {
+          ...icon
+        }
+      }
+    }
+  }
+
+  const icon : kakao.maps.drawing.MarkerImageOption = {
+    src: dot,
+    width:24,
+    height: 24,
+    offsetX: 12,
+    offsetY: 24,
+    spriteWidth: 24,
+    spriteHeight: 24,
+    spriteOriginX: 0,
+    spriteOriginY: 0,
+    shape: 'circle',
+    coords:kakao.maps.services.Coords.WGS84
+  }
+
+  const image : kakao.maps.drawing.MarkerImageOptions = {
+    ...icon,
+    hoverImage: {
+      ...icon
+    },
+    dragImage: {
+      ...icon
+    }
+  }
+  
 
   return (
     <>
@@ -130,6 +188,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
           markerOptions={{
             draggable: false,
             removable: true,
+            markerImages: [image]
           }}
           polylineOptions={{
             draggable: false,
@@ -163,6 +222,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
           handleTransparentButtonClick={handleTransparentButtonClick}
           handleColorButtonClick={handleColorButtonClick}
           handleMoveButtonClick={handleMoveButtonClick}
+          handleDotButtonClick={handleDotButtonClick}
         />
       ) : null}
     </>
