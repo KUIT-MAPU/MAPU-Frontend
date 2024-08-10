@@ -44,10 +44,6 @@
   border-bottom: 1px solid var(--gray_50);
 }
 
-.userIconContainer {
-  background-color: var(--gray_50);
-}
-
 .icon {
   color: var(--white);
   font-size: 24px;
@@ -78,3 +74,12 @@
   justify-content: center;
   z-index: 1000;
 }
+
+.iconContainer_on {
+  background-color: var(--gray_50);
+}
+
+.iconContainer_off {
+  background-color: var(--white);
+}
+
