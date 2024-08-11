@@ -91,7 +91,7 @@
   flex-direction: column;
   width: 100%;
   gap: 16px;
-  max-height: 600px;
+  flex-grow: 1;
   overflow-y: auto;
 }
 
@@ -162,4 +162,24 @@
 
 .link {
   text-decoration: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--gray_400);
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-size: 16px;
 }

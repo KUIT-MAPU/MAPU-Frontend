@@ -13,6 +13,8 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [view, setView] = useState('gallery'); //gallery를 기본으로 설정
   const [isNewMapOpen, setIsNewMapOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const placeholderImage = 'https://via.placeholder.com/150';
 
   const openNewMap = () => {
@@ -81,6 +83,24 @@ const GetUser = (props: { children?: React.ReactNode }) => {
       center: '서울시 광진구',
     },
   ]; //지도 데이터 임시 저장
+
+  const ITEMS_PER_PAGE = 9; //한 페이지에 표시되는 항목 수는 9개
+  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+  const currentItems = mapData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(mapData.length / ITEMS_PER_PAGE);
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -221,33 +241,60 @@ const GetUser = (props: { children?: React.ReactNode }) => {
                   />
                 </div>
               </Link>
+              <Link to="/map/mapId" className={styles.link}>
+                <div className={styles.numMap}>
+                  <img
+                    src={placeholderImage}
+                    alt="placeholder"
+                    className={styles.image}
+                  />
+                </div>
+              </Link>
             </div>
           </div>
         )}
         {view === 'list' && (
-          <div className={styles.listInfo}>
-            <div className={styles.mapName}>지도 이름</div>
-            <div className={styles.mapInfo}>
-              <div>권한</div>
-              <div>참여자</div>
-              <div>제작한 날짜</div>
-              <div>중앙 위치</div>
+          <div>
+            <div className={styles.listInfo}>
+              <div className={styles.mapName}>지도 이름</div>
+              <div className={styles.mapInfo}>
+                <div>권한</div>
+                <div>참여자</div>
+                <div>제작한 날짜</div>
+                <div>중앙 위치</div>
+              </div>
+            </div>
+            <div className={styles.listContainer}>
+              {mapData.map((map) => (
+                <div key={map.id} className={styles.mapList}>
+                  <div className={styles.mapListName}>{map.name}</div>
+                  <div className={styles.mapListInfo}>
+                    <div>{map.permissions}</div>
+                    <div>{map.participants}</div>
+                    <div>{map.date}</div>
+                    <div>{map.center}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
-        <div className={styles.listContainer}>
-          {mapData.map((map) => (
-            <div key={map.id} className={styles.mapList}>
-              <div className={styles.mapListName}>{map.name}</div>
-              <div className={styles.mapListInfo}>
-                <div>{map.permissions}</div>
-                <div>{map.participants}</div>
-                <div>{map.date}</div>
-                <div>{map.center}</div>
-              </div>
-            </div>
-          ))}
-        </div>
+        {view === 'gallery' && (
+          <div className={styles.pagination}>
+            <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+              이전
+            </button>
+            <span>
+              {currentPage} / {totalPages}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              다음
+            </button>
+          </div>
+        )}
       </div>
       {isNewMapOpen && <NewMap onClose={closeNewMap} />}
     </div>
