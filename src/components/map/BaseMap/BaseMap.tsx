@@ -1,8 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Map, DrawingManager } from 'react-kakao-maps-sdk';
+import React, { useEffect, useRef, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { Map, DrawingManager, MapMarker } from 'react-kakao-maps-sdk';
 import useKakaoLoader from '../../../hooks/useKakaoLoader';
 import styles from './BaseMap.module.scss';
 import EditDesignPanel from './EditDesignPanel';
+import { ReactComponent as DotThick } from '../../../assets/map/ico_dot_thick_custom.svg';
+import { ReactComponent as DotThin } from '../../../assets/map/ico_dot_thin_custom.svg';
 
 interface BaseMapProps {
   mode: string;
@@ -13,6 +16,11 @@ interface Position {
   lng: number;
 }
 
+interface Marker {
+  img: string;
+  pos: Position;
+}
+
 const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   useKakaoLoader();
 
@@ -21,13 +29,16 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     lng: 126.570667,
   });
 
+  const [marker, setMarker] = useState<Marker[] | null>(null);
   const [isObject, setIsObject] = useState<string>('');
   const [strokeWeight, setStrokeWeight] = useState<number>(1.5);
+  const [dot, setDot] = useState<string>(''); // 저장할 데이터는 Base64 문자열
+  const [dotShape, setDotShape] = useState<string>('');
+  const [dotColor, setDotColor] = useState<string>('#111111');
 
   const managerRef =
     useRef<
       kakao.maps.drawing.DrawingManager<
-        | kakao.maps.drawing.OverlayType.MARKER
         | kakao.maps.drawing.OverlayType.POLYLINE
         | kakao.maps.drawing.OverlayType.POLYGON
       >
@@ -35,12 +46,12 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
-  type OverlayTypeString = 'marker' | 'polyline' | 'polygon';
+  type OverlayTypeString = 'polyline' | 'polygon';
 
-  const handleShapeButtonClick = (type: OverlayTypeString) => {
+  const handleShapeButtonClick = (type: OverlayTypeString | 'dot') => {
     const manager = managerRef.current;
     setIsObject(type);
-    if (manager) {
+    if (manager && type !== 'dot') {
       manager.cancel();
       manager.select(type);
     }
@@ -89,11 +100,12 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
         color = '#821FFF';
         break;
       default:
-        color = '#111111'; // 기본 색상으로 설정
+        color = '#111111';
     }
 
+    setDotColor(color);
     const manager = managerRef.current;
-    manager?.setStrokeColor(label);
+    manager?.setStrokeColor(color);
     manager?.setStyle(
       kakao.maps.drawing.OverlayType.POLYGON,
       'fillColor',
@@ -103,12 +115,55 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
 
   const handleMoveButtonClick = (label: 'expansion' | 'reduction') => {
     const map = mapRef.current;
-    console.log('map:', map);
     if (label === 'expansion') {
       map?.setLevel(map.getLevel() - 1);
     } else {
       map?.setLevel(map.getLevel() + 1);
     }
+  };
+
+  // const handleDotShapeButtonClick = (label: boolean) => {
+  //   if (label) {
+  //     setDotShape(true);
+  //     setIsObject('marker');
+  //   }
+  // };
+
+  const handleDotButtonClick = (label: 'dot thin' | 'dot thick') => {
+    const DotComponent = label === 'dot thin' ? DotThin : DotThick;
+    setDotShape(label);
+    const dotImg = <DotComponent stroke={dotColor} />;
+    const svgString = ReactDOMServer.renderToStaticMarkup(dotImg);
+    const base64Svg = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgString)))}`;
+    setDot(base64Svg);
+  };
+
+  useEffect(() => {
+    if (isObject === 'dot') {
+      const dotImg = isObject ? (
+        dotShape === 'dot thin' ? (
+          <DotThin stroke={dotColor} />
+        ) : (
+          <DotThick stroke={dotColor} />
+        )
+      ) : null;
+      if (dotImg) {
+        const svgString = ReactDOMServer.renderToStaticMarkup(dotImg);
+        const base64Svg = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgString)))}`;
+        setDot(base64Svg);
+      }
+    }
+  }, [dotColor, dotShape, isObject]);
+
+  const getMarker = (position: Position) => {
+    const pre = marker;
+    if (pre) {
+      setMarker([...pre, { img: dot, pos: position }]);
+    } else {
+      setMarker([{ img: dot, pos: position }]);
+    }
+
+    setIsObject('');
   };
 
   const manager = managerRef.current;
@@ -118,19 +173,41 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
 
   return (
     <>
-      <Map ref={mapRef} center={position} className={styles.map} level={3}>
+      <Map
+        ref={mapRef}
+        center={position}
+        className={styles.map}
+        level={3}
+        onClick={(_, mouseEvent) => {
+          if (isObject === 'dot') {
+            const latlng = mouseEvent.latLng;
+            getMarker({ lat: latlng.getLat(), lng: latlng.getLng() });
+          }
+        }}
+      >
+        {marker?.map((item) => (
+          <MapMarker
+            key={item.pos.lat + '-' + item.pos.lng}
+            position={item.pos}
+            image={{
+              src: item.img,
+              size: {
+                width: 24,
+                height: 24,
+              },
+            }}
+            onClick={(marker: kakao.maps.Marker) => {
+              marker.setMap(null);
+            }} // 마커 지우기
+          />
+        ))}
         <DrawingManager
           ref={managerRef}
           drawingMode={[
-            kakao.maps.drawing.OverlayType.MARKER,
             kakao.maps.drawing.OverlayType.POLYLINE,
             kakao.maps.drawing.OverlayType.POLYGON,
           ]}
           guideTooltip={['draw', 'drag', 'edit']}
-          markerOptions={{
-            draggable: false,
-            removable: true,
-          }}
           polylineOptions={{
             draggable: false,
             removable: true,
@@ -155,7 +232,6 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
       </Map>
       {mode === 'edit' ? (
         <EditDesignPanel
-          mode={mode}
           object={isObject}
           managerRef={managerRef}
           handleShapeButtonClick={handleShapeButtonClick}
@@ -163,6 +239,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
           handleTransparentButtonClick={handleTransparentButtonClick}
           handleColorButtonClick={handleColorButtonClick}
           handleMoveButtonClick={handleMoveButtonClick}
+          handleDotButtonClick={handleDotButtonClick}
         />
       ) : null}
     </>

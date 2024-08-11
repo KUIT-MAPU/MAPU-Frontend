@@ -25,17 +25,16 @@ import ico_face_transparent_30 from '../../../assets/map/ico_face_transparent_30
 import styles from './EditDesignPanel.module.scss';
 
 interface EditDesignPanelProps {
-  mode: string;
   object: string;
   managerRef: React.RefObject<
-    kakao.maps.drawing.DrawingManager<
-      | kakao.maps.drawing.OverlayType.MARKER
-      | kakao.maps.drawing.OverlayType.POLYLINE
-      | kakao.maps.drawing.OverlayType.POLYGON
-    >
-  >;
-  handleShapeButtonClick: (type: 'marker' | 'polyline' | 'polygon') => void;
-  handelDotButtonClick?: () => void;
+  kakao.maps.drawing.DrawingManager<
+    | kakao.maps.drawing.OverlayType.MARKER
+    | kakao.maps.drawing.OverlayType.POLYLINE
+    | kakao.maps.drawing.OverlayType.POLYGON
+  >
+>;
+  handleShapeButtonClick: (type:'polyline' | 'polygon' |'dot') => void;
+  handleDotButtonClick: (label: 'dot thin' | 'dot thick') => void;
   handleLineButtonClick: (label: 'line thin' | 'line thick') => void;
   handleTransparentButtonClick: (
     label: 'face transparent 15' | 'face transparent 30',
@@ -48,11 +47,11 @@ interface EditDesignPanelProps {
 }
 
 const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
-  mode,
   object,
   managerRef,
   handleShapeButtonClick,
-  handelDotButtonClick,
+
+  handleDotButtonClick,
   handleLineButtonClick,
   handleTransparentButtonClick,
   handleColorButtonClick,
@@ -61,6 +60,7 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
 }) => {
   const [activeShape, setActiveShape] = useState<string>('');
   const [activeLine, setActiveLine] = useState<string>('');
+  const [activeDot, setActiveDot] = useState<string>('');
   const [activeTransparent, setActiveTransperent] = useState<string>('');
   const [activeColor, setActiveColor] = useState<string>('');
 
@@ -69,9 +69,18 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
     setActiveColor('');
     setActiveLine('');
     setActiveTransperent('');
+    setActiveDot('');
   });
 
-  const handleShapeButton = (type: 'marker' | 'polyline' | 'polygon') => {
+  useEffect(() => {
+    if (object === '') {
+      setActiveShape('');
+      setActiveDot('');
+      setActiveColor('');
+    }
+  }, [object]);
+  
+  const handleShapeButton = (type:'polyline' | 'polygon' | 'dot') => {
     handleShapeButtonClick(type);
     setActiveShape(type);
   };
@@ -93,24 +102,27 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
   ) => {
     handleColorButtonClick(label);
     setActiveColor(label);
-    console.log(label);
-    console.log(activeColor);
   };
+
+  const handleDotButton = (label: 'dot thin'|'dot thick') => {
+    handleDotButtonClick(label);
+    setActiveDot(label);
+  }
 
   return (
     <div
-      className={`${styles.root} ${object === 'marker' && styles.markerRoot} ${object === 'polyline' && styles.polylineRoot} ${object === 'polygon' && styles.polygonRoot}`}
+      className={`${styles.root} ${object === 'dot' && styles.markerRoot} ${object === 'polyline' && styles.polylineRoot} ${object === 'polygon' && styles.polygonRoot}`}
     >
       <div
-        className={`${styles.design} ${object === 'marker' && styles.markerDesign} ${object === 'polyline' && styles.polylineDesign} ${object === 'polygon' && styles.polygonDesign}`}
+        className={`${styles.design} ${object === 'dot' && styles.markerDesign} ${object === 'polyline' && styles.polylineDesign} ${object === 'polygon' && styles.polygonDesign}`}
       >
         <div className={`${object ? styles.shape : styles.noShape}`}>
           <div className={styles.shapeBtn}>
             <button
-              className={`${activeShape === 'marker' ? styles.activeBtn : styles.button}`}
-              onClick={() => handleShapeButton('marker')}
+              className={`${activeShape === 'dot' ? styles.activeBtn : styles.button}`}
+              onClick={() => handleShapeButton('dot')}
             >
-              <img src={ico_dot} alt="marker" />
+              <img src={ico_dot} alt="dot" />
             </button>
             <button
               className={`${activeShape === 'polyline' ? styles.activeBtn : styles.button}`}
@@ -129,17 +141,17 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
 
         {object && (
           <div className={styles.line}>
-            {object === 'marker' && (
+            {object === 'dot' && (
               <div className={styles.lineBtn}>
                 <button
-                  className={styles.button}
-                  onClick={handelDotButtonClick}
+                  className={`${activeDot === 'dot thin' ? styles.activeBtn : styles.button}`}
+                  onClick={() => handleDotButton('dot thin')}
                 >
                   <img src={ico_dot_thin} alt="dot thin" />
                 </button>
                 <button
-                  className={styles.button}
-                  onClick={handelDotButtonClick}
+                  className={`${activeDot === 'dot thick' ? styles.activeBtn : styles.button}`}
+                  onClick={() => handleDotButton('dot thick')}
                 >
                   <img src={ico_dot_thick} alt="dot thick" />
                 </button>
