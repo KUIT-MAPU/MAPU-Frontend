@@ -25,7 +25,6 @@ import ico_face_transparent_30 from '../../../assets/map/ico_face_transparent_30
 import styles from './EditDesignPanel.module.scss';
 
 interface EditDesignPanelProps {
-  mode: string;
   object: string;
   managerRef: React.RefObject<
   kakao.maps.drawing.DrawingManager<
@@ -34,8 +33,8 @@ interface EditDesignPanelProps {
     | kakao.maps.drawing.OverlayType.POLYGON
   >
 >;
-  handleShapeButtonClick: (type:'polyline' | 'polygon') => void;
-  handleDotShapeButtonClick: (label: boolean) => void
+  handleShapeButtonClick: (type:'polyline' | 'polygon' |'dot') => void;
+  handleDotShapeButtonClick?: (label: boolean) => void
   handleDotButtonClick: (label: 'dot thin' | 'dot thick') => void;
   handleLineButtonClick: (label: 'line thin' | 'line thick') => void;
   handleTransparentButtonClick: (
@@ -49,11 +48,10 @@ interface EditDesignPanelProps {
 }
 
 const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
-  mode,
   object,
   managerRef,
   handleShapeButtonClick,
-  handleDotShapeButtonClick,
+
   handleDotButtonClick,
   handleLineButtonClick,
   handleTransparentButtonClick,
@@ -63,9 +61,9 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
 }) => {
   const [activeShape, setActiveShape] = useState<string>('');
   const [activeLine, setActiveLine] = useState<string>('');
+  const [activeDot, setActiveDot] = useState<string>('');
   const [activeTransparent, setActiveTransperent] = useState<string>('');
   const [activeColor, setActiveColor] = useState<string>('');
-  const [activeDot, setActiveDot] = useState<string>('');
 
   managerRef.current?.addListener('drawend', () => {
     setActiveShape('');
@@ -74,16 +72,19 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
     setActiveTransperent('');
     setActiveDot('');
   });
+
+  useEffect(() => {
+    if (object === '') {
+      setActiveShape('');
+      setActiveDot('');
+      setActiveColor('');
+    }
+  }, [object]);
   
-  const handleShapeButton = (type:'polyline' | 'polygon') => {
+  const handleShapeButton = (type:'polyline' | 'polygon' | 'dot') => {
     handleShapeButtonClick(type);
     setActiveShape(type);
   };
-
-  const handleDotShapeButton = (label: boolean) => {
-    handleDotShapeButtonClick(label);
-    setActiveShape('marker');
-  }
 
   const handleLineButton = (label: 'line thin' | 'line thick') => {
     handleLineButtonClick(label);
@@ -111,18 +112,18 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
 
   return (
     <div
-      className={`${styles.root} ${object === 'marker' && styles.markerRoot} ${object === 'polyline' && styles.polylineRoot} ${object === 'polygon' && styles.polygonRoot}`}
+      className={`${styles.root} ${object === 'dot' && styles.markerRoot} ${object === 'polyline' && styles.polylineRoot} ${object === 'polygon' && styles.polygonRoot}`}
     >
       <div
-        className={`${styles.design} ${object === 'marker' && styles.markerDesign} ${object === 'polyline' && styles.polylineDesign} ${object === 'polygon' && styles.polygonDesign}`}
+        className={`${styles.design} ${object === 'dot' && styles.markerDesign} ${object === 'polyline' && styles.polylineDesign} ${object === 'polygon' && styles.polygonDesign}`}
       >
         <div className={`${object ? styles.shape : styles.noShape}`}>
           <div className={styles.shapeBtn}>
             <button
-              className={`${activeShape === 'marker' ? styles.activeBtn : styles.button}`}
-              onClick={() => handleDotShapeButton(true)}
+              className={`${activeShape === 'dot' ? styles.activeBtn : styles.button}`}
+              onClick={() => handleShapeButton('dot')}
             >
-              <img src={ico_dot} alt="marker" />
+              <img src={ico_dot} alt="dot" />
             </button>
             <button
               className={`${activeShape === 'polyline' ? styles.activeBtn : styles.button}`}
@@ -141,7 +142,7 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
 
         {object && (
           <div className={styles.line}>
-            {object === 'marker' && (
+            {object === 'dot' && (
               <div className={styles.lineBtn}>
                 <button
                   className={`${activeDot === 'dot thin' ? styles.activeBtn : styles.button}`}
