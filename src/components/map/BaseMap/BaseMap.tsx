@@ -33,7 +33,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   const [isObject, setIsObject] = useState<string>('');
   const [strokeWeight, setStrokeWeight] = useState<number>(1.5);
   const [dot, setDot] = useState<string>(''); // 저장할 데이터는 Base64 문자열
-  const [dotShape, setDotShape] = useState<string>('');
+  const [dotShape, setDotShape] = useState<string>('dot thin');
   const [dotColor, setDotColor] = useState<string>('#111111');
 
   const managerRef =
@@ -122,13 +122,6 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     }
   };
 
-  // const handleDotShapeButtonClick = (label: boolean) => {
-  //   if (label) {
-  //     setDotShape(true);
-  //     setIsObject('marker');
-  //   }
-  // };
-
   const handleDotButtonClick = (label: 'dot thin' | 'dot thick') => {
     const DotComponent = label === 'dot thin' ? DotThin : DotThick;
     setDotShape(label);
@@ -162,13 +155,13 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     } else {
       setMarker([{ img: dot, pos: position }]);
     }
-
     setIsObject('');
+    setDotColor('#111111');
+    setDotShape('dot thin')
   };
 
   const manager = managerRef.current;
   manager?.addListener('drawend', () => {
-    setIsObject('');
   });
 
   return (
@@ -198,7 +191,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
             }}
             onClick={(marker: kakao.maps.Marker) => {
               marker.setMap(null);
-            }} // 마커 지우기
+            }}
           />
         ))}
         <DrawingManager

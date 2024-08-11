@@ -12,7 +12,7 @@ import MapList from '../../components/explore/MapList';
 import ErrorPage from '../../components/explore/ErrorPage';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore';
-import mockData from '../../components/timeLine/mapList/MapModel';
+import mockData from '../../components/timeLine/mapCard/MapModel';
 
 import styles from './Explore.module.scss';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
