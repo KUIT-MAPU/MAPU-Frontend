@@ -52,7 +52,7 @@
 
 .searchBar {
   display: flex;
-  width: 1508px;
+  width: 1250px;
   align-items: center;
   justify-content: flex-start;
   color: var(--gray_400);
@@ -67,14 +67,16 @@
 
 .contentView {
   display: flex;
+  width: 94px;
   align-items: center;
-  justify-content: flex-end;
-  margin-left: auto;
+  justify-content: space-evenly;
+  margin-left: 16px;
   border: 1px solid var(--gray_50);
 }
 
 .newMap {
-  margin-left: auto;
+  margin-left: 16px;
+  width: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,19 +93,19 @@
   flex-direction: column;
   width: 100%;
   gap: 16px;
-  max-height: 600px;
+  flex-grow: 1;
   overflow-y: auto;
 }
 
 .getMap {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   width: 1508px;
-  min-height: 327px;
+  min-height: 256px;
   height: auto;
   margin: 16px;
   align-items: center;
-  justify-content: space-around;
+  justify-items: center;
 }
 
 .image {
@@ -112,12 +114,47 @@
   object-fit: cover;
 }
 
-.numMap {
+.mapWrapper {
   display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  align-items: center;
+}
+
+.numMap {
   width: 492px;
-  height: 327px;
+  height: 256px;
   margin: 8px;
   background-color: var(--gray_400);
+}
+
+.galleryInfo {
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+  padding: 8px;
+  color: var(--black);
+  text-align: center;
+  width: 492px;
+  height: 55px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mapTitle {
+  display: flex;
+  color: black;
+  font-size: 20px;
+  line-height: 30px;
+  justify-content: flex-start;
+}
+
+.mapLocation {
+  display: flex;
+  color: var(--gray_500);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  justify-items: flex-start;
 }
 
 .listInfo {
@@ -162,4 +199,24 @@
 
 .link {
   text-decoration: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--gray_400);
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-size: 16px;
 }
