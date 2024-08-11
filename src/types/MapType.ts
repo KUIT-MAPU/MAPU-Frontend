@@ -8,7 +8,7 @@ export interface MapType {
   img: string;
   keywords: string;
   editors: EditorType[];
-  discription?:string;
+  discription?: string;
   mapKeyword?: MapKeywordType[];
-  owner?:EditorType;
+  owner?: EditorType;
 }

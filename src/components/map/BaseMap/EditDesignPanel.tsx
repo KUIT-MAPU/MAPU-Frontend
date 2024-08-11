@@ -34,7 +34,6 @@ interface EditDesignPanelProps {
   >
 >;
   handleShapeButtonClick: (type:'polyline' | 'polygon' |'dot') => void;
-  handleDotShapeButtonClick?: (label: boolean) => void
   handleDotButtonClick: (label: 'dot thin' | 'dot thick') => void;
   handleLineButtonClick: (label: 'line thin' | 'line thick') => void;
   handleTransparentButtonClick: (
