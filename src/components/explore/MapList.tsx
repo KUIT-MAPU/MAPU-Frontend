@@ -4,7 +4,8 @@ import userImg from '../../assets/user.svg';
 import styles from './MapList.module.scss';
 import { MapKeywordType } from '../../types/MapKeywordType';
 import MapKeywordCard from './MapKeywordCard';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface MapListProps {
   map: MapType;
@@ -12,9 +13,7 @@ interface MapListProps {
 }
 
 const MapList: React.FC<MapListProps> = ({ map, keyword }) => {
-  const [selectedKeyword, setSelectedKeyword] = useState<MapKeywordType | null>(
-    null,
-  );
+  const [selectedKeyword, setSelectedKeyword] = useState<MapKeywordType | null>(null);
 
   const handleSelectPills = (mapKeyword: MapKeywordType) => {
     if (selectedKeyword?.keyword === mapKeyword.keyword) {
@@ -27,7 +26,9 @@ const MapList: React.FC<MapListProps> = ({ map, keyword }) => {
   return (
     <div className={styles.MapListRoot}>
       <div className={styles.Images}>
-        <img src={map.img} className={styles.mapImg} alt="Map" />
+        <Link to={`/map/${map.name}/view`} style={{ textDecoration: 'none' }}>
+          <img src={map.img} className={styles.mapImg} alt="Map" />
+        </Link>
 
         <div className={styles.editor}>
           <img src={userImg} alt="User" />
@@ -44,7 +45,6 @@ const MapList: React.FC<MapListProps> = ({ map, keyword }) => {
             <span className={styles.mapName}>{map.name}</span>
             <span className={styles.mapAddress}>{map.address}</span>
           </div>
-
           <span className={styles.description}>{map.discription}</span>
         </div>
 
@@ -63,6 +63,7 @@ const MapList: React.FC<MapListProps> = ({ map, keyword }) => {
             </button>
           ))}
         </div>
+
         <div className={styles.keywordContainer}>
           {selectedKeyword && (
             <MapKeywordCard
