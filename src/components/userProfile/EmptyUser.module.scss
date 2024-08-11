@@ -52,7 +52,7 @@
 
 .searchBar {
   display: flex;
-  width: 1508px;
+  width: 1250px;
   align-items: center;
   justify-content: flex-start;
   color: var(--gray_400);
@@ -66,6 +66,7 @@
 }
 .contentView {
   display: flex;
+  width: 94px;
   align-items: center;
   justify-content: flex-end;
   margin-left: auto;
@@ -75,6 +76,7 @@
 .newMap {
   margin-left: auto;
   display: flex;
+  width: 140px;
   align-items: center;
   justify-content: center;
   background-color: var(--gray_200);
