@@ -159,21 +159,35 @@
 
 .listInfo {
   display: flex;
-  width: 100%;
+  width: 1366px;
   height: 21px;
   margin-top: 20px;
   margin-left: 20px;
-  margin-bottom: 20px;
   font-size: 14px;
   color: var(--gray_500);
+  align-items: center;
+  justify-content: space-between;
 }
 
-.mapInfo {
+.mapName {
   display: flex;
-  flex: 1;
+  width: 274px;
+}
+
+.mapInfo,
+.mapListInfo {
+  display: flex;
+  width: 729px;
   flex-direction: row;
-  margin-left: 637px;
   justify-content: space-between;
+  align-items: center;
+  gap: 140px;
+}
+
+.mapInfo div, 
+.mapListInfo div {
+  width: 186px; /* 각 요소의 너비를 동일하게 설정 */
+  text-align: left; /* 텍스트 왼쪽 정렬 */
 }
 
 .listContainer {
@@ -183,17 +197,12 @@
   flex-direction: column;
 }
 
+
 .mapList {
   display: flex;
-  width: 100%;
+  width: 1366px;
   height: 102px;
-}
-
-.mapListInfo {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  margin-left: 637px;
+  margin-top: 8px;
   justify-content: space-between;
 }
 
@@ -219,4 +228,37 @@
 .pagination span {
   margin: 0 10px;
   font-size: 16px;
+}
+
+.mapListName {
+  display: flex;
+  width: 274px;
+  height: 80px;
+  margin-top: 8px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mapListImage {
+  width: 152px;
+  height: 80px;
+  background-color: #000;
+}
+
+.mapListImageTitleLocation {
+  margin-left: 16px;
+  gap: 2px;
+}
+.mapListImageTitle {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--black);
+}
+
+.mapListImageLocation {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--gray_500);
 }

@@ -7,8 +7,8 @@ import { ReactComponent as DownArrow } from '../../assets/DownArrow.svg';
 import { ReactComponent as Search } from '../../assets/Search.svg';
 import { ReactComponent as Gallery } from '../../assets/GalleryView.svg';
 import { ReactComponent as List } from '../../assets/ListView.svg';
-import {ReactComponent as MiniUser} from '../../assets/ico_miniuser_profile.svg'
-import {ReactComponent as CreatMap} from '../../assets/btn_map_create.svg';
+import { ReactComponent as ExampleUser } from '../../assets/ico_exampleuser_profile.svg';
+import { ReactComponent as CreatMap } from '../../assets/btn_map_create.svg';
 
 import NewMap from './getNewMap/NewMap';
 
@@ -197,7 +197,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
                       <div className={styles.mapTitle}>우리 동네 맛집 지도</div>
                       <div className={styles.mapLocation}>성북구 정릉동</div>
                     </div>
-                    <MiniUser />
+                    <ExampleUser />
                   </div>
                 </div>
               </Link>
@@ -218,10 +218,26 @@ const GetUser = (props: { children?: React.ReactNode }) => {
             <div className={styles.listContainer}>
               {listMapData.map((map) => (
                 <div key={map.id} className={styles.mapList}>
-                  <div className={styles.mapListName}>{map.name}</div>
+                  <div className={styles.mapListName}>
+                    <div className={styles.mapListImage}>
+                      <img
+                        src={placeholderImage}
+                        alt="placeholder"
+                        className={styles.image}
+                      />
+                    </div>
+                    <div className={styles.mapListImageTitleLocation}>
+                      <div className={styles.mapListImageTitle}>
+                        우리 동네 맛집 지도
+                      </div>
+                      <div className={styles.mapListImageLocation}>
+                        성북구 정릉동
+                      </div>
+                    </div>
+                  </div>
                   <div className={styles.mapListInfo}>
                     <div>{map.permissions}</div>
-                    <div>{map.participants}</div>
+                    <div><ExampleUser /></div>
                     <div>{map.date}</div>
                     <div>{map.center}</div>
                   </div>
