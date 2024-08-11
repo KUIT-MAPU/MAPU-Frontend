@@ -88,7 +88,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
   const currentItems = mapData.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(mapData.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(10 / ITEMS_PER_PAGE);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -153,13 +153,13 @@ const GetUser = (props: { children?: React.ReactNode }) => {
         </div>
       </div>
       <div className={styles.mapContainer}>
-        {view === 'gallery' && (
+        {view === 'gallery' && currentPage === 1 && (
           <div>
             <div className={styles.getMap}>
               <Link to="/map/mapId" className={styles.link}>
                 <div className={styles.numMap}>
                   <img
-                    src={placeholderImage}
+                    src="https://via.placeholder.com/150"
                     alt="placeholder"
                     className={styles.image}
                   />
@@ -168,7 +168,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               <Link to="/map/mapId" className={styles.link}>
                 <div className={styles.numMap}>
                   <img
-                    src={placeholderImage}
+                    src="https://via.placeholder.com/150"
                     alt="placeholder"
                     className={styles.image}
                   />
@@ -177,7 +177,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               <Link to="/map/mapId" className={styles.link}>
                 <div className={styles.numMap}>
                   <img
-                    src={placeholderImage}
+                    src="https://via.placeholder.com/150"
                     alt="placeholder"
                     className={styles.image}
                   />
@@ -188,7 +188,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               <Link to="/map/mapId" className={styles.link}>
                 <div className={styles.numMap}>
                   <img
-                    src={placeholderImage}
+                    src="https://via.placeholder.com/150"
                     alt="placeholder"
                     className={styles.image}
                   />
@@ -197,7 +197,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               <Link to="/map/mapId" className={styles.link}>
                 <div className={styles.numMap}>
                   <img
-                    src={placeholderImage}
+                    src="https://via.placeholder.com/150"
                     alt="placeholder"
                     className={styles.image}
                   />
@@ -206,7 +206,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               <Link to="/map/mapId" className={styles.link}>
                 <div className={styles.numMap}>
                   <img
-                    src={placeholderImage}
+                    src="https://via.placeholder.com/150"
                     alt="placeholder"
                     className={styles.image}
                   />
@@ -217,7 +217,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               <Link to="/map/mapId" className={styles.link}>
                 <div className={styles.numMap}>
                   <img
-                    src={placeholderImage}
+                    src="https://via.placeholder.com/150"
                     alt="placeholder"
                     className={styles.image}
                   />
@@ -226,7 +226,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               <Link to="/map/mapId" className={styles.link}>
                 <div className={styles.numMap}>
                   <img
-                    src={placeholderImage}
+                    src="https://via.placeholder.com/150"
                     alt="placeholder"
                     className={styles.image}
                   />
@@ -235,22 +235,26 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               <Link to="/map/mapId" className={styles.link}>
                 <div className={styles.numMap}>
                   <img
-                    src={placeholderImage}
-                    alt="placeholder"
-                    className={styles.image}
-                  />
-                </div>
-              </Link>
-              <Link to="/map/mapId" className={styles.link}>
-                <div className={styles.numMap}>
-                  <img
-                    src={placeholderImage}
+                    src="https://via.placeholder.com/150"
                     alt="placeholder"
                     className={styles.image}
                   />
                 </div>
               </Link>
             </div>
+          </div>
+        )}
+        {view === 'gallery' && currentPage === 2 && (
+          <div className={styles.getMap}>
+            <Link to="/map/mapId" className={styles.link}>
+              <div className={styles.numMap}>
+                <img
+                  src="https://via.placeholder.com/150"
+                  alt="placeholder"
+                  className={styles.image}
+                />
+              </div>
+            </Link>
           </div>
         )}
         {view === 'list' && (
