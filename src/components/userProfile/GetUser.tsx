@@ -8,6 +8,7 @@ import { ReactComponent as Search } from '../../assets/Search.svg';
 import { ReactComponent as Gallery } from '../../assets/GalleryView.svg';
 import { ReactComponent as List } from '../../assets/ListView.svg';
 import {ReactComponent as MiniUser} from '../../assets/ico_miniuser_profile.svg'
+import {ReactComponent as CreatMap} from '../../assets/btn_map_create.svg';
 
 import NewMap from './getNewMap/NewMap';
 
@@ -175,7 +176,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
           </button>
         </div>
         <div className={styles.newMap} onClick={openNewMap}>
-          + 새로운 지도
+          <CreatMap />
         </div>
       </div>
       <div className={styles.mapContainer}>

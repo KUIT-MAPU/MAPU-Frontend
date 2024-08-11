@@ -69,13 +69,13 @@
   display: flex;
   width: 94px;
   align-items: center;
-  justify-content: flex-end;
-  margin-left: auto;
+  justify-content: space-evenly;
+  margin-left: 16px;
   border: 1px solid var(--gray_50);
 }
 
 .newMap {
-  margin-left: auto;
+  margin-left: 16px;
   width: 140px;
   display: flex;
   align-items: center;
