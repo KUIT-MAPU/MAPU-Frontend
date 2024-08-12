@@ -1,9 +1,7 @@
-import { LoginSuccess } from './auth/login';
-
-export type BaseResponse = {
+export type BaseResponse<T> = {
   code: number;
   status: number;
   message: string;
-  result?: LoginSuccess;
-  timestamp?: string;
+  result: T;
+  timestamp: string;
 };
