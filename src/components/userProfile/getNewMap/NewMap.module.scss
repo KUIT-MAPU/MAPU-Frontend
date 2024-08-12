@@ -92,19 +92,18 @@
   padding: 0 4px;
 }
 
-.btnLocation div {
+.btnLocation button {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 118px;
   height: 40px; 
-  background-color: var(--sub); 
   border-radius: 4px; 
   cursor: pointer; 
   position: relative;
 }
 
-.btnLocation div:not(:last-child)::after {
+.btnLocation button:not(:last-child)::after {
   content: "";
   position: absolute;
   right: -5px; /* 요소 사이에 여백을 만들어 선이 중앙에 오도록 */
@@ -113,6 +112,21 @@
   background-color: var(--gray_100); /* 선의 색상 설정 */
 }
 
+.defaultButton {
+  background-color: var(--gray_50);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+  color: var(--gray_400);
+}
+
+.selectedButton {
+  background-color: var(--sub);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--main);
+}
 .createBtn {
   background-color: var(--main);
   color: white;
