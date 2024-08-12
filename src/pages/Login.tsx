@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import instance from '../../apis/instance';
-import { useLogInDataQuery } from '../../apis/auth/socialLogin';
+import instance from '../apis/instance';
+import { useLogInDataQuery } from '../apis/auth/socialLogin';
 
-import useRegisterStore from '../../stores/registerStore';
-import { RegisterStatus } from '../../types/enum/RegisterStatus';
-import { ResponseCode } from '../../types/enum/ResponseCode';
+import useRegisterStore from '../stores/registerStore';
+import { RegisterStatus } from '../types/enum/RegisterStatus';
+import { ResponseCode } from '../types/enum/ResponseCode';
 
 const Login = () => {
   const navigate = useNavigate();
