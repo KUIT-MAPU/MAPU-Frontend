@@ -36,7 +36,19 @@
   margin-bottom: 8px;
 }
 
-.searchBar {
+.mapTitleText {
+  display: flex;
+  width: 52px;
+  height: 24px;
+  margin-left: 4px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.mapTitle {
   display: flex;
   width: 380px;
   height: 48px;
@@ -45,7 +57,7 @@
   align-items: center;
 }
 
-.searchBarText {
+.mapTitleInput {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -57,8 +69,53 @@
   color: var(--gray_400);
 }
 
+.mapStartText{
+  display: flex;
+  width: 52px;
+  height: 24px;
+  margin-left: 4px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.btnLocation {
+  display: flex;
+  justify-content: space-between;
+  width: 380px;
+  height: 48px;
+  border-radius: 8px;
+  background-color: var(--gray_50);
+  align-items: center;
+  padding: 0 4px;
+}
+
+.btnLocation div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 118px;
+  height: 40px; 
+  background-color: var(--sub); 
+  border-radius: 4px; 
+  cursor: pointer; 
+  position: relative;
+}
+
+.btnLocation div:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -5px; /* 요소 사이에 여백을 만들어 선이 중앙에 오도록 */
+  height: 36px; /* 선의 높이 지정 */
+  width: 1px; /* 선의 두께 지정 */
+  background-color: var(--gray_100); /* 선의 색상 설정 */
+}
+
 .createBtn {
-  background-color: black;
+  background-color: var(--main);
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;

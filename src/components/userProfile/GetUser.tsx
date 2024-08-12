@@ -177,7 +177,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
             <List />
           </button>
         </div>
-        <div className={styles.NewMap} onClick={openNewMap}>
+        <div className={styles.newMap} onClick={openNewMap}>
           <CreatMap />
         </div>
       </div>
