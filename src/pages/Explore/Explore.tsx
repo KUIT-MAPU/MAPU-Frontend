@@ -12,7 +12,7 @@ import MapList from '../../components/explore/MapList';
 import ErrorPage from '../../components/explore/ErrorPage';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore';
-import mockData from '../../components/timeLine/mapList/MapModel';
+import mockData from '../../components/timeLine/mapCard/MapModel';
 
 import styles from './Explore.module.scss';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
@@ -29,7 +29,6 @@ const Explore: React.FC = () => {
 
   const { selectedList, setSelectedList, removeSelectedList } =
     useKeywordStore();
-  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
 
   const outside = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -37,6 +36,7 @@ const Explore: React.FC = () => {
 
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
+  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
   const fetchMapData = async () => {
@@ -75,20 +75,8 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const allKeywords = allKeywordList.map((keyword) => ({
-      ...keyword,
-      selected: false,
-    }));
-
-    setAllKeywordList(allKeywords);
-
-    const resetSelectedLists = async () => {
-      await removeSelectedList();
-      setSelectedList([]);
-    };
-
-    resetSelectedLists();
-  }, [pathname]);
+    console.log(selectedList);
+  },[selectedList])
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -124,6 +112,13 @@ const Explore: React.FC = () => {
 
   useEffect(() => {
     fetchMapData();
+    setSelectedList([]);
+    if (allKeywordList) {
+      const keywords: KeywordType[] = allKeywordList.map((item) => {
+        return { ...item, selected: false };
+      });
+      setAllKeywordList(keywords);
+    }
   }, []);
 
   useEffect(() => {

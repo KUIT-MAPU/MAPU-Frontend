@@ -73,7 +73,7 @@ const Map = () => {
     navigate(prevUrl);
   };
 
-  //map
+  // map
   return (
     <div className={styles.map}>
       {dimmed && (

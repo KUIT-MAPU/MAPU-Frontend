@@ -8,9 +8,9 @@ import { useKeywordStore } from '../../stores/keywordStore';
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import AuthContainer from '../../components/login/AuthContainer';
-import MapCard from '../../components/timeLine/mapList/MapCard';
+import MapCard from '../../components/timeLine/mapCard/MapCard';
 import { MapType } from '../../types/MapType';
-import mockData from '../../components/timeLine/mapList/MapModel';
+import mockData from '../../components/timeLine/mapCard/MapModel';
 
 import styles from './TimeLine.module.scss';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';

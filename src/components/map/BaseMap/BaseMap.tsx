@@ -1,8 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Map, DrawingManager } from 'react-kakao-maps-sdk';
+import React, { useEffect, useRef, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { Map, DrawingManager, MapMarker } from 'react-kakao-maps-sdk';
 import useKakaoLoader from '../../../hooks/useKakaoLoader';
 import styles from './BaseMap.module.scss';
 import EditDesignPanel from './EditDesignPanel';
+import { ReactComponent as DotThick } from '../../../assets/map/ico_dot_thick_custom.svg';
+import { ReactComponent as DotThin } from '../../../assets/map/ico_dot_thin_custom.svg';
 
 interface BaseMapProps {
   mode: string;
@@ -13,21 +16,39 @@ interface Position {
   lng: number;
 }
 
+interface Marker {
+  img: string;
+  pos: Position;
+}
+
+interface DrawingObjects {
+  polyline?: kakao.maps.drawing.DrawingPolylineData[];
+  polygon?:kakao.maps.drawing.DrawingPolylineData[];
+}
+
 const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   useKakaoLoader();
+
+  type OverlayTypeString = 'polyline' | 'polygon';
 
   const [position, setPosition] = useState<Position>({
     lat: 33.450701,
     lng: 126.570667,
   });
 
+  const [marker, setMarker] = useState<Marker[] | null>(null);
+  const [objects, setObjects] = useState<Partial<DrawingObjects>>({});
   const [isObject, setIsObject] = useState<string>('');
   const [strokeWeight, setStrokeWeight] = useState<number>(1.5);
+  const [dot, setDot] = useState<string>(''); // 저장할 데이터는 Base64 문자열
+  const [dotShape, setDotShape] = useState<string>('dot thin');
+  const [dotColor, setDotColor] = useState<string>('#111111');
+
+  const [isShare, setIsShare] = useState<boolean>(false);
 
   const managerRef =
     useRef<
       kakao.maps.drawing.DrawingManager<
-        | kakao.maps.drawing.OverlayType.MARKER
         | kakao.maps.drawing.OverlayType.POLYLINE
         | kakao.maps.drawing.OverlayType.POLYGON
       >
@@ -35,12 +56,10 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
-  type OverlayTypeString = 'marker' | 'polyline' | 'polygon';
-
-  const handleShapeButtonClick = (type: OverlayTypeString) => {
+  const handleShapeButtonClick = (type: OverlayTypeString | 'dot') => {
     const manager = managerRef.current;
     setIsObject(type);
-    if (manager) {
+    if (manager && type !== 'dot') {
       manager.cancel();
       manager.select(type);
     }
@@ -89,11 +108,12 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
         color = '#821FFF';
         break;
       default:
-        color = '#111111'; // 기본 색상으로 설정
+        color = '#111111';
     }
 
+    setDotColor(color);
     const manager = managerRef.current;
-    manager?.setStrokeColor(label);
+    manager?.setStrokeColor(color);
     manager?.setStyle(
       kakao.maps.drawing.OverlayType.POLYGON,
       'fillColor',
@@ -103,7 +123,6 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
 
   const handleMoveButtonClick = (label: 'expansion' | 'reduction') => {
     const map = mapRef.current;
-    console.log('map:', map);
     if (label === 'expansion') {
       map?.setLevel(map.getLevel() - 1);
     } else {
@@ -111,26 +130,112 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     }
   };
 
+  const handleDotButtonClick = (label: 'dot thin' | 'dot thick') => {
+    const DotComponent = label === 'dot thin' ? DotThin : DotThick;
+    setDotShape(label);
+    const dotImg = <DotComponent stroke={dotColor} />;
+    const svgString = ReactDOMServer.renderToStaticMarkup(dotImg);
+    const base64Svg = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgString)))}`;
+    setDot(base64Svg);
+  };
+
+  useEffect(() => {
+    if (isObject === 'dot') {
+      const dotImg = isObject ? (
+        dotShape === 'dot thin' ? (
+          <DotThin stroke={dotColor} fill={dotColor} />
+        ) : (
+          <DotThick stroke={dotColor} />
+        )
+      ) : null;
+      if (dotImg) {
+        const svgString = ReactDOMServer.renderToStaticMarkup(dotImg);
+        const base64Svg = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgString)))}`;
+        setDot(base64Svg);
+      }
+    }
+  }, [dotColor, dotShape, isObject]);
+
+  const getMarker = (position: Position) => {
+    const pre = marker;
+    if (pre) {
+      setMarker([...pre, { img: dot, pos: position }]);
+    } else {
+      setMarker([{ img: dot, pos: position }]);
+    }
+    setIsObject('');
+    setDotColor('#111111');
+    setDotShape('dot thin');
+  };
+
   const manager = managerRef.current;
-  manager?.addListener('drawend',()=>{
-    setIsObject('')
-  })
+
+  useEffect(() => {
+    const manager = managerRef.current;
+    manager?.addListener('drawend', () => {
+      const objects = manager?.getOverlays(['polyline', 'polygon']);
+      setIsObject('');
+      setObjects(objects);
+    });
+
+    manager?.addListener('remove', () => {
+      const objects = manager?.getOverlays(['polyline', 'polygon']);
+      setObjects(objects);
+    });
+  }, [manager, objects]);
+
+  useEffect(() => {
+    console.log('objects:', objects);
+    console.log('marker:', marker);
+    if ((Array.isArray(objects.polygon) && objects.polygon?.length > 0)  || (Array.isArray(objects.polyline) && objects.polyline?.length > 0) || (marker !== undefined && marker !== null && marker.length > 0)) {
+      setIsShare(true);
+    } else {
+      setIsShare(false);
+    }
+  }, [objects, marker]); 
 
   return (
     <>
-      <Map ref={mapRef} center={position} className={styles.map} level={3}>
+      <Map
+        ref={mapRef}
+        center={position}
+        className={styles.map}
+        level={3}
+        onClick={(_, mouseEvent) => {
+          if (isObject === 'dot') {
+            const latlng = mouseEvent.latLng;
+            getMarker({ lat: latlng.getLat(), lng: latlng.getLng() });
+          }
+        }}
+      >
+        {marker?.map((item) => (
+          <MapMarker
+            key={item.pos.lat + '-' + item.pos.lng}
+            position={item.pos}
+            image={{
+              src: item.img,
+              size: {
+                width: 24,
+                height: 24,
+              },
+            }}
+            onClick={(marker: kakao.maps.Marker) => {
+              marker.setMap(null);
+              setMarker((pre) => {
+                return (pre || []).filter(
+                  (marker) => marker.pos.lat !== item.pos.lat || marker.pos.lng !== item.pos.lng
+                );
+              });
+            }}
+          />
+        ))}
         <DrawingManager
           ref={managerRef}
           drawingMode={[
-            kakao.maps.drawing.OverlayType.MARKER,
             kakao.maps.drawing.OverlayType.POLYLINE,
             kakao.maps.drawing.OverlayType.POLYGON,
           ]}
           guideTooltip={['draw', 'drag', 'edit']}
-          markerOptions={{
-            draggable: false,
-            removable: true,
-          }}
           polylineOptions={{
             draggable: false,
             removable: true,
@@ -155,14 +260,15 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
       </Map>
       {mode === 'edit' ? (
         <EditDesignPanel
-          mode={mode}
           object={isObject}
+          isShare={isShare}
           managerRef={managerRef}
           handleShapeButtonClick={handleShapeButtonClick}
           handleLineButtonClick={handleLineButtonClick}
           handleTransparentButtonClick={handleTransparentButtonClick}
           handleColorButtonClick={handleColorButtonClick}
           handleMoveButtonClick={handleMoveButtonClick}
+          handleDotButtonClick={handleDotButtonClick}
         />
       ) : null}
     </>

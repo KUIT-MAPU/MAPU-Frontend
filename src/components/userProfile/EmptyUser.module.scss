@@ -52,7 +52,7 @@
 
 .searchBar {
   display: flex;
-  width: 1508px;
+  width: 1250px;
   align-items: center;
   justify-content: flex-start;
   color: var(--gray_400);
@@ -64,17 +64,20 @@
   align-items: center;
   margin-left: 20px;
 }
+
 .contentView {
   display: flex;
+  width: 94px;
   align-items: center;
-  justify-content: flex-end;
-  margin-left: auto;
+  justify-content: space-evenly;
+  margin-left: 16px;
   border: 1px solid var(--gray_50);
 }
 
 .newMap {
-  margin-left: auto;
+  margin-left: 16px;
   display: flex;
+  width: 140px;
   align-items: center;
   justify-content: center;
   background-color: var(--gray_200);
