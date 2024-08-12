@@ -4,17 +4,12 @@ import useRegisterStore from '../stores/registerStore';
 // axios 인스턴스 생성
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_URL}`,
+  withCredentials: true, //쿠키를 포함한 요청을 보낼 때 필요
 });
 
 // 요청 인터셉터
 instance.interceptors.request.use(
   (config) => {
-    // const accessToken = useRegisterStore().accessToken;
-    // // console.log(accessToken);
-
-    // if (accessToken !== null && accessToken !== '') {
-    //   config.headers['Authorization'] = `Bearer ${accessToken}`;
-    // }
     // console.log('axios config : ', config);
     return config;
   },
@@ -27,7 +22,7 @@ instance.interceptors.request.use(
 // 응답 인터셉터
 instance.interceptors.response.use(
   (response) => {
-    console.log(response);
+    console.log('response: ', response);
     return response;
   },
   // (error) => {
