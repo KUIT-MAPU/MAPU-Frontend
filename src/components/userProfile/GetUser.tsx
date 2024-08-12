@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
+
 import styles from './GetUser.module.scss';
 import { ReactComponent as BackArrow } from '../../assets/BackArrow.svg';
 import { ReactComponent as FrontArrow } from '../../assets/FrontArrow.svg';
@@ -175,7 +177,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
             <List />
           </button>
         </div>
-        <div className={styles.newMap} onClick={openNewMap}>
+        <div className={styles.NewMap} onClick={openNewMap}>
           <CreatMap />
         </div>
       </div>

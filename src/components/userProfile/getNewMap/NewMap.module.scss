@@ -21,6 +21,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .modalTop {
@@ -54,4 +55,17 @@
   font-size: 18px;
   font-weight: 400;
   color: var(--gray_400);
+}
+
+.createBtn {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: auto;
 }

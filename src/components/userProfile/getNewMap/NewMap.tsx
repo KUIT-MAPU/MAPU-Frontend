@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import styles from './NewMap.module.scss';
 import { ReactComponent as ModalClose } from '../../../assets/btn_followmodal_close.svg';
 import { ReactComponent as NewMapIcon } from '../../../assets/ico_newmap.svg';
@@ -18,6 +16,9 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
           <div className={styles.searchBarText}>
             <div>텍스트</div>
           </div>
+        </div>
+        <div className={styles.createBtn}>
+          <div>텍스트</div>
         </div>
       </div>
     </div>

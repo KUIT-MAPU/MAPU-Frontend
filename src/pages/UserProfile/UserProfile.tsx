@@ -40,7 +40,7 @@ const UserProfile = () => {
     <div className={styles1.container}>
       <GlobalNavigationBar />
       <UserInfoBar />
-      {isLog ? <GetUser /> : <EmptyUser />}
+      {RegisterStatus.LOG_IN ? <EmptyUser /> : <GetUser />}
       <main className={styles1.main}>
         <Outlet />
       </main>
