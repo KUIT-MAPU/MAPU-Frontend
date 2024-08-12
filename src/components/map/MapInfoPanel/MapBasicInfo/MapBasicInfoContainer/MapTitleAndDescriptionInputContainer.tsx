@@ -23,7 +23,7 @@ const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
     isBookmarked,
     switchIsBookmarked,
   } = useMapInfoStore();
-  const { registerStatus, setLoginNeeded } = useRegisterStore();
+  const { registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [editedTitle, setEditedTitle] = useState<string>('');
   const [editedDescription, setEditedDescription] = useState<string>('');
 
@@ -57,7 +57,7 @@ const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
 
   const handleSwitchIsBookmarked = () => {
     if (registerStatus !== RegisterStatus.LOG_IN) {
-      setLoginNeeded(true);
+      setLoginNeededStatus(true);
     } else {
       //TODO: 북마크 설정 api 호출
       switchIsBookmarked();

@@ -4,7 +4,7 @@ import TimeLine from './pages/TimeLine/TimeLine';
 import Map from './pages/Map/Map';
 import Explore from './pages/Explore/Explore';
 import UserProfile from './pages/UserProfile/UserProfile';
-import Login from './pages/login/Login';
+import Login from './pages/Login/Login';
 
 const Router = () => {
   const router = createBrowserRouter([

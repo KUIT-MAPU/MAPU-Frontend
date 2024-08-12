@@ -34,7 +34,8 @@ const Explore: React.FC = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
-  const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
+  const { loginNeeded, registerStatus, setLoginNeededStatus } =
+    useRegisterStore();
   const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
@@ -86,7 +87,7 @@ const Explore: React.FC = () => {
   }, [loginNeeded, registerStatus]);
 
   const handleClose = () => {
-    setLoginNeeded(false);
+    setLoginNeededStatus(false);
     const prevUrl = pathname.split('?')[0];
     navigate(prevUrl);
   };

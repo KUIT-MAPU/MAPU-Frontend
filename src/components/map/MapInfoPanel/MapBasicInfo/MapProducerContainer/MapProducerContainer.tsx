@@ -11,10 +11,10 @@ const MapProducerConatiner = () => {
     nickname: 'producer',
     amIFollowing: false,
   });
-  const { registerStatus, setLoginNeeded } = useRegisterStore();
+  const { registerStatus, setLoginNeededStatus } = useRegisterStore();
 
   const handleFollowBtn = () => {
-    if (registerStatus !== RegisterStatus.LOG_IN) setLoginNeeded(true);
+    if (registerStatus !== RegisterStatus.LOG_IN) setLoginNeededStatus(true);
     else {
       //TODO: 팔로우 api
       setMockData((state) => {
