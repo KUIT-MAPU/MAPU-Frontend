@@ -19,7 +19,8 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const location = useLocation();
 
-  const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
+  const { loginNeeded, registerStatus, setLoginNeededStatus } =
+    useRegisterStore();
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -34,12 +35,12 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
   }, [loginNeeded, registerStatus]);
 
   const handleClose = () => {
-    setLoginNeeded(false);
+    setLoginNeededStatus(false);
     setIsOverlayVisible(false);
   };
 
   const handleLoginClick = () => {
-    setLoginNeeded(true);
+    setLoginNeededStatus(true);
     setIsOverlayVisible(true);
   };
 
@@ -54,7 +55,9 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
           <MapuLogo className={styles.icon} />
         </div>
         <Link to="/timeline" className={styles.link}>
-          <div className={`${styles.iconContainer} ${isHomeActive ? styles.iconContainer_on : styles.iconContainer_off}`}>
+          <div
+            className={`${styles.iconContainer} ${isHomeActive ? styles.iconContainer_on : styles.iconContainer_off}`}
+          >
             {isHomeActive ? (
               <Home_on className={styles.icon} />
             ) : (
@@ -63,8 +66,10 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
           </div>
         </Link>
         <Link to="/explore" className={styles.link}>
-          <div className={`${styles.iconContainer} ${isExploreActive ? styles.iconContainer_on : styles.iconContainer_off}`}>
-          {isExploreActive ? (
+          <div
+            className={`${styles.iconContainer} ${isExploreActive ? styles.iconContainer_on : styles.iconContainer_off}`}
+          >
+            {isExploreActive ? (
               <Explore_on className={styles.icon} />
             ) : (
               <Explore_off className={styles.icon} />
@@ -72,7 +77,9 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
           </div>
         </Link>
         <Link to="/user/:userId" className={styles.link}>
-        <div className={`${styles.iconContainer} ${isUserpageActive ? styles.iconContainer_on : styles.iconContainer_off}`}>
+          <div
+            className={`${styles.iconContainer} ${isUserpageActive ? styles.iconContainer_on : styles.iconContainer_off}`}
+          >
             <User className={styles.icon} />
           </div>
         </Link>

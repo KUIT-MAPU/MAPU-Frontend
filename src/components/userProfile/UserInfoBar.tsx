@@ -14,7 +14,8 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
-  const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
+  const { loginNeeded, registerStatus, setLoginNeededStatus } =
+    useRegisterStore();
 
   const openFollowing = () => {
     setIsFollowingOpen(true);
@@ -45,12 +46,12 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
   }, [loginNeeded, registerStatus]);
 
   const handleClose = () => {
-    setLoginNeeded(false);
+    setLoginNeededStatus(false);
     setIsOverlayVisible(false);
   };
 
   const handleLoginClick = () => {
-    setLoginNeeded(true);
+    setLoginNeededStatus(true);
     setIsOverlayVisible(true);
   };
 
