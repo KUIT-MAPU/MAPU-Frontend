@@ -1,4 +1,4 @@
-import React,{ useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
@@ -16,7 +16,7 @@ const UserProfile = () => {
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
-  const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
+  const { loginNeeded, registerStatus } = useRegisterStore();
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -29,7 +29,6 @@ const UserProfile = () => {
       console.log('setDimmed(false)');
     }
   }, [loginNeeded, registerStatus]);
-
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0];
