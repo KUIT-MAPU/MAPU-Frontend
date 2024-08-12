@@ -46,32 +46,32 @@ const Map = () => {
     titleElement.innerHTML = `${mapName!.replaceAll('-', ' ')} | MAPU`;
   }, [mapName]);
 
-  useEffect(() => {
-    if (mapMode === MapMode.EDIT) {
-      //editor
-      if (registerStatus !== RegisterStatus.LOG_IN) {
-        setDimmed(true);
-        setLoginNeeded(true);
-      } else {
-        setDimmed(false);
-      }
-    }
-    if (mapMode === MapMode.VIEW) {
-      //viewer
-      if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
-        setDimmed(true);
-      } else {
-        setDimmed(false);
-      }
-    }
-    //else: 잘못된 접근(모드)
-  }, [registerStatus, loginNeeded]);
+  // useEffect(() => {
+  //   if (mapMode === MapMode.EDIT) {
+  //     //editor
+  //     if (registerStatus !== RegisterStatus.LOG_IN) {
+  //       setDimmed(true);
+  //       setLoginNeeded(true);
+  //     } else {
+  //       setDimmed(false);
+  //     }
+  //   }
+  //   if (mapMode === MapMode.VIEW) {
+  //     //viewer
+  //     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
+  //       setDimmed(true);
+  //     } else {
+  //       setDimmed(false);
+  //     }
+  //   }
+  //   //else: 잘못된 접근(모드)
+  // }, [registerStatus, loginNeeded]);
 
-  const handleClose = () => {
-    setLoginNeeded(false);
-    const prevUrl = pathname.split('?')[0];
-    navigate(prevUrl);
-  };
+  // const handleClose = () => {
+  //   setLoginNeeded(false);
+  //   const prevUrl = pathname.split('?')[0];
+  //   navigate(prevUrl);
+  // };
 
   //map
   return (

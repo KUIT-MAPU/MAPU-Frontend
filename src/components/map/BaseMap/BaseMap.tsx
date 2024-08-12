@@ -21,8 +21,15 @@ interface Marker {
   pos: Position;
 }
 
+interface DrawingObjects {
+  polyline?: kakao.maps.drawing.DrawingPolylineData[];
+  polygon?:kakao.maps.drawing.DrawingPolylineData[];
+}
+
 const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   useKakaoLoader();
+
+  type OverlayTypeString = 'polyline' | 'polygon';
 
   const [position, setPosition] = useState<Position>({
     lat: 33.450701,
@@ -30,11 +37,14 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   });
 
   const [marker, setMarker] = useState<Marker[] | null>(null);
+  const [objects, setObjects] = useState<Partial<DrawingObjects>>({});
   const [isObject, setIsObject] = useState<string>('');
   const [strokeWeight, setStrokeWeight] = useState<number>(1.5);
   const [dot, setDot] = useState<string>(''); // 저장할 데이터는 Base64 문자열
   const [dotShape, setDotShape] = useState<string>('dot thin');
   const [dotColor, setDotColor] = useState<string>('#111111');
+
+  const [isShare, setIsShare] = useState<boolean>(false);
 
   const managerRef =
     useRef<
@@ -45,8 +55,6 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     >(null);
 
   const mapRef = useRef<kakao.maps.Map>(null);
-
-  type OverlayTypeString = 'polyline' | 'polygon';
 
   const handleShapeButtonClick = (type: OverlayTypeString | 'dot') => {
     const manager = managerRef.current;
@@ -135,7 +143,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     if (isObject === 'dot') {
       const dotImg = isObject ? (
         dotShape === 'dot thin' ? (
-          <DotThin stroke={dotColor} />
+          <DotThin stroke={dotColor} fill={dotColor} />
         ) : (
           <DotThick stroke={dotColor} />
         )
@@ -157,12 +165,34 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     }
     setIsObject('');
     setDotColor('#111111');
-    setDotShape('dot thin')
+    setDotShape('dot thin');
   };
 
   const manager = managerRef.current;
-  manager?.addListener('drawend', () => {
-  });
+
+  useEffect(() => {
+    const manager = managerRef.current;
+    manager?.addListener('drawend', () => {
+      const objects = manager?.getOverlays(['polyline', 'polygon']);
+      setIsObject('');
+      setObjects(objects);
+    });
+
+    manager?.addListener('remove', () => {
+      const objects = manager?.getOverlays(['polyline', 'polygon']);
+      setObjects(objects);
+    });
+  }, [manager, objects]);
+
+  useEffect(() => {
+    console.log('objects:', objects);
+    console.log('marker:', marker);
+    if ((Array.isArray(objects.polygon) && objects.polygon?.length > 0)  || (Array.isArray(objects.polyline) && objects.polyline?.length > 0) || (marker !== undefined && marker !== null && marker.length > 0)) {
+      setIsShare(true);
+    } else {
+      setIsShare(false);
+    }
+  }, [objects, marker]); 
 
   return (
     <>
@@ -191,6 +221,11 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
             }}
             onClick={(marker: kakao.maps.Marker) => {
               marker.setMap(null);
+              setMarker((pre) => {
+                return (pre || []).filter(
+                  (marker) => marker.pos.lat !== item.pos.lat || marker.pos.lng !== item.pos.lng
+                );
+              });
             }}
           />
         ))}
@@ -226,6 +261,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
       {mode === 'edit' ? (
         <EditDesignPanel
           object={isObject}
+          isShare={isShare}
           managerRef={managerRef}
           handleShapeButtonClick={handleShapeButtonClick}
           handleLineButtonClick={handleLineButtonClick}
