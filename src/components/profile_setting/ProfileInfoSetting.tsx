@@ -49,7 +49,17 @@ const ProfileInfoSetting = () => {
 
   const handleProfileSettingSubmit = async () => {
     //TODO: profileId 중복 검사
+
+    const formData = new FormData();
+    imgFile && formData.append('imageFile', imgFile);
+    const requestDTO = JSON.stringify({
+      nickname: nickname,
+      profileId: id,
+    });
+    formData.append('requestDTO', requestDTO);
+
     //TODO: 회원가입 api 연결
+    await signUpMutation.mutate(formData);
   };
 
   const onChangeIamge = async (e: React.ChangeEvent<HTMLInputElement>) => {
