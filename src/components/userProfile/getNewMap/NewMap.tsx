@@ -6,13 +6,18 @@ import { ReactComponent as NewMapIcon } from '../../../assets/ico_newmap.svg';
 
 const NewMap = ({ onClose }: { onClose: () => void }) => {
 
-  const [location,setLocation] = useState('현재 위치');
+  const [location,setLocation] = useState<string>('');
+  const [mapTitle,setMapTitle] = useState<string>('');
 
   const getButtonStyle = (buttonLocation : string) => {
     return location===buttonLocation
     ? `${styles.selectedButton}`
     : `${styles.defaultButton}`;
   }
+
+  const getInputTextStyle = () => {
+    return mapTitle ? `${styles.filledInput}` : `${styles.emptyInput}`;
+  };
 
   return (
     <div className={styles.modalOverlay}>
@@ -25,9 +30,13 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
         </div>
         <div className={styles.mapTitleText}>지도 이름</div>
         <div className={styles.mapTitle}>
-          <div className={styles.mapTitleInput}>
-            <div>텍스트</div>
-          </div>
+        <input
+            type="text"
+            className={`${styles.mapTitleInput} ${getInputTextStyle}`}
+            value={mapTitle}
+            onChange={(e) => setMapTitle(e.target.value)} // 입력 값 업데이트
+            placeholder="지도 이름 입력"
+          />
         </div>
         <div className={styles.mapStartText}>시작 위치</div>
         <div className={styles.btnLocation}>
