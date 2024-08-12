@@ -11,7 +11,7 @@ interface ProfileCardProps {
 }
 
 const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor }) => {
-  const { registerStatus, setLoginNeeded } = useRegisterStore();
+  const { registerStatus, setLoginNeededStatus } = useRegisterStore();
 
   const isLoggedIn = () => {
     return registerStatus === RegisterStatus.LOG_IN;
@@ -19,7 +19,7 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor }) => {
 
   const handleFollow = () => {
     if (!isLoggedIn()) {
-      setLoginNeeded(true);
+      setLoginNeededStatus(true);
     }
   };
 

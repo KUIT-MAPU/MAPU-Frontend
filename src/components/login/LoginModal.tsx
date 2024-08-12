@@ -7,7 +7,7 @@ import GoogleLogo from '../../assets/login/ico_google.svg';
 const LoginModal = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
-  const { setLoginNeeded } = useRegisterStore();
+  const { setLoginNeededStatus } = useRegisterStore();
 
   //oauth 요청 URL
   const ENCODED_PRESENT_URI = encodeURIComponent(pathname);
@@ -25,7 +25,7 @@ const LoginModal = () => {
   };
 
   const handleLater = () => {
-    setLoginNeeded(false);
+    setLoginNeededStatus(false);
     if (pathname === '/') {
       navigate('/timeline');
     } else {

@@ -29,7 +29,7 @@ const Map = () => {
         : MapMode.UNVALID; //error;
   const navigate = useNavigate();
   const { mapName } = useParams();
-  const { registerStatus, loginNeeded, setLoginNeeded } = useRegisterStore();
+  const { registerStatus, loginNeeded, setLoginNeededStatus } = useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const Map = () => {
       //editor
       if (registerStatus !== RegisterStatus.LOG_IN) {
         setDimmed(true);
-        setLoginNeeded(true);
+        setLoginNeededStatus(true);
       } else {
         setDimmed(false);
       }
@@ -68,7 +68,7 @@ const Map = () => {
   }, [registerStatus, loginNeeded]);
 
   const handleClose = () => {
-    setLoginNeeded(false);
+    setLoginNeededStatus(false);
     const prevUrl = pathname.split('?')[0];
     navigate(prevUrl);
   };

@@ -22,7 +22,7 @@ const TimeLine: React.FC = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
-  const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
+  const { loginNeeded, registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const TimeLine: React.FC = () => {
   }, [selectedList]);
 
   const handleClose = () => {
-    setLoginNeeded(false);
+    setLoginNeededStatus(false);
     const prevUrl = pathname.split('?')[0];
     navigate(prevUrl);
   };
