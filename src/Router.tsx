@@ -4,8 +4,7 @@ import TimeLine from './pages/TimeLine/TimeLine';
 import Map from './pages/Map/Map';
 import Explore from './pages/Explore/Explore';
 import UserProfile from './pages/UserProfile/UserProfile';
-import KakaoLogin from './pages/login/KakaoLogin';
-import GoogleLogin from './pages/login/GoogleLogin';
+import Login from './pages/login/Login';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -42,12 +41,12 @@ const Router = () => {
     {
       index: true,
       path: '/kakao/callback',
-      element: <KakaoLogin />,
+      element: <Login />,
     },
     {
       index: true,
       path: '/google/callback',
-      element: <GoogleLogin />,
+      element: <Login />,
     },
   ]);
 
