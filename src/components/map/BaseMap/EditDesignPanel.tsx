@@ -26,14 +26,15 @@ import styles from './EditDesignPanel.module.scss';
 
 interface EditDesignPanelProps {
   object: string;
+  isShare: boolean;
   managerRef: React.RefObject<
-  kakao.maps.drawing.DrawingManager<
-    | kakao.maps.drawing.OverlayType.MARKER
-    | kakao.maps.drawing.OverlayType.POLYLINE
-    | kakao.maps.drawing.OverlayType.POLYGON
-  >
->;
-  handleShapeButtonClick: (type:'polyline' | 'polygon' |'dot') => void;
+    kakao.maps.drawing.DrawingManager<
+      | kakao.maps.drawing.OverlayType.MARKER
+      | kakao.maps.drawing.OverlayType.POLYLINE
+      | kakao.maps.drawing.OverlayType.POLYGON
+    >
+  >;
+  handleShapeButtonClick: (type: 'polyline' | 'polygon' | 'dot') => void;
   handleDotButtonClick: (label: 'dot thin' | 'dot thick') => void;
   handleLineButtonClick: (label: 'line thin' | 'line thick') => void;
   handleTransparentButtonClick: (
@@ -48,9 +49,9 @@ interface EditDesignPanelProps {
 
 const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
   object,
+  isShare,
   managerRef,
   handleShapeButtonClick,
-
   handleDotButtonClick,
   handleLineButtonClick,
   handleTransparentButtonClick,
@@ -79,8 +80,8 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
       setActiveColor('');
     }
   }, [object]);
-  
-  const handleShapeButton = (type:'polyline' | 'polygon' | 'dot') => {
+
+  const handleShapeButton = (type: 'polyline' | 'polygon' | 'dot') => {
     handleShapeButtonClick(type);
     setActiveShape(type);
   };
@@ -104,10 +105,10 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
     setActiveColor(label);
   };
 
-  const handleDotButton = (label: 'dot thin'|'dot thick') => {
+  const handleDotButton = (label: 'dot thin' | 'dot thick') => {
     handleDotButtonClick(label);
     setActiveDot(label);
-  }
+  };
 
   return (
     <div
@@ -276,9 +277,15 @@ const EditDesignPanel: React.FC<EditDesignPanelProps> = ({
       </div>
 
       <div className={styles.share}>
-        <button className={styles.button} onClick={handleShareButtonClick}>
-          <img src={ico_share_inactive} alt="share" />
-        </button>
+        {isShare ? (
+          <button className={styles.button} onClick={handleShareButtonClick}>
+            <img src={ico_share_active} alt="share_active" />
+          </button>
+        ) : (
+          <button className={styles.button} disabled={true}>
+            <img src={ico_share_inactive} alt="share_inactive" />
+          </button>
+        )}
       </div>
     </div>
   );
