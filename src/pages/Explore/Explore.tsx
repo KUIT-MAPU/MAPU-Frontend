@@ -29,13 +29,13 @@ const Explore: React.FC = () => {
 
   const { selectedList, setSelectedList, removeSelectedList } =
     useKeywordStore();
-  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
 
   const outside = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
   const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
+  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
   const fetchMapData = async () => {
@@ -74,20 +74,8 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const allKeywords = allKeywordList.map((keyword) => ({
-      ...keyword,
-      selected: false,
-    }));
-
-    setAllKeywordList(allKeywords);
-
-    const resetSelectedLists = async () => {
-      await removeSelectedList();
-      setSelectedList([]);
-    };
-
-    resetSelectedLists();
-  }, [pathname]);
+    console.log(selectedList);
+  },[selectedList])
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -123,6 +111,13 @@ const Explore: React.FC = () => {
 
   useEffect(() => {
     fetchMapData();
+    setSelectedList([]);
+    if (allKeywordList) {
+      const keywords: KeywordType[] = allKeywordList.map((item) => {
+        return { ...item, selected: false };
+      });
+      setAllKeywordList(keywords);
+    }
   }, []);
 
   useEffect(() => {
