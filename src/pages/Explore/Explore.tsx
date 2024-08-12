@@ -35,7 +35,8 @@ const Explore: React.FC = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
-  const { loginNeeded, registerStatus, setLoginNeededStatus } = useRegisterStore();
+  const { loginNeeded, registerStatus, setLoginNeededStatus } =
+    useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
   const fetchMapData = async () => {
