@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import { KeywordType } from '../../../types/KeywordType';
-import { useKeywordStore, useAllKeywordStore } from '../../../stores/keywordStore';
+import {
+  useKeywordStore,
+  useAllKeywordStore,
+} from '../../../stores/keywordStore';
 import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 
@@ -24,12 +27,12 @@ const mockData: KeywordType[] = [
 
 const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   const { registerStatus } = useRegisterStore();
-  const { selectedList, setSelectedList } = useKeywordStore();
+  const { selectedList, setSelectedList, removeSelectedList } =
+    useKeywordStore();
   const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
   const [alert, setAlert] = useState<boolean>(false);
   const [isLog, setIsLog] = useState<boolean>(false);
-  const [isPath, setIsPath] = useState<string>('');
 
   const location = useLocation();
 
@@ -44,7 +47,9 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
 
   useEffect(() => {
     fetchKeywordData();
+  }, [location.pathname]);
 
+  useEffect(() => {
     if (registerStatus === RegisterStatus.LOG_IN) {
       setIsLog(true);
     } else {
@@ -53,11 +58,17 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   }, [registerStatus]);
 
   useEffect(() => {
-    if (!isLog && selectedList.length === 0) {
-      const selectedInit = allKeywordList.slice(0, 2).map((item: KeywordType) => {
-        item.selected = !item.selected;
-        return item;
-      });
+    if (
+      !isLog &&
+      selectedList.length === 0 &&
+      location.pathname === '/timeline'
+    ) {
+      const selectedInit = allKeywordList
+        .slice(0, 2)
+        .map((item: KeywordType) => {
+          item.selected = !item.selected;
+          return item;
+        });
       setSelectedList(selectedInit);
     }
   }, [isLog, allKeywordList]);
@@ -78,18 +89,15 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
 
       const updatedKeywordList = [...selectedList, ...falseKeyword];
 
-      if (JSON.stringify(allKeywordList) !== JSON.stringify(updatedKeywordList)) {
+      if (
+        JSON.stringify(allKeywordList) !== JSON.stringify(updatedKeywordList)
+      ) {
         setAllKeywordList(updatedKeywordList);
       }
 
       setIsRefresh(false);
     }
   }, [isRefresh]);
-
-  useEffect(() => {
-    console.log('현재 경로:',location.pathname);
-    setIsPath(location.pathname);
-  }, [location.pathname]);
 
   const handleRefreshClick = () => {
     if (selectedList.length === 5) {
@@ -100,13 +108,24 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
   };
 
   const handleSelectPills = (selectedKeyword: KeywordType) => {
-    selectedKeyword.selected = !selectedKeyword.selected;
-    const updatedList = allKeywordList.filter((item) => item.selected);
-    setAllKeywordList(allKeywordList);
-    setSelectedList(updatedList);
+    if (location.pathname === '/explore') {
+      if (selectedKeyword.selected) return;
+      const updatedList = allKeywordList.map((keyword) => ({
+        ...keyword,
+        selected: keyword.id === selectedKeyword.id ? true : false,
+      }));
 
-    if (updatedList.length < 5) {
-      setAlert(false);
+      setAllKeywordList(updatedList);
+      setSelectedList(updatedList.filter((keyword) => keyword.selected));
+    } else {
+      selectedKeyword.selected = !selectedKeyword.selected;
+      const updatedList = allKeywordList.filter((item) => item.selected);
+      setAllKeywordList(allKeywordList);
+      setSelectedList(updatedList);
+
+      if (updatedList.length < 5) {
+        setAlert(false);
+      }
     }
   };
 
@@ -125,7 +144,6 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
             className={keyword.selected ? styles.selected : styles.keywordPills}
             key={keyword.id}
             onClick={() => handleSelectPills(keyword)}
-            disabled={isPath === '/explore' && selectedList.length === 1 && !(keyword.selected) ? true : false}
           >
             {keyword.title}
           </button>

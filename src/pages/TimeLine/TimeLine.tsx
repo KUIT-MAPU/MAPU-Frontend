@@ -8,9 +8,9 @@ import { useKeywordStore } from '../../stores/keywordStore';
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import AuthContainer from '../../components/login/AuthContainer';
-import MapCard from '../../components/timeLine/mapList/MapCard';
+import MapCard from '../../components/timeLine/mapCard/MapCard';
 import { MapType } from '../../types/MapType';
-import mockData from '../../components/timeLine/mapList/MapModel';
+import mockData from '../../components/timeLine/mapCard/MapModel';
 
 import styles from './TimeLine.module.scss';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
@@ -22,7 +22,7 @@ const TimeLine: React.FC = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
-  const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
+  const { loginNeeded, registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const TimeLine: React.FC = () => {
   }, [selectedList]);
 
   const handleClose = () => {
-    setLoginNeeded(false);
+    setLoginNeededStatus(false);
     const prevUrl = pathname.split('?')[0];
     navigate(prevUrl);
   };

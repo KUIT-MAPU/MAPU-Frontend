@@ -59,6 +59,12 @@
   gap: 40px;
 }
 
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .submitBtn {
   padding: 12px 0;
   border-radius: 8px;

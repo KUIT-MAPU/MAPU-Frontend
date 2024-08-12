@@ -7,6 +7,9 @@ import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import ObjectInfoPanel from '../../components/map/ObjectInfoPanel/ObjectInfoPanel';
 import AuthContainer from '../../components/login/AuthContainer';
+import BaseMap from '../../components/map/BaseMap/BaseMap';
+import EditDesignPanel from '../../components/map/BaseMap/EditDesignPanel';
+import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import { MapMode } from '../../types/enum/MapMode';
 
 //"editor"
@@ -26,7 +29,7 @@ const Map = () => {
         : MapMode.UNVALID; //error;
   const navigate = useNavigate();
   const { mapName } = useParams();
-  const { registerStatus, loginNeeded, setLoginNeeded } = useRegisterStore();
+  const { registerStatus, loginNeeded, setLoginNeededStatus } = useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
 
   useEffect(() => {
@@ -48,7 +51,7 @@ const Map = () => {
       //editor
       if (registerStatus !== RegisterStatus.LOG_IN) {
         setDimmed(true);
-        setLoginNeeded(true);
+        setLoginNeededStatus(true);
       } else {
         setDimmed(false);
       }
@@ -65,12 +68,12 @@ const Map = () => {
   }, [registerStatus, loginNeeded]);
 
   const handleClose = () => {
-    setLoginNeeded(false);
+    setLoginNeededStatus(false);
     const prevUrl = pathname.split('?')[0];
     navigate(prevUrl);
   };
 
-  //map
+  // map
   return (
     <div className={styles.map}>
       {dimmed && (
@@ -80,8 +83,11 @@ const Map = () => {
         />
       )}
       {dimmed && <AuthContainer className={styles.authContainer} />}
-      <MapInfoPanel mode={mapMode} />
-      <ObjectInfoPanel mode={mapMode} />
+      <GlobalNavigationBar>
+        <MapInfoPanel mode={mapMode} />
+        <BaseMap mode={mapMode} />
+        <ObjectInfoPanel mode={mapMode} />
+      </GlobalNavigationBar>
     </div>
   );
 };

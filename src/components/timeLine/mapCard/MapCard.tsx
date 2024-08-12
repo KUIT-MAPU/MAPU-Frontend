@@ -7,6 +7,7 @@ import styles from './MapCard.module.scss';
 import userImg from '../../../assets/user.svg';
 import ico_carousel_backward from '../../../assets/ico_carousel_backward.svg';
 import ico_carousel_forward from '../../../assets/ico_carousel_forward.svg';
+import { Link } from 'react-router-dom';
 
 interface MapCardProps {
   mapData: MapType[];
@@ -49,8 +50,14 @@ const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
             </button>
           </div>
           {mapData.slice(renderMap - INIT_RENDER, renderMap).map((map) => (
+            <Link to={`/map/${map.name}/view`}  style={{ textDecoration: "none"}}>
+            
             <div key={map.id} className={styles.map}>
-              <img src={map.img} className={styles.mapImg} alt={`${map.name}`} />
+              <img
+                src={map.img}
+                className={styles.mapImg}
+                alt={`${map.name}`}
+              />
 
               <div className={styles.info}>
                 <div className={styles.mapInfo}>
@@ -73,6 +80,7 @@ const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
                 </div>
               </div>
             </div>
+            </Link>
           ))}
         </div>
       </div>

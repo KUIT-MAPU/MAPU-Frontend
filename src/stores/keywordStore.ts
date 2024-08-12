@@ -9,7 +9,7 @@ const cookieStorage: StateStorage = {
     return cookie ? JSON.parse(cookie) : null;
   },
   setItem: (name: string, value: string) => {
-    setCookie(name, value, { path: '/' });
+    setCookie(name, value, { path: "/" });
   },
   removeItem: (name: string) => {
     removeCookie(name);
@@ -31,7 +31,7 @@ const useKeywordStore = create<KeywordStore>()(
         cookieStorage.setItem('keyword-store', JSON.stringify(selectedList));
       },
       removeSelectedList: () => {
-        // set({ selectedList: [] });
+        set({ selectedList: [] });
         cookieStorage.removeItem('keyword-store');
       },
     }),
@@ -53,7 +53,10 @@ const useAllKeywordStore = create<AllKeywordStore>()(
       allKeywordList: [],
       setAllKeywordList: (allKeywordList: KeywordType[]) => {
         set({ allKeywordList });
-        cookieStorage.setItem('all-keyword-store', JSON.stringify(allKeywordList));
+        cookieStorage.setItem(
+          'all-keyword-store',
+          JSON.stringify(allKeywordList),
+        );
       },
     }),
     {

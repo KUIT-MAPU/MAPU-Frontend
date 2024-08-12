@@ -1,13 +1,35 @@
-import { useEffect } from 'react';
+import React,{ useState,useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
+
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import styles1 from '../../components/global/GlobalNavigationBar.module.scss';
 import UserInfoBar from '../../components/userProfile/UserInfoBar';
 import styles2 from '../components/userProfile/UserInfoBar.module.scss';
 import GetUser from '../../components/userProfile/GetUser';
+import EmptyUser from '../../components/userProfile/EmptyUser';
+
+import useRegisterStore from '../../stores/registerStore';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
 
 const UserProfile = () => {
   const { profileId } = useParams();
+  const [isLog, setIsLog] = useState<boolean>(false);
+  const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+
+  const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
+
+  useEffect(() => {
+    if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
+      setIsLog(false);
+      setIsOverlayVisible(true);
+      console.log('setDimmed(true');
+    } else {
+      setIsLog(true);
+      setIsOverlayVisible(false);
+      console.log('setDimmed(false)');
+    }
+  }, [loginNeeded, registerStatus]);
+
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0];
@@ -18,7 +40,7 @@ const UserProfile = () => {
     <div className={styles1.container}>
       <GlobalNavigationBar />
       <UserInfoBar />
-      <GetUser />
+      {isLog ? <GetUser /> : <EmptyUser />}
       <main className={styles1.main}>
         <Outlet />
       </main>

@@ -11,8 +11,8 @@ import AuthContainer from '../../components/login/AuthContainer';
 import MapList from '../../components/explore/MapList';
 import ErrorPage from '../../components/explore/ErrorPage';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
-import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore'
-import mockData from '../../components/timeLine/mapList/MapModel';
+import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore';
+import mockData from '../../components/timeLine/mapCard/MapModel';
 
 import styles from './Explore.module.scss';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
@@ -27,14 +27,16 @@ const Explore: React.FC = () => {
   const [isPopup, setIsPopup] = useState<boolean>(false);
   const [mapData, setMapData] = useState<MapType[]>([]);
 
-  const { selectedList, setSelectedList, removeSelectedList } = useKeywordStore()
-  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
+  const { selectedList, setSelectedList, removeSelectedList } =
+    useKeywordStore();
 
   const outside = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
-  const { loginNeeded, registerStatus, setLoginNeeded } = useRegisterStore();
+  const { loginNeeded, registerStatus, setLoginNeededStatus } =
+    useRegisterStore();
+  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
   const fetchMapData = async () => {
@@ -46,14 +48,14 @@ const Explore: React.FC = () => {
   };
 
   const fetchKeywordSearch = async (keyword: KeywordType) => {
-    try{
+    try {
       //TODO: API
-      const data =mockData.filter((map) => map.keywords === keyword.title);
+      const data = mockData.filter((map) => map.keywords === keyword.title);
       setMapData(data);
     } catch {
       console.error('error');
     }
-  }
+  };
 
   const handleRandomBtn = () => {
     setIsCheck('random');
@@ -73,21 +75,8 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const allKeywords = allKeywordList.map(keyword => ({
-      ...keyword,
-      selected: false,
-    }));
-  
-    setAllKeywordList(allKeywords);
-  
-    const resetSelectedLists = async () => {
-      await removeSelectedList();
-      setSelectedList([]);
-    };
-
-    resetSelectedLists();
-  
-  }, [pathname]);
+    console.log(selectedList);
+  },[selectedList])
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -98,7 +87,7 @@ const Explore: React.FC = () => {
   }, [loginNeeded, registerStatus]);
 
   const handleClose = () => {
-    setLoginNeeded(false);
+    setLoginNeededStatus(false);
     const prevUrl = pathname.split('?')[0];
     navigate(prevUrl);
   };
@@ -123,10 +112,17 @@ const Explore: React.FC = () => {
 
   useEffect(() => {
     fetchMapData();
+    setSelectedList([]);
+    if (allKeywordList) {
+      const keywords: KeywordType[] = allKeywordList.map((item) => {
+        return { ...item, selected: false };
+      });
+      setAllKeywordList(keywords);
+    }
   }, []);
 
   useEffect(() => {
-    if(selectedList !== null && selectedList.length !== 0) {
+    if (selectedList !== null && selectedList.length !== 0) {
       const keyword = selectedList[0];
       setText(keyword.title);
       fetchKeywordSearch(keyword);
@@ -134,7 +130,7 @@ const Explore: React.FC = () => {
       setText('');
       fetchMapData();
     }
-  },[selectedList]);
+  }, [selectedList]);
 
   return (
     <>
@@ -176,11 +172,17 @@ const Explore: React.FC = () => {
               setText={setText}
             />
             <div className={styles.main}>
-              {mapData !== null && mapData.length !==0 ? (
+              {mapData !== null && mapData.length !== 0 ? (
                 mapData.map((map: MapType) => (
-                  <MapList map={map} key={map.id} keyword={map.mapKeyword ?? []} />
+                  <MapList
+                    map={map}
+                    key={map.id}
+                    keyword={map.mapKeyword ?? []}
+                  />
                 ))
-              ) : (<ErrorPage text={text} />)}
+              ) : (
+                <ErrorPage text={text} />
+              )}
             </div>
           </HeaderNavigation>
         </div>
