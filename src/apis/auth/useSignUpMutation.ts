@@ -34,7 +34,10 @@ export const useSignUpMutation = (prevUrl: string) => {
         instance.defaults.headers.common['Authorization'] =
           `Bearer ${accessToken}`; //로그인 된 유저에 대하여 모든 api 호출에 accesstoken 포함시키는 코드
       } else {
-        //TODO: 회원가입 오류
+        //회원가입 오류
+        console.log('회원가입 실패');
+        navigate(`${prevUrl === '/' ? prevUrl : prevUrl + '?authState=login'}`);
+        return;
       }
 
       if (prevUrl === '/') navigate('/timeline');
