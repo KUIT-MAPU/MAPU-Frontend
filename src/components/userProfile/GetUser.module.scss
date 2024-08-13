@@ -45,6 +45,25 @@
   line-height: 33px;
   color: var(--black);
   gap: 12px;
+  cursor: pointer;
+}
+
+.dropdown {
+  top: 100%;
+  width: 100%;
+  max-height: 150px; 
+  background-color: white;
+  border: 1px solid var(--gray_400);
+  border-radius: 4px;
+  z-index: 1000; 
+}
+
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--gray_100); /* 마우스 오버 시 배경색 변경 */
+  }
 }
 
 .middleBar {
