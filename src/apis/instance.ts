@@ -1,5 +1,4 @@
 import axios from 'axios';
-import useRegisterStore from '../stores/registerStore';
 
 // axios 인스턴스 생성
 const instance = axios.create({
@@ -10,7 +9,7 @@ const instance = axios.create({
 // 요청 인터셉터
 instance.interceptors.request.use(
   (config) => {
-    // console.log('axios config : ', config);
+    console.log('axios config : ', config);
     return config;
   },
   (error) => {
