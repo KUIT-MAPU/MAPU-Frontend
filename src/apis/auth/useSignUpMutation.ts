@@ -13,7 +13,7 @@ export const useSignUpMutation = (prevUrl: string) => {
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
       return await instance.post<BaseResponse<LoginSuccess>>(
-        `/user/singup`,
+        `/user/signup`,
         data,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
