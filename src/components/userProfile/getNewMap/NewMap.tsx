@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 
 import styles from './NewMap.module.scss';
 import { ReactComponent as ModalClose } from '../../../assets/btn_followmodal_close.svg';
@@ -8,6 +8,7 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
 
   const [location,setLocation] = useState<string>('');
   const [mapTitle,setMapTitle] = useState<string>('');
+  const [mapCreate,setMapCreate] = useState<boolean>(false);
 
   const getButtonStyle = (buttonLocation : string) => {
     return location===buttonLocation
@@ -18,6 +19,18 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
   const getInputTextStyle = () => {
     return mapTitle ? `${styles.filledInput}` : `${styles.emptyInput}`;
   };
+
+  useEffect(() => {
+    if(location && mapTitle) {
+      setMapCreate(true);
+    } else{
+      setMapCreate(false);
+    }
+  },[location,mapTitle]);
+
+  const getMapCreateStyle = () => {
+    return mapCreate ? `${styles.onMapCreate}` : `${styles.offMapCreate}`;
+  }
 
   return (
     <div className={styles.modalOverlay}>
@@ -32,7 +45,7 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
         <div className={styles.mapTitle}>
         <input
             type="text"
-            className={`${styles.mapTitleInput} ${getInputTextStyle}`}
+            className={`${styles.mapTitleInput} ${getInputTextStyle()}`}
             value={mapTitle}
             onChange={(e) => setMapTitle(e.target.value)} // 입력 값 업데이트
             placeholder="지도 이름 입력"
@@ -50,7 +63,7 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
           className={getButtonStyle('광역자치단체')}
           onClick={() => setLocation('광역자치단체')}>광역자치단체</button>
         </div>
-        <div className={styles.createBtn}>
+        <div className={`${styles.createBtn} ${getMapCreateStyle()}`}>
           <div>생성하기</div>
         </div>
       </div>

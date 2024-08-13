@@ -74,11 +74,11 @@
 }
 
 .emptyInput {
-  color: var(--gray_400); /* 텍스트가 없을 때의 색상 */
+  color: var(--gray_400); 
 }
 
 .filledInput {
-  color: var(--black); /* 텍스트가 입력되었을 때의 색상 */
+  color: var(--black); 
 }
 
 .mapStartText{
@@ -139,8 +139,9 @@
   line-height: 24px;
   color: var(--main);
 }
+
 .createBtn {
-  background-color: var(--main);
+  background-color: var(--gray_100);
   color: white;
   display: flex;
   justify-content: center;
@@ -151,4 +152,12 @@
   font-weight: 600;
   cursor: pointer;
   margin-top: auto;
+}
+
+.onMapCreate {
+  background-color: var(--main);
+}
+
+.offMapCreate {
+  background-color: var(--gray_200);
 }
