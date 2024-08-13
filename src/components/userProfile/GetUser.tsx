@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
+
 import styles from './GetUser.module.scss';
 import { ReactComponent as BackArrow } from '../../assets/BackArrow.svg';
 import { ReactComponent as FrontArrow } from '../../assets/FrontArrow.svg';
