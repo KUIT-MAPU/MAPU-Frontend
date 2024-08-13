@@ -15,10 +15,12 @@ import { ReactComponent as CreatMap } from '../../assets/btn_map_create.svg';
 import NewMap from './getNewMap/NewMap';
 
 const GetUser = (props: { children?: React.ReactNode }) => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [view, setView] = useState('gallery'); //gallery를 기본으로 설정
   const [isNewMapOpen, setIsNewMapOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [mapTitle, setMapTitle] = useState<string>('');
+  const [mapCategory,setMapCategory] = useState<string>('edited');
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const placeholderImage = 'https://via.placeholder.com/150';
 
@@ -29,6 +31,15 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const closeNewMap = () => {
     setIsNewMapOpen(false);
   };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  }
+
+  const selectCategory = (category : string) => {
+    setMapCategory(category);
+    setIsDropdownOpen(false);
+  }
 
   const listMapData = [
     {
@@ -146,33 +157,43 @@ const GetUser = (props: { children?: React.ReactNode }) => {
           </div>
         </div>
       </div>
-      <div className={styles.btnTitle}>
-        편집 가능한 지도
+      <button className={styles.btnTitle} onClick={toggleDropdown}>
+        {mapCategory === 'edited' ? '편집 가능한 지도' : '북마크한 지도'}
         <DownArrow />
-      </div>
+      </button>
+      {isDropdownOpen && (
+          <div className={styles.dropdown}>
+            <div onClick={() => selectCategory('edited')} className={styles.dropdownItem}>
+              편집 가능한 지도
+            </div>
+            <div onClick={() => selectCategory('bookmarked')} className={styles.dropdownItem}>
+              북마크한 지도
+            </div>
+          </div>
+        )}
       <div className={styles.middleBar}>
         <div className={styles.searchBar}>
           <div className={styles.search}>
             <Search />
             <input
               type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+              value={mapTitle}
+              onChange={(e) => setMapTitle(e.target.value)}
               placeholder="검색"
-              className={styles.search}
             />
           </div>
         </div>
         <div className={styles.contentView}>
           <button
             onClick={() => setView('gallery')}
-            className={view === 'gallery' ? styles.active : ''}
+            className={`${styles.iconButton} ${view === 'gallery' ? styles.activeView : ''}`}
           >
             <Gallery />
           </button>
           <button
             onClick={() => setView('list')}
-            className={view === 'list' ? styles.active : ''}
+            className={`${styles.iconButton} ${view === 'list' ? styles.activeView : ''}`}
           >
             <List />
           </button>
