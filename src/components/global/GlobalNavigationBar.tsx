@@ -89,7 +89,6 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
           <Login className={styles.icon} onClick={handleLoginClick} />
         </div>
       </div>
-      <main className={styles.main}>{props.children}</main>
       {isOverlayVisible && (
         <>
           <div onClick={handleClose} />
