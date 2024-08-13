@@ -19,6 +19,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const [view, setView] = useState('gallery'); //gallery를 기본으로 설정
   const [isNewMapOpen, setIsNewMapOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [mapTitle, setMapTitle] = useState<string>('');
 
   const placeholderImage = 'https://via.placeholder.com/150';
 
@@ -156,10 +157,10 @@ const GetUser = (props: { children?: React.ReactNode }) => {
             <Search />
             <input
               type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+              value={mapTitle}
+              onChange={(e) => setMapTitle(e.target.value)}
               placeholder="검색"
-              className={styles.search}
             />
           </div>
         </div>
