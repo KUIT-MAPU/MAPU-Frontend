@@ -187,13 +187,13 @@ const GetUser = (props: { children?: React.ReactNode }) => {
         <div className={styles.contentView}>
           <button
             onClick={() => setView('gallery')}
-            className={view === 'gallery' ? styles.active : ''}
+            className={`${styles.iconButton} ${view === 'gallery' ? styles.activeView : ''}`}
           >
             <Gallery />
           </button>
           <button
             onClick={() => setView('list')}
-            className={view === 'list' ? styles.active : ''}
+            className={`${styles.iconButton} ${view === 'list' ? styles.activeView : ''}`}
           >
             <List />
           </button>

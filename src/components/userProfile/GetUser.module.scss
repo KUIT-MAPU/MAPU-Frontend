@@ -115,6 +115,30 @@
   justify-content: space-evenly;
   margin-left: 16px;
   border: 1px solid var(--gray_50);
+  border-radius: 8px;
+}
+
+.iconButton {
+  background-color: var(--white); // 기본 배경색
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px; // 버튼을 정사각형으로 만들기 위해 적용
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--gray_500); // 기본 SVG 색상
+  }
+}
+
+.activeView {
+  background-color: var(--gray_50);
 }
 
 .newMap {
