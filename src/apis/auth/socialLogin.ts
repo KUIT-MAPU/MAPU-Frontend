@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import instance from '../instance';
 import { BaseResponse } from '../../types/BaseResponse';
 import { LoginSuccess } from '../../types/auth/login';
