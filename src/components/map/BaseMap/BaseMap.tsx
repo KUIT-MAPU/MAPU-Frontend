@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { Map, DrawingManager, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, DrawingManager, MapMarker, Polyline } from 'react-kakao-maps-sdk';
 import useKakaoLoader from '../../../hooks/useKakaoLoader';
 import styles from './BaseMap.module.scss';
 import EditDesignPanel from './EditDesignPanel';
@@ -23,7 +23,7 @@ interface Marker {
 
 interface DrawingObjects {
   polyline?: kakao.maps.drawing.DrawingPolylineData[];
-  polygon?:kakao.maps.drawing.DrawingPolylineData[];
+  polygon?: kakao.maps.drawing.DrawingPolylineData[];
 }
 
 const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
@@ -43,8 +43,8 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   const [dot, setDot] = useState<string>(''); // 저장할 데이터는 Base64 문자열
   const [dotShape, setDotShape] = useState<string>('dot thin');
   const [dotColor, setDotColor] = useState<string>('#111111');
-
   const [isShare, setIsShare] = useState<boolean>(false);
+  const [selectedMarker, setSelectedMarker] = useState< kakao.maps.Marker | null>(null); // 마커 지우기 위해서 사용
 
   const managerRef =
     useRef<
@@ -61,7 +61,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     setIsObject(type);
     if (manager && type !== 'dot') {
       manager.cancel();
-      manager.select(type);
+      manager.select(type); // polyline 인지 polygon 인지 선택하기
     }
   };
 
@@ -176,23 +176,85 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
       const objects = manager?.getOverlays(['polyline', 'polygon']);
       setIsObject('');
       setObjects(objects);
-    });
+      manager.setStrokeWeight(1.5);
+      manager.setStrokeColor('#111111');
+      manager.setStyle(
+        kakao.maps.drawing.OverlayType.POLYGON,
+        'fillColor',
+        '#111111',
+      );
+      manager.setStyle(
+        kakao.maps.drawing.OverlayType.POLYGON,
+        'fillOpacity',
+        0.2,
+      );
+    }); // 그리기 끝나면 => objects 안에 넣기
 
     manager?.addListener('remove', () => {
       const objects = manager?.getOverlays(['polyline', 'polygon']);
       setObjects(objects);
-    });
+    }); // 제거되면 남아있는 객체 정보로 업데이트
   }, [manager, objects]);
 
   useEffect(() => {
-    console.log('objects:', objects);
-    console.log('marker:', marker);
-    if ((Array.isArray(objects.polygon) && objects.polygon?.length > 0)  || (Array.isArray(objects.polyline) && objects.polyline?.length > 0) || (marker !== undefined && marker !== null && marker.length > 0)) {
+    if (
+      (Array.isArray(objects.polygon) && objects.polygon?.length > 0) ||
+      (Array.isArray(objects.polyline) && objects.polyline?.length > 0) ||
+      (marker !== undefined && marker !== null && marker.length > 0)
+    ) {
       setIsShare(true);
     } else {
       setIsShare(false);
     }
-  }, [objects, marker]); 
+  }, [objects, marker]);
+
+  let select: kakao.maps.drawing.ExtendsOverlay | null = null;
+
+  // 전역에서 keydown 이벤트 리스너를 등록
+  window.addEventListener('keydown', (ev: KeyboardEvent) => {
+    if (ev.key === 'Delete' && select) {
+      manager?.remove(select);
+      select = null;
+    } else if (ev.key === 'Delete' && selectedMarker) {
+      setMarker((pre) => {
+        return (pre || []).filter(
+          (marker) =>
+            marker.pos.lat !== selectedMarker.getPosition().getLat() ||
+            marker.pos.lng !== selectedMarker.getPosition().getLng(),
+        );
+      });
+      setIsObject('');
+      setSelectedMarker(null);
+    }
+  });
+
+  // drawend 이벤트 리스너 등록
+  manager?.addListener('drawend', (e: kakao.maps.drawing.MouseEvent) => {
+    const object = e.target;
+
+    // 클릭 이벤트 리스너 등록
+    kakao.maps.event.addListener(object, 'click', () => {
+      select = object;
+    });
+  });
+  
+
+  useEffect(()=> {
+    window.addEventListener('keydown', (ev: KeyboardEvent) => {
+      if (ev.key === 'Delete' && selectedMarker) {
+        selectedMarker.setMap(null);
+        setMarker((pre) => {
+          return (pre || []).filter(
+            (marker) =>
+              marker.pos.lat !== selectedMarker.getPosition().getLat() ||
+              marker.pos.lng !== selectedMarker.getPosition().getLng(),
+          );
+        });
+        setSelectedMarker(null);
+      }
+    });
+  },[marker, selectedMarker]);
+
 
   return (
     <>
@@ -205,6 +267,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
           if (isObject === 'dot') {
             const latlng = mouseEvent.latLng;
             getMarker({ lat: latlng.getLat(), lng: latlng.getLng() });
+            // setIsObject('')
           }
         }}
       >
@@ -220,12 +283,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
               },
             }}
             onClick={(marker: kakao.maps.Marker) => {
-              marker.setMap(null);
-              setMarker((pre) => {
-                return (pre || []).filter(
-                  (marker) => marker.pos.lat !== item.pos.lat || marker.pos.lng !== item.pos.lng
-                );
-              });
+              setSelectedMarker(marker);
             }}
           />
         ))}
@@ -238,7 +296,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
           guideTooltip={['draw', 'drag', 'edit']}
           polylineOptions={{
             draggable: false,
-            removable: true,
+            removable: false,
             editable: true,
             strokeWeight: strokeWeight,
             strokeColor: '#111111',
@@ -247,7 +305,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
           }}
           polygonOptions={{
             draggable: false,
-            removable: true,
+            removable: false,
             editable: true,
             strokeColor: '#111111',
             strokeWeight: strokeWeight,

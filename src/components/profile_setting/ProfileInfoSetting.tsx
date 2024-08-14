@@ -52,10 +52,11 @@ const ProfileInfoSetting = () => {
 
     const formData = new FormData();
     imgFile && formData.append('imageFile', imgFile);
-    const requestDTO = JSON.stringify({
+    const requestJson = JSON.stringify({
       nickname: nickname,
       profileId: id,
     });
+    const requestDTO = new Blob([requestJson], { type: 'application/json' });
     formData.append('requestDTO', requestDTO);
 
     //TODO: 회원가입 api 연결
