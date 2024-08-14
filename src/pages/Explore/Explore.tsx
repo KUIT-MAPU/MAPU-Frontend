@@ -76,7 +76,7 @@ const Explore: React.FC = () => {
 
   useEffect(() => {
     console.log(selectedList);
-  },[selectedList])
+  }, [selectedList]);
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {

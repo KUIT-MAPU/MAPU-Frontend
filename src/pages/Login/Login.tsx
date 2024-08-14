@@ -20,7 +20,7 @@ const Login = () => {
   const social = redirectUrl.pathname.toLowerCase().split('/')[1];
 
   console.log(`${social} login`);
-  // console.log(code);
+  console.log(code);
 
   const { loginData, isLoginDataLoading } = useLogInDataQuery(social, code!);
 

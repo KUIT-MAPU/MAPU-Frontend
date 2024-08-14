@@ -29,7 +29,8 @@ const Map = () => {
         : MapMode.UNVALID; //error;
   const navigate = useNavigate();
   const { mapName } = useParams();
-  const { registerStatus, loginNeeded, setLoginNeededStatus } = useRegisterStore();
+  const { registerStatus, loginNeeded, setLoginNeededStatus } =
+    useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
 
   useEffect(() => {

@@ -50,36 +50,38 @@ const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
             </button>
           </div>
           {mapData.slice(renderMap - INIT_RENDER, renderMap).map((map) => (
-            <Link to={`/map/${map.name}/view`}  style={{ textDecoration: "none"}}>
-            
-            <div key={map.id} className={styles.map}>
-              <img
-                src={map.img}
-                className={styles.mapImg}
-                alt={`${map.name}`}
-              />
+            <Link
+              to={`/map/${map.name}/view`}
+              style={{ textDecoration: 'none' }}
+            >
+              <div key={map.id} className={styles.map}>
+                <img
+                  src={map.img}
+                  className={styles.mapImg}
+                  alt={`${map.name}`}
+                />
 
-              <div className={styles.info}>
-                <div className={styles.mapInfo}>
-                  <div className={styles.title}>{map.name}</div>
-                  <div className={styles.address}>{map.address}</div>
-                </div>
+                <div className={styles.info}>
+                  <div className={styles.mapInfo}>
+                    <div className={styles.title}>{map.name}</div>
+                    <div className={styles.address}>{map.address}</div>
+                  </div>
 
-                <div className={styles.editorImg}>
-                  {map.editors.map((editor, index) => {
-                    const offset = index * 15;
-                    return (
-                      <img
-                        key={index}
-                        src={userImg}
-                        alt={`${editor.name} editor`}
-                        style={{ right: `${offset}px`, top: '0px' }}
-                      />
-                    );
-                  })}
+                  <div className={styles.editorImg}>
+                    {map.editors.map((editor, index) => {
+                      const offset = index * 15;
+                      return (
+                        <img
+                          key={index}
+                          src={userImg}
+                          alt={`${editor.name} editor`}
+                          style={{ right: `${offset}px`, top: '0px' }}
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
             </Link>
           ))}
         </div>
