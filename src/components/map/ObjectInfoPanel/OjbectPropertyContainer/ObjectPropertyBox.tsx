@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './ObjectPropertyBox.module.scss';
 import { ObjectOutline } from '../../../../types/map/object/ObjectOutline';
 import { StarRating } from '../../../../types/map/object/StarRating';
@@ -36,8 +37,15 @@ const isStarRatingArray = (
 };
 
 const ObjectPropertyBox: React.FC<Props> = ({ mode, type, values }) => {
+  const [editedTag, setEditedTag] = useState<string>('');
+
+  const handleTagNameOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedTag(e.currentTarget.value);
+  };
+
   const handleAddTag = () => {
     //TODO: 태그 추가 api
+    //글자수 검사 (1~10글자)
   };
 
   const handleDeleteTag = () => {
@@ -97,11 +105,19 @@ const ObjectPropertyBox: React.FC<Props> = ({ mode, type, values }) => {
         <div className={styles.propertyBox}>
           {mode === MapMode.EDIT && (
             <div className={styles.tagInputContainer}>
-              <input type="text" className={styles.tagInput} maxLength={10} />
+              <input
+                type="text"
+                value={editedTag}
+                placeholder="태그 이름"
+                className={styles.tagNameInput}
+                maxLength={10}
+                onChange={handleTagNameOnChange}
+              />
               <button
                 type="button"
                 className={styles.addTagBtn}
                 onClick={handleAddTag}
+                disabled={editedTag.length === 0 ? true : false}
               >
                 <span>추가</span>
               </button>

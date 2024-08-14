@@ -72,12 +72,16 @@
   border-radius: 6px;
   border: 1px solid var(--gray_50);
 
-  .tagInput {
+  .tagNameInput {
     width: calc(100% - 60px);
     padding: 0;
     border: none;
     background: none;
     font-size: 18px;
+
+    &::-webkit-input-placeholder {
+      color: var(--gray_400);
+    }
   }
   .addTagBtn {
     width: 44px;
@@ -90,6 +94,10 @@
       color: var(--white);
       font-size: 14px;
       font-weight: 600;
+    }
+
+    &:disabled {
+      background: var(--gray_200);
     }
   }
 }

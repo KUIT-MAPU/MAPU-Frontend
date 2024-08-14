@@ -47,7 +47,7 @@ const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
   const handleFocusOutTitle = () => {
     //TODO: 지도 제목 저장 api 호출, 응답으로 받은 지도 제목 사용
     setTitle(editedTitle);
-    navigate(`/map/${editedTitle.replaceAll(' ', '-')}`);
+    navigate(`/map/${editedTitle.replaceAll(' ', '-')}/${mode}`);
   };
 
   const handleFocusOutDescription = () => {
