@@ -10,7 +10,15 @@ const instance = axios.create({
 // 요청 인터셉터
 instance.interceptors.request.use(
   (config) => {
-    // console.log('axios config : ', config);
+    const state = useRegisterStore.getState();
+    if (
+      state.accessToken &&
+      state.accessToken !== null &&
+      state.accessToken !== ''
+    ) {
+      config.headers['Authorization'] = `Bearer ${state.accessToken}`;
+    }
+    console.log('axios config : ', config);
     return config;
   },
   (error) => {
