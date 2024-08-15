@@ -97,13 +97,14 @@ const OjbectPropertyContainer: React.FC<Props> = ({ mode, object }) => {
             mode={mode}
           />
         )}
-        {object.starRatings.length !== 0 && (
+        TODO: 보류한 부분 주석 처리 (별점)
+        {/* {object.starRatings.length !== 0 && (
           <ObjectPropertyBox
             type={ObjectPropertyType.STAR_RATING}
             values={object.starRatings}
             mode={mode}
           />
-        )}
+        )} */}
       </div>
     </section>
   );
