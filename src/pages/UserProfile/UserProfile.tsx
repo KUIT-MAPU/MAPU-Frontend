@@ -40,7 +40,6 @@ const UserProfile = () => {
       <GlobalNavigationBar />
       <UserInfoBar />
       {RegisterStatus.LOG_IN ? <GetUser /> : <EmptyUser />}
-      <GetUser /> 
       <main className={styles1.main}>
         <Outlet />
       </main>
