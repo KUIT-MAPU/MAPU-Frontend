@@ -8,7 +8,7 @@ import forwardInactive from '../../../assets/ico_front_inactive.svg';
 
 import styles from './HeaderNavigation.module.scss';
 
-const HeaderNavigation: React.FC<{ children: React.ReactNode }> = (props) => {
+const HeaderNavigation: React.FC = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const navigationType = useNavigationType();
@@ -68,7 +68,7 @@ const HeaderNavigation: React.FC<{ children: React.ReactNode }> = (props) => {
         </button>
       </nav>
 
-      <main className={styles.headerMain}>{props.children}</main>
+      {/* <main className={styles.headerMain}>{props.children}</main> */}
     </div>
   );
 };

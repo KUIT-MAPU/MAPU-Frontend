@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 
 import EditorProfileCard from './EditorProfileCard';
-import { EditorType } from '../../../types/EditorType';
-import mockData from './EditorModel';
+import { fetchEditorData } from '../../../apis/editors/fetchEditorsData';
+import useRegisterStore from '../../../stores/registerStore';
 
 import styles from './EditorList.module.scss';
 
@@ -11,33 +12,19 @@ interface EditorListProps {
 }
 
 const EditorList: React.FC<EditorListProps> = ({ className }) => {
-  const [editorData, setEditorData] = useState<EditorType[]>([]);
-  const [isRefresh, setIsRefresh] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const token = useRegisterStore((state) => state.accessToken);
 
-  useEffect(() => {
-    fetchEditorData();
-  }, []);
-
-  const fetchEditorData = async () => {
-    try {
-      //api data
-      setEditorData(mockData);
-    } catch (error) {
-      setError('정보를 불러올 수 없음.');
+  const { data: editorData, error, isLoading, refetch } = useQuery(
+    ['editorsData', token], 
+    () => fetchEditorData(token),
+    {
+      enabled: true,
+      refetchOnWindowFocus: false, 
     }
-  };
-
-  useEffect(() => {
-    if (isRefresh) {
-      fetchEditorData();
-      setIsRefresh(false);
-    }
-    console.log('에디터 새로고침', isRefresh);
-  }, [isRefresh]);
+  );
 
   const handleRefreshClick = () => {
-    setIsRefresh(true);
+    refetch();
   };
 
   return (
@@ -52,7 +39,7 @@ const EditorList: React.FC<EditorListProps> = ({ className }) => {
       <div className={styles.editorProfiles}>
         {editorData &&
           editorData.map((editor) => (
-            <EditorProfileCard Editor={editor} key={editor.id} />
+            <EditorProfileCard Editor={editor} key={editor.userId} />
           ))}
       </div>
     </div>

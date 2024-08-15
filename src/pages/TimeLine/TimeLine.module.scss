@@ -1,14 +1,15 @@
 .timeLineContainer {
   display: flex;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 1920px;
+  height: 1080px;
+
   position: relative;
 }
 
-.leftBarWrapper {
+.main {
   display: flex;
   flex-direction: row;
+  width: calc(100vw - 72px);
 }
 
 .authContainer {
@@ -19,9 +20,32 @@
   transform: translate(-50%, -50%);
 }
 
-.main {
+.TimelineMain {
+  display: flex; 
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.mapMain {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  width: 100%;
+  justify-content: flex-start;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 24px;
+  // height: calc(100vh - 72px);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 206px;
+    // background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 4px;
+    background-color: #EBEEF2;
+  }
 }

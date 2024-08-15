@@ -2,20 +2,12 @@
   display: flex;
   flex-direction: column;
   width: 1408px;
-  height: 100%;
+  height: auto;
 
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 24px;
+  margin-bottom: 36px;
 
-  overflow: hidden;
+  // overflow: hidden;
   max-width: 100%;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
 .keyword {
@@ -31,6 +23,7 @@
   position: relative;
   flex-direction: row;
   gap: 16px;
+  margin-top: 16px;
   flex-wrap: nowrap;
 }
 
@@ -60,6 +53,7 @@
 .mapInfo {
   display: flex;
   flex-direction: column;
+  height: 55px;
 }
 
 .title {
