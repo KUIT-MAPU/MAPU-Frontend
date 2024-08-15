@@ -39,7 +39,7 @@ const UserProfile = () => {
     <div className={styles1.container}>
       <GlobalNavigationBar />
       <UserInfoBar />
-      {/*{RegisterStatus.LOG_IN ? <EmptyUser /> : <GetUser />}   로그인구현 정상 되면 주석 제거*/}
+      {RegisterStatus.LOG_IN ? <GetUser /> : <EmptyUser />}
       <GetUser /> 
       <main className={styles1.main}>
         <Outlet />
