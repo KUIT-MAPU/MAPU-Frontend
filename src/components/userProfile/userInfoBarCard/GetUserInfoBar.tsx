@@ -128,7 +128,11 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
   return (
     <div className={styles.UserInfoBar}>
       <div className={styles.UserPhoto}>
-        <ProfilePerson />
+        {userData.imgUrl ? (
+          <img src={userData.imgUrl} alt='User Profile' className={styles.Profile} />
+        ) : (
+          <ProfilePerson />
+        )}
       </div>
       <div className={styles.UserName}>
         <h1>{userData.nickname}</h1>
