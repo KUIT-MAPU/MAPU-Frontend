@@ -59,7 +59,6 @@ const ProfileInfoSetting = () => {
     const requestDTO = new Blob([requestJson], { type: 'application/json' });
     formData.append('requestDTO', requestDTO);
 
-    //TODO: 회원가입 api 연결
     await signUpMutation.mutate(formData);
   };
 
