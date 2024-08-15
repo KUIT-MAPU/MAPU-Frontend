@@ -3,8 +3,8 @@ import { Outlet, useParams } from 'react-router-dom';
 
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import styles1 from '../../components/global/GlobalNavigationBar.module.scss';
-import UserInfoBar from '../../components/userProfile/UserInfoBar';
-import styles2 from '../components/userProfile/UserInfoBar.module.scss';
+import UserInfoBar from '../../components/userProfile/userInfoBarCard/GetUserInfoBar';
+import styles2 from '../components/userProfile/GetUserInfoBar.module.scss';
 import GetUser from '../../components/userProfile/GetUser';
 import EmptyUser from '../../components/userProfile/EmptyUser';
 
