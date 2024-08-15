@@ -3,8 +3,8 @@ import { Outlet, useParams } from 'react-router-dom';
 
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import styles1 from '../../components/global/GlobalNavigationBar.module.scss';
-import UserInfoBar from '../../components/userProfile/UserInfoBar';
-import styles2 from '../components/userProfile/UserInfoBar.module.scss';
+import UserInfoBar from '../../components/userProfile/userInfoBarCard/GetUserInfoBar';
+import styles2 from '../components/userProfile/GetUserInfoBar.module.scss';
 import GetUser from '../../components/userProfile/GetUser';
 import EmptyUser from '../../components/userProfile/EmptyUser';
 
@@ -39,8 +39,7 @@ const UserProfile = () => {
     <div className={styles1.container}>
       <GlobalNavigationBar />
       <UserInfoBar />
-      {/*{RegisterStatus.LOG_IN ? <EmptyUser /> : <GetUser />}   로그인구현 정상 되면 주석 제거*/}
-      <GetUser /> 
+      {RegisterStatus.LOG_IN ? <GetUser /> : <EmptyUser />}
       <main className={styles1.main}>
         <Outlet />
       </main>
