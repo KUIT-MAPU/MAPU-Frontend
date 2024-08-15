@@ -76,7 +76,7 @@ const Explore: React.FC = () => {
 
   useEffect(() => {
     console.log(selectedList);
-  },[selectedList])
+  }, [selectedList]);
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -133,7 +133,7 @@ const Explore: React.FC = () => {
   }, [selectedList]);
 
   return (
-    <>
+    <div className={styles.root}>
       {isOverlayVisible && (
         <>
           <div className={dimmedStyles.background} onClick={handleClose} />
@@ -141,10 +141,11 @@ const Explore: React.FC = () => {
         </>
       )}
 
-      <SideBar>
-        <div className={styles.leftBarWrapper}>
-          <LeftBar />
-          <HeaderNavigation>
+      <SideBar />
+      <div className={styles.leftBarWrapper}>
+        <LeftBar />
+        <div className={styles.main}>
+          <HeaderNavigation />
             <div className={styles.btnTitle}>
               {isCheck === 'random' && (
                 <span className={styles.title}>랜덤순 탐색</span>
@@ -184,10 +185,10 @@ const Explore: React.FC = () => {
                 <ErrorPage text={text} />
               )}
             </div>
-          </HeaderNavigation>
+          {/* </HeaderNavigation> */}
         </div>
-      </SideBar>
-    </>
+      </div>
+    </div>
   );
 };
 

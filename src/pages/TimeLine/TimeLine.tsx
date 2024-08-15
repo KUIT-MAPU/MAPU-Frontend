@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
-import SideBar from '../../components/global/GlobalNavigationBar';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
 import { useKeywordStore } from '../../stores/keywordStore';
 import useRegisterStore from '../../stores/registerStore';
@@ -14,6 +13,7 @@ import mockData from '../../components/timeLine/mapCard/MapModel';
 
 import styles from './TimeLine.module.scss';
 import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
+import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 
 const TimeLine: React.FC = () => {
   const [mapData, setMapData] = useState<{ [key: string]: MapType[] }>({});
@@ -71,11 +71,12 @@ const TimeLine: React.FC = () => {
         </>
       )}
 
-      <SideBar>
-        <div className={styles.leftBarWrapper}>
-          <LeftBar />
-          <HeaderNavigation>
-            <div className={styles.main}>
+      <GlobalNavigationBar />
+      <div className={styles.main}>
+        <LeftBar />
+        <div className={styles.TimelineMain}>
+          <HeaderNavigation />
+            <div className={styles.mapMain}>
               {selectedList.map((keyword) => {
                 const data = mapData[keyword.title] || [];
                 return data.length > 0 ? (
@@ -88,9 +89,9 @@ const TimeLine: React.FC = () => {
                 ) : null;
               })}
             </div>
-          </HeaderNavigation>
+          {/* </HeaderNavigation> */}
         </div>
-      </SideBar>
+      </div>
     </div>
   );
 };

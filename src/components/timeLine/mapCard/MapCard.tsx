@@ -30,28 +30,26 @@ const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
 
   return (
     <div className={styles.mapcard}>
-      <div className={styles.wrapper}>
-        <div className={styles.keyword}>{keyword}</div>
+      <div className={styles.keyword}>{keyword}</div>
 
-        <div className={styles.mapContainer}>
-          <div className={styles.buttonContainer}>
-            <button
-              className={`${renderMap > INIT_RENDER ? styles.forward : styles.hidden}`}
-              onClick={handleForward}
-            >
-              <img src={ico_carousel_forward} alt="Forward" />
-            </button>
+      <div className={styles.mapContainer}>
+        <div className={styles.buttonContainer}>
+          <button
+            className={`${renderMap > INIT_RENDER ? styles.forward : styles.hidden}`}
+            onClick={handleForward}
+          >
+            <img src={ico_carousel_forward} alt="Forward" />
+          </button>
 
-            <button
-              className={`${renderMap > mapData.length ? styles.hidden : styles.backward}`}
-              onClick={handleBackward}
-            >
-              <img src={ico_carousel_backward} alt="Backward" />
-            </button>
-          </div>
-          {mapData.slice(renderMap - INIT_RENDER, renderMap).map((map) => (
-            <Link to={`/map/${map.name}/view`}  style={{ textDecoration: "none"}}>
-            
+          <button
+            className={`${renderMap > mapData.length ? styles.hidden : styles.backward}`}
+            onClick={handleBackward}
+          >
+            <img src={ico_carousel_backward} alt="Backward" />
+          </button>
+        </div>
+        {mapData.slice(renderMap - INIT_RENDER, renderMap).map((map) => (
+          <Link to={`/map/${map.name}/view`} style={{ textDecoration: 'none' }}>
             <div key={map.id} className={styles.map}>
               <img
                 src={map.img}
@@ -80,9 +78,8 @@ const MapCard: React.FC<MapCardProps> = ({ mapData, isLog, keyword }) => {
                 </div>
               </div>
             </div>
-            </Link>
-          ))}
-        </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

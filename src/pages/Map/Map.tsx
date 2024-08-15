@@ -83,11 +83,10 @@ const Map = () => {
         />
       )}
       {dimmed && <AuthContainer className={styles.authContainer} />}
-      <GlobalNavigationBar>
+      <GlobalNavigationBar />
         <MapInfoPanel mode={mapMode} />
         <BaseMap mode={mapMode} />
         <ObjectInfoPanel mode={mapMode} />
-      </GlobalNavigationBar>
     </div>
   );
 };
