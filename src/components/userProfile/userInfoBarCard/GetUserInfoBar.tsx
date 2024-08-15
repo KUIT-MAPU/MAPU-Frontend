@@ -136,7 +136,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
       </div>
       <div className={styles.UserName}>
         <h1>{userData.nickname}</h1>
-        <span>{userData.profileId}</span>
+        <span>{`@${userData.profileId}`}</span>
       </div>
       <div className={styles.UserProfileNumber}>
         <div className={styles.UserProfileBox}>
