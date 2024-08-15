@@ -10,6 +10,7 @@ import AuthContainer from '../../login/AuthContainer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { usePostFollow } from '../../../apis/follow/usePostFollow';
 import { FollowType } from '../../../types/follow/FollowType';
+import { FollowingType } from '../../../types/follow/FollowingType';
 
 interface ProfileCardProps {
   Editor: EditorType;
@@ -21,6 +22,8 @@ interface ProfileCardProps {
 const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, token, isLog }) => {
   const { registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+  const [pendingUser, setPendingUser] = useState<number | null>(null);
+  const [isFollow, setIsFollow] = useState<boolean>(false);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
   const mutation = usePostFollow();
@@ -28,14 +31,15 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, token, isLog })
 
   const handleFollow = (followingId:number) => {
     if (!isLog) {
+      setPendingUser(followingId)
       setLoginNeededStatus(true);
       setIsOverlayVisible(true);
     } else {
       const followData: FollowType = {
         followingId: followingId,
       }
-
       mutation.mutate(followData);
+      setIsFollow(true);
     }
   };
 
@@ -64,8 +68,9 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, token, isLog })
         </div>
       </div>
 
-      <button className={styles.following} onClick={() => handleFollow(Editor.userId)}>
-        팔로잉
+      <button className={`${isFollow ? styles.unfollowing : styles.following}`} onClick={() => handleFollow(Editor.userId)}>
+        {isFollow ? "팔로잉" : "팔로우"}
+
       </button>
     </div>
   );

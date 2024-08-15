@@ -5,13 +5,16 @@ import { useLocation } from 'react-router-dom';
 import { useGetKeywords } from '../../../apis/keywords/useGetKeywords';
 import styles from './KeywordList.module.scss';
 import ico_info from '../../../assets/ico_info_gray.svg';
+import { useQuery } from 'react-query';
+import { fetchFollowing } from '../../../apis/follow/useGetFollowing';
 
 interface KeywordListProps {
   className?: string;
   isLog: boolean;
+  token: string | undefined;
 }
 
-const KeywordList: React.FC<KeywordListProps> = ({ className, isLog }) => {
+const KeywordList: React.FC<KeywordListProps> = ({ className, isLog, token }) => {
   const { selectedList, setSelectedList } = useKeywordStore();
   const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
@@ -19,6 +22,15 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, isLog }) => {
 
   const location = useLocation();
   const { refetch } = useGetKeywords();
+
+  const { data: followingData } = useQuery(
+    ['editorsData', token], 
+    () => fetchFollowing(token),
+    {
+      enabled: true,
+      refetchOnWindowFocus: false, 
+    }
+  );
 
 
   useEffect(() => {
@@ -29,20 +41,26 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, isLog }) => {
 
 
   useEffect(() => {
-    if (
-      !isLog &&
-      selectedList.length === 0 &&
-      location.pathname === '/timeline'
-    ) {
+    if (!isLog && selectedList.length === 0 && location.pathname === '/timeline') {
       const selectedInit = allKeywordList
         .slice(0, 2)
         .map((item: KeywordType) => {
-          item.selected = !item.selected;
+          item.selected = true;
           return item;
         });
       setSelectedList(selectedInit);
+    } else if (isLog && !followingData) {
+      const selectedInit = allKeywordList
+        .slice(0, 2)
+        .map((item: KeywordType) => {
+          item.selected = true;
+          return item;
+        });
+      setSelectedList(selectedInit);
+    } else {
+      setSelectedList([]);
     }
-  }, [isLog, allKeywordList]);
+  }, [isLog,location.pathname]);
 
   useEffect(() => {
     if (isRefresh) {
@@ -59,15 +77,18 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, isLog }) => {
       }
       setIsRefresh(false);
     }
-  }, [isRefresh, allKeywordList, selectedList]);
+  }, [isRefresh]);
 
   const handleRefreshClick = async () => {
     if (selectedList.length === 5) {
       setAlert(true);
     } else {
       try {
-        await refetch(); 
-        console.log(allKeywordList) // Fetch new data
+        const { data } = await refetch(); 
+        if(data) {
+          setAllKeywordList(data);
+        }
+        
         setIsRefresh(true); // Trigger the refresh logic
       } catch (error) {
         console.error('Error fetching keywords:', error);
@@ -103,7 +124,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, isLog }) => {
     <div className={className}>
       <div className={styles.titleBar}>
         <div className={styles.title}>추천 키워드</div>
-        <button className={styles.refreshBtn}  >
+        <button className={styles.refreshBtn} onClick={handleRefreshClick} >
           <span className={styles.refreshBtnContent}>새로고침</span>
         </button>
       </div>

@@ -16,7 +16,7 @@ const LeftBar: React.FC<LeftBarProps> = ({token, isLog}) => {
       <div className={styles.leftBar}>
         <EditorList className={styles.editorList} token={token} isLog={isLog} />
         <div className={styles.border}></div>
-        <KeywordList className={styles.keywordList} isLog={isLog} />
+        <KeywordList className={styles.keywordList} isLog={isLog} token={token} />
       </div>
     </>
   );

@@ -8,7 +8,7 @@ export const getKeyword = async () => {
     const keywords = response.data.result || [];
 
     return keywords.map((title, index) => ({
-      id: index+1,
+      id: Math.random(),
       title: title,
       selected: false,
     }))
