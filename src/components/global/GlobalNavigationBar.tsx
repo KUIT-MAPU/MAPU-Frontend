@@ -12,15 +12,21 @@ import { ReactComponent as Home_on } from '../../assets/btn_home_on.svg';
 import { ReactComponent as Explore_off } from '../../assets/btn_explore_off.svg';
 import { ReactComponent as Explore_on } from '../../assets/btn_explore_on.svg';
 import { ReactComponent as User } from '../../assets/user.svg';
-import { ReactComponent as Login } from '../../assets/login.svg';
+import { ReactComponent as Login } from '../../assets/btn_login.svg';
+import { ReactComponent as Logout } from '../../assets/btn_logout.svg';
+import useLogOutMutation from '../../apis/auth/useLogOutMutation';
 
 const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
+  const prevUrl = useLocation().pathname.split('?')[0];
+
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const location = useLocation();
 
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
+
+  const logOutMutation = useLogOutMutation(prevUrl);
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -42,6 +48,10 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
   const handleLoginClick = () => {
     setLoginNeededStatus(true);
     setIsOverlayVisible(true);
+  };
+
+  const handleLogoutClick = async () => {
+    await logOutMutation.mutate();
   };
 
   const isHomeActive = location.pathname === '/timeline';
@@ -86,7 +96,11 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
         <div
           className={`${styles.iconContainer} ${styles.bottomIconContainer}`}
         >
-          <Login className={styles.icon} onClick={handleLoginClick} />
+          {registerStatus === RegisterStatus.LOG_IN ? (
+            <Logout className={styles.icon} onClick={handleLogoutClick} />
+          ) : (
+            <Login className={styles.icon} onClick={handleLoginClick} />
+          )}
         </div>
       </div>
       {isOverlayVisible && (
