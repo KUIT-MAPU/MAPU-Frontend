@@ -19,13 +19,15 @@ import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
 
 import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
 import { MapType } from '../../types/MapType';
-import { KeywordType } from '../../types/KeywordType';
+import { KeywordType } from '../../types/keywords/KeywordType';
 
 const Explore: React.FC = () => {
+  const token = useRegisterStore((state) => state.accessToken);
   const [isCheck, setIsCheck] = useState<string>('random');
   const [text, setText] = useState<string>('');
   const [isPopup, setIsPopup] = useState<boolean>(false);
   const [mapData, setMapData] = useState<MapType[]>([]);
+  const [isLog, setIsLog] = useState<boolean>(false);
 
   const { selectedList, setSelectedList, removeSelectedList } =
     useKeywordStore();
@@ -143,7 +145,7 @@ const Explore: React.FC = () => {
 
       <SideBar />
       <div className={styles.leftBarWrapper}>
-        <LeftBar />
+        <LeftBar token={token} isLog={isLog} />
         <div className={styles.main}>
           <HeaderNavigation />
             <div className={styles.btnTitle}>

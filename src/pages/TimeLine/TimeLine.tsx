@@ -19,11 +19,8 @@ const TimeLine: React.FC = () => {
   const [mapData, setMapData] = useState<{ [key: string]: MapType[] }>({});
   const [isLog, setIsLog] = useState<boolean>(false);
   const { selectedList } = useKeywordStore();
-  const navigate = useNavigate();
-  const pathname = useLocation().pathname;
 
-  const { loginNeeded, registerStatus, setLoginNeededStatus } = useRegisterStore();
-  const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+  const token = useRegisterStore((state) => state.accessToken);
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0];
@@ -31,16 +28,13 @@ const TimeLine: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
-      setIsOverlayVisible(true);
+    if (!token) {
       setIsLog(false);
-      console.log('setDimmed(true)');
     } else {
       setIsLog(true);
-      setIsOverlayVisible(false);
-    }
-  }, [loginNeeded, registerStatus]);
 
+    }
+  }, [token]); 
   const fetchMapData = async (keyword: string) => {
     try {
       const data = mockData.filter((map) => map.keywords.includes(keyword)); // mockData에서 필터링
@@ -56,24 +50,11 @@ const TimeLine: React.FC = () => {
     });
   }, [selectedList]);
 
-  const handleClose = () => {
-    setLoginNeededStatus(false);
-    const prevUrl = pathname.split('?')[0];
-    navigate(prevUrl);
-  };
-
   return (
     <div className={styles.timeLineContainer}>
-      {isOverlayVisible && (
-        <>
-          <div className={dimmedStyles.background} onClick={handleClose} />
-          <AuthContainer className={styles.authContainer} />
-        </>
-      )}
-
       <GlobalNavigationBar />
       <div className={styles.main}>
-        <LeftBar />
+        <LeftBar token={token} isLog={isLog} />
         <div className={styles.TimelineMain}>
           <HeaderNavigation />
             <div className={styles.mapMain}>
