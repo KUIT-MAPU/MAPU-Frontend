@@ -14,6 +14,8 @@ interface State {
   setRegisterStatus: (status: RegisterStatus) => void; //미로그인/회원가입 상태 세팅
   setLoginNeededStatus: (status: boolean) => void;
   setIsIdDuplicate: (status: boolean) => void;
+  setAccessToken: (accessToken: string) => void; //새로운 액세스 토큰 설정
+  clearAccessToken: () => void; //액세스 토큰 초기화
 }
 
 const useRegisterStore = create(
@@ -47,6 +49,12 @@ const useRegisterStore = create(
       },
       setIsIdDuplicate: (status) => {
         set({ isIdDuplicate: status });
+      },
+      setAccessToken: (accessToken) => {
+        set({ accessToken: accessToken });
+      },
+      clearAccessToken: () => {
+        set({ accessToken: undefined });
       },
     }),
     { name: 'registerStatusStorage' },
