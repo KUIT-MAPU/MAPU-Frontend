@@ -23,7 +23,7 @@ export const useSignUpMutation = (prevUrl: string) => {
     onSuccess: (response) => {
       const respone = response.data;
 
-      if (respone.code === ResponseCode.LOGGED_IN) {
+      if (respone.code === ResponseCode.SUCCESS) {
         console.log('새로운 사용자, 회원가입 성공!');
 
         const profileId = respone.result.profileId;

@@ -29,7 +29,7 @@ const Login = () => {
     if (!isLoginDataLoading) {
       if (code) {
         //기존 유저, 로그인
-        if (loginData!.code === ResponseCode.LOGGED_IN) {
+        if (loginData!.code === ResponseCode.SUCCESS) {
           console.log('기존 사용자, 로그인 성공!');
 
           const profileId = loginData!.result.profileId;
