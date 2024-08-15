@@ -16,8 +16,9 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const [userData, setUserData] = useState({
-    profileImage:'',
+    nickname:'',
     profileId:'',
+    imgUrl:'',
     mapCnt:0,
     followerCnt:0,
     followingCnt:0,
@@ -30,9 +31,10 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
         const data = response.data;
   
         setUserData({
-          profileImage: data.profileImage,
-          mapCnt:data.mapCnt,
+          nickname: data.nickname,
           profileId: data.profileId,
+          imgUrl: data.imgUrl,
+          mapCnt:data.mapCnt,
           followerCnt: data.followerCnt,
           followingCnt: data.followingCnt,
         });
@@ -42,7 +44,8 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
     };
   
     fetchUserData();
-  }, [userData]);
+  }, []);
+
 
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
@@ -97,7 +100,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
       <div className={styles.UserProfileNumber}>
         <div className={styles.UserProfileBox}>
           <div>내 지도</div>
-          <span>0</span>
+          <span>{userData.mapCnt}</span>
         </div>
         <div className={styles.UserProfileBox} onClick={openFollower}>
           <div>팔로워</div>
