@@ -131,8 +131,8 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
         <ProfilePerson />
       </div>
       <div className={styles.UserName}>
-        <h1>환영해요!</h1>
-        <span>로그인이 필요해요</span>
+        <h1>{userData.nickname}</h1>
+        <span>{userData.profileId}</span>
       </div>
       <div className={styles.UserProfileNumber}>
         <div className={styles.UserProfileBox}>
