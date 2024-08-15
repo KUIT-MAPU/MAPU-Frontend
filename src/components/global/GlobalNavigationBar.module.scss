@@ -1,6 +1,7 @@
 .container {
   display: flex;
   z-index: 10;
+  width: 72px;
 }
 
 .LeftSideBar {
@@ -83,4 +84,3 @@
 .iconContainer_off {
   background-color: var(--white);
 }
-
