@@ -8,11 +8,41 @@ import { ReactComponent as ProfilePerson } from '../../assets/img_user_default_p
 import Following from './followModal/Following';
 import Follower from './followModal/Follower';
 
+import instance from '../../apis/instance';
+
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
   const [isFollowingOpen, setIsFollowingOpen] = useState(false);
   const [isFollowerOpen, setIsFollowerOpen] = useState(false);
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+  const [userData, setUserData] = useState({
+    profileImage:'',
+    profileId:'',
+    mapCnt:0,
+    followerCnt:0,
+    followingCnt:0,
+  })
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await instance.get('/user');
+        const data = response.data;
+  
+        setUserData({
+          profileImage: data.profileImage,
+          mapCnt:data.mapCnt,
+          profileId: data.profileId,
+          followerCnt: data.followerCnt,
+          followingCnt: data.followingCnt,
+        });
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };
+  
+    fetchUserData();
+  }, [userData]);
 
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
@@ -71,11 +101,11 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
         </div>
         <div className={styles.UserProfileBox} onClick={openFollower}>
           <div>팔로워</div>
-          <span>0</span>
+          <span>{userData.followerCnt}</span>
         </div>
         <div className={styles.UserProfileBox} onClick={openFollowing}>
           <div>팔로잉</div>
-          <span>0</span>
+          <span>{userData.followingCnt}</span>
         </div>
       </div>
       <div className={styles.ProfileBottom} onClick={handleLoginClick}>

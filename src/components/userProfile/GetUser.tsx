@@ -12,6 +12,7 @@ import { ReactComponent as List } from '../../assets/ListView.svg';
 import { ReactComponent as ExampleUser } from '../../assets/ico_exampleuser_profile.svg';
 import { ReactComponent as CreatMap } from '../../assets/btn_map_create.svg';
 
+import instance from '../../apis/instance';
 import NewMap from './getNewMap/NewMap';
 
 const GetUser = (props: { children?: React.ReactNode }) => {
@@ -21,7 +22,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const [mapTitle, setMapTitle] = useState<string>('');
   const [mapCategory,setMapCategory] = useState<string>('edited');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-
+  
   const placeholderImage = 'https://via.placeholder.com/150';
 
   const openNewMap = () => {
