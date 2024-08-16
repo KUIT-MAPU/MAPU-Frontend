@@ -15,7 +15,8 @@ export const getEditorDataWithToken = async () => {
 
 export const getEditorDataWithoutToken = async () => {
   try {
-    const response = await instance.get<BaseResponse<EditorType[]>>('/home/editor');
+    const response =
+      await instance.get<BaseResponse<EditorType[]>>('/home/editor');
     console.log('Data without Token:', response.data);
     return response.data.result || [];
   } catch (error) {

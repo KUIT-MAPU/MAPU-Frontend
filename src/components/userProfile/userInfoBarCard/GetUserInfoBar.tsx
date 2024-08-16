@@ -1,48 +1,92 @@
 import React, { useState, useEffect } from 'react';
-import AuthContainer from '../login/AuthContainer';
-import useRegisterStore from '../../stores/registerStore';
-import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import { useNavigate } from 'react-router-dom';
+import AuthContainer from '../../login/AuthContainer';
+import useRegisterStore from '../../../stores/registerStore';
+import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 
-import styles from './UserInfoBar.module.scss';
-import { ReactComponent as ProfilePerson } from '../../assets/img_user_default_profile.svg';
-import Following from './followModal/Following';
-import Follower from './followModal/Follower';
+import styles from './GetUserInfoBar.module.scss';
+import { ReactComponent as ProfilePerson } from '../../../assets/img_user_default_profile.svg';
+import Following from '../followModal/Following';
+import Follower from '../followModal/Follower';
 
-import instance from '../../apis/instance';
+import instance from '../../../apis/instance';
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
+  const navigate = useNavigate();
   const [isFollowingOpen, setIsFollowingOpen] = useState(false);
   const [isFollowerOpen, setIsFollowerOpen] = useState(false);
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const [userData, setUserData] = useState({
-    profileImage:'',
-    profileId:'',
-    mapCnt:0,
-    followerCnt:0,
-    followingCnt:0,
-  })
+    nickname: '',
+    profileId: '',
+    imgUrl: '',
+    mapCnt: 0,
+    followerCnt: 0,
+    followingCnt: 0,
+  });
+
+  // const {setAccessToken, clearAccessToken} = useRegisterStore();
+  // useEffect(() => {
+  //   const reIssueToken = async () => {
+  //     try {
+  //       const response = await instance.get('/jwt/reissue');
+  //       const data = response.data;
+
+  //       if (data && data.accessToken) {
+  //         setAccessToken(data.accessToken);
+  //         instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+  //       }
+  //     } catch (error) {
+  //       console.error('Failed to reissue token', error);
+  //       clearAccessToken(); // 실패 시 토큰 초기화 (로그아웃 처리)
+  //     }
+  //   };
+
+  //   const responseInterceptor = instance.interceptors.response.use(
+  //     (response) => response, // 성공적인 응답 그대로 전달
+  //     async (error) => {
+  //       const originalRequest = error.config;
+
+  //       if (!originalRequest._retry) {
+  //         originalRequest._retry = true; // 무한 루프 방지
+  //         await reIssueToken(); // 토큰 재발급 시도
+  //         return instance(originalRequest); // 재발급 후 원래 요청 재시도
+  //       }
+
+  //       return Promise.reject(error);
+  //     }
+  //   );
+
+  //   return () => {
+  //     // 컴포넌트 언마운트 시 인터셉터 해제
+  //     instance.interceptors.response.eject(responseInterceptor);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await instance.get('/user');
-        const data = response.data;
-  
+        const data = response.data.result;
+
         setUserData({
-          profileImage: data.profileImage,
-          mapCnt:data.mapCnt,
+          nickname: data.nickname,
           profileId: data.profileId,
+          imgUrl: data.imgUrl,
+          mapCnt: data.mapCnt,
           followerCnt: data.followerCnt,
           followingCnt: data.followingCnt,
         });
+
+        navigate(`/user/${data.profileId}`);
       } catch (error) {
         console.error('Failed to fetch user data', error);
       }
     };
-  
+
     fetchUserData();
-  }, [userData]);
+  }, [navigate]);
 
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
@@ -88,16 +132,24 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
   return (
     <div className={styles.UserInfoBar}>
       <div className={styles.UserPhoto}>
-        <ProfilePerson />
+        {userData.imgUrl ? (
+          <img
+            src={userData.imgUrl}
+            alt="User Profile"
+            className={styles.Profile}
+          />
+        ) : (
+          <ProfilePerson />
+        )}
       </div>
       <div className={styles.UserName}>
-        <h1>환영해요!</h1>
-        <span>로그인이 필요해요</span>
+        <h1>{userData.nickname}</h1>
+        <span>{`@${userData.profileId}`}</span>
       </div>
       <div className={styles.UserProfileNumber}>
         <div className={styles.UserProfileBox}>
           <div>내 지도</div>
-          <span>0</span>
+          <span>{userData.mapCnt}</span>
         </div>
         <div className={styles.UserProfileBox} onClick={openFollower}>
           <div>팔로워</div>
@@ -109,7 +161,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
         </div>
       </div>
       <div className={styles.ProfileBottom} onClick={handleLoginClick}>
-        로그인하기
+        프로필 편집
       </div>
 
       {isFollowingOpen && <Following onClose={closeFollowing} />}

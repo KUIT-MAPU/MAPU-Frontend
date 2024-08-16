@@ -60,7 +60,11 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, token, isLog })
         </>
       )}
       <div className={styles.editorInfo}>
-        <img className={styles.editorImg} src={Editor.image ? Editor.image : userImg} alt="Editor Image" />
+        <img
+          className={styles.editorImg}
+          src={Editor.image ? Editor.image : userImg}
+          alt="Editor Image"
+        />
 
         <div className={styles.editorNameNid}>
           <div className={styles.editorName}>{Editor.nickname}</div>

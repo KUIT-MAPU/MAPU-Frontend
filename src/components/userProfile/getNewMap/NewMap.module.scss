@@ -74,14 +74,14 @@
 }
 
 .emptyInput {
-  color: var(--gray_400); 
+  color: var(--gray_400);
 }
 
 .filledInput {
-  color: var(--black); 
+  color: var(--black);
 }
 
-.mapStartText{
+.mapStartText {
   display: flex;
   width: 52px;
   height: 24px;
@@ -109,14 +109,14 @@
   justify-content: center;
   align-items: center;
   width: 118px;
-  height: 40px; 
-  border-radius: 4px; 
-  cursor: pointer; 
+  height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
   position: relative;
 }
 
 .btnLocation button:not(:last-child)::after {
-  content: "";
+  content: '';
   position: absolute;
   right: -5px; /* 요소 사이에 여백을 만들어 선이 중앙에 오도록 */
   height: 36px; /* 선의 높이 지정 */
@@ -140,7 +140,7 @@
   color: var(--main);
 }
 
-.createBtn {
+.createBtn{
   background-color: var(--gray_100);
   color: white;
   display: flex;

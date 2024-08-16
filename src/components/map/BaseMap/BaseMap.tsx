@@ -44,7 +44,8 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   const [dotShape, setDotShape] = useState<string>('dot thin');
   const [dotColor, setDotColor] = useState<string>('#111111');
   const [isShare, setIsShare] = useState<boolean>(false);
-  const [selectedMarker, setSelectedMarker] = useState< kakao.maps.Marker | null>(null); // 마커 지우기 위해서 사용
+  const [selectedMarker, setSelectedMarker] =
+    useState<kakao.maps.Marker | null>(null); // 마커 지우기 위해서 사용
 
   const managerRef =
     useRef<
@@ -237,9 +238,8 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
       select = object;
     });
   });
-  
 
-  useEffect(()=> {
+  useEffect(() => {
     window.addEventListener('keydown', (ev: KeyboardEvent) => {
       if (ev.key === 'Delete' && selectedMarker) {
         selectedMarker.setMap(null);
@@ -253,8 +253,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
         setSelectedMarker(null);
       }
     });
-  },[marker, selectedMarker]);
-
+  }, [marker, selectedMarker]);
 
   return (
     <>
