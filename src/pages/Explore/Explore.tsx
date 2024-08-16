@@ -19,7 +19,9 @@ import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
 import { MapType } from '../../types/MapType';
 import { KeywordType } from '../../types/keywords/KeywordType';
 import { useQuery } from 'react-query';
-import { ExploreMapType } from '../../types/mapData/ExploreMapType';
+import { KeywordMapType } from '../../types/keywords/KeywordMapType';
+import { getKeywordMap } from '../../apis/keywords/getKeywordMap';
+import { APIKeywordMapType } from '../../types/keywords/APIKeywordMapType';
 
 const Explore: React.FC = () => {
   const token = useRegisterStore((state) => state.accessToken);
@@ -27,35 +29,24 @@ const Explore: React.FC = () => {
   const [text, setText] = useState<string>('');
   const [isPopup, setIsPopup] = useState<boolean>(false);
   const [mapData, setMapData] = useState<MapType[]>([]);
-  const [ref, inView] = useInView()
-  const [page, setPage] =useState<number>(0);
-  const [size, setSize] =useState<number>(4);
+  const [ref, inView] = useInView();
+  const [page, setPage] = useState<number>(0);
+  const [size, setSize] = useState<number>(4);
   const [isLog, setIsLog] = useState<boolean>(false);
+  const [keywordMap, setKeywordMap] = useState<KeywordMapType[] | undefined>(
+    undefined,
+  );
 
-  const { selectedList, setSelectedList } =
-    useKeywordStore();
+  const { selectedList, setSelectedList } = useKeywordStore();
 
   const outside = useRef<HTMLDivElement>(null);
 
   const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
 
-  const { data: ExploreMapData } = useQuery(
-    ['exploreMapData', isCheck, size, page ],
-    () => getExploreMap(text,size,page)
+  const { data: ExploreMapData, refetch } = useQuery(
+    ['exploreMapData', isCheck, size, page],
+    () => getExploreMap(text, size, page),
   );
-
-  useEffect(() => {
-    console.log(ExploreMapData);
-    console.log(typeof ExploreMapData);
-  },[ExploreMapData])
-
-  const fetchMapData = async () => {
-    try {
-      setMapData(mockData);
-    } catch {
-      console.error('error');
-    }
-  };
 
   const fetchKeywordSearch = async (keyword: KeywordType) => {
     try {
@@ -85,9 +76,10 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log(selectedList);
-  }, [selectedList]);
-
+    if (inView) {
+      setPage((num) => num + 1);
+    }
+  }, [page]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -108,7 +100,6 @@ const Explore: React.FC = () => {
   }, [isPopup]);
 
   useEffect(() => {
-    fetchMapData();
     setSelectedList([]);
     if (allKeywordList) {
       const keywords: KeywordType[] = allKeywordList.map((item) => {
@@ -119,26 +110,46 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedList !== null && selectedList.length !== 0) {
-      const keyword = selectedList[0];
-      setText(keyword.title);
-      fetchKeywordSearch(keyword);
-    } else {
-      setText('');
-      fetchMapData();
-    }
+    const fetchData = async () => {
+      if (selectedList !== null && selectedList.length !== 0) {
+        const keyword = selectedList[0].title;
+        setText(keyword);
+        const result = await getKeywordMap(keyword);
+
+        if (result) {
+          const newResults: KeywordMapType[] = result.map(
+            (map: APIKeywordMapType) => {
+              const newKeyword: KeywordType = {
+                id: Math.random(),
+                title: map.keyword,
+                selected: false,
+              };
+
+              return {
+                ...map,
+                keyword: newKeyword,
+              };
+            },
+          );
+          setKeywordMap(newResults);
+        }
+      } else {
+        setText('');
+        setKeywordMap(undefined);
+      }
+    };
+
+    fetchData();
   }, [selectedList]);
 
   return (
     <div className={styles.root}>
-
       <SideBar />
       <div className={styles.leftBarWrapper}>
         <LeftBar token={token} isLog={isLog} />
         <div className={styles.pageMain}>
           <HeaderNavigation />
           <div className={styles.mapMain}>
-
             <div className={styles.btnTitle}>
               {isCheck === 'random' && (
                 <span className={styles.title}>랜덤순 탐색</span>
@@ -165,21 +176,32 @@ const Explore: React.FC = () => {
               text={text}
               setText={setText}
             />
-            <div className={styles.main} ref={ref} >
-              {ExploreMapData !== undefined ? (
-                ExploreMapData.map((item) => (
-                  <MapList
-                    map={item}
-                    key={item.mapId}
-                    keyword={item.keyword}
-                  />
+            <div className={styles.main} ref={ref}>
+              {ExploreMapData !== undefined && selectedList.length === 0 ? (
+                ExploreMapData.map((item, index) => (
+                  <div key={item.mapId} ref={index === 3 ? ref : null}>
+                    <MapList
+                      map={item}
+                      key={item.mapId}
+                      keyword={item.keyword}
+                    />
+                  </div>
                 ))
               ) : (
                 <ErrorPage text={text} />
               )}
-              <div ref={ref}>안녕</div>
-          </div>
+
+              {selectedList.length !== 0 && keywordMap !== undefined ? (
+                keywordMap.map((map: KeywordMapType) => {
+                  const keyword = map.keyword;
+                  const data = map.maps;
+                  return <MapList keyword={keyword} keywordMap={data} />;
+                })
+              ) : (
+                <ErrorPage text={text} />
+              )}
             </div>
+          </div>
         </div>
       </div>
     </div>

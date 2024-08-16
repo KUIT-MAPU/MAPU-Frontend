@@ -1,10 +1,10 @@
 import instance from "../instance";
-import { KeywordMapType } from "../../types/keywords/KeywordMapType";
+import { APIKeywordMapType } from "../../types/keywords/APIKeywordMapType";
 import { BaseResponse } from "../../types/BaseResponse";
 
 export const keywordMap = async (keyword:string) => {
   try {
-    const response = await instance.get<BaseResponse<KeywordMapType[] | undefined>>(`/map/keyword`, {
+    const response = await instance.get<BaseResponse<APIKeywordMapType[] | undefined>>(`home/map/keyword`, {
       params: { keyword }
     })
     return response.data.result;
