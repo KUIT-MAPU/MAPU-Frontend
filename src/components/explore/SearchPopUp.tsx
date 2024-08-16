@@ -23,7 +23,7 @@ const SearchPopUp: React.FC<SearchPopUpProps> = ({
       </button>
       <button className={styles.recent} onClick={handleRecentBtn}>
         날짜순 탐색
-        {isCheck === 'recent' && <img src={check} alt="check" />}
+        {isCheck === 'date' && <img src={check} alt="check" />}
       </button>
     </div>
   );

@@ -5,9 +5,10 @@ import { BaseResponse } from "../../types/BaseResponse";
 export const getFollowing = async () => {
   try{
     const response = await instance.get<BaseResponse<FollowingType>>('following')
-    return response.data.result || []
+    console.log('response', response)
+    return response.data.result || undefined
   } catch (error) {
     console.error('Error fetching data');
-    return [];
+    return undefined;
   }
 }

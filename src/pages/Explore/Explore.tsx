@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 
 import SideBar from '../../components/global/GlobalNavigationBar';
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
@@ -7,19 +7,19 @@ import LeftBar from '../../components/timeLine/leftBar/LeftBar';
 import SearchBar from '../../components/explore/SearchBar';
 import SearchPopUp from '../../components/explore/SearchPopUp';
 import useRegisterStore from '../../stores/registerStore';
-import AuthContainer from '../../components/login/AuthContainer';
+import { getExploreMap } from '../../apis/mapData/getExploreMap';
 import MapList from '../../components/explore/MapList';
 import ErrorPage from '../../components/explore/ErrorPage';
-import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore';
 import mockData from '../../components/timeLine/mapCard/MapModel';
 
 import styles from './Explore.module.scss';
-import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
 
 import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
 import { MapType } from '../../types/MapType';
 import { KeywordType } from '../../types/keywords/KeywordType';
+import { useQuery } from 'react-query';
+import { ExploreMapType } from '../../types/mapData/ExploreMapType';
 
 const Explore: React.FC = () => {
   const token = useRegisterStore((state) => state.accessToken);
@@ -27,19 +27,27 @@ const Explore: React.FC = () => {
   const [text, setText] = useState<string>('');
   const [isPopup, setIsPopup] = useState<boolean>(false);
   const [mapData, setMapData] = useState<MapType[]>([]);
+  const [ref, inView] = useInView()
+  const [page, setPage] =useState<number>(0);
+  const [size, setSize] =useState<number>(4);
   const [isLog, setIsLog] = useState<boolean>(false);
 
-  const { selectedList, setSelectedList, removeSelectedList } =
+  const { selectedList, setSelectedList } =
     useKeywordStore();
 
   const outside = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  const pathname = useLocation().pathname;
 
-  const { loginNeeded, registerStatus, setLoginNeededStatus } =
-    useRegisterStore();
   const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
-  const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+
+  const { data: ExploreMapData } = useQuery(
+    ['exploreMapData', isCheck, size, page ],
+    () => getExploreMap(text,size,page)
+  );
+
+  useEffect(() => {
+    console.log(ExploreMapData);
+    console.log(typeof ExploreMapData);
+  },[ExploreMapData])
 
   const fetchMapData = async () => {
     try {
@@ -64,7 +72,7 @@ const Explore: React.FC = () => {
   };
 
   const handleRecentBtn = () => {
-    setIsCheck('recent');
+    setIsCheck('date');
   };
 
   const handleMenuBtn = () => {
@@ -80,19 +88,6 @@ const Explore: React.FC = () => {
     console.log(selectedList);
   }, [selectedList]);
 
-  useEffect(() => {
-    if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
-      setIsOverlayVisible(true);
-    } else {
-      setIsOverlayVisible(false);
-    }
-  }, [loginNeeded, registerStatus]);
-
-  const handleClose = () => {
-    setLoginNeededStatus(false);
-    const prevUrl = pathname.split('?')[0];
-    navigate(prevUrl);
-  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -136,23 +131,19 @@ const Explore: React.FC = () => {
 
   return (
     <div className={styles.root}>
-      {isOverlayVisible && (
-        <>
-          <div className={dimmedStyles.background} onClick={handleClose} />
-          <AuthContainer className={styles.authContainer} />
-        </>
-      )}
 
       <SideBar />
       <div className={styles.leftBarWrapper}>
         <LeftBar token={token} isLog={isLog} />
-        <div className={styles.main}>
+        <div className={styles.pageMain}>
           <HeaderNavigation />
+          <div className={styles.mapMain}>
+
             <div className={styles.btnTitle}>
               {isCheck === 'random' && (
                 <span className={styles.title}>랜덤순 탐색</span>
               )}
-              {isCheck === 'recent' && (
+              {isCheck === 'date' && (
                 <span className={styles.title}>날짜순 탐색</span>
               )}
               <button className={styles.btnArrow} onClick={handleMenuBtn}>
@@ -174,20 +165,21 @@ const Explore: React.FC = () => {
               text={text}
               setText={setText}
             />
-            <div className={styles.main}>
-              {mapData !== null && mapData.length !== 0 ? (
-                mapData.map((map: MapType) => (
+            <div className={styles.main} ref={ref} >
+              {ExploreMapData !== undefined ? (
+                ExploreMapData.map((item) => (
                   <MapList
-                    map={map}
-                    key={map.id}
-                    keyword={map.mapKeyword ?? []}
+                    map={item}
+                    key={item.mapId}
+                    keyword={item.keyword}
                   />
                 ))
               ) : (
                 <ErrorPage text={text} />
               )}
+              <div ref={ref}>안녕</div>
+          </div>
             </div>
-          {/* </HeaderNavigation> */}
         </div>
       </div>
     </div>

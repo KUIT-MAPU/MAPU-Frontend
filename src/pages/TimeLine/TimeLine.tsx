@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 import HeaderNavigation from '../../components/timeLine/headerNavigation/HeaderNavigation';
 import LeftBar from '../../components/timeLine/leftBar/LeftBar';
 import { useKeywordStore } from '../../stores/keywordStore';
 import useRegisterStore from '../../stores/registerStore';
-import { RegisterStatus } from '../../types/enum/RegisterStatus';
-import AuthContainer from '../../components/login/AuthContainer';
 import MapCard from '../../components/timeLine/mapCard/MapCard';
 import { MapType } from '../../types/MapType';
+import { getFollowingMap } from '../../apis/mapData/getFollowingMap';
+import { getKeywordMap } from '../../apis/keywords/getKeywordMap';
 import mockData from '../../components/timeLine/mapCard/MapModel';
 
 import styles from './TimeLine.module.scss';
-import dimmedStyles from '../../components/timeLine/Dimmed.module.scss';
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 
 const TimeLine: React.FC = () => {
   const [mapData, setMapData] = useState<{ [key: string]: MapType[] }>({});
   const [isLog, setIsLog] = useState<boolean>(false);
   const { selectedList } = useKeywordStore();
-
   const token = useRegisterStore((state) => state.accessToken);
+
+  const { data: followingMapData } = useQuery(['followingMapData', token], () =>
+    getFollowingMap(token),
+  );
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0];
@@ -28,25 +31,23 @@ const TimeLine: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!token) {
-      setIsLog(false);
-    } else {
-      setIsLog(true);
+    setIsLog(!!token);
+    console.log('timeline followingmap', followingMapData);
+  }, [token]);
 
-    }
-  }, [token]); 
-  const fetchMapData = async (keyword: string) => {
-    try {
-      const data = mockData.filter((map) => map.keywords.includes(keyword)); // mockData에서 필터링
-      setMapData((prevState) => ({ ...prevState, [keyword]: data }));
-    } catch {
-      console.error(`Failed to fetch map data for keyword: ${keyword}`);
-    }
-  };
+  // const fetchMapData = async (keyword: string) => {
+  //   try {
+  //     const data = mockData.filter((map) => map.keywords.includes(keyword)); // mockData에서 필터링
+  //     setMapData((prevState) => ({ ...prevState, [keyword]: data }));
+  //   } catch {
+  //     console.error(`Failed to fetch map data for keyword: ${keyword}`);
+  //   }
+  // };
 
   useEffect(() => {
     selectedList.forEach((keyword) => {
-      fetchMapData(keyword.title);
+      console.log(keyword);
+      getKeywordMap(keyword.title);
     });
   }, [selectedList]);
 
@@ -57,20 +58,36 @@ const TimeLine: React.FC = () => {
         <LeftBar token={token} isLog={isLog} />
         <div className={styles.TimelineMain}>
           <HeaderNavigation />
-            <div className={styles.mapMain}>
-              {selectedList.map((keyword) => {
-                const data = mapData[keyword.title] || [];
+          <div className={styles.mapMain}>
+            {followingMapData ? (
+              followingMapData.map((item) => {
+                const nickname = item.nickname;
+                const data = item.maps;
+
                 return data.length > 0 ? (
                   <MapCard
-                    key={keyword.id}
-                    keyword={keyword.title}
-                    mapData={data}
-                    isLog={isLog}
+                    key={item.profileId}
+                    keyword={`${nickname} 님의 지도`}
+                    followingMap={data}
+                    userInfo = {item}
                   />
                 ) : null;
-              })}
-            </div>
-          {/* </HeaderNavigation> */}
+              })
+            ) : (
+              null
+            )}
+
+            {selectedList.map((keyword) => {
+              const data = mapData[keyword.title] || [];
+              return data.length > 0 ? (
+                <MapCard
+                  key={keyword.id}
+                  keyword={keyword.title}
+                  mapData={data}
+                />
+              ) : null;
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { KeywordType } from '../../../types/keywords/KeywordType';
 import { useKeywordStore, useAllKeywordStore } from '../../../stores/keywordStore';
 import { useLocation } from 'react-router-dom';
-import { useGetKeywords } from '../../../apis/keywords/useGetKeywords';
+import { useGetKeywords } from '../../../apis/keywords/fetchGetKeywords';
 import styles from './KeywordList.module.scss';
 import ico_info from '../../../assets/ico_info_gray.svg';
-import { useQuery } from 'react-query';
-import { fetchFollowing } from '../../../apis/follow/useGetFollowing';
 
 interface KeywordListProps {
   className?: string;
@@ -21,46 +19,17 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, isLog, token }) =>
   const [alert, setAlert] = useState<boolean>(false);
 
   const location = useLocation();
-  const { refetch } = useGetKeywords();
-
-  const { data: followingData } = useQuery(
-    ['editorsData', token], 
-    () => fetchFollowing(token),
-    {
-      enabled: true,
-      refetchOnWindowFocus: false, 
-    }
-  );
+  const { refetch } = useGetKeywords(token);
 
 
-  useEffect(() => {
-    console.log('allKeywordList:', allKeywordList)
-    console.log('isLog',isLog);
-    console.log('selected',selectedList)
-  },[allKeywordList, isLog])
+  // useEffect(() => {
+  //   console.log('allKeywordList:', allKeywordList)
+  //   console.log('isLog',isLog);
+  //   console.log('selected',selectedList)
+  //   console.log(typeof token);
+  //   console.log("followingData:",followingData?.users)
+  // },[allKeywordList, isLog, followingData])
 
-
-  useEffect(() => {
-    if (!isLog && selectedList.length === 0 && location.pathname === '/timeline') {
-      const selectedInit = allKeywordList
-        .slice(0, 2)
-        .map((item: KeywordType) => {
-          item.selected = true;
-          return item;
-        });
-      setSelectedList(selectedInit);
-    } else if (isLog && !followingData) {
-      const selectedInit = allKeywordList
-        .slice(0, 2)
-        .map((item: KeywordType) => {
-          item.selected = true;
-          return item;
-        });
-      setSelectedList(selectedInit);
-    } else {
-      setSelectedList([]);
-    }
-  }, [isLog,location.pathname]);
 
   useEffect(() => {
     if (isRefresh) {
@@ -89,7 +58,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className, isLog, token }) =>
           setAllKeywordList(data);
         }
         
-        setIsRefresh(true); // Trigger the refresh logic
+        setIsRefresh(true);
       } catch (error) {
         console.error('Error fetching keywords:', error);
       }
