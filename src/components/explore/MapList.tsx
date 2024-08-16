@@ -13,7 +13,9 @@ interface MapListProps {
 }
 
 const MapList: React.FC<MapListProps> = ({ map, keyword }) => {
-  const [selectedKeyword, setSelectedKeyword] = useState<MapKeywordType | null>(null);
+  const [selectedKeyword, setSelectedKeyword] = useState<MapKeywordType | null>(
+    null,
+  );
 
   const handleSelectPills = (mapKeyword: MapKeywordType) => {
     if (selectedKeyword?.keyword === mapKeyword.keyword) {

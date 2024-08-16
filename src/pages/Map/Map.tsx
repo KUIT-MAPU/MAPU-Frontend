@@ -29,7 +29,8 @@ const Map = () => {
         : MapMode.UNVALID; //error;
   const navigate = useNavigate();
   const { mapName } = useParams();
-  const { registerStatus, loginNeeded, setLoginNeededStatus } = useRegisterStore();
+  const { registerStatus, loginNeeded, setLoginNeededStatus } =
+    useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
 
   useEffect(() => {
@@ -84,9 +85,9 @@ const Map = () => {
       )}
       {dimmed && <AuthContainer className={styles.authContainer} />}
       <GlobalNavigationBar />
-        <MapInfoPanel mode={mapMode} />
-        <BaseMap mode={mapMode} />
-        <ObjectInfoPanel mode={mapMode} />
+      <MapInfoPanel mode={mapMode} />
+      <BaseMap mode={mapMode} />
+      <ObjectInfoPanel mode={mapMode} />
     </div>
   );
 };

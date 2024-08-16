@@ -5,7 +5,7 @@ import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 
 import styles from './EditorProfileCard.module.scss';
-import userImg from '../../../assets/img_user_default_profile.svg'
+import userImg from '../../../assets/img_user_default_profile.svg';
 
 interface ProfileCardProps {
   Editor: EditorType;
@@ -27,7 +27,11 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor }) => {
   return (
     <div className={styles.cardRoot}>
       <div className={styles.editorInfo}>
-        <img className={styles.editorImg} src={Editor.image ? Editor.image : userImg} alt="Editor Image" />
+        <img
+          className={styles.editorImg}
+          src={Editor.image ? Editor.image : userImg}
+          alt="Editor Image"
+        />
 
         <div className={styles.editorNameNid}>
           <div className={styles.editorName}>{Editor.nickname}</div>

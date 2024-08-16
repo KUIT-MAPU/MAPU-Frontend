@@ -20,9 +20,9 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const [isNewMapOpen, setIsNewMapOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [mapTitle, setMapTitle] = useState<string>('');
-  const [mapCategory,setMapCategory] = useState<string>('edited');
+  const [mapCategory, setMapCategory] = useState<string>('edited');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-  
+
   const placeholderImage = 'https://via.placeholder.com/150';
 
   const openNewMap = () => {
@@ -35,12 +35,12 @@ const GetUser = (props: { children?: React.ReactNode }) => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
-  }
+  };
 
-  const selectCategory = (category : string) => {
+  const selectCategory = (category: string) => {
     setMapCategory(category);
     setIsDropdownOpen(false);
-  }
+  };
 
   const listMapData = [
     {
@@ -163,15 +163,21 @@ const GetUser = (props: { children?: React.ReactNode }) => {
         <DownArrow />
       </button>
       {isDropdownOpen && (
-          <div className={styles.dropdown}>
-            <div onClick={() => selectCategory('edited')} className={styles.dropdownItem}>
-              편집 가능한 지도
-            </div>
-            <div onClick={() => selectCategory('bookmarked')} className={styles.dropdownItem}>
-              북마크한 지도
-            </div>
+        <div className={styles.dropdown}>
+          <div
+            onClick={() => selectCategory('edited')}
+            className={styles.dropdownItem}
+          >
+            편집 가능한 지도
           </div>
-        )}
+          <div
+            onClick={() => selectCategory('bookmarked')}
+            className={styles.dropdownItem}
+          >
+            북마크한 지도
+          </div>
+        </div>
+      )}
       <div className={styles.middleBar}>
         <div className={styles.searchBar}>
           <div className={styles.search}>
@@ -261,7 +267,9 @@ const GetUser = (props: { children?: React.ReactNode }) => {
                   </div>
                   <div className={styles.mapListInfo}>
                     <div>{map.permissions}</div>
-                    <div><ExampleUser /></div>
+                    <div>
+                      <ExampleUser />
+                    </div>
                     <div>{map.date}</div>
                     <div>{map.center}</div>
                   </div>

@@ -14,14 +14,15 @@ interface EditorListProps {
 const EditorList: React.FC<EditorListProps> = ({ className }) => {
   const token = useRegisterStore((state) => state.accessToken);
 
-  const { data: editorData, error, isLoading, refetch } = useQuery(
-    ['editorsData', token], 
-    () => fetchEditorData(token),
-    {
-      enabled: true,
-      refetchOnWindowFocus: false, 
-    }
-  );
+  const {
+    data: editorData,
+    error,
+    isLoading,
+    refetch,
+  } = useQuery(['editorsData', token], () => fetchEditorData(token), {
+    enabled: true,
+    refetchOnWindowFocus: false,
+  });
 
   const handleRefreshClick = () => {
     refetch();

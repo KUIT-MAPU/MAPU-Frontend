@@ -18,22 +18,21 @@ import { ReactComponent as Login } from '../../assets/login.svg';
 import instance from '../../apis/instance';
 
 const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const location = useLocation();
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
-  
+
   const [userData, setUserData] = useState({
-      nickname:'',
-      profileId:'',
-      imgUrl:'',
-      mapCnt:0,
-      followerCnt:0,
-      followingCnt:0,
-    });
-    
+    nickname: '',
+    profileId: '',
+    imgUrl: '',
+    mapCnt: 0,
+    followerCnt: 0,
+    followingCnt: 0,
+  });
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -62,23 +61,22 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
       try {
         const response = await instance.get('/user');
         const data = response.data.result;
-  
+
         setUserData({
           nickname: data.nickname,
           profileId: data.profileId,
           imgUrl: data.imgUrl,
-          mapCnt:data.mapCnt,
+          mapCnt: data.mapCnt,
           followerCnt: data.followerCnt,
           followingCnt: data.followingCnt,
         });
-
       } catch (error) {
         console.error('Failed to fetch user data', error);
       }
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, []);
 
   const isHomeActive = location.pathname === '/timeline';
   const isExploreActive = location.pathname === '/explore';
@@ -116,7 +114,15 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
           <div
             className={`${styles.iconContainer} ${isUserpageActive ? styles.iconContainer_on : styles.iconContainer_off}`}
           >
-            <User className={styles.icon} />
+            {userData.imgUrl ? (
+              <img
+                src={userData.imgUrl}
+                alt="User Profile"
+                className={styles.iconContainer}
+              />
+            ) : (
+              <User />
+            )}
           </div>
         </Link>
         <div

@@ -1,7 +1,12 @@
-import { getEditorDataWithToken, getEditorDataWithoutToken } from "./getEditorsData";
-import { EditorType } from "../../types/getEditors/EditorType";
+import {
+  getEditorDataWithToken,
+  getEditorDataWithoutToken,
+} from './getEditorsData';
+import { EditorType } from '../../types/getEditors/EditorType';
 
-export const fetchEditorData = async (token: string | undefined): Promise<EditorType[]> => {
+export const fetchEditorData = async (
+  token: string | undefined,
+): Promise<EditorType[]> => {
   try {
     if (token) {
       return await getEditorDataWithToken();
