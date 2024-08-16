@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AuthContainer from '../../login/AuthContainer';
 import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/enum/RegisterStatus';
@@ -11,6 +12,7 @@ import Follower from '../followModal/Follower';
 import instance from '../../../apis/instance';
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
+  const navigate=useNavigate();
   const [isFollowingOpen, setIsFollowingOpen] = useState(false);
   const [isFollowerOpen, setIsFollowerOpen] = useState(false);
   const [isLog, setIsLog] = useState<boolean>(false);
@@ -76,13 +78,15 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
           followerCnt: data.followerCnt,
           followingCnt: data.followingCnt,
         });
+        
+        navigate(`/user/${data.profileId}`);
       } catch (error) {
         console.error('Failed to fetch user data', error);
       }
     };
 
     fetchUserData();
-  }, []);
+  }, [navigate]);
 
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
@@ -128,11 +132,15 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
   return (
     <div className={styles.UserInfoBar}>
       <div className={styles.UserPhoto}>
-        <ProfilePerson />
+        {userData.imgUrl ? (
+          <img src={userData.imgUrl} alt='User Profile' className={styles.Profile} />
+        ) : (
+          <ProfilePerson />
+        )}
       </div>
       <div className={styles.UserName}>
         <h1>{userData.nickname}</h1>
-        <span>{userData.profileId}</span>
+        <span>{`@${userData.profileId}`}</span>
       </div>
       <div className={styles.UserProfileNumber}>
         <div className={styles.UserProfileBox}>
