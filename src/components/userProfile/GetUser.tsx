@@ -28,13 +28,14 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const [mapCategory, setMapCategory] = useState<string>('edited');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [mapData, setMapData] = useState({
+    mapId: 0,
     imageUrl: '',
     title: '',
     region: '',
-    description: '',
-    userImageUrl: '',
-    userNickName: '',
-    userProfileId: '',
+    role: '',
+    createDate: '',
+    longtitude: 0,
+    latitude: 0,
   });
 
   const placeholderImage = 'https://via.placeholder.com/150';
@@ -144,19 +145,18 @@ const GetUser = (props: { children?: React.ReactNode }) => {
       try {
         const response = await instance.get(`/user`);
         const data = response.data.result;
-        const userMapData =response.data.result.user;
 
         setMapData({
+          mapId: data.mapId,
           imageUrl: data.imageUrl,
           title: data.title,
           region: data.region,
-          description: data.description,
-          userImageUrl: userMapData.imageUrl,
-          userNickName: userMapData.nickName,
-          userProfileId: userMapData.profileId,
+          role: data.role,
+          createDate: data.createDate,
+          longtitude: data.longtitude,
+          latitude: data.latitude,
         });
 
-        navigate(`/user/${data.profileId}`);
       } catch (error) {
         console.error('Failed to fetch user data', error);
       }
