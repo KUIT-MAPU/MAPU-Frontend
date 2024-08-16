@@ -46,11 +46,16 @@ const GetUser = (props: { children?: React.ReactNode }) => {
     setMapCategory(category);
     setIsDropdownOpen(false);
   };
-  
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await instance.get(`/user/maps?editable=true&bookmarked=false`);
+        let response;
+        if(mapCategory==='edited'){
+          response = await instance.get(`/user/maps?editable=true&bookmarked=false`);
+        }else{
+          response = await instance.get(`/user/maps?editable=false&bookmarked=true`);
+        }
         const data = response.data;
   
         if (Array.isArray(data.result)) {
