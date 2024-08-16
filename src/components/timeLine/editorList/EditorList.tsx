@@ -2,27 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 import EditorProfileCard from './EditorProfileCard';
-import { fetchEditorData } from '../../../apis/editors/fetchEditorsData';
+import { fetchEditorData } from '../../../apis/editors/useGetEditorsData';
 import useRegisterStore from '../../../stores/registerStore';
 
 import styles from './EditorList.module.scss';
 
 interface EditorListProps {
   className?: string;
+  isLog: boolean;
+  token: string|undefined;
 }
 
-const EditorList: React.FC<EditorListProps> = ({ className }) => {
-  const token = useRegisterStore((state) => state.accessToken);
+const EditorList: React.FC<EditorListProps> = ({ className, isLog, token }) => {
 
-  const {
-    data: editorData,
-    error,
-    isLoading,
-    refetch,
-  } = useQuery(['editorsData', token], () => fetchEditorData(token), {
-    enabled: true,
-    refetchOnWindowFocus: false,
-  });
+  const { data: editorData, refetch } = useQuery(
+    ['editorsData', token], 
+    () => fetchEditorData(token),
+    {
+      enabled: true,
+      refetchOnWindowFocus: false, 
+    }
+  );
 
   const handleRefreshClick = () => {
     refetch();
@@ -40,7 +40,7 @@ const EditorList: React.FC<EditorListProps> = ({ className }) => {
       <div className={styles.editorProfiles}>
         {editorData &&
           editorData.map((editor) => (
-            <EditorProfileCard Editor={editor} key={editor.userId} />
+            <EditorProfileCard Editor={editor} key={editor.userId} token={token} isLog={isLog} />
           ))}
       </div>
     </div>

@@ -1,109 +1,67 @@
 import React, { useEffect, useState } from 'react';
-
-import { KeywordType } from '../../../types/KeywordType';
-import {
-  useKeywordStore,
-  useAllKeywordStore,
-} from '../../../stores/keywordStore';
-import useRegisterStore from '../../../stores/registerStore';
-import { RegisterStatus } from '../../../types/enum/RegisterStatus';
-
-import styles from './KeywordList.module.scss';
-
-import ico_info from '../../../assets/ico_info_gray.svg';
+import { KeywordType } from '../../../types/keywords/KeywordType';
+import { useKeywordStore, useAllKeywordStore } from '../../../stores/keywordStore';
 import { useLocation } from 'react-router-dom';
+import { useGetKeywords } from '../../../apis/keywords/fetchGetKeywords';
+import styles from './KeywordList.module.scss';
+import ico_info from '../../../assets/ico_info_gray.svg';
 
 interface KeywordListProps {
   className?: string;
+  isLog: boolean;
+  token: string | undefined;
 }
 
-const mockData: KeywordType[] = [
-  { id: 1, title: '동대문시장 골목맛집', selected: false },
-  { id: 2, title: '서울 타워 야경 관람', selected: false },
-  { id: 3, title: '홍대 놀이터 스트리트 퍼포먼스', selected: false },
-  { id: 4, title: '강남역 카페 투어', selected: false },
-  { id: 5, title: '코엑스 쇼핑몰 쇼핑 추천', selected: false },
-];
-
-const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
-  const { registerStatus } = useRegisterStore();
-  const { selectedList, setSelectedList, removeSelectedList } =
-    useKeywordStore();
+const KeywordList: React.FC<KeywordListProps> = ({ className, isLog, token }) => {
+  const { selectedList, setSelectedList } = useKeywordStore();
   const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const [isRefresh, setIsRefresh] = useState<boolean>(false);
   const [alert, setAlert] = useState<boolean>(false);
-  const [isLog, setIsLog] = useState<boolean>(false);
 
   const location = useLocation();
+  const { refetch } = useGetKeywords(token);
 
-  const fetchKeywordData = async () => {
-    try {
-      // TODO: 실제 API 호출로 데이터 받아오기
-      setAllKeywordList(mockData);
-    } catch (error) {
-      console.error('정보를 불러올 수 없음.');
-    }
-  };
 
-  useEffect(() => {
-    fetchKeywordData();
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   console.log('allKeywordList:', allKeywordList)
+  //   console.log('isLog',isLog);
+  //   console.log('selected',selectedList)
+  //   console.log(typeof token);
+  //   console.log("followingData:",followingData?.users)
+  // },[allKeywordList, isLog, followingData])
 
-  useEffect(() => {
-    if (registerStatus === RegisterStatus.LOG_IN) {
-      setIsLog(true);
-    } else {
-      setIsLog(false);
-    }
-  }, [registerStatus]);
-
-  useEffect(() => {
-    if (
-      !isLog &&
-      selectedList.length === 0 &&
-      location.pathname === '/timeline'
-    ) {
-      const selectedInit = allKeywordList
-        .slice(0, 2)
-        .map((item: KeywordType) => {
-          item.selected = !item.selected;
-          return item;
-        });
-      setSelectedList(selectedInit);
-    }
-  }, [isLog, allKeywordList]);
 
   useEffect(() => {
     if (isRefresh) {
-      const falseKeyword = allKeywordList.filter(
-        (keyword: KeywordType) => !keyword.selected,
+      const refreshKeyword = allKeywordList.filter((refresh) =>
+        !selectedList.some((select) => refresh.title === select.title)
       );
 
-      const refreshDatas = allKeywordList.filter(
-        (keyword: KeywordType) =>
-          !falseKeyword.some(
-            (falseKeywordItem: KeywordType) =>
-              falseKeywordItem.id === keyword.id,
-          ),
-      );
-
-      const updatedKeywordList = [...selectedList, ...falseKeyword];
-
-      if (
-        JSON.stringify(allKeywordList) !== JSON.stringify(updatedKeywordList)
-      ) {
+      if(refreshKeyword.length > 5-selectedList.length) {
+        const newKeyword = refreshKeyword.slice(0,5-selectedList.length);
+        const updatedKeywordList = [...selectedList, ...newKeyword];
         setAllKeywordList(updatedKeywordList);
+      } else {
+        setAllKeywordList([...selectedList, ...refreshKeyword])
       }
-
       setIsRefresh(false);
     }
   }, [isRefresh]);
 
-  const handleRefreshClick = () => {
+  const handleRefreshClick = async () => {
     if (selectedList.length === 5) {
       setAlert(true);
     } else {
-      setIsRefresh(true);
+      try {
+        const { data } = await refetch(); 
+        if(data) {
+          setAllKeywordList(data);
+        }
+        
+        setIsRefresh(true);
+      } catch (error) {
+        console.error('Error fetching keywords:', error);
+      }
     }
   };
 
@@ -119,9 +77,11 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
       setSelectedList(updatedList.filter((keyword) => keyword.selected));
     } else {
       selectedKeyword.selected = !selectedKeyword.selected;
-      const updatedList = allKeywordList.filter((item) => item.selected);
-      setAllKeywordList(allKeywordList);
-      setSelectedList(updatedList);
+      const updatedList = allKeywordList.map((item) =>
+        item.id === selectedKeyword.id ? selectedKeyword : item
+      );
+      setAllKeywordList(updatedList);
+      setSelectedList(updatedList.filter((item) => item.selected));
 
       if (updatedList.length < 5) {
         setAlert(false);
@@ -133,7 +93,7 @@ const KeywordList: React.FC<KeywordListProps> = ({ className }) => {
     <div className={className}>
       <div className={styles.titleBar}>
         <div className={styles.title}>추천 키워드</div>
-        <button className={styles.refreshBtn} onClick={handleRefreshClick}>
+        <button className={styles.refreshBtn} onClick={handleRefreshClick} >
           <span className={styles.refreshBtnContent}>새로고침</span>
         </button>
       </div>

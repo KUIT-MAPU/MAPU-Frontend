@@ -1,8 +1,5 @@
-import {
-  getEditorDataWithToken,
-  getEditorDataWithoutToken,
-} from './getEditorsData';
-import { EditorType } from '../../types/getEditors/EditorType';
+import { getEditorDataWithToken, getEditorDataWithoutToken } from "./getEditorsData";
+import { EditorType } from "../../types/editors/EditorType";
 
 export const fetchEditorData = async (
   token: string | undefined,
