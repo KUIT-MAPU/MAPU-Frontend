@@ -80,6 +80,7 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
       mapTitle,
       mapDescription,
       address: location,
+      imageUrl: "https://example.com/maps/seoul-food-tour",
       latitude,
       longitude,
       zoomLevel,

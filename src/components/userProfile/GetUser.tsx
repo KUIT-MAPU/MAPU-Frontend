@@ -75,7 +75,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
   const currentItems = mapData.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(mapData.length / ITEMS_PER_PAGE); //10은 가지고 있는 맵의 개수(백과 연동하면 나중에 바꿔야함)
+  const totalPages = Math.ceil(mapData.length / ITEMS_PER_PAGE); //10은 가지고 있는 맵의 개수(백과 연동하면 나중에 바꿔야함) 변경완료
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
