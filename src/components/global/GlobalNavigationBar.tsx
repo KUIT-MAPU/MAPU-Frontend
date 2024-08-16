@@ -110,7 +110,7 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
             )}
           </div>
         </Link>
-        <Link to={`/user/${userData.profileId}`} className={styles.link}>
+        <Link to='/user/:userId' className={styles.link}>
           <div
             className={`${styles.iconContainer} ${isUserpageActive ? styles.iconContainer_on : styles.iconContainer_off}`}
           >

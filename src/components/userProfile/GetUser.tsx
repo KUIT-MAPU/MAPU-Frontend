@@ -27,18 +27,8 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const [mapTitle, setMapTitle] = useState<string>('');
   const [mapCategory, setMapCategory] = useState<string>('edited');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-  const [mapData, setMapData] = useState({
-    mapId: 0,
-    imageUrl: '',
-    title: '',
-    region: '',
-    role: '',
-    createDate: '',
-    longtitude: 0,
-    latitude: 0,
-  });
+  const [mapData, setMapData] = useState([]);
 
-  const placeholderImage = 'https://via.placeholder.com/150';
 
   const openNewMap = () => {
     setIsNewMapOpen(true);
@@ -57,119 +47,113 @@ const GetUser = (props: { children?: React.ReactNode }) => {
     setIsDropdownOpen(false);
   };
 
-  const listMapData = [
-    {
-      id: 1,
-      name: 'Map 1',
-      permissions: '편집자',
-      participants: 5,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-    {
-      id: 2,
-      name: 'Map 2',
-      permissions: '편집자',
-      participants: 4,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-    {
-      id: 3,
-      name: 'Map 3',
-      permissions: '편집자',
-      participants: 3,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-    {
-      id: 4,
-      name: 'Map 4',
-      permissions: '편집자',
-      participants: 2,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-    {
-      id: 5,
-      name: 'Map 5',
-      permissions: '편집자',
-      participants: 1,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-    {
-      id: 6,
-      name: 'Map 6',
-      permissions: '편집자',
-      participants: 6,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-    {
-      id: 7,
-      name: 'Map 7',
-      permissions: '편집자',
-      participants: 7,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-    {
-      id: 8,
-      name: 'Map 8',
-      permissions: '편집자',
-      participants: 7,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-    {
-      id: 9,
-      name: 'Map 9',
-      permissions: '편집자',
-      participants: 7,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-    {
-      id: 10,
-      name: 'Map 10',
-      permissions: '편집자',
-      participants: 7,
-      date: '2024.05.06',
-      center: '서울시 광진구',
-    },
-  ]; //지도 데이터 임시 저장
+  // const listMapData = [
+  //   {
+  //     id: 1,
+  //     name: 'Map 1',
+  //     permissions: '편집자',
+  //     participants: 5,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Map 2',
+  //     permissions: '편집자',
+  //     participants: 4,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Map 3',
+  //     permissions: '편집자',
+  //     participants: 3,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'Map 4',
+  //     permissions: '편집자',
+  //     participants: 2,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  //   {
+  //     id: 5,
+  //     name: 'Map 5',
+  //     permissions: '편집자',
+  //     participants: 1,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  //   {
+  //     id: 6,
+  //     name: 'Map 6',
+  //     permissions: '편집자',
+  //     participants: 6,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  //   {
+  //     id: 7,
+  //     name: 'Map 7',
+  //     permissions: '편집자',
+  //     participants: 7,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  //   {
+  //     id: 8,
+  //     name: 'Map 8',
+  //     permissions: '편집자',
+  //     participants: 7,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  //   {
+  //     id: 9,
+  //     name: 'Map 9',
+  //     permissions: '편집자',
+  //     participants: 7,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  //   {
+  //     id: 10,
+  //     name: 'Map 10',
+  //     permissions: '편집자',
+  //     participants: 7,
+  //     date: '2024.05.06',
+  //     center: '서울시 광진구',
+  //   },
+  // ]; //지도 데이터 임시 저장
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await instance.get(`/user`);
-        const data = response.data.result;
-
-        setMapData({
-          mapId: data.mapId,
-          imageUrl: data.imageUrl,
-          title: data.title,
-          region: data.region,
-          role: data.role,
-          createDate: data.createDate,
-          longtitude: data.longtitude,
-          latitude: data.latitude,
-        });
-
+        const response = await instance.get(`/user/maps?editable=true&bookmarked=false`);
+        const data = response.data;
+  
+        if (Array.isArray(data.result)) {
+          setMapData(data.result); // result 배열을 mapData로 설정
+        } else {
+          console.error('Fetched data is not an array:', data.result);
+        }
       } catch (error) {
-        console.error('Failed to fetch user data', error);
+        console.error('Failed to fetch map data', error);
       }
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, []);
   
   const ITEMS_PER_PAGE = 9; //한 페이지에 표시되는 항목 수는 9개
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-  const currentItems = listMapData.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(10 / ITEMS_PER_PAGE); //10은 가지고 있는 맵의 개수(백과 연동하면 나중에 바꿔야함)
+  const currentItems = mapData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(mapData.length / ITEMS_PER_PAGE); //10은 가지고 있는 맵의 개수(백과 연동하면 나중에 바꿔야함)
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -252,20 +236,20 @@ const GetUser = (props: { children?: React.ReactNode }) => {
       <div className={styles.mapContainer}>
         {view === 'gallery' && (
           <div className={styles.getMap}>
-            {currentItems.map((map) => (
+            {currentItems.map((map :any) => (
               <Link to={`/map/${map.id}`} className={styles.link} key={map.id}>
                 <div className={styles.mapWrapper}>
                   <div className={styles.numMap}>
                     <img
-                      src={placeholderImage}
-                      alt="placeholder"
+                      src={map.imageUrl}
+                      alt="mapImage"
                       className={styles.image}
                     />
                   </div>
                   <div className={styles.galleryInfo}>
                     <div className={styles.mapTitleLocation}>
-                      <div className={styles.mapTitle}>우리 동네 맛집 지도</div>
-                      <div className={styles.mapLocation}>성북구 정릉동</div>
+                      <div className={styles.mapTitle}>{map.title}</div>
+                      <div className={styles.mapLocation}>{map.region}</div>
                     </div>
                     <ExampleUser />
                   </div>
@@ -286,31 +270,31 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               </div>
             </div>
             <div className={styles.listContainer}>
-              {listMapData.map((map) => (
+              {currentItems.map((map:any) => (
                 <div key={map.id} className={styles.mapList}>
                   <div className={styles.mapListName}>
                     <div className={styles.mapListImage}>
                       <img
-                        src={placeholderImage}
-                        alt="placeholder"
+                        src={map.imageUrl}
+                        alt="mapImage"
                         className={styles.image}
                       />
                     </div>
                     <div className={styles.mapListImageTitleLocation}>
                       <div className={styles.mapListImageTitle}>
-                        우리 동네 맛집 지도
+                        {map.title}
                       </div>
                       <div className={styles.mapListImageLocation}>
-                        성북구 정릉동
+                        {map.region}
                       </div>
                     </div>
                   </div>
                   <div className={styles.mapListInfo}>
-                    <div>{map.permissions}</div>
+                    <div>{map.role}</div>
                     <div>
                       <ExampleUser />
                     </div>
-                    <div>{map.date}</div>
+                    <div>{map.createdDate}</div>
                     <div>{map.center}</div>
                   </div>
                 </div>
