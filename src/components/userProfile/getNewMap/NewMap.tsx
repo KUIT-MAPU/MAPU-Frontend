@@ -3,15 +3,21 @@ import React, { useState, useEffect } from 'react';
 import styles from './NewMap.module.scss';
 import { ReactComponent as ModalClose } from '../../../assets/btn_followmodal_close.svg';
 import { ReactComponent as NewMapIcon } from '../../../assets/ico_newmap.svg';
+import axios from 'axios';
 
 const { kakao } = window;
 
 const NewMap = ({ onClose }: { onClose: () => void }) => {
   const [location, setLocation] = useState<string>('');
   const [mapTitle, setMapTitle] = useState<string>('');
+  const [mapDescription, setMapDescription] = useState<string>('');
+  const [imageUrl, setImageUrl] =useState<string>('');
   const [mapCreate, setMapCreate] = useState<boolean>(false);
   const [latitude, setLatitude] = useState<number | null>(null); //위도(기본값 null)
   const [longtitude, setLongtitude] = useState<number | null>(null); //경도(기본값 null)
+  const [zoomLevel, setZoomLever] = useState<number>(0);
+  const [isOnSearch, setIsOnSearch] = useState<boolean>(true);
+  const [keywords,setKeywords] = useState<string[]>([]);
 
   const getButtonStyle = (buttonLocation: string) => {
     return location === buttonLocation
@@ -52,6 +58,38 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
     });
   };
 
+  const sendDataToBackend = async (data:any) => {
+    try {
+      const response = await axios.post('/map/create', data);
+      console.log('Data sent successfully:', response.data);
+    } catch (error) {
+      console.error('Failed to send data:', error);
+    }
+  };
+  
+  // 예를 들어, form 데이터를 백엔드로 전송
+  const handleSubmit = (event:any) => {
+    event.preventDefault();
+    
+    if(!mapTitle || !latitude || !longtitude){
+      alert('모든 필수 정보를 입력해주세요');
+      return;
+    }
+    const formData = {
+      mapTitle,
+      mapDescription,
+      address: location,
+      latitude,
+      longtitude,
+      zoomLevel,
+      publishLink : imageUrl, // 예시에서는 imageUrl로 대체
+      isOnSearch,
+      keywords,
+    };
+  
+    sendDataToBackend(formData);
+  };
+  
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
@@ -93,7 +131,9 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
           </button>
         </div>
         <div className={`${styles.createBtn} ${getMapCreateStyle()}`}>
-          <div>생성하기</div>
+          <div 
+            role="button" 
+          onClick={handleSubmit}>생성하기</div>
         </div>
       </div>
     </div>
