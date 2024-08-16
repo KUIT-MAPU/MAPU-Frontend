@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Navigate } from 'react-router-dom';
 
 import styles from './GetUser.module.scss';
 import { ReactComponent as BackArrow } from '../../assets/BackArrow.svg';
@@ -12,16 +13,29 @@ import { ReactComponent as List } from '../../assets/ListView.svg';
 import { ReactComponent as ExampleUser } from '../../assets/ico_exampleuser_profile.svg';
 import { ReactComponent as CreatMap } from '../../assets/btn_map_create.svg';
 
+import useRegisterStore from '../../stores/registerStore';
+import { RegisterStatus } from '../../types/enum/RegisterStatus';
+
 import instance from '../../apis/instance';
 import NewMap from './getNewMap/NewMap';
 
 const GetUser = (props: { children?: React.ReactNode }) => {
+  const navigate=useNavigate();
   const [view, setView] = useState('gallery'); //gallery를 기본으로 설정
   const [isNewMapOpen, setIsNewMapOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [mapTitle, setMapTitle] = useState<string>('');
   const [mapCategory, setMapCategory] = useState<string>('edited');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const [mapData, setMapData] = useState({
+    imageUrl: '',
+    title: '',
+    region: '',
+    description: '',
+    userImageUrl: '',
+    userNickName: '',
+    userProfileId: '',
+  });
 
   const placeholderImage = 'https://via.placeholder.com/150';
 
@@ -125,6 +139,32 @@ const GetUser = (props: { children?: React.ReactNode }) => {
     },
   ]; //지도 데이터 임시 저장
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await instance.get(`/user`);
+        const data = response.data.result;
+        const userMapData =response.data.result.user;
+
+        setMapData({
+          imageUrl: data.imageUrl,
+          title: data.title,
+          region: data.region,
+          description: data.description,
+          userImageUrl: userMapData.imageUrl,
+          userNickName: userMapData.nickName,
+          userProfileId: userMapData.profileId,
+        });
+
+        navigate(`/user/${data.profileId}`);
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };
+
+    fetchUserData();
+  }, [navigate]);
+  
   const ITEMS_PER_PAGE = 9; //한 페이지에 표시되는 항목 수는 9개
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
