@@ -21,7 +21,7 @@
 }
 
 .TimelineMain {
-  display: flex; 
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   flex: 1;
@@ -46,6 +46,6 @@
   }
   &::-webkit-scrollbar-thumb {
     width: 4px;
-    background-color: #EBEEF2;
+    background-color: #ebeef2;
   }
 }

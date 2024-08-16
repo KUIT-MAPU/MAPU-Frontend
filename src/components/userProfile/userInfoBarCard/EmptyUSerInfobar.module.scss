@@ -1,118 +1,117 @@
 @font-face {
-    font-family: Freesentation;
-    src: url('../../../assets/fonts/Freesentation-Bold.woff');
-  }
-  
-  @font-face {
-    font-family: Freesentation;
-    src: url('../../../assets/fonts/Freesentation-Regular.woff');
-  }
-  
-  @font-face {
-    font-family: Freesentation;
-    src: url('../../../assets/fonts/Freesentation-SemiBold.woff');
-  }
-  
-  .UserInfoBar {
-    width: 300px;
-    background-color: var(--white);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    border-right: 1px solid var(--gray_50);
-  }
-  
-  .UserPhoto {
-    width: 120px;
-    height: 120px;
-    background-color: var(--gray_100);
-    margin-top: 72px;
-    border-radius: 760px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .UserName {
-    margin-top: 4px;
-    min-width: 111px;
-    width: auto;
-    min-height: 64px;
-    height: auto;
-    padding: 10px;
-    background-color: white;
-    text-align: center;
-  }
-  
-  .UserName h1 {
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 33px;
-    font: 'Freesentation';
-  }
-  
-  .UserName span {
-    size: 18px;
-    font-weight: 400;
-    line-height: 27px;
-    font: 'Freesentation';
-    color: var(--gray_500);
-  }
-  
-  .UserProfileNumber {
-    margin-top: 12px;
-    min-width: 216px;
-    width: auto;
-    min-height: 72px;
-    height: auto;
-    background-color: white;
-    display: flex;
-    justify-content: space-around;
-    gap: 10px;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .UserProfilBox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .UserProfileBox span {
-    display: block;
-    text-align: center;
-    margin-bottom: 5px;
-  }
-  
-  .ProfileBottom {
-    margin-top: 20px;
-    width: 260px;
-    height: 32px;
-    background-color: var(--gray_50);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    cursor: pointer;
-  }
-  
-  .authContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
+  font-family: Freesentation;
+  src: url('../../../assets/fonts/Freesentation-Bold.woff');
+}
+
+@font-face {
+  font-family: Freesentation;
+  src: url('../../../assets/fonts/Freesentation-Regular.woff');
+}
+
+@font-face {
+  font-family: Freesentation;
+  src: url('../../../assets/fonts/Freesentation-SemiBold.woff');
+}
+
+.UserInfoBar {
+  width: 300px;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-right: 1px solid var(--gray_50);
+}
+
+.UserPhoto {
+  width: 120px;
+  height: 120px;
+  background-color: var(--gray_100);
+  margin-top: 72px;
+  border-radius: 760px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.UserName {
+  margin-top: 4px;
+  min-width: 111px;
+  width: auto;
+  min-height: 64px;
+  height: auto;
+  padding: 10px;
+  background-color: white;
+  text-align: center;
+}
+
+.UserName h1 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 33px;
+  font: 'Freesentation';
+}
+
+.UserName span {
+  size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  font: 'Freesentation';
+  color: var(--gray_500);
+}
+
+.UserProfileNumber {
+  margin-top: 12px;
+  min-width: 216px;
+  width: auto;
+  min-height: 72px;
+  height: auto;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.UserProfilBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.UserProfileBox span {
+  display: block;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.ProfileBottom {
+  margin-top: 20px;
+  width: 260px;
+  height: 32px;
+  background-color: var(--gray_50);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.authContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}

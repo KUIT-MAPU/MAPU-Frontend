@@ -22,7 +22,8 @@ const TimeLine: React.FC = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
 
-  const { loginNeeded, registerStatus, setLoginNeededStatus } = useRegisterStore();
+  const { loginNeeded, registerStatus, setLoginNeededStatus } =
+    useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -76,19 +77,19 @@ const TimeLine: React.FC = () => {
         <LeftBar />
         <div className={styles.TimelineMain}>
           <HeaderNavigation />
-            <div className={styles.mapMain}>
-              {selectedList.map((keyword) => {
-                const data = mapData[keyword.title] || [];
-                return data.length > 0 ? (
-                  <MapCard
-                    key={keyword.id}
-                    keyword={keyword.title}
-                    mapData={data}
-                    isLog={isLog}
-                  />
-                ) : null;
-              })}
-            </div>
+          <div className={styles.mapMain}>
+            {selectedList.map((keyword) => {
+              const data = mapData[keyword.title] || [];
+              return data.length > 0 ? (
+                <MapCard
+                  key={keyword.id}
+                  keyword={keyword.title}
+                  mapData={data}
+                  isLog={isLog}
+                />
+              ) : null;
+            })}
+          </div>
           {/* </HeaderNavigation> */}
         </div>
       </div>

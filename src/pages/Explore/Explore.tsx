@@ -146,45 +146,45 @@ const Explore: React.FC = () => {
         <LeftBar />
         <div className={styles.main}>
           <HeaderNavigation />
-            <div className={styles.btnTitle}>
-              {isCheck === 'random' && (
-                <span className={styles.title}>랜덤순 탐색</span>
-              )}
-              {isCheck === 'recent' && (
-                <span className={styles.title}>날짜순 탐색</span>
-              )}
-              <button className={styles.btnArrow} onClick={handleMenuBtn}>
-                <img src={ico_title_arrow_down} alt="Arrow Down Icon" />
-              </button>
-              {isPopup && (
-                <div ref={outside}>
-                  <SearchPopUp
-                    className={styles.searchModule}
-                    isCheck={isCheck}
-                    handleRandomBtn={handleRandomBtn}
-                    handleRecentBtn={handleRecentBtn}
-                  />
-                </div>
-              )}
-            </div>
-            <SearchBar
-              className={styles.searchBar}
-              text={text}
-              setText={setText}
-            />
-            <div className={styles.main}>
-              {mapData !== null && mapData.length !== 0 ? (
-                mapData.map((map: MapType) => (
-                  <MapList
-                    map={map}
-                    key={map.id}
-                    keyword={map.mapKeyword ?? []}
-                  />
-                ))
-              ) : (
-                <ErrorPage text={text} />
-              )}
-            </div>
+          <div className={styles.btnTitle}>
+            {isCheck === 'random' && (
+              <span className={styles.title}>랜덤순 탐색</span>
+            )}
+            {isCheck === 'recent' && (
+              <span className={styles.title}>날짜순 탐색</span>
+            )}
+            <button className={styles.btnArrow} onClick={handleMenuBtn}>
+              <img src={ico_title_arrow_down} alt="Arrow Down Icon" />
+            </button>
+            {isPopup && (
+              <div ref={outside}>
+                <SearchPopUp
+                  className={styles.searchModule}
+                  isCheck={isCheck}
+                  handleRandomBtn={handleRandomBtn}
+                  handleRecentBtn={handleRecentBtn}
+                />
+              </div>
+            )}
+          </div>
+          <SearchBar
+            className={styles.searchBar}
+            text={text}
+            setText={setText}
+          />
+          <div className={styles.main}>
+            {mapData !== null && mapData.length !== 0 ? (
+              mapData.map((map: MapType) => (
+                <MapList
+                  map={map}
+                  key={map.id}
+                  keyword={map.mapKeyword ?? []}
+                />
+              ))
+            ) : (
+              <ErrorPage text={text} />
+            )}
+          </div>
           {/* </HeaderNavigation> */}
         </div>
       </div>

@@ -44,11 +44,11 @@ const useRegisterStore = create(
         set({ loginNeeded: status });
       },
       setAccessToken: (accessToken) => {
-        set({accessToken:accessToken});
+        set({ accessToken: accessToken });
       },
       clearAccessToken: () => {
-        set({accessToken:undefined});
-      }
+        set({ accessToken: undefined });
+      },
     }),
     { name: 'registerStatusStorage' },
   ),
