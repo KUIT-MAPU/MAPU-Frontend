@@ -26,43 +26,43 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
     followingCnt:0,
   });
   
-  const {setAccessToken, clearAccessToken} = useRegisterStore();
-  useEffect(() => {
-    const reIssueToken = async () => {
-      try {
-        const response = await instance.get('/jwt/reissue');
-        const data = response.data;
+  // const {setAccessToken, clearAccessToken} = useRegisterStore();
+  // useEffect(() => {
+  //   const reIssueToken = async () => {
+  //     try {
+  //       const response = await instance.get('/jwt/reissue');
+  //       const data = response.data;
 
-        if (data && data.accessToken) {
-          setAccessToken(data.accessToken);
-          instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
-        }
-      } catch (error) {
-        console.error('Failed to reissue token', error);
-        clearAccessToken(); // 실패 시 토큰 초기화 (로그아웃 처리)
-      }
-    };
+  //       if (data && data.accessToken) {
+  //         setAccessToken(data.accessToken);
+  //         instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+  //       }
+  //     } catch (error) {
+  //       console.error('Failed to reissue token', error);
+  //       clearAccessToken(); // 실패 시 토큰 초기화 (로그아웃 처리)
+  //     }
+  //   };
 
-    const responseInterceptor = instance.interceptors.response.use(
-      (response) => response, // 성공적인 응답 그대로 전달
-      async (error) => {
-        const originalRequest = error.config;
+  //   const responseInterceptor = instance.interceptors.response.use(
+  //     (response) => response, // 성공적인 응답 그대로 전달
+  //     async (error) => {
+  //       const originalRequest = error.config;
         
-        if (!originalRequest._retry) {
-          originalRequest._retry = true; // 무한 루프 방지
-          await reIssueToken(); // 토큰 재발급 시도
-          return instance(originalRequest); // 재발급 후 원래 요청 재시도
-        }
+  //       if (!originalRequest._retry) {
+  //         originalRequest._retry = true; // 무한 루프 방지
+  //         await reIssueToken(); // 토큰 재발급 시도
+  //         return instance(originalRequest); // 재발급 후 원래 요청 재시도
+  //       }
 
-        return Promise.reject(error);
-      }
-    );
+  //       return Promise.reject(error);
+  //     }
+  //   );
 
-    return () => {
-      // 컴포넌트 언마운트 시 인터셉터 해제
-      instance.interceptors.response.eject(responseInterceptor);
-    };
-  }, []);
+  //   return () => {
+  //     // 컴포넌트 언마운트 시 인터셉터 해제
+  //     instance.interceptors.response.eject(responseInterceptor);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -157,7 +157,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
         </div>
       </div>
       <div className={styles.ProfileBottom} onClick={handleLoginClick}>
-        로그인하기
+        프로필 편집
       </div>
 
       {isFollowingOpen && <Following onClose={closeFollowing} />}
