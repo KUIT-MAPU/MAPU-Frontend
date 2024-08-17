@@ -10,6 +10,7 @@ import instance from '../../../apis/instance';
 
 const Follower = ({ onClose }: { onClose: () => void }) => {
   const [followerUsers,setFollowerUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchUserFollowerData = async () => {
@@ -26,6 +27,10 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
    fetchUserFollowerData();
   }, []);
 
+  const filteredUsers = followerUsers.filter((user:any) =>
+    user.nickname.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
@@ -38,11 +43,17 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
         <div className={styles.searchBar}>
           <div className={styles.searchBarText}>
             <Search />
-            <div>검색</div>
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder="검색"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
         </div>
         <div className={styles.userList}>
-          {followerUsers.map((user: any) => (
+          {filteredUsers.map((user: any) => (
             <div key={user.userId} className={styles.userItem}>
               <div className={styles.userInfo}>
               <img
