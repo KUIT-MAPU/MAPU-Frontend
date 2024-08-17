@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './Following.module.scss';
+import styles from './Follower.module.scss';
 import { ReactComponent as IcoFollower } from '../../../assets/ico_user_follower.svg';
 import { ReactComponent as ModalClose } from '../../../assets/btn_followmodal_close.svg';
 import { ReactComponent as Search } from '../../../assets/ico_search.svg';
@@ -49,7 +49,7 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
                         src={user.profileImageUrl}
                         alt="mapImage"
                         className={styles.userProfilePic}
-                      />
+                />
                 <div className={styles.userName}>{user.nickname}</div>
               </div>
               <button className={styles.isFollow}>

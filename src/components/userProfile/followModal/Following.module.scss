@@ -56,17 +56,16 @@
   color: var(--gray_400);
 }
 
-
 .userList {
-  flex: 1;
+  width: 380px;
   overflow-y: auto;
   margin-top: 8px;
-  padding-right: 4px; /* To ensure padding when scrolling */
+  padding-right: 4px; 
   gap: 6px;
 }
 
 ::-webkit-scrollbar {
-  width: 6px; /* 스크롤 바의 너비 */
+  width: 6px;
 }
 
 .userItem {
@@ -75,7 +74,6 @@
   flex-direction: row;
   width: 380px;
   height: 52px;
-  padding: 8px;
   margin-bottom: 8px;
   border-radius: 6px;
   justify-content: space-between;
@@ -92,7 +90,7 @@
   width: 40px;
   height: 40px;
   border-radius: 100px;
-  margin-right: 12px;
+  margin-right: 2px;
   border: 1px;
 }
 

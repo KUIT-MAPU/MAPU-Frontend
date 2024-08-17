@@ -57,7 +57,7 @@
 }
 
 .userList {
-  flex: 1;
+  width: 380px;
   overflow-y: auto;
   margin-top: 8px;
   padding-right: 4px; 
@@ -73,8 +73,7 @@
   align-items: center;
   flex-direction: row;
   width: 380px;
-  height: 60px;
-  padding: 8px;
+  height: 52px;
   margin-bottom: 8px;
   border-radius: 6px;
   justify-content: space-between;
