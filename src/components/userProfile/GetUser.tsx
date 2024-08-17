@@ -72,7 +72,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   }, [mapCategory]);
   
   const filteredMaps=mapData.filter((map:any) =>
-    typeof map.title === 'string' && // map.title이 문자열인지 확인
+    typeof map.title === 'string' && 
     map.title.toLowerCase().includes(mapTitle.toLowerCase())
   );
 

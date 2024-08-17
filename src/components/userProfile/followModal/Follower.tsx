@@ -38,7 +38,11 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
         <div className={styles.searchBar}>
           <div className={styles.searchBarText}>
             <Search />
-            <div>검색</div>
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder="검색"
+            />
           </div>
         </div>
         <div className={styles.userList}>
