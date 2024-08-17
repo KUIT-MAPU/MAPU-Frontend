@@ -4,6 +4,7 @@ import styles from './Following.module.scss';
 import { ReactComponent as IcoFollowing } from '../../../assets/ico_user_following.svg';
 import { ReactComponent as ModalClose } from '../../../assets/btn_followmodal_close.svg';
 import { ReactComponent as Search } from '../../../assets/ico_search.svg';
+import { ReactComponent as User } from '../../../assets/user.svg';
 
 
 interface User {
@@ -40,8 +41,13 @@ const Following = ({ onClose }: { onClose: () => void }) => {
         <div className={styles.userList}>
           {followingUsers.map((user) => (
             <div key={user.id} className={styles.userItem}>
-              <img src={user.profilePic} alt={user.name} className={styles.userProfilePic} />
-              <div className={styles.userName}>{user.name}</div>
+              <div className={styles.userInfo}>
+                <User/>
+                <div className={styles.userName}>{user.name}</div>
+              </div>
+              <button className={styles.isFollow}>
+                팔로잉
+              </button>
             </div>
           ))}
         </div>
