@@ -6,6 +6,7 @@ import { ReactComponent as ModalClose } from '../../../assets/btn_followmodal_cl
 import { ReactComponent as Search } from '../../../assets/ico_search.svg';
 import { ReactComponent as User } from '../../../assets/user.svg';
 
+import instance from '../../../apis/instance';
 
 interface User {
   id: number;
@@ -14,15 +15,23 @@ interface User {
 }
 
 const Following = ({ onClose }: { onClose: () => void }) => {
-  const [followingUsers,setIsFollowingUsers] = useState<User[]>([
-    { id: 1, name: 'User 1', profilePic: '/path/to/profile1.jpg' },
-    { id: 2, name: 'User 2', profilePic: '/path/to/profile2.jpg' },
-    { id: 3, name: 'User 3', profilePic: '/path/to/profile3.jpg' },
-    { id: 4, name: 'User 3', profilePic: '/path/to/profile3.jpg' },
-    { id: 5, name: 'User 3', profilePic: '/path/to/profile3.jpg' },
-    { id: 6, name: 'User 3', profilePic: '/path/to/profile3.jpg' },
-    { id: 7, name: 'User 3', profilePic: '/path/to/profile3.jpg' },
-  ])
+  const [followingUsers,setFollowingUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUserFollowingData = async () => {
+      try {
+        const response = await instance.get('/following');
+        const data = response.data.result.users;
+
+        setFollowingUsers(data);
+
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+   };  
+   fetchUserFollowingData();
+  }, []);
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
@@ -39,11 +48,11 @@ const Following = ({ onClose }: { onClose: () => void }) => {
           </div>
         </div>
         <div className={styles.userList}>
-          {followingUsers.map((user) => (
-            <div key={user.id} className={styles.userItem}>
+          {followingUsers.map((user: any) => (
+            <div key={user.userId} className={styles.userItem}>
               <div className={styles.userInfo}>
                 <User/>
-                <div className={styles.userName}>{user.name}</div>
+                <div className={styles.userName}>{user.nickname}</div>
               </div>
               <button className={styles.isFollow}>
                 팔로잉
