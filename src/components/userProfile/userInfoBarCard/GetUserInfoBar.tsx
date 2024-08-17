@@ -83,7 +83,8 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
       } catch (error) {
         console.error('Failed to fetch user data', error);
       }
-    };
+    };  //로그인 한 유저 정보 받아오기
+    
 
     fetchUserData();
   }, [navigate]);

@@ -55,3 +55,61 @@
   font-weight: 400;
   color: var(--gray_400);
 }
+
+.userList {
+  width: 380px;
+  overflow-y: auto;
+  margin-top: 8px;
+  padding-right: 4px; 
+  gap: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+.userItem {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 380px;
+  height: 52px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  justify-content: space-between;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.userProfilePic {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  margin-right: 2px;
+  border: 1px;
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: black;
+}
+
+.isFollow {
+  display: flex;
+  border-radius: 4px;
+  background-color: var(--gray_50);
+  width: 56px;
+  height: 25px;
+  align-items: center;
+  padding: 2px 12px 2px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+}
