@@ -3,7 +3,7 @@ import AuthContainer from '../../login/AuthContainer';
 import useRegisterStore from '../../../stores/registerStore';
 import { RegisterStatus } from '../../../types/enum/RegisterStatus';
 
-import styles from './UserInfoBar.module.scss';
+import styles from './EmptyUSerInfobar.module.scss';
 import { ReactComponent as ProfilePerson } from '../../../assets/img_user_default_profile.svg';
 import Following from '../followModal/Following';
 import Follower from '../followModal/Follower';
