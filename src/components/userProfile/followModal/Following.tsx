@@ -8,11 +8,6 @@ import { ReactComponent as User } from '../../../assets/user.svg';
 
 import instance from '../../../apis/instance';
 
-interface User {
-  id: number;
-  name: string;
-  profilePic: string;
-}
 
 const Following = ({ onClose }: { onClose: () => void }) => {
   const [followingUsers,setFollowingUsers] = useState([]);

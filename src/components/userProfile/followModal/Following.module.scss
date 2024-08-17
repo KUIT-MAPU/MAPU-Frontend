@@ -60,7 +60,7 @@
 .userList {
   flex: 1;
   overflow-y: auto;
-  margin-top: 16px;
+  margin-top: 8px;
   padding-right: 4px; /* To ensure padding when scrolling */
   gap: 6px;
 }
@@ -79,7 +79,6 @@
   margin-bottom: 8px;
   border-radius: 6px;
   justify-content: space-between;
-  background-color: gray;
 }
 
 .userInfo {
