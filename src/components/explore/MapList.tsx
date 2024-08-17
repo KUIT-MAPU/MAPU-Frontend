@@ -85,7 +85,7 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap, keyword }) => {
           </div>
         ))
       ) : (
-        <div>
+        <div className={styles.MapListRoot}>
           <div className={styles.Images}>
             <Link
               to={`/map/${map?.title}/view`}
