@@ -45,7 +45,11 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
           {followerUsers.map((user: any) => (
             <div key={user.userId} className={styles.userItem}>
               <div className={styles.userInfo}>
-                <User/>
+              <img
+                        src={user.profileImageUrl}
+                        alt="mapImage"
+                        className={styles.userProfilePic}
+                      />
                 <div className={styles.userName}>{user.nickname}</div>
               </div>
               <button className={styles.isFollow}>
