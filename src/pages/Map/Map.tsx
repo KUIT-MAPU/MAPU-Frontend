@@ -1,3 +1,4 @@
+import yorkie, { Client, Document } from 'yorkie-js-sdk';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './Map.module.scss';
@@ -32,6 +33,8 @@ const Map = () => {
   const { registerStatus, loginNeeded, setLoginNeededStatus } =
     useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
+  const [client, setClient] = useState<Client>();
+  const [doc, setDoc] = useState<Document<any, any>>();
 
   useEffect(() => {
     if (mapMode === MapMode.UNVALID) {
@@ -73,6 +76,36 @@ const Map = () => {
     const prevUrl = pathname.split('?')[0];
     navigate(prevUrl);
   };
+
+  useEffect(() => {
+    const YORKIE_CLIENT_API_KEY = process.env.REACT_APP_YORKIE_API_KEY;
+    const YORKIE_ENDPOINT = process.env.REACT_APP_YORKIE_URL;
+
+    if (!mapName || !YORKIE_CLIENT_API_KEY || !YORKIE_ENDPOINT) {
+      return;
+    }
+
+    const initializeYorkie = async () => {
+      const client = new yorkie.Client(YORKIE_ENDPOINT, {
+        apiKey: YORKIE_CLIENT_API_KEY,
+      });
+      await client.activate();
+
+      const doc = new yorkie.Document(mapName);
+      await client.attach(doc);
+
+      setClient(client);
+      setDoc(doc);
+    };
+
+    initializeYorkie();
+
+    return () => {
+      if (client) {
+        client.deactivate();
+      }
+    };
+  }, [mapName]);
 
   // map
   return (
