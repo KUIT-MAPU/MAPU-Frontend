@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { MapType } from '../../../types/MapType';
-
 import styles from './MapCard.module.scss';
 
 import user_default from '../../../assets/img_user_default_profile.svg';

@@ -18,7 +18,6 @@ instance.interceptors.request.use(
     ) {
       config.headers['Authorization'] = `Bearer ${state.accessToken}`;
     }
-    console.log('axios config : ', config);
     return config;
   },
   (error) => {
@@ -30,7 +29,6 @@ instance.interceptors.request.use(
 // 응답 인터셉터
 instance.interceptors.response.use(
   (response) => {
-    console.log('response: ', response);
     return response;
   },
   // (error) => {

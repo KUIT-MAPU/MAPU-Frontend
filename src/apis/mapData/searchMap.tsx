@@ -1,13 +1,14 @@
 import instance from "../instance";
 import { BaseResponse } from "../../types/BaseResponse";
-import { KeywordType } from "../../types/keywords/KeywordType";
 import { APIExploreMapType } from "../../types/mapData/APIExploreMapType ";
+import { KeywordType } from "../../types/keywords/KeywordType";
 
-export const exploreMap = async (searchType:string, size: number, page:number) => {
+export const searchMap = async (searchType: string, searchWord:string,size:number,page:number) => {
   try {
     const response = await instance.get<BaseResponse<APIExploreMapType[] | undefined>> (`/map/search`, {
       params: {
         searchType,
+        searchWord,
         size,
         page
       }
@@ -19,7 +20,6 @@ export const exploreMap = async (searchType:string, size: number, page:number) =
         title: title,
         selected: false,
       }));
-
       return {
         ...item,
         keyword: newKeyword,

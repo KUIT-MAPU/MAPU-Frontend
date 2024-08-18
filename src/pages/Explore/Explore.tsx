@@ -11,50 +11,75 @@ import { getExploreMap } from '../../apis/mapData/getExploreMap';
 import MapList from '../../components/explore/MapList';
 import ErrorPage from '../../components/explore/ErrorPage';
 import { useAllKeywordStore, useKeywordStore } from '../../stores/keywordStore';
-import mockData from '../../components/timeLine/mapCard/MapModel';
 
 import styles from './Explore.module.scss';
 
 import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
-import { MapType } from '../../types/MapType';
 import { KeywordType } from '../../types/keywords/KeywordType';
-import { useQuery } from 'react-query';
 import { KeywordMapType } from '../../types/keywords/KeywordMapType';
 import { getKeywordMap } from '../../apis/keywords/getKeywordMap';
 import { APIKeywordMapType } from '../../types/keywords/APIKeywordMapType';
+import { ExploreMapType } from '../../types/mapData/ExploreMapType';
+import { getSearchMap } from '../../apis/mapData/getSearchMap';
 
 const Explore: React.FC = () => {
+  const outside = useRef<HTMLDivElement>(null);
+  const mainRef = useRef(null)
   const token = useRegisterStore((state) => state.accessToken);
   const [isCheck, setIsCheck] = useState<string>('random');
   const [text, setText] = useState<string>('');
   const [isPopup, setIsPopup] = useState<boolean>(false);
-  const [mapData, setMapData] = useState<MapType[]>([]);
-  const [ref, inView] = useInView();
+  const [mapData, setMapData] = useState<ExploreMapType[]>([]);
+  const [searchData, setSearchData] = useState<ExploreMapType[]>([]);
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    root: mainRef.current,
+  });
   const [page, setPage] = useState<number>(0);
-  const [size, setSize] = useState<number>(4);
   const [isLog, setIsLog] = useState<boolean>(false);
   const [keywordMap, setKeywordMap] = useState<KeywordMapType[] | undefined>(
     undefined,
   );
-
+  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
   const { selectedList, setSelectedList } = useKeywordStore();
 
-  const outside = useRef<HTMLDivElement>(null);
+  const fetchLoad = async () => {
+    const newMaps = await getExploreMap(isCheck, 4, page);
+    if (newMaps !== undefined) {
+      setMapData((pre) => [...pre, ...newMaps]);
+    }
+  };
 
-  const { allKeywordList, setAllKeywordList } = useAllKeywordStore();
+  const fetchSearch = async () => {
+    const newMaps = await getSearchMap(isCheck, text, 4, page);
+    if (newMaps !== undefined) {
+      setSearchData((pre) => [...pre, ...newMaps]);
+    }
+  };
 
-  const { data: ExploreMapData, refetch } = useQuery(
-    ['exploreMapData', isCheck, size, page],
-    () => getExploreMap(text, size, page),
-  );
+  const fetchKeywordMap = async () => {
+    if (selectedList.length !== 0) {
+      const keyword = selectedList[0].title;
+      setText(keyword);
+      const result = await getKeywordMap(keyword);
 
-  const fetchKeywordSearch = async (keyword: KeywordType) => {
-    try {
-      //TODO: API
-      const data = mockData.filter((map) => map.keywords === keyword.title);
-      setMapData(data);
-    } catch {
-      console.error('error');
+      if (result) {
+        const newResults: KeywordMapType[] = result.map(
+          (map: APIKeywordMapType) => {
+            const newKeyword: KeywordType = {
+              id: Math.random(),
+              title: map.keyword,
+              selected: false,
+            };
+
+            return {
+              ...map,
+              keyword: newKeyword,
+            };
+          },
+        );
+        setKeywordMap(newResults);
+      }
     }
   };
 
@@ -76,10 +101,42 @@ const Explore: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (token) {
+      setIsLog(true);
+    } else {
+      setIsLog(false);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (text !== '' && selectedList.length === 0) {
+      setPage(0);
+      setSearchData([]);
+      fetchSearch(); // 지도 제목 검색
+    } else if (text === '' && selectedList.length === 0) {
+      setPage(0);
+      setMapData([]);
+      fetchLoad();
+    } else if (selectedList.length !== 0) {
+      setPage(0);
+      setKeywordMap(undefined);
+
+      fetchKeywordMap();
+    }
+  }, [text,isCheck,selectedList]);
+
+  useEffect(() => {
+    if(selectedList.length === 0 ) {
+      setText('')
+    }
+  },[selectedList])
+
+  useEffect(() => {
     if (inView) {
       setPage((num) => num + 1);
+      fetchLoad()
     }
-  }, [page]);
+  }, [inView]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -109,38 +166,57 @@ const Explore: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (selectedList !== null && selectedList.length !== 0) {
-        const keyword = selectedList[0].title;
-        setText(keyword);
-        const result = await getKeywordMap(keyword);
+  let content;
 
-        if (result) {
-          const newResults: KeywordMapType[] = result.map(
-            (map: APIKeywordMapType) => {
-              const newKeyword: KeywordType = {
-                id: Math.random(),
-                title: map.keyword,
-                selected: false,
-              };
+  if (text.length === 0 && selectedList.length === 0) {
+    content = (
+      <div className={styles.map}>
+        {mapData && mapData.length !== 0 ? (
+          mapData.map((item, index) => (
+            <div className={styles.mapListMain} key={index}>
+              <MapList map={item} keyword={item.keyword} />
+            </div>
+          ))
+        ) : (
+          <ErrorPage text={text} />
+        )}
+        <div ref={ref}/>
+      </div> //  랜덤순/ 날짜순
+    );
+  } else if (text.length > 0 && selectedList.length === 0) {
+    content = (
+      <div className={styles.map}>
+        {searchData && searchData.length !== 0 ? (
+          searchData.map((item, index) => (
+            <div className={styles.mapListMain} key={index}>
+              <MapList map={item} keyword={item.keyword} />
+            </div>
+          ))
+        ) : (
+          <ErrorPage text={text} />
+        )}
+        <div ref={ref}/>
+      </div> // 지도 제목 검색
+    );
+  } else if (selectedList.length !== 0) {
+    content = (
+      <div className={styles.map}>
+        {keywordMap?.map((item: KeywordMapType, index) => {
+          if (item.maps.length === 0) {
+            return <ErrorPage text={item.keyword.title} />;
+          } else {
+            return (
+              <div className={styles.mapListMain} key={`map-${index}`}>
+                <MapList keywordMap={item.maps} keyword={item.keyword} />
+              </div>
+            );
+          }
+        })}
+        <div ref={ref}/>
+      </div> // 키워드 검색
+    );
+  }
 
-              return {
-                ...map,
-                keyword: newKeyword,
-              };
-            },
-          );
-          setKeywordMap(newResults);
-        }
-      } else {
-        setText('');
-        setKeywordMap(undefined);
-      }
-    };
-
-    fetchData();
-  }, [selectedList]);
 
   return (
     <div className={styles.root}>
@@ -176,30 +252,8 @@ const Explore: React.FC = () => {
               text={text}
               setText={setText}
             />
-            <div className={styles.main} ref={ref}>
-              {ExploreMapData !== undefined && selectedList.length === 0 ? (
-                ExploreMapData.map((item, index) => (
-                  <div key={item.mapId} ref={index === 3 ? ref : null}>
-                    <MapList
-                      map={item}
-                      key={item.mapId}
-                      keyword={item.keyword}
-                    />
-                  </div>
-                ))
-              ) : (
-                <ErrorPage text={text} />
-              )}
-
-              {selectedList.length !== 0 && keywordMap !== undefined ? (
-                keywordMap.map((map: KeywordMapType) => {
-                  const keyword = map.keyword;
-                  const data = map.maps;
-                  return <MapList keyword={keyword} keywordMap={data} />;
-                })
-              ) : (
-                <ErrorPage text={text} />
-              )}
+            <div className={styles.main} ref={mainRef}>
+              {content}
             </div>
           </div>
         </div>

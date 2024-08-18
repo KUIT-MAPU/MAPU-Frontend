@@ -1,6 +1,7 @@
 .container {
   display: flex;
   z-index: 10;
+  overflow: hidden;
 }
 
 .LeftSideBar {
@@ -12,6 +13,7 @@
   align-items: center;
   padding: 8px 8px;
   border-right: 1px solid var(--gray_50);
+  overflow: hidden;
 }
 
 .iconContainer {
@@ -55,7 +57,6 @@
 
 .main {
   flex-grow: 1;
-  // padding: 16px;
 }
 
 .bottomIconContainer {
