@@ -12,6 +12,7 @@ import BaseMap from '../../components/map/BaseMap/BaseMap';
 import EditDesignPanel from '../../components/map/BaseMap/EditDesignPanel';
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import { MapMode } from '../../types/enum/MapMode';
+import { YorkieDocType } from '../../types/map/object/ObjectInfo';
 
 //"editor"
 //마이페이지 > 편집 가능한 지도에서의 접근이므로, 이미 로그인 된 상태일 것.
@@ -91,8 +92,13 @@ const Map = () => {
       });
       await client.activate();
 
-      const doc = new yorkie.Document(mapName);
+      const doc = new yorkie.Document<YorkieDocType>(mapName);
       await client.attach(doc);
+
+      doc.update((root) => {
+        if (!root.informationAttributes) root.informationAttributes = [];
+        if (!root.objects) root.objects = [];
+      }, 'initialize document');
 
       setClient(client);
       setDoc(doc);
