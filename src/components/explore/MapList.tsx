@@ -1,4 +1,3 @@
-import { MapType } from '../../types/MapType';
 import user_default from '../../assets/img_user_default_profile.svg';
 import styles from './MapList.module.scss';
 import { useState } from 'react';
@@ -6,10 +5,11 @@ import { Link } from 'react-router-dom';
 import { ExploreMapType } from '../../types/mapData/ExploreMapType';
 import { KeywordType } from '../../types/keywords/KeywordType';
 import { MapsType } from '../../types/keywords/MapsType';
+import MapKeywordCard from './MapKeywordCard';
 
 interface MapListProps {
-  map?: ExploreMapType;
-  keywordMap?: MapsType[];
+  map?: ExploreMapType; // 랜덤날짜순 + 검색
+  keywordMap?: MapsType[]; // 키워드로 검색
   keyword: KeywordType[] | KeywordType;
 }
 
@@ -83,7 +83,7 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap, keyword }) => {
               </div>
             </div>
           </div>
-        ))
+        )) // 키워드로 지도 찾기
       ) : (
         <div className={styles.MapListRoot}>
           <div className={styles.Images}>
@@ -130,6 +130,13 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap, keyword }) => {
                   {mapKeyword.title}
                 </button>
               ))}
+            </div>
+            <div className={styles.keywordContainer}>
+              {selectedKeyword && (
+                <MapKeywordCard
+                  keyword={selectedKeyword}
+                />
+              )}
             </div>
           </div>
         </div>

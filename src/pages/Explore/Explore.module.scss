@@ -3,6 +3,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  position: relative;
 }
 
 .leftBarWrapper {
@@ -14,6 +15,16 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  height: 100%;
+
+}
+
+.mapMain {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  flex: 1;
 }
 
 .btnTitle {
@@ -51,14 +62,29 @@
   margin-bottom: 24px;
 }
 
+.map {
+  height: auto;
+  padding-bottom: 80px;
+}
+
 .main {
   display: flex;
   flex-direction: column;
   padding-left: 20px;
   padding-right: 12px;
-  gap: 28px;
-  width: 100vw;
-  height: 100vh;
-  overflow: auto;
+
+  flex:1;
+  overflow-y: auto;
   overflow-x: hidden;
+  gap: 28px;
+  height: calc(100vh - 80px);
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 206px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 4px;
+    background-color: #ebeef2;
+  }
 }
