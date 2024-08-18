@@ -11,10 +11,10 @@ import { getKeywordMap } from '../../apis/keywords/getKeywordMap';
 
 import styles from './TimeLine.module.scss';
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
-import { APIKeywordMapType } from '../../types/keywords/APIKeywordMapType';
+import { KeywordMapType } from '../../types/keywords/KeywordMapType';
 
 const TimeLine: React.FC = () => {
-  const [keywordMap, setKeywordMap] = useState<APIKeywordMapType[] | undefined>(undefined);
+  const [keywordMap, setKeywordMap] = useState<KeywordMapType[] | undefined>(undefined);
   const [isLog, setIsLog] = useState<boolean>(false);
   const { selectedList } = useKeywordStore();
   const token = useRegisterStore((state) => state.accessToken);
@@ -35,7 +35,7 @@ const TimeLine: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const allResults: APIKeywordMapType[] = [];
+      const allResults: KeywordMapType[] = [];
 
       for (const keyword of selectedList) {
         const result = await getKeywordMap(keyword.title);
@@ -71,7 +71,7 @@ const TimeLine: React.FC = () => {
                 return data.length > 0 ? (
                   <MapCard
                     key={item.profileId}
-                    keyword={`${nickname} 님의 지도`}
+                    editorId={`${nickname} 님의 지도`}
                     followingMap={data}
                     userInfo = {item}
                   />
@@ -81,14 +81,14 @@ const TimeLine: React.FC = () => {
               null
             )}
 
-            {keywordMap ? (keywordMap.map((item:APIKeywordMapType) => {
+            {keywordMap ? (keywordMap.map((item:KeywordMapType) => {
               const keyword = item.keyword;
               const data = item.maps;
               return data.length > 0 ? (
                 <MapCard 
                   key={Math.random()}
                   keyword={keyword}
-                  mapData={data}
+                  KeywordmapData={data}
                   />
               ) : null
             })) : null}

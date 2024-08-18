@@ -1,6 +1,4 @@
-import { KeywordType } from "./KeywordType";
-
-export interface MapsType {
+export interface APIMapsType {
   nickname: string;
   profileId: string;
   userImage: string;
@@ -9,5 +7,5 @@ export interface MapsType {
   mapImage: string;
   madDescription:string;
   mapAddress:string;
-  mapKeywords:KeywordType[]
+  mapKeywords:string[]
 }

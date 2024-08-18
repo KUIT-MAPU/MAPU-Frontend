@@ -1,6 +1,6 @@
-import { MapsType } from "./MapsType";
+import { APIMapsType } from "./APIMapsType";
 
 export interface APIKeywordMapType {
   keyword: string;
-  maps: MapsType[];
+  maps: APIMapsType[];
 }

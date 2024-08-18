@@ -17,7 +17,6 @@ interface KeywordListProps {
 
 const KeywordList: React.FC<KeywordListProps> = ({
   className,
-  isLog,
   token,
 }) => {
   const { selectedList, setSelectedList } = useKeywordStore();

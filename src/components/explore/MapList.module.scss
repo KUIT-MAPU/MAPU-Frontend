@@ -68,7 +68,8 @@
 .mapInfo {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  justify-content: space-between;
 }
 
 .mapContent {

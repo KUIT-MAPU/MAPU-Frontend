@@ -4,58 +4,39 @@ import ico_carousel_backward from '../../assets/ico_carousel_backward.svg';
 import ico_carousel_forward from '../../assets/ico_carousel_forward.svg';
 import { getKeywordMap } from '../../apis/keywords/getKeywordMap';
 import { KeywordMapType } from '../../types/keywords/KeywordMapType';
-import { APIKeywordMapType } from '../../types/keywords/APIKeywordMapType';
-import { KeywordType } from '../../types/keywords/KeywordType';
 
 interface MapKeywordCardProps {
   keyword: string;
+  mapId: number;
+  isSelect: boolean;
 }
 
-const MapKeywordCard: React.FC<MapKeywordCardProps> = ({
-  keyword,
-}) => {
-  const INIT_RENDER: number = 4;
-  const MAP_PER_PAGE: number = 3;
-  const [renderKeyword, setRenderKeyword] = useState<number>(INIT_RENDER);
-  const [keywordMap, setKeywordMap] = useState<KeywordMapType | undefined>(
-    undefined,
-  );
+const MapKeywordCard: React.FC<MapKeywordCardProps> = ({ keyword, isSelect, mapId }) => {
+  const INIT_RENDER = 4;
+  const MAP_PER_PAGE = 3;
+  const [renderKeyword, setRenderKeyword] = useState(INIT_RENDER);
+  const [keywordMap, setKeywordMap] = useState<KeywordMapType | undefined>(undefined);
 
   const handleForward = () => {
-    setRenderKeyword((preVisibleItems) => preVisibleItems - MAP_PER_PAGE);
-    console.log('forward:', renderKeyword);
+    setRenderKeyword(prev => prev - MAP_PER_PAGE);
   };
 
   const handleBackward = () => {
-    setRenderKeyword((prevVisibleItems) => prevVisibleItems + MAP_PER_PAGE);
+    setRenderKeyword(prev => prev + MAP_PER_PAGE);
   };
 
   const fetchKeywordMap = async () => {
-      const result = await getKeywordMap(keyword);
-      if (result) {
-        const newResults: KeywordMapType[] = result.map(
-          (map: APIKeywordMapType) => {
-            const newKeyword: KeywordType = {
-              id: Math.random(),
-              title: map.keyword,
-              selected: false,
-            };
-
-            return {
-              ...map,
-              keyword: newKeyword,
-            };
-          },
-        );
-        setKeywordMap(newResults[0]);
-      }
+    const result = await getKeywordMap(keyword);
+    if (result && result.length > 0) {
+      setKeywordMap(result[0]);
+    }
   };
 
   useEffect(() => {
-    if(keyword) {
-      fetchKeywordMap()
+    if (keyword) {
+      fetchKeywordMap();
     }
-  },[keyword])
+  }, [keyword]);
 
   return (
     <div className={styles.keywordRoot}>
@@ -68,23 +49,22 @@ const MapKeywordCard: React.FC<MapKeywordCardProps> = ({
         </button>
 
         <button
-          className={`${keywordMap !== undefined && renderKeyword > keywordMap.maps.length ? styles.hidden : styles.backward}`}
+          className={`${!keywordMap || renderKeyword <= INIT_RENDER ? styles.hidden : styles.backward}`}
           onClick={handleBackward}
         >
           <img src={ico_carousel_backward} alt="Backward" />
         </button>
       </div>
-      {
-        keywordMap?.maps
-          .slice(renderKeyword - INIT_RENDER, renderKeyword)
-          .map((map, index) => (
-            <div key={index} className={styles.keywordItem}>
-              <img src={map.mapImage} className={styles.keywordImg} />
-              <div className={styles.keywordInfo}>
-                <span className={styles.keywordTitle}>{map.mapTitle}</span>
-              </div>
+      {isSelect && mapId && keywordMap?.maps
+        .slice(renderKeyword - INIT_RENDER, renderKeyword)
+        .map((map, index) => (
+          <div key={index} className={styles.keywordItem}>
+            <img src={map.mapImage} className={styles.keywordImg} />
+            <div className={styles.keywordInfo}>
+              <span className={styles.keywordTitle}>{map.mapTitle}</span>
             </div>
-          ))}
+          </div>
+        ))}
     </div>
   );
 };

@@ -32,8 +32,8 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   type OverlayTypeString = 'polyline' | 'polygon';
 
   const [position, setPosition] = useState<Position>({
-    lat: 33.450701,
-    lng: 126.570667,
+    lat: 37.540957955055,
+    lng: 127.08278172427,
   });
 
   const [marker, setMarker] = useState<Marker[] | null>(null);
