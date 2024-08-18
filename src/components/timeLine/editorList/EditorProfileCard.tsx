@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { EditorType } from '../../../types/editors/EditorType';
 import useRegisterStore from '../../../stores/registerStore';
@@ -10,7 +10,7 @@ import AuthContainer from '../../login/AuthContainer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { usePostFollow } from '../../../apis/follow/usePostFollow';
 import { FollowType } from '../../../types/follow/FollowType';
-import { FollowingType } from '../../../types/follow/FollowingType';
+import { useDeleteUnFollow } from '../../../apis/follow/useDeleteUnFollow';
 
 interface ProfileCardProps {
   Editor: EditorType;
@@ -19,17 +19,18 @@ interface ProfileCardProps {
   
 }
 
-const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, token, isLog }) => {
+const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog }) => {
   const { registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const [pendingUser, setPendingUser] = useState<number | null>(null);
   const [isFollow, setIsFollow] = useState<boolean>(false);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
-  const mutation = usePostFollow();
-
+  const Followmutation = usePostFollow();
+  const UnFollowmutation = useDeleteUnFollow();
 
   const handleFollow = (followingId:number) => {
+    setIsFollow(true);
     if (!isLog) {
       setPendingUser(followingId)
       setLoginNeededStatus(true);
@@ -38,10 +39,18 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, token, isLog })
       const followData: FollowType = {
         followingId: followingId,
       }
-      mutation.mutate(followData);
-      setIsFollow(true);
+      Followmutation.mutate(followData);
     }
   };
+
+  const handleUnFollow = (followingId:number) => {
+  setIsFollow(false);
+  const unfollowData : FollowType = {
+    followingId: followingId,
+  }
+  UnFollowmutation.mutate(unfollowData);
+  };
+
 
   const handleClose = () => {
     setLoginNeededStatus(false);
@@ -49,7 +58,6 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, token, isLog })
     navigate(prevUrl);
     setIsOverlayVisible(false);
   };
-
 
   return (
     <div className={styles.cardRoot}>
@@ -72,7 +80,7 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, token, isLog })
         </div>
       </div>
 
-      <button className={`${isFollow ? styles.unfollowing : styles.following}`} onClick={() => handleFollow(Editor.userId)}>
+      <button className={`${isFollow ? styles.unfollowing : styles.following}`} onClick={isFollow ? () => handleUnFollow(Editor.userId):() => handleFollow(Editor.userId)}>
         {isFollow ? "팔로잉" : "팔로우"}
 
       </button>

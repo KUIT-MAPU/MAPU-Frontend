@@ -18,13 +18,12 @@ import ico_title_arrow_down from '../../assets/ico_title_arrow_down.svg';
 import { KeywordType } from '../../types/keywords/KeywordType';
 import { KeywordMapType } from '../../types/keywords/KeywordMapType';
 import { getKeywordMap } from '../../apis/keywords/getKeywordMap';
-import { APIKeywordMapType } from '../../types/keywords/APIKeywordMapType';
 import { ExploreMapType } from '../../types/mapData/ExploreMapType';
 import { getSearchMap } from '../../apis/mapData/getSearchMap';
 
 const Explore: React.FC = () => {
   const outside = useRef<HTMLDivElement>(null);
-  const mainRef = useRef(null)
+  const mainRef = useRef(null);
   const token = useRegisterStore((state) => state.accessToken);
   const [isCheck, setIsCheck] = useState<string>('random');
   const [text, setText] = useState<string>('');
@@ -61,24 +60,10 @@ const Explore: React.FC = () => {
     if (selectedList.length !== 0) {
       const keyword = selectedList[0].title;
       setText(keyword);
-      const result = await getKeywordMap(keyword);
+      const results = await getKeywordMap(keyword);
 
-      if (result) {
-        const newResults: KeywordMapType[] = result.map(
-          (map: APIKeywordMapType) => {
-            const newKeyword: KeywordType = {
-              id: Math.random(),
-              title: map.keyword,
-              selected: false,
-            };
-
-            return {
-              ...map,
-              keyword: newKeyword,
-            };
-          },
-        );
-        setKeywordMap(newResults);
+      if (results !== undefined) {
+        setKeywordMap(results);
       }
     }
   };
@@ -123,18 +108,18 @@ const Explore: React.FC = () => {
 
       fetchKeywordMap();
     }
-  }, [text,isCheck,selectedList]);
+  }, [text, isCheck, selectedList]);
 
   useEffect(() => {
-    if(selectedList.length === 0 ) {
-      setText('')
+    if (selectedList.length === 0) {
+      setText('');
     }
-  },[selectedList])
+  }, [selectedList]);
 
   useEffect(() => {
     if (inView) {
       setPage((num) => num + 1);
-      fetchLoad()
+      fetchLoad();
     }
   }, [inView]);
 
@@ -178,9 +163,11 @@ const Explore: React.FC = () => {
             </div>
           ))
         ) : (
-          <ErrorPage text={text} />
+          <div className={styles.main}>
+            <ErrorPage text={text} />
+          </div>
         )}
-        <div ref={ref}/>
+        <div ref={ref} />
       </div> //  랜덤순/ 날짜순
     );
   } else if (text.length > 0 && selectedList.length === 0) {
@@ -193,9 +180,11 @@ const Explore: React.FC = () => {
             </div>
           ))
         ) : (
-          <ErrorPage text={text} />
+          <div className={styles.main}>
+            <ErrorPage text={text} />
+          </div>
         )}
-        <div ref={ref}/>
+        <div ref={ref} />
       </div> // 지도 제목 검색
     );
   } else if (selectedList.length !== 0) {
@@ -212,11 +201,10 @@ const Explore: React.FC = () => {
             );
           }
         })}
-        <div ref={ref}/>
+        <div ref={ref} />
       </div> // 키워드 검색
     );
   }
-
 
   return (
     <div className={styles.root}>

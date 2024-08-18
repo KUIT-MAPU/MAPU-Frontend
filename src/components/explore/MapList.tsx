@@ -1,51 +1,42 @@
-import user_default from '../../assets/img_user_default_profile.svg';
+import React, { useState } from 'react';
 import styles from './MapList.module.scss';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import user_default from '../../assets/img_user_default_profile.svg';
 import { ExploreMapType } from '../../types/mapData/ExploreMapType';
 import { KeywordType } from '../../types/keywords/KeywordType';
 import { MapsType } from '../../types/keywords/MapsType';
 import MapKeywordCard from './MapKeywordCard';
 
 interface MapListProps {
-  map?: ExploreMapType; // 랜덤날짜순 + 검색
-  keywordMap?: MapsType[]; // 키워드로 검색
+  map?: ExploreMapType;
+  keywordMap?: MapsType[];
   keyword: KeywordType[] | KeywordType;
 }
 
-const MapList: React.FC<MapListProps> = ({ map, keywordMap, keyword }) => {
-  const [selectedKeyword, setSelectedKeyword] = useState<string>('');
+const MapList: React.FC<MapListProps> = ({ map, keywordMap }) => {
+  const [selected, setSelected] = useState<{ keyword: string; mapId: number } | null>(null);
 
-  const handleSelectPills = (mapKeyword: KeywordType) => {
-    if (selectedKeyword === mapKeyword.title) {
-      setSelectedKeyword('');
+  const handleSelectPills = (mapKeyword: KeywordType, mapId: number) => {
+    if (selected && selected.keyword === mapKeyword.title && selected.mapId === mapId) {
+      setSelected(null); 
     } else {
-      setSelectedKeyword(mapKeyword.title);
+      setSelected({ keyword: mapKeyword.title, mapId: mapId }); 
     }
   };
 
   return (
-    <div className={styles.MapListRoot}>
-      {keywordMap !== undefined ? (
-        keywordMap.map((mapItem: MapsType, index: number) => (
-          <div key={index}>
+    <>
+      {keywordMap ? (
+        keywordMap.map((mapItem: MapsType) => (
+          <div className={styles.MapListRoot} key={mapItem.mapId}>
             <div className={styles.Images}>
-              <Link
-                to={`/map/${mapItem.mapTitle}/view`}
-                style={{ textDecoration: 'none' }}
-              >
-                <img
-                  src={mapItem.mapImage}
-                  className={styles.mapImg}
-                  alt="Map"
-                />
+              <Link to={`/map/${mapItem.mapTitle}/view`} style={{ textDecoration: 'none' }}>
+              <div className={styles.mapImg}>
+                <img src={mapItem.mapImage} alt="Map" />
+              </div>
               </Link>
               <div className={styles.editor}>
-                <img
-                  className={styles.editorImg}
-                  src={mapItem.userImage ? mapItem.userImage : user_default}
-                  alt="User"
-                />
+                <img className={styles.editorImg} src={mapItem.userImage ? mapItem.userImage : user_default} alt="User" />
                 <div className={styles.editorInfo}>
                   <span className={styles.editorName}>{mapItem.nickname}</span>
                   <span className={styles.editorId}>{mapItem.profileId}</span>
@@ -57,49 +48,40 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap, keyword }) => {
               <div className={styles.mapContent}>
                 <div className={styles.mapTitle}>
                   <span className={styles.mapName}>{mapItem.mapTitle}</span>
-                  <span className={styles.mapAddress}>
-                    지도 설명 API 추가 요청
-                  </span>
+                  <span className={styles.mapAddress}>{mapItem.mapAddress}</span>
                 </div>
-                <span className={styles.description}>
-                  지도 설명 API 추가 요청
-                </span>
+                <span className={styles.description}>{mapItem.madDescription}</span>
+                <div className={styles.mapKeyword}>
+                  {mapItem.mapKeywords?.map((mapKeyword: KeywordType) => (
+                    <button
+                      className={selected?.keyword === mapKeyword.title && selected.mapId === mapItem.mapId
+                        ? styles.selected
+                        : styles.keywordPills}
+                      key={mapKeyword.id}
+                      onClick={() => handleSelectPills(mapKeyword, mapItem.mapId)}
+                    >
+                      {mapKeyword.title}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div className={styles.mapKeyword}>
-                {/* {mapItem.keyword?.map((mapKeyword: KeywordType) => (
-                  <button
-                    className={
-                      selectedKeyword !== mapKeyword.title
-                        ? styles.selected
-                        : styles.keywordPills
-                    }
-                    key={mapKeyword.id}
-                    onClick={() => handleSelectPills(mapKeyword)}
-                  >
-                    {mapKeyword.title}
-                  </button>
-                ))} */}
+              <div className={styles.keywordContainer}>
+                {selected && selected.mapId === mapItem.mapId && (
+                  <MapKeywordCard keyword={selected.keyword} mapId={selected.mapId} isSelect={true} />
+                )}
               </div>
             </div>
           </div>
-        )) // 키워드로 지도 찾기
+        ))
       ) : (
         <div className={styles.MapListRoot}>
           <div className={styles.Images}>
-            <Link
-              to={`/map/${map?.title}/view`}
-              style={{ textDecoration: 'none' }}
-            >
+            <Link to={`/map/${map?.title}/view`} style={{ textDecoration: 'none' }}>
               <img src={map?.imageUrl} className={styles.mapImg} alt="Map" />
             </Link>
-
             <div className={styles.editor}>
-              <img
-                className={styles.editorImg}
-                src={map?.user.imageUrl ? map.user.imageUrl : user_default}
-                alt="User"
-              />
+              <img className={styles.editorImg} src={map?.user.imageUrl ? map.user.imageUrl : user_default} alt="User" />
               <div className={styles.editorInfo}>
                 <span className={styles.editorName}>{map?.user.nickName}</span>
                 <span className={styles.editorId}>{map?.user.profileId}</span>
@@ -114,34 +96,29 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap, keyword }) => {
                 <span className={styles.mapAddress}>{map?.region}</span>
               </div>
               <span className={styles.description}>{map?.description}</span>
-            </div>
-
-            <div className={styles.mapKeyword}>
-              {map?.keyword?.map((mapKeyword: KeywordType) => (
-                <button
-                  className={
-                    selectedKeyword !== mapKeyword.title
+              <div className={styles.mapKeyword}>
+                {map?.keyword?.map((mapKeyword: KeywordType) => (
+                  <button
+                    className={selected?.keyword === mapKeyword.title && selected.mapId === map.mapId
                       ? styles.selected
-                      : styles.keywordPills
-                  }
-                  key={mapKeyword.id}
-                  onClick={() => handleSelectPills(mapKeyword)}
-                >
-                  {mapKeyword.title}
-                </button>
-              ))}
+                      : styles.keywordPills}
+                    key={mapKeyword.id}
+                    onClick={() => handleSelectPills(mapKeyword, map.mapId)}
+                  >
+                    {mapKeyword.title}
+                  </button>
+                ))}
+              </div>
             </div>
             <div className={styles.keywordContainer}>
-              {selectedKeyword && (
-                <MapKeywordCard
-                  keyword={selectedKeyword}
-                />
+              {selected && selected.mapId === map?.mapId && (
+                <MapKeywordCard keyword={selected.keyword} mapId={selected.mapId} isSelect={true} />
               )}
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
