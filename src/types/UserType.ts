@@ -1,5 +1,5 @@
 export interface UserType {
-  imgUrl: string | null;
+  imageUrl: string | null;
   nickName: string;
   profileId: string;
   userId: number;
