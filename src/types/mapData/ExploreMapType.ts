@@ -1,4 +1,4 @@
-import { UserType } from "./UserType";
+import { UserType } from "../UserType";
 import { KeywordType } from "../keywords/KeywordType";
 
 export interface ExploreMapType {
