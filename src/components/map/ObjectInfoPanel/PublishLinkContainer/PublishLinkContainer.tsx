@@ -10,13 +10,12 @@ interface Props {
 }
 
 const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
-  const { isPublished, swithIsPublished, publicLink, objectOutlineList } =
-    useMapInfoStore();
+  const { mapInfo, innerData } = useMapInfoStore();
 
   const handleCopyLink = async () => {
     //클립보드에 공유 링크 복사
     try {
-      await navigator.clipboard.writeText(`${publicLink}`);
+      await navigator.clipboard.writeText(`${mapInfo.publicLink}`);
     } catch (e) {
       //TODO: 에러 상태로 설정
       alert('공유 링크 복사에 실패하였습니다.');
@@ -25,7 +24,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
 
   const handleSwitchIsPublished = () => {
     //TODO: 게시 여부 설정 api 호출
-    swithIsPublished();
+    // swithIsPublished();
   };
 
   //editor
@@ -34,14 +33,14 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
       <section
         className={`${styles.objectInfoHeader} ${styles.publishContainer}`}
       >
-        {isPublished ? (
+        {mapInfo.isPublished ? (
           <div className={publicStyles.publicTextContainer}>
             <span className={publicStyles.boxTitle}>지도 게시 취소하기</span>
             <span className={publicStyles.publicDescription}>
               공개된 지도가 비공개됩니다
             </span>
           </div>
-        ) : objectOutlineList.length === 0 ? (
+        ) : !innerData.objects ? (
           <div className={publicStyles.publicTextContainer}>
             <span
               className={`${publicStyles.boxTitle} ${publicStyles.cannotPublishBoxTitle}`}
@@ -62,7 +61,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
             </span>
           </div>
         )}
-        {isPublished ? (
+        {mapInfo.isPublished ? (
           <button
             type="button"
             className={styles.publishBtn}
@@ -70,7 +69,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
           >
             <img src={PublishCancelBtn} alt="게시 취소하기" />
           </button>
-        ) : objectOutlineList.length === 0 ? (
+        ) : !innerData.objects ? (
           <button
             type="button"
             className={`${styles.publishBtn} ${styles.cannotPublishBtn}`}
@@ -97,7 +96,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
     >
       <span className={publicStyles.boxTitle}>지도 링크</span>
       <div className={styles.linkContainer}>
-        <span className={styles.publicLink}>{publicLink}</span>
+        <span className={styles.publicLink}>{mapInfo.publicLink}</span>
         <img
           src={CopyLinkBtn}
           alt="링크 복사하기"

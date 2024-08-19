@@ -1,4 +1,5 @@
 import { ObjectShape } from '../../enum/ObjectShape';
+import { ObjectPropertyType } from '../../enum/ObjectPropertyType';
 
 export interface MapObject {
   objectId: string;
@@ -6,13 +7,13 @@ export interface MapObject {
   name: string;
   shape: any;
   geoAttribute: {
-    roadNameAddress: string;
+    roadNameAddress?: string;
     length?: string; //길이 - 선
     perimeter?: string; //둘레 - 면
     area?: string; //면적 - 면
   };
   userAttribute: {
-    detailAddress: string;
+    detailAddress?: string;
     [attributeID: string]: any;
   };
 }
@@ -20,7 +21,7 @@ export interface MapObject {
 export interface InfoAttribute {
   id: string;
   name: string;
-  type: 'stars' | 'relations' | 'tags';
+  type: ObjectPropertyType;
 }
 
 export interface YorkieDocType {
