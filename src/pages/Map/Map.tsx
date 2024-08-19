@@ -13,6 +13,7 @@ import EditDesignPanel from '../../components/map/BaseMap/EditDesignPanel';
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import { MapMode } from '../../types/enum/MapMode';
 import { YorkieDocType } from '../../types/map/object/ObjectInfo';
+import useMapInfoStore from '../../stores/mapInfoStore';
 
 //"editor"
 //마이페이지 > 편집 가능한 지도에서의 접근이므로, 이미 로그인 된 상태일 것.
@@ -35,7 +36,13 @@ const Map = () => {
     useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
   const [client, setClient] = useState<Client>();
-  const [doc, setDoc] = useState<Document<any, any>>();
+  const {
+    doc,
+    setDoc: setYorkieDoc,
+    setInformationAttributes,
+    setObjects,
+    setInnerData,
+  } = useMapInfoStore();
 
   useEffect(() => {
     if (mapMode === MapMode.UNVALID) {
@@ -98,10 +105,11 @@ const Map = () => {
       doc.update((root) => {
         if (!root.informationAttributes) root.informationAttributes = [];
         if (!root.objects) root.objects = [];
+        setInnerData(root);
       }, 'initialize document');
 
       setClient(client);
-      setDoc(doc);
+      setYorkieDoc(doc);
     };
 
     initializeYorkie();
@@ -112,6 +120,22 @@ const Map = () => {
       }
     };
   }, [mapName]);
+
+  if (!client || !doc) {
+    return <div>Loading...</div>;
+  }
+
+  if (mapMode === MapMode.EDIT) {
+    doc.subscribe('$.informationAttributes', (event) => {
+      console.log('informationAttributes updated', event);
+      setInformationAttributes(doc.getRoot().informationAttributes);
+    });
+
+    doc.subscribe('$.objects', (event) => {
+      console.log('objects updated', event);
+      setObjects(doc.getRoot().objects);
+    });
+  }
 
   // map
   return (
