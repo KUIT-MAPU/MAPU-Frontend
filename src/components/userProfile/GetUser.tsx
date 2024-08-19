@@ -28,7 +28,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const [mapCategory, setMapCategory] = useState<string>('edited');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [mapData, setMapData] = useState([]);
-
+  const [searchInput,setSearchInput] = useState<string>('');
 
   const openNewMap = () => {
     setIsNewMapOpen(true);
@@ -69,13 +69,24 @@ const GetUser = (props: { children?: React.ReactNode }) => {
     };
 
     fetchUserData();
-  }, []);
+  }, [mapCategory]);
   
+  const filteredMaps=mapData.filter((map:any) =>
+    typeof map.title === 'string' && 
+    map.title.toLowerCase().includes(mapTitle.toLowerCase())
+  );
+
   const ITEMS_PER_PAGE = 9; //한 페이지에 표시되는 항목 수는 9개
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-  const currentItems = mapData.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(mapData.length / ITEMS_PER_PAGE); //10은 가지고 있는 맵의 개수(백과 연동하면 나중에 바꿔야함) 변경완료
+
+  const currentItems = mapTitle
+  ? filteredMaps.slice(indexOfFirstItem, indexOfLastItem) // 검색 결과를 표시
+  : mapData.slice(indexOfFirstItem, indexOfLastItem); // 모든 맵을 표시
+
+  const totalPages = mapTitle
+  ? Math.ceil(filteredMaps.length / ITEMS_PER_PAGE) // 검색 결과에 대한 페이지 수
+  : Math.ceil(mapData.length / ITEMS_PER_PAGE); // 전체 맵에 대한 페이지 수
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -132,7 +143,10 @@ const GetUser = (props: { children?: React.ReactNode }) => {
               type="text"
               className={styles.searchInput}
               value={mapTitle}
-              onChange={(e) => setMapTitle(e.target.value)}
+              onChange={(e) => {
+                setMapTitle(e.target.value);
+                setCurrentPage(1); 
+              }}
               placeholder="검색"
             />
           </div>

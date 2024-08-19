@@ -10,6 +10,7 @@ const MapLocationInfoContainer = () => {
         <span className={styles.location__title}>위치</span>
         <span>{mapInfo.location}</span>
       </div>
+      {/* TODO: 날씨, 미세/초미세 추후 목표로 보류 */}
       {/* <div className={styles.locationInfo}>
         <span className={styles.location__title}>날씨</span>
         <span>날씨 api 호출 결과</span>

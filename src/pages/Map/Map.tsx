@@ -151,6 +151,11 @@ const Map = () => {
       <MapInfoPanel mode={mapMode} />
       <BaseMap mode={mapMode} />
       <ObjectInfoPanel mode={mapMode} />
+      <div className={styles.main}>
+        <MapInfoPanel mode={mapMode} />
+        <BaseMap mode={mapMode} />
+        <ObjectInfoPanel mode={mapMode} />
+      </div>
     </div>
   );
 };

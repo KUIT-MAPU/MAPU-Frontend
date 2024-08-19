@@ -4,7 +4,7 @@ import { BaseResponse } from "../../types/BaseResponse";
 
 export const getFollowing = async () => {
   try{
-    const response = await instance.get<BaseResponse<FollowingType>>('following')
+    const response = await instance.get<BaseResponse<FollowingType>>('/following')
     console.log('response', response)
     return response.data.result || undefined
   } catch (error) {

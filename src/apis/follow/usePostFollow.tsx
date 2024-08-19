@@ -1,4 +1,3 @@
-// src/apis/follow/usePostFollow.ts
 import { useMutation, useQueryClient } from 'react-query';
 import instance from '../instance';
 import { FollowType } from '../../types/follow/FollowType';
