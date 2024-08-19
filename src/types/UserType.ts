@@ -1,5 +1,7 @@
 export interface UserType {
-  imageUrl: string | null;
+  imgUrl: string | null;
   nickName: string;
   profileId: string;
+  userId: number;
+  amIFollowing: boolean;
 }

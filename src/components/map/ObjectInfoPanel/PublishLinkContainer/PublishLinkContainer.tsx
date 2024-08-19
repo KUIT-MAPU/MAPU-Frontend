@@ -1,17 +1,20 @@
 import styles from './PublishLinkContainer.module.scss';
 import publicStyles from '../ObjectContainerPublicStyle.module.scss';
+import { useMapBasicInfoQuery } from '../../../../apis/Map/fetchMapBasicInfo';
 import useMapInfoStore from '../../../../stores/mapInfoStore';
 import PublishBtn from '../../../../assets/map/btn_publish.svg';
 import PublishCancelBtn from '../../../../assets/map/btn_cancel_publish.svg';
 import CopyLinkBtn from '../../../../assets/map/btn_link_copy.svg';
+import { MapMode } from '../../../../types/enum/MapMode';
 
 interface Props {
-  mode: string;
+  mode: MapMode;
+  mapId: number;
 }
 
-const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
-  const { isPublished, swithIsPublished, publicLink, objectOutlineList } =
-    useMapInfoStore();
+const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
+  const { publicLink, objectOutlineList } = useMapInfoStore();
+  const { mapBasicInfo } = useMapBasicInfoQuery(mapId, mode);
 
   const handleCopyLink = async () => {
     //클립보드에 공유 링크 복사
@@ -25,7 +28,6 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
 
   const handleSwitchIsPublished = () => {
     //TODO: 게시 여부 설정 api 호출
-    swithIsPublished();
   };
 
   //editor
@@ -34,7 +36,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
       <section
         className={`${styles.objectInfoHeader} ${styles.publishContainer}`}
       >
-        {isPublished ? (
+        {mapBasicInfo !== undefined && mapBasicInfo.result.published ? (
           <div className={publicStyles.publicTextContainer}>
             <span className={publicStyles.boxTitle}>지도 게시 취소하기</span>
             <span className={publicStyles.publicDescription}>
@@ -62,7 +64,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
             </span>
           </div>
         )}
-        {isPublished ? (
+        {mapBasicInfo !== undefined && mapBasicInfo.result.published ? (
           <button
             type="button"
             className={styles.publishBtn}

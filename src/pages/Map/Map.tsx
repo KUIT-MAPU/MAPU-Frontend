@@ -11,6 +11,7 @@ import BaseMap from '../../components/map/BaseMap/BaseMap';
 import EditDesignPanel from '../../components/map/BaseMap/EditDesignPanel';
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import { MapMode } from '../../types/enum/MapMode';
+import { useMapBasicInfoQuery } from '../../apis/Map/fetchMapBasicInfo';
 
 //"editor"
 //마이페이지 > 편집 가능한 지도에서의 접근이므로, 이미 로그인 된 상태일 것.
@@ -28,10 +29,15 @@ const Map = () => {
         ? MapMode.VIEW
         : MapMode.UNVALID; //error;
   const navigate = useNavigate();
-  const { mapName } = useParams();
+  const mapId = Number(useParams().mapId);
   const { registerStatus, loginNeeded, setLoginNeededStatus } =
     useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
+
+  const { mapBasicInfo, isMapBasicInfoLoading } = useMapBasicInfoQuery(
+    mapId,
+    mapMode,
+  );
 
   useEffect(() => {
     if (mapMode === MapMode.UNVALID) {
@@ -41,11 +47,13 @@ const Map = () => {
 
   //TODO: 지도 정보 api 호출 -> react query의 캐시로 데이터 관리
   useEffect(() => {
-    const titleElement = document.getElementsByTagName('title')[0];
-    //TODO: 지도 제목이 바뀐 경우, 이전으로 갔을 때 오류 반환해야 함
-    //mapId를 통해 지도 정보 api 호출 -> 지도 제목이 일치하는지 확인 -> 불일치시 에러
-    titleElement.innerHTML = `${mapName!.replaceAll('-', ' ')} | MAPU`;
-  }, [mapName]);
+    if (!isMapBasicInfoLoading) {
+      const titleElement = document.getElementsByTagName('title')[0];
+      //TODO: 지도 제목이 바뀐 경우, 이전으로 갔을 때 오류 반환해야 함
+      //mapId를 통해 지도 정보 api 호출 -> 지도 제목이 일치하는지 확인 -> 불일치시 에러
+      titleElement.innerHTML = `${mapBasicInfo!.result.title} | MAPU`;
+    }
+  }, [isMapBasicInfoLoading]);
 
   // useEffect(() => {
   //   if (mapMode === MapMode.EDIT) {
@@ -85,14 +93,9 @@ const Map = () => {
       )}
       {dimmed && <AuthContainer className={styles.authContainer} />}
       <GlobalNavigationBar />
-      <MapInfoPanel mode={mapMode} />
+      <MapInfoPanel mode={mapMode} mapId={mapId} />
       <BaseMap mode={mapMode} />
-      <ObjectInfoPanel mode={mapMode} />
-      <div className={styles.main}>
-        <MapInfoPanel mode={mapMode} />
-        <BaseMap mode={mapMode} />
-        <ObjectInfoPanel mode={mapMode} />
-      </div>
+      <ObjectInfoPanel mode={mapMode} mapId={mapId} />
     </div>
   );
 };

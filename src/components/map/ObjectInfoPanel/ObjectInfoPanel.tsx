@@ -9,9 +9,10 @@ import { MapMode } from '../../../types/enum/MapMode';
 
 interface Props {
   mode: MapMode;
+  mapId: number;
 }
 
-const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
+const ObjectInfoPanel: React.FC<Props> = ({ mode, mapId }) => {
   // const editorObjectMockData: EditorObjectBasicInfo = {
   //   shape: ObjectShape.PLANE,
   //   roadNameAddress: '서울시 광진구 능동로 120',
@@ -70,7 +71,7 @@ const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
   };
   return (
     <div id={styles.objectInfoPanel}>
-      <PublishLinkContainer mode={mode} />
+      <PublishLinkContainer mode={mode} mapId={mapId} />
       <ObjectBasicInfoContainer mode={mode} object={objectMockData} />
       {mode === MapMode.EDIT && (
         <EditorObjectInfoInputContainer

@@ -1,35 +1,38 @@
-import { useState } from 'react';
 import styles from './MapProducerContainer.module.scss';
-import { MapProducerInfo } from '../../../../../types/map/MapProducerInfo';
+import { useMapBasicInfoQuery } from '../../../../../apis/Map/fetchMapBasicInfo';
 import useRegisterStore from '../../../../../stores/registerStore';
 import { RegisterStatus } from '../../../../../types/enum/RegisterStatus';
+import { MapMode } from '../../../../../types/enum/MapMode';
+import { UserType } from '../../../../../types/UserType';
+import UserDefaultProfile from '../../../../../assets/img_user_default_profile.svg';
 
-const MapProducerConatiner = () => {
-  const [mockData, setMockData] = useState<MapProducerInfo>({
-    profileId: 'mockUser',
-    profileImgUrl: 'http://placehold.co/32x32',
-    nickname: 'producer',
-    amIFollowing: false,
-  });
+interface Props {
+  mode: MapMode;
+  mapId: number;
+}
+
+const MapProducerConatiner: React.FC<Props> = ({ mode, mapId }) => {
+  const owner: UserType = useMapBasicInfoQuery(mapId, mode).mapBasicInfo!.result
+    .owner;
   const { registerStatus, setLoginNeededStatus } = useRegisterStore();
 
   const handleFollowBtn = () => {
     if (registerStatus !== RegisterStatus.LOG_IN) setLoginNeededStatus(true);
     else {
       //TODO: 팔로우 api
-      setMockData((state) => {
-        return { ...state, amIFollowing: true };
-      });
     }
   };
 
   return (
     <div className={styles.mapProducerContainer}>
       <div className={styles.mapProducer__info}>
-        <img src={mockData.profileImgUrl} alt="프로필 이미지" />
-        <span>{mockData.nickname}</span>
+        <img
+          src={owner !== undefined ? owner.imgUrl! : UserDefaultProfile}
+          alt="프로필 이미지"
+        />
+        <span>{owner !== undefined && owner.nickName!}</span>
       </div>
-      {mockData.amIFollowing ? (
+      {owner !== undefined && owner.amIFollowing ? (
         <button type="button" className={styles.followBtn} disabled>
           팔로잉
         </button>
