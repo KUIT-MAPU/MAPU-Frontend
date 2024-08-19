@@ -270,7 +270,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   window.addEventListener('keydown', handleDeleteKey);
   window.addEventListener('keydown', (ev: KeyboardEvent) => {
     if (ev.key === 'Escape' && selectedObjectId) {
-      setSelectedObjectId(undefined);
+      setSelectedObjectId("");
     }
   });
 

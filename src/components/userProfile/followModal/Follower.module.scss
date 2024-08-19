@@ -38,7 +38,6 @@
 .searchBar {
   display: flex;
   width: 380px;
-  height: 48px;
   border-radius: 8px;
   background-color: var(--gray_50);
   align-items: center;
@@ -47,6 +46,7 @@
 .searchBarText {
   display: flex;
   flex-direction: row;
+  height: 48px;
   justify-content: center;
   align-items: center;
   gap: 8px;

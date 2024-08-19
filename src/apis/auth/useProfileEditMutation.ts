@@ -13,7 +13,7 @@ export const useProfileUpdateMutation = (prevUrl: string) => {
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
       return await instance.patch<BaseResponse<LoginSuccess>>(
-        `/user`,  // 여기서 `PATCH` 요청으로 수정
+        `/user`, 
         data,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
