@@ -1,5 +1,5 @@
 import { getTsid } from 'tsid-ts';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import {
   Map,
@@ -36,6 +36,32 @@ interface DrawingObjects {
   polyline?: kakao.maps.drawing.DrawingPolylineData[];
   polygon?: kakao.maps.drawing.DrawingPolylineData[];
 }
+
+const useThrottle = <T extends (...args: any[]) => any>(
+  func: T,
+  delay: number,
+): T => {
+  const timeoutRef = useRef<number | null>(null);
+  const lastRanRef = useRef<number>(0);
+
+  return useCallback(
+    (...args: Parameters<T>) => {
+      const now = Date.now();
+
+      if (now - lastRanRef.current >= delay) {
+        func(...args);
+        lastRanRef.current = now;
+      } else if (!timeoutRef.current) {
+        timeoutRef.current = window.setTimeout(() => {
+          func(...args);
+          lastRanRef.current = Date.now();
+          timeoutRef.current = null;
+        }, delay);
+      }
+    },
+    [func, delay],
+  ) as T;
+};
 
 const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   useKakaoLoader();
@@ -249,7 +275,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     }
   }, [innerData.objects]);
 
-  const handleDeleteKey = (ev: KeyboardEvent) => {
+  const handleDeleteKey = useThrottle((ev: KeyboardEvent) => {
     if (
       (ev.key === 'Delete' || (ev.key === 'Backspace' && ev.metaKey)) &&
       selectedObjectId
@@ -265,9 +291,15 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
         }
       }, `Delete object ${selectedObjectId}`);
     }
-  };
+  }, 300);
 
-  window.addEventListener('keydown', handleDeleteKey);
+  useEffect(() => {
+    document.addEventListener('keydown', handleDeleteKey);
+    return () => {
+      document.removeEventListener('keydown', handleDeleteKey);
+    };
+  }, [handleDeleteKey]);
+
   window.addEventListener('keydown', (ev: KeyboardEvent) => {
     if (ev.key === 'Escape' && selectedObjectId) {
       setSelectedObjectId("");
