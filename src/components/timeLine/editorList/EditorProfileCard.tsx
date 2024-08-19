@@ -25,10 +25,6 @@ interface ProfileCardProps {
 const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token }) => {
   const { registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
-  const [pendingUser, setPendingUser] = useState<number | null>(() => {
-    const following = localStorage.getItem('pendingUser');
-    return following !== null ? Number(following) : null;
-  });
   const [isFollow, setIsFollow] = useState<boolean>(false);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
@@ -40,16 +36,16 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token })
     () => fetchFollowing(token)
   )
 
-  const handleFollow = (followingId:number) => {
+  const handleFollow = (followingId: number) => {
+  
     if (!isLog) {
-      localStorage.setItem('pendingUser', String(followingId))
       setLoginNeededStatus(true);
       setIsOverlayVisible(true);
-    } else if (isLog && pendingUser === null){
+    } else {
       setIsFollow(true);
       const followData: FollowType = {
         followingId: followingId,
-      }
+      };
       Followmutation.mutate(followData);
     }
   };
@@ -69,26 +65,6 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token })
     navigate(prevUrl);
     setIsOverlayVisible(false);
   };
-
-  useEffect(() => {
-    if (isLog && pendingUser !== null && !isOverlayVisible) {
-      const followData: FollowType = {
-        followingId: pendingUser,
-      };
-
-      if (!followingData?.users.some(user => user.userId === pendingUser)) {
-        Followmutation.mutate(followData, {
-          onSuccess: () => {
-            setIsFollow(true);
-            localStorage.removeItem('pendingUser');
-            setPendingUser(null);
-          },
-        });
-      } else {
-        localStorage.removeItem('pendingUser');
-      }
-    }
-  }, [pendingUser]);
 
   useEffect(()=>{
     if(followingData?.users.some(user => user.userId === Editor.userId)) {
