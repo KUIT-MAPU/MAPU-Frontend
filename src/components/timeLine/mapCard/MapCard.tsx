@@ -41,7 +41,6 @@ const MapCard: React.FC<MapCardProps> = ({
     }
     return styles.backward;
   };
-  
 
   useEffect(() => {
     console.log('MapCard followingMap:', followingMap);
@@ -74,10 +73,7 @@ const MapCard: React.FC<MapCardProps> = ({
             <img src={ico_carousel_forward} alt="Forward" />
           </button>
 
-          <button
-            className={buttonClassName()}
-            onClick={handleBackward}
-          >
+          <button className={buttonClassName()} onClick={handleBackward}>
             <img src={ico_carousel_backward} alt="Backward" />
           </button>
         </div>
