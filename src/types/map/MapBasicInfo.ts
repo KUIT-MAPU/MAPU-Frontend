@@ -1,4 +1,4 @@
-import { UserType } from '../mapData/UserType';
+import { UserType } from '../UserType';
 
 export interface MapBasicInfo {
   mapId: number;
