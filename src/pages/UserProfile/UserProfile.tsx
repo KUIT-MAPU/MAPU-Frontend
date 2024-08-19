@@ -71,8 +71,8 @@ const UserProfile = () => {
 
   useEffect(() => {
     const titleElement = document.getElementsByTagName('title')[0];
-    titleElement.innerHTML = (`${userData.nickname}님의 페이지 | MAPU`); //api 호출 -> 사용자 타이틀에 추가
-  }, []);
+    titleElement.innerHTML = `${userData.nickname}님의 페이지 | MAPU`; //api 호출 -> 사용자 타이틀에 추가
+  }, [userData.nickname]);
 
 
   console.log(registerStatus);
