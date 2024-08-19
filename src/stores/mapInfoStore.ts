@@ -6,35 +6,15 @@ import { ObjectShape } from '../types/enum/ObjectShape';
 
 interface State {
   mapId: number;
-  mapTitle: string;
-  mapDescription: string;
-  location: string;
-  centerLatitude: number;
-  centerLongitude: number;
-  isPublished: boolean;
   publicLink: string;
-  isMine: boolean;
-  isBookmarked?: boolean;
   objectOutlineList: ObjectOutline[];
-  setMapInfo: (mapInfo: MapInfo) => void;
-  setTitle: (title: string) => void;
-  setDescription: (description: string) => void;
-  swithIsPublished: () => void;
-  switchIsBookmarked: () => void;
 }
 
 const useMapInfoStore = create(
   persist<State>(
     (set) => ({
       mapId: 1,
-      mapTitle: '건대 맛집 지도',
-      mapDescription: '',
-      location: '위치',
-      centerLatitude: 0.0,
-      centerLongitude: 0.0,
-      isPublished: false,
-      publicLink: 'mapu.com/publicLink',
-      isMine: false,
+      publicLink: 'mapu-frontend.vercel.app/map/2/view',
       objectOutlineList: [
         {
           objectId: 1,
@@ -109,29 +89,6 @@ const useMapInfoStore = create(
           roadNameAddress: '광진구 능동로 120',
         },
       ],
-      setMapInfo: (mapInfo) =>
-        set({
-          mapId: mapInfo.id,
-          mapTitle: mapInfo.title,
-          mapDescription: mapInfo.description,
-          location: mapInfo.location,
-          centerLatitude: mapInfo.latitude,
-          centerLongitude: mapInfo.longitude,
-          isPublished: mapInfo.isPublished,
-          publicLink: mapInfo.isPublished ? mapInfo.publicLink : '',
-          isMine: mapInfo.isMine,
-          isBookmarked: mapInfo.isMine && mapInfo.isBookmarked,
-        }),
-      setTitle: (title) => set({ mapTitle: title }),
-      setDescription: (description) => set({ mapDescription: description }),
-      swithIsPublished: () =>
-        set((state) => {
-          return { ...state, isPublished: !state.isPublished };
-        }),
-      switchIsBookmarked: () =>
-        set((state) => {
-          return { ...state, isBookmarked: !state.isBookmarked };
-        }),
     }),
     { name: 'mapInfoStorage' },
   ),
