@@ -102,6 +102,12 @@
   flex-direction: row;
   align-items: center;
   gap: 6px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.userInfo:hover {
+  text-decoration: none; /* 호버 시에도 밑줄 제거 */
 }
 
 .userProfilePic {
