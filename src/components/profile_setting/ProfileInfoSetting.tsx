@@ -4,6 +4,7 @@ import imageCompression from 'browser-image-compression';
 import styles from './ProfileInfoSetting.module.scss';
 
 import useSignUpMutation from '../../apis/auth/useSignUpMutation';
+import useProfileEditMutation from '../../apis/auth/useProfileEditMutation'
 
 import NicknameInput from './input/NicknameInput';
 import IdInput from './input/IdInput';
@@ -12,6 +13,7 @@ import ProfileEditPen from '../../assets/btn_profile_edit_pen.svg';
 
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import UserProfile from '../../pages/UserProfile/UserProfile';
 
 const ProfileInfoSetting = () => {
   const prevUrl = useLocation().pathname.split('?')[0];
@@ -32,6 +34,7 @@ const ProfileInfoSetting = () => {
   const [isValidId, setIsValidId] = useState<boolean>(true);
 
   const signUpMutation = useSignUpMutation(prevUrl);
+  const profileEditMutation = useProfileEditMutation(prevUrl);
 
   useEffect(() => {
     if (id === undefined || nickname === undefined) {
@@ -44,6 +47,7 @@ const ProfileInfoSetting = () => {
     else setIsComplete(false);
   }, [isNicknameEmpty, isValidNickname, isIdEmpty, isValidId]);
 
+  
   const handleProfileSettingSubmit = async () => {
     const formData = new FormData();
     imgFile && formData.append('imageFile', imgFile);
@@ -53,8 +57,8 @@ const ProfileInfoSetting = () => {
     });
     const requestDTO = new Blob([requestJson], { type: 'application/json' });
     formData.append('requestDTO', requestDTO);
-
     await signUpMutation.mutate(formData);
+    await profileEditMutation.mutate(formData);
   };
 
   const onChangeIamge = async (e: React.ChangeEvent<HTMLInputElement>) => {

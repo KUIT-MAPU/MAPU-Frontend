@@ -10,7 +10,7 @@ import instance from '../../../apis/instance';
 
 
 const Following = ({ onClose }: { onClose: () => void }) => {
-  const [followingUsers,setFollowingUsers] = useState([]);
+  const [followingUsers,setFollowingUsers] = useState<any[]>([])
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Following = ({ onClose }: { onClose: () => void }) => {
       try {
         const response = await instance.get('/following');
         const data = response.data.result.users;
-
+        
         setFollowingUsers(data);
 
       } catch (error) {
@@ -29,8 +29,11 @@ const Following = ({ onClose }: { onClose: () => void }) => {
   }, []);
 
   const filteredUsers = followingUsers.filter((user:any) =>
-    user.nickname.toLowerCase().includes(searchTerm.toLowerCase())
+    user.nickName?.toLowerCase().includes(searchTerm.toLowerCase())
   )
+
+  console.log(followingUsers);
+  // console.log(filteredUsers);
 
   return (
     <div className={styles.modalOverlay}>
@@ -58,11 +61,11 @@ const Following = ({ onClose }: { onClose: () => void }) => {
             <div key={user.userId} className={styles.userItem}>
               <div className={styles.userInfo}>
               <img
-                        src={user.profileImageUrl}
-                        alt="mapImage"
+                        src={user.imgUrl}
+                        alt="profileImage"
                         className={styles.userProfilePic}
                       />
-                <div className={styles.userName}>{user.nickname}</div>
+                <div className={styles.userName}>{user.nickName}</div>
               </div>
               <button className={styles.isFollow}>
                 팔로잉

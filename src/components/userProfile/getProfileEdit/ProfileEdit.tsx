@@ -8,6 +8,7 @@ import { ReactComponent as FontAlert } from '../../../assets/ico_font_alert.svg'
 
 
 import instance from '../../../apis/instance';
+import ProfileSettingModal from '../../profile_setting/ProfileSettingModal';
 
 const ProfileEdit = ({ onClose }: { onClose: () => void }) => {
     const [imageUrl, setImageUrl] =useState<string>('ddd');
