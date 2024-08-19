@@ -42,10 +42,6 @@ const MapCard: React.FC<MapCardProps> = ({
     return styles.backward;
   };
   
-
-  useEffect(() => {
-    console.log('MapCard followingMap:', followingMap);
-  }, [followingMap]);
   const handleForward = () => {
     setRenderMap((preVisibleItems) => preVisibleItems - MAP_PER_PAGE);
   };
@@ -54,14 +50,9 @@ const MapCard: React.FC<MapCardProps> = ({
     setRenderMap((prevVisibleItems) => prevVisibleItems + MAP_PER_PAGE);
   };
 
-  useEffect(() => {
-    console.log('renderMap:', renderMap);
-    console.log('followingMap', followingMap?.length);
-  }, [handleBackward]);
-
   return (
     <div className={styles.mapcard}>
-      <div className={styles.keyword}>
+      <div className={styles.keyword} key={Math.random()}>
         {editorId ? editorId : keyword?.title}
       </div>
 
@@ -85,7 +76,7 @@ const MapCard: React.FC<MapCardProps> = ({
           ?.slice(renderMap - INIT_RENDER, renderMap)
           .map((map, index) => (
             <Link
-              to={`/map/${map.title}/view`}
+              to={`/map/${map.mapId}/view`}
               style={{ textDecoration: 'none' }}
             >
               <div key={index} className={styles.map}>
@@ -119,7 +110,7 @@ const MapCard: React.FC<MapCardProps> = ({
         {KeywordmapData?.slice(renderMap - INIT_RENDER, renderMap).map(
           (map) => (
             <Link
-              to={`/map/${map.mapTitle}/view`}
+              to={`/map/${map.mapId}/view`}
               style={{ textDecoration: 'none' }}
             >
               <div key={Math.random()} className={styles.map}>

@@ -77,7 +77,7 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap }) => {
       ) : (
         <div className={styles.MapListRoot}>
           <div className={styles.Images}>
-            <Link to={`/map/${map?.title}/view`} style={{ textDecoration: 'none' }}>
+            <Link to={`/map/${map?.mapId}/view`} style={{ textDecoration: 'none' }}>
               <img src={map?.imageUrl} className={styles.mapImg} alt="Map" />
             </Link>
             <div className={styles.editor}>

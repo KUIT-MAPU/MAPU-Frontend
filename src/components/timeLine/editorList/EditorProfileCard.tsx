@@ -7,10 +7,13 @@ import styles from './EditorProfileCard.module.scss';
 import dimmedStyles from '../Dimmed.module.scss';
 import userImg from '../../../assets/img_user_default_profile.svg'
 import AuthContainer from '../../login/AuthContainer';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import { usePostFollow } from '../../../apis/follow/usePostFollow';
 import { FollowType } from '../../../types/follow/FollowType';
 import { useDeleteUnFollow } from '../../../apis/follow/useDeleteUnFollow';
+import { useQuery } from 'react-query';
+import { fetchFollowing } from '../../../apis/follow/useGetFollowing';
 
 interface ProfileCardProps {
   Editor: EditorType;
@@ -19,23 +22,31 @@ interface ProfileCardProps {
   
 }
 
-const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog }) => {
+const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token }) => {
   const { registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
-  const [pendingUser, setPendingUser] = useState<number | null>(null);
+  const [pendingUser, setPendingUser] = useState<number | null>(() => {
+    const following = localStorage.getItem('pendingUser');
+    return following !== null ? Number(following) : null;
+  });
   const [isFollow, setIsFollow] = useState<boolean>(false);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
   const Followmutation = usePostFollow();
   const UnFollowmutation = useDeleteUnFollow();
 
+  const { data: followingData } = useQuery(
+    ['followindData'],
+    () => fetchFollowing(token)
+  )
+
   const handleFollow = (followingId:number) => {
-    setIsFollow(true);
     if (!isLog) {
-      setPendingUser(followingId)
+      localStorage.setItem('pendingUser', String(followingId))
       setLoginNeededStatus(true);
       setIsOverlayVisible(true);
-    } else {
+    } else if (isLog && pendingUser === null){
+      setIsFollow(true);
       const followData: FollowType = {
         followingId: followingId,
       }
@@ -58,6 +69,38 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog }) => {
     navigate(prevUrl);
     setIsOverlayVisible(false);
   };
+
+  useEffect(() => {
+    if (isLog && pendingUser !== null && !isOverlayVisible) {
+      const followData: FollowType = {
+        followingId: pendingUser,
+      };
+
+      if (!followingData?.users.some(user => user.userId === pendingUser)) {
+        Followmutation.mutate(followData, {
+          onSuccess: () => {
+            setIsFollow(true);
+            localStorage.removeItem('pendingUser');
+            setPendingUser(null);
+          },
+        });
+      } else {
+        localStorage.removeItem('pendingUser');
+      }
+    }
+  }, [pendingUser]);
+
+  useEffect(()=>{
+    if(followingData?.users.some(user => user.userId === Editor.userId)) {
+      setIsFollow(true);
+    } else {
+      setIsFollow(false);
+    }
+  },[followingData])
+
+  useEffect(() => {
+    console.log('followingData:',followingData);
+  },[isLog,followingData])
 
   return (
     <div className={styles.cardRoot}>
