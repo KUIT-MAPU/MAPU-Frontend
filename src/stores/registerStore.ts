@@ -31,6 +31,7 @@ const useRegisterStore = create(
           profileImgUrl: imgUrl,
           accessToken: accessToken,
           isIdDuplicate: false,
+          loginNeeded: false,
         }),
       setRegisterStatus: (status) => set(() => ({ registerStatus: status })),
       resetStatus: () => {

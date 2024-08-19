@@ -13,3 +13,11 @@
     background: var(--gray_25);
   }
 }
+
+.selectedObjectOutlineBtn {
+  background: var(--gray_50);
+
+  &:hover {
+    background: var(--gray_50);
+  }
+}

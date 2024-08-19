@@ -11,11 +11,15 @@ interface Props {
 }
 
 const ObjectOutlineBtn: React.FC<Props> = ({ object }) => {
-  const { setSelectedObjectId } = useMapInfoStore();
+  const { setSelectedObjectId, selectedObjectId } = useMapInfoStore();
   return (
     <button
       type="button"
-      className={styles.objectOutlineBtn}
+      className={
+        selectedObjectId === object.objectId
+          ? `${styles.objectOutlineBtn} ${styles.selectedObjectOutlineBtn}`
+          : styles.objectOutlineBtn
+      }
       onClick={() => setSelectedObjectId(object.objectId)}
     >
       {object.type === ObjectShape.POINT ? (

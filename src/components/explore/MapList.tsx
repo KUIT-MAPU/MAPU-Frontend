@@ -115,7 +115,7 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap }) => {
             <div className={styles.editor}>
               <img
                 className={styles.editorImg}
-                src={map?.user.imgUrl ? map.user.imgUrl : user_default}
+                src={map?.user.imageUrl ? map.user.imageUrl : user_default}
                 alt="User"
               />
               <div className={styles.editorInfo}>

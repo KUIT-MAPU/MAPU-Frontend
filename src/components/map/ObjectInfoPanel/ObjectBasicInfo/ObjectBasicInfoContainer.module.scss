@@ -22,3 +22,8 @@
   width: 190px;
   font-size: 14px;
 }
+
+.disabledBasicInfoContainer,
+.disabledBasicInfoContainer span {
+  color: var(--gray_400);
+}

@@ -4,22 +4,22 @@
   margin-right: 2px;
 }
 .editorPointContainer {
-  height: calc(100vh - 451px);
+  height: calc(100vh - 366px);
 }
 .editorLineContainer {
-  height: calc(100vh - 488px);
+  height: calc(100vh - 403px);
 }
 .editorPlainContainer {
-  height: calc(100vh - 525px);
+  height: calc(100vh - 440px);
 }
 .viewerPointContainer {
-  height: calc(100vh - 326px);
+  height: calc(100vh - 309px);
 }
 .viewerLineContainer {
-  height: calc(100vh - 363px);
+  height: calc(100vh - 346px);
 }
 .viewerPlainContainer {
-  height: calc(100vh - 400px);
+  height: calc(100vh - 383px);
 }
 
 .propertyContainerTitleBox {
@@ -47,4 +47,12 @@
   position: absolute;
   right: 16px;
   top: 52px;
+  z-index: 10000;
+}
+
+.noneOfObjectSelected {
+  color: var(--gray_400);
+}
+.plusBtnContainer:disabled:hover {
+  cursor: auto;
 }
