@@ -1,11 +1,22 @@
+import { getTsid } from 'tsid-ts';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { Map, DrawingManager, MapMarker, Polyline } from 'react-kakao-maps-sdk';
+import {
+  Map,
+  DrawingManager,
+  MapMarker,
+  Polyline,
+  useMap,
+  Polygon,
+} from 'react-kakao-maps-sdk';
 import useKakaoLoader from '../../../hooks/useKakaoLoader';
 import styles from './BaseMap.module.scss';
 import EditDesignPanel from './EditDesignPanel';
 import { ReactComponent as DotThick } from '../../../assets/map/ico_dot_thick_custom.svg';
 import { ReactComponent as DotThin } from '../../../assets/map/ico_dot_thin_custom.svg';
+import useMapInfoStore from '../../../stores/mapInfoStore';
+import { MapObject } from '../../../types/map/object/ObjectInfo';
+import { ObjectShape } from '../../../types/enum/ObjectShape';
 
 interface BaseMapProps {
   mode: string;
@@ -36,8 +47,6 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
     lng: 127.08278172427,
   });
 
-  const [marker, setMarker] = useState<Marker[] | null>(null);
-  const [objects, setObjects] = useState<Partial<DrawingObjects>>({});
   const [isObject, setIsObject] = useState<string>('');
   const [strokeWeight, setStrokeWeight] = useState<number>(1.5);
   const [dot, setDot] = useState<string>(''); // 저장할 데이터는 Base64 문자열
@@ -46,6 +55,8 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   const [isShare, setIsShare] = useState<boolean>(false);
   const [selectedMarker, setSelectedMarker] =
     useState<kakao.maps.Marker | null>(null); // 마커 지우기 위해서 사용
+  const { innerData, doc, selectedObjectId, setSelectedObjectId } =
+    useMapInfoStore();
 
   const managerRef =
     useRef<
@@ -158,25 +169,62 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   }, [dotColor, dotShape, isObject]);
 
   const getMarker = (position: Position) => {
-    const pre = marker;
-    if (pre) {
-      setMarker([...pre, { img: dot, pos: position }]);
-    } else {
-      setMarker([{ img: dot, pos: position }]);
-    }
+    const id = getTsid().toString();
+    doc?.update((root) => {
+      root.objects.push({
+        objectId: id,
+        type: ObjectShape.POINT,
+        name: ObjectShape.POINT,
+        shape: {
+          img: dot,
+          pos: position,
+        },
+        geoAttribute: {},
+        userAttribute: {},
+      });
+    }, `Add object ${id}(${ObjectShape.POINT})`);
     setIsObject('');
     setDotColor('#111111');
     setDotShape('dot thin');
   };
 
   const manager = managerRef.current;
-
   useEffect(() => {
-    const manager = managerRef.current;
-    manager?.addListener('drawend', () => {
-      const objects = manager?.getOverlays(['polyline', 'polygon']);
-      setIsObject('');
-      setObjects(objects);
+    manager?.addListener('drawend', (event) => {
+      const objectType = event.overlayType;
+      const datas = manager?.getData([objectType])[objectType];
+      const overlays = manager?.getOverlays([objectType])[objectType];
+
+      const id = getTsid().toString();
+      const lastIndex = datas.length - 1;
+      if (objectType === 'polyline' || 'polygon') {
+        const objectShape = datas[lastIndex];
+        let geoAttribute = {};
+
+        if (objectType === 'polyline') {
+          // @ts-ignore 카카오맵 라이브러리 이슈
+          geoAttribute = { length: overlays[lastIndex].getLength() };
+        } else if (objectType === 'polygon') {
+          geoAttribute = {
+            // @ts-ignore 카카오맵 라이브러리 이슈
+            perimeter: overlays[lastIndex].getLength(),
+            // @ts-ignore 카카오맵 라이브러리 이슈
+            area: overlays[lastIndex].getArea(),
+          };
+        }
+
+        doc?.update((root) => {
+          root.objects.push({
+            objectId: id,
+            type: objectType,
+            name: objectType,
+            shape: objectShape,
+            geoAttribute: geoAttribute,
+            userAttribute: {},
+          });
+        }, `Add object ${id}(${objectType})`);
+      }
+
       manager.setStrokeWeight(1.5);
       manager.setStrokeColor('#111111');
       manager.setStyle(
@@ -189,71 +237,49 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
         'fillOpacity',
         0.2,
       );
-    }); // 그리기 끝나면 => objects 안에 넣기
-
-    manager?.addListener('remove', () => {
-      const objects = manager?.getOverlays(['polyline', 'polygon']);
-      setObjects(objects);
-    }); // 제거되면 남아있는 객체 정보로 업데이트
-  }, [manager, objects]);
+      manager.remove(event.target);
+    });
+  }, [manager]);
 
   useEffect(() => {
-    if (
-      (Array.isArray(objects.polygon) && objects.polygon?.length > 0) ||
-      (Array.isArray(objects.polyline) && objects.polyline?.length > 0) ||
-      (marker !== undefined && marker !== null && marker.length > 0)
-    ) {
+    if (innerData.objects && innerData.objects.length > 0) {
       setIsShare(true);
     } else {
       setIsShare(false);
     }
-  }, [objects, marker]);
+  }, [innerData.objects]);
 
-  let select: kakao.maps.drawing.ExtendsOverlay | null = null;
-
-  // 전역에서 keydown 이벤트 리스너를 등록
-  window.addEventListener('keydown', (ev: KeyboardEvent) => {
-    if (ev.key === 'Delete' && select) {
-      manager?.remove(select);
-      select = null;
-    } else if (ev.key === 'Delete' && selectedMarker) {
-      setMarker((pre) => {
-        return (pre || []).filter(
-          (marker) =>
-            marker.pos.lat !== selectedMarker.getPosition().getLat() ||
-            marker.pos.lng !== selectedMarker.getPosition().getLng(),
+  const handleDeleteKey = (ev: KeyboardEvent) => {
+    if (
+      (ev.key === 'Delete' || (ev.key === 'Backspace' && ev.metaKey)) &&
+      selectedObjectId
+    ) {
+      doc?.update((root) => {
+        const indexToDelete = root.objects.findIndex(
+          (obj: MapObject) => obj.objectId === selectedObjectId,
         );
-      });
-      setIsObject('');
-      setSelectedMarker(null);
+
+        if (indexToDelete !== -1) {
+          root.objects.splice(indexToDelete, 1);
+          setSelectedObjectId(undefined);
+        }
+      }, `Delete object ${selectedObjectId}`);
+    }
+  };
+
+  window.addEventListener('keydown', handleDeleteKey);
+  window.addEventListener('keydown', (ev: KeyboardEvent) => {
+    if (ev.key === 'Escape' && selectedObjectId) {
+      setSelectedObjectId(undefined);
     }
   });
 
-  // drawend 이벤트 리스너 등록
-  manager?.addListener('drawend', (e: kakao.maps.drawing.MouseEvent) => {
-    const object = e.target;
-
-    // 클릭 이벤트 리스너 등록
-    kakao.maps.event.addListener(object, 'click', () => {
-      select = object;
-    });
-  });
-
-  useEffect(() => {
-    window.addEventListener('keydown', (ev: KeyboardEvent) => {
-      if (ev.key === 'Delete' && selectedMarker) {
-        selectedMarker.setMap(null);
-        setMarker((pre) => {
-          return (pre || []).filter(
-            (marker) =>
-              marker.pos.lat !== selectedMarker.getPosition().getLat() ||
-              marker.pos.lng !== selectedMarker.getPosition().getLng(),
-          );
-        });
-        setSelectedMarker(null);
-      }
-    });
-  }, [marker, selectedMarker]);
+  function pointsToPath(points: Array<{ x: number; y: number }>) {
+    return points.map((point) => ({
+      lat: point.y,
+      lng: point.x,
+    }));
+  }
 
   return (
     <>
@@ -266,26 +292,51 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
           if (isObject === 'dot') {
             const latlng = mouseEvent.latLng;
             getMarker({ lat: latlng.getLat(), lng: latlng.getLng() });
-            // setIsObject('')
           }
         }}
       >
-        {marker?.map((item) => (
-          <MapMarker
-            key={item.pos.lat + '-' + item.pos.lng}
-            position={item.pos}
-            image={{
-              src: item.img,
-              size: {
-                width: 24,
-                height: 24,
-              },
-            }}
-            onClick={(marker: kakao.maps.Marker) => {
-              setSelectedMarker(marker);
-            }}
-          />
-        ))}
+        {innerData.objects?.map((object: MapObject) => {
+          if (object.type === ObjectShape.POINT) {
+            return (
+              <MapMarker
+                key={object.objectId}
+                position={{
+                  lat: object.shape.pos.lat,
+                  lng: object.shape.pos.lng,
+                }}
+                image={{
+                  src: object.shape.img,
+                  size: {
+                    width: 24,
+                    height: 24,
+                  },
+                }}
+                onClick={() => setSelectedObjectId(object.objectId)}
+              />
+            );
+          } else if (object.type === ObjectShape.LINE) {
+            return (
+              <Polyline
+                key={object.objectId}
+                path={pointsToPath(object.shape.points)}
+                {...object.shape.options}
+                onMouseover={(target, mouseEvent) => {
+                  console.log('mouseover', target, mouseEvent);
+                }}
+                onClick={() => setSelectedObjectId(object.objectId)}
+              />
+            );
+          } else if (object.type === ObjectShape.PLANE) {
+            return (
+              <Polygon
+                key={object.objectId}
+                path={pointsToPath(object.shape.points)}
+                {...object.shape.options}
+                onClick={() => setSelectedObjectId(object.objectId)}
+              />
+            );
+          }
+        })}
         <DrawingManager
           ref={managerRef}
           drawingMode={[
@@ -296,7 +347,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
           polylineOptions={{
             draggable: false,
             removable: false,
-            editable: true,
+            editable: false,
             strokeWeight: strokeWeight,
             strokeColor: '#111111',
             hintStrokeStyle: 'dash',
@@ -305,7 +356,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
           polygonOptions={{
             draggable: false,
             removable: false,
-            editable: true,
+            editable: false,
             strokeColor: '#111111',
             strokeWeight: strokeWeight,
             fillColor: '#111111',

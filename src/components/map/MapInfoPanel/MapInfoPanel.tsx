@@ -14,7 +14,7 @@ interface Props {
 }
 
 const MapInfoPanel: React.FC<Props> = ({ mode }) => {
-  const { isMine } = useMapInfoStore();
+  const { mapInfo } = useMapInfoStore();
   const { loginNeeded } = useRegisterStore();
 
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ const MapInfoPanel: React.FC<Props> = ({ mode }) => {
             />
           </button>
         </div>
-        {!isMine && <MapProducerConatiner />}
+        {!mapInfo.isMine && <MapProducerConatiner />}
         <MapBasicInfoContainer mode={mode} />
         {!loginNeeded && <ObjectList />}
       </section>

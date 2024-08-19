@@ -2,13 +2,13 @@ import styles from './MapLocationInfoContainer.module.scss';
 import useMapInfoStore from '../../../../../stores/mapInfoStore';
 
 const MapLocationInfoContainer = () => {
-  const { location, centerLatitude, centerLongitude } = useMapInfoStore();
+  const { mapInfo } = useMapInfoStore();
 
   return (
     <div className={styles.locationInfoContainer}>
       <div className={styles.locationInfo}>
         <span className={styles.location__title}>위치</span>
-        <span>{location}</span>
+        <span>{mapInfo.location}</span>
       </div>
       {/* TODO: 날씨, 미세/초미세 추후 목표로 보류 */}
       {/* <div className={styles.locationInfo}>

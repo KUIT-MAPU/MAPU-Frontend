@@ -13,16 +13,7 @@ interface Props {
 }
 
 const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
-  const {
-    mapId,
-    mapTitle,
-    mapDescription,
-    setTitle,
-    setDescription,
-    isMine,
-    isBookmarked,
-    switchIsBookmarked,
-  } = useMapInfoStore();
+  const { mapInfo } = useMapInfoStore();
   const { registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [editedTitle, setEditedTitle] = useState<string>('');
   const [editedDescription, setEditedDescription] = useState<string>('');
@@ -30,8 +21,8 @@ const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setEditedTitle(mapTitle);
-    setEditedDescription(mapDescription);
+    setEditedTitle(mapInfo.title);
+    setEditedDescription(mapInfo.description);
   }, []);
 
   const handleTitleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,13 +37,13 @@ const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
 
   const handleFocusOutTitle = () => {
     //TODO: 지도 제목 저장 api 호출, 응답으로 받은 지도 제목 사용
-    setTitle(editedTitle);
+    // setTitle(editedTitle);
     navigate(`/map/${editedTitle.replaceAll(' ', '-')}/${mode}`);
   };
 
   const handleFocusOutDescription = () => {
     //TODO: 지도 설명 저장 api 호출
-    setDescription(editedDescription);
+    // setDescription(editedDescription);
   };
 
   const handleSwitchIsBookmarked = () => {
@@ -60,7 +51,7 @@ const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
       setLoginNeededStatus(true);
     } else {
       //TODO: 북마크 설정 api 호출
-      switchIsBookmarked();
+      // switchIsBookmarked();
     }
   };
 
@@ -77,8 +68,8 @@ const MapTitleAndDescriptionInputContainer: React.FC<Props> = ({ mode }) => {
           onBlur={handleFocusOutTitle}
           disabled={mode === MapMode.VIEW ? true : false}
         />
-        {!isMine &&
-          (isBookmarked ? (
+        {!mapInfo.isMine &&
+          (mapInfo.isBookmarked ? (
             <img
               src={BookmarkSelected}
               alt="북마크함"

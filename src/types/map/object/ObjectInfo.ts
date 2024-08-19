@@ -1,16 +1,30 @@
 import { ObjectShape } from '../../enum/ObjectShape';
-import { ObjectOutline } from './ObjectOutline';
-import { StarRating } from './StarRating';
+import { ObjectPropertyType } from '../../enum/ObjectPropertyType';
 
-export interface ObjectInfo {
-  shape: ObjectShape;
+export interface MapObject {
+  objectId: string;
+  type: ObjectShape;
   name: string;
-  roadNameAddress: string;
-  detailAddress: string;
-  length?: string; //길이 - 선
-  perimeter?: string; //둘레 - 면
-  area?: string; //면적 - 면
-  connections: ObjectOutline[];
-  tags: string[]; // 최대 10글자
-  starRatings: StarRating[];
+  shape: any;
+  geoAttribute: {
+    roadNameAddress?: string;
+    length?: string; //길이 - 선
+    perimeter?: string; //둘레 - 면
+    area?: string; //면적 - 면
+  };
+  userAttribute: {
+    detailAddress?: string;
+    [attributeID: string]: any;
+  };
+}
+
+export interface InfoAttribute {
+  id: string;
+  name: string;
+  type: ObjectPropertyType;
+}
+
+export interface YorkieDocType {
+  informationAttributes: InfoAttribute[];
+  objects: MapObject[];
 }
