@@ -76,7 +76,7 @@ const MapCard: React.FC<MapCardProps> = ({
           ?.slice(renderMap - INIT_RENDER, renderMap)
           .map((map, index) => (
             <Link
-              to={`/map/${map.title}/view`}
+              to={`/map/${map.mapId}/view`}
               style={{ textDecoration: 'none' }}
             >
               <div key={index} className={styles.map}>
@@ -110,7 +110,7 @@ const MapCard: React.FC<MapCardProps> = ({
         {KeywordmapData?.slice(renderMap - INIT_RENDER, renderMap).map(
           (map) => (
             <Link
-              to={`/map/${map.mapTitle}/view`}
+              to={`/map/${map.mapId}/view`}
               style={{ textDecoration: 'none' }}
             >
               <div key={Math.random()} className={styles.map}>
