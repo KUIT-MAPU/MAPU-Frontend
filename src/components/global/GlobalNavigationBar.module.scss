@@ -2,6 +2,7 @@
   display: flex;
   z-index: 10;
   width: 72px;
+  overflow: hidden;
 }
 
 .LeftSideBar {
@@ -13,6 +14,7 @@
   align-items: center;
   padding: 8px 8px;
   border-right: 1px solid var(--gray_50);
+  overflow: hidden;
 }
 
 .iconContainer {
@@ -56,7 +58,6 @@
 
 .main {
   flex-grow: 1;
-  // padding: 16px;
 }
 
 .bottomIconContainer {
@@ -83,4 +84,10 @@
 
 .iconContainer_off {
   background-color: var(--white);
+}
+
+.iconContainer img {
+  width: 24px;
+  height: 24px;
+  border-radius: 150px;
 }

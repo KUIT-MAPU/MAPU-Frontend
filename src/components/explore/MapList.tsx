@@ -1,79 +1,124 @@
-import { MapType } from '../../types/MapType';
-import userImg from '../../assets/user.svg';
-
+import React, { useState } from 'react';
 import styles from './MapList.module.scss';
-import { MapKeywordType } from '../../types/MapKeywordType';
-import MapKeywordCard from './MapKeywordCard';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import user_default from '../../assets/img_user_default_profile.svg';
+import { ExploreMapType } from '../../types/mapData/ExploreMapType';
+import { KeywordType } from '../../types/keywords/KeywordType';
+import { MapsType } from '../../types/keywords/MapsType';
+import MapKeywordCard from './MapKeywordCard';
 
 interface MapListProps {
-  map: MapType;
-  keyword: MapKeywordType[];
+  map?: ExploreMapType;
+  keywordMap?: MapsType[];
+  keyword: KeywordType[] | KeywordType;
 }
 
-const MapList: React.FC<MapListProps> = ({ map, keyword }) => {
-  const [selectedKeyword, setSelectedKeyword] = useState<MapKeywordType | null>(null);
+const MapList: React.FC<MapListProps> = ({ map, keywordMap }) => {
+  const [selected, setSelected] = useState<{ keyword: string; mapId: number } | null>(null);
 
-  const handleSelectPills = (mapKeyword: MapKeywordType) => {
-    if (selectedKeyword?.keyword === mapKeyword.keyword) {
-      setSelectedKeyword(null);
+  const handleSelectPills = (mapKeyword: KeywordType, mapId: number) => {
+    if (selected && selected.keyword === mapKeyword.title && selected.mapId === mapId) {
+      setSelected(null); 
     } else {
-      setSelectedKeyword(mapKeyword);
+      setSelected({ keyword: mapKeyword.title, mapId: mapId }); 
     }
   };
 
   return (
-    <div className={styles.MapListRoot}>
-      <div className={styles.Images}>
-        <Link to={`/map/${map.name}/view`} style={{ textDecoration: 'none' }}>
-          <img src={map.img} className={styles.mapImg} alt="Map" />
-        </Link>
+    <>
+      {keywordMap ? (
+        keywordMap.map((mapItem: MapsType) => (
+          <div className={styles.MapListRoot} key={mapItem.mapId}>
+            <div className={styles.Images}>
+              <Link to={`/map/${mapItem.mapTitle}/view`} style={{ textDecoration: 'none' }}>
+              <div className={styles.mapImg}>
+                <img src={mapItem.mapImage} alt="Map" />
+              </div>
+              </Link>
+              <div className={styles.editor}>
+                <img className={styles.editorImg} src={mapItem.userImage ? mapItem.userImage : user_default} alt="User" />
+                <div className={styles.editorInfo}>
+                  <span className={styles.editorName}>{mapItem.nickname}</span>
+                  <span className={styles.editorId}>{mapItem.profileId}</span>
+                </div>
+              </div>
+            </div>
 
-        <div className={styles.editor}>
-          <img src={userImg} alt="User" />
-          <div className={styles.editorInfo}>
-            <span className={styles.editorName}>{map.owner?.name}</span>
-            <span className={styles.editorId}>{map.owner?.userId}</span>
+            <div className={styles.mapInfo}>
+              <div className={styles.mapContent}>
+                <div className={styles.mapTitle}>
+                  <span className={styles.mapName}>{mapItem.mapTitle}</span>
+                  <span className={styles.mapAddress}>{mapItem.mapAddress}</span>
+                </div>
+                <span className={styles.description}>{mapItem.madDescription}</span>
+                <div className={styles.mapKeyword}>
+                  {mapItem.mapKeywords?.map((mapKeyword: KeywordType) => (
+                    <button
+                      className={selected?.keyword === mapKeyword.title && selected.mapId === mapItem.mapId
+                        ? styles.selected
+                        : styles.keywordPills}
+                      key={mapKeyword.id}
+                      onClick={() => handleSelectPills(mapKeyword, mapItem.mapId)}
+                    >
+                      {mapKeyword.title}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.keywordContainer}>
+                {selected && selected.mapId === mapItem.mapId && (
+                  <MapKeywordCard keyword={selected.keyword} mapId={selected.mapId} isSelect={true} />
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className={styles.MapListRoot}>
+          <div className={styles.Images}>
+            <Link to={`/map/${map?.title}/view`} style={{ textDecoration: 'none' }}>
+              <img src={map?.imageUrl} className={styles.mapImg} alt="Map" />
+            </Link>
+            <div className={styles.editor}>
+              <img className={styles.editorImg} src={map?.user.imageUrl ? map.user.imageUrl : user_default} alt="User" />
+              <div className={styles.editorInfo}>
+                <span className={styles.editorName}>{map?.user.nickName}</span>
+                <span className={styles.editorId}>{map?.user.profileId}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.mapInfo}>
+            <div className={styles.mapContent}>
+              <div className={styles.mapTitle}>
+                <span className={styles.mapName}>{map?.title}</span>
+                <span className={styles.mapAddress}>{map?.region}</span>
+              </div>
+              <span className={styles.description}>{map?.description}</span>
+              <div className={styles.mapKeyword}>
+                {map?.keyword?.map((mapKeyword: KeywordType) => (
+                  <button
+                    className={selected?.keyword === mapKeyword.title && selected.mapId === map.mapId
+                      ? styles.selected
+                      : styles.keywordPills}
+                    key={mapKeyword.id}
+                    onClick={() => handleSelectPills(mapKeyword, map.mapId)}
+                  >
+                    {mapKeyword.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className={styles.keywordContainer}>
+              {selected && selected.mapId === map?.mapId && (
+                <MapKeywordCard keyword={selected.keyword} mapId={selected.mapId} isSelect={true} />
+              )}
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className={styles.mapInfo}>
-        <div className={styles.mapContent}>
-          <div className={styles.mapTitle}>
-            <span className={styles.mapName}>{map.name}</span>
-            <span className={styles.mapAddress}>{map.address}</span>
-          </div>
-          <span className={styles.description}>{map.discription}</span>
-        </div>
-
-        <div className={styles.mapKeyword}>
-          {keyword?.map((mapKeyword: MapKeywordType, index: number) => (
-            <button
-              className={
-                selectedKeyword?.keyword === mapKeyword.keyword
-                  ? styles.selected
-                  : styles.keywordPills
-              }
-              key={index}
-              onClick={() => handleSelectPills(mapKeyword)}
-            >
-              {mapKeyword.keyword}
-            </button>
-          ))}
-        </div>
-
-        <div className={styles.keywordContainer}>
-          {selectedKeyword && (
-            <MapKeywordCard
-              isSelect={!!selectedKeyword}
-              keyword={selectedKeyword}
-            />
-          )}
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

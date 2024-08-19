@@ -32,8 +32,8 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   type OverlayTypeString = 'polyline' | 'polygon';
 
   const [position, setPosition] = useState<Position>({
-    lat: 33.450701,
-    lng: 126.570667,
+    lat: 37.540957955055,
+    lng: 127.08278172427,
   });
 
   const [marker, setMarker] = useState<Marker[] | null>(null);
@@ -44,7 +44,8 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
   const [dotShape, setDotShape] = useState<string>('dot thin');
   const [dotColor, setDotColor] = useState<string>('#111111');
   const [isShare, setIsShare] = useState<boolean>(false);
-  const [selectedMarker, setSelectedMarker] = useState< kakao.maps.Marker | null>(null); // 마커 지우기 위해서 사용
+  const [selectedMarker, setSelectedMarker] =
+    useState<kakao.maps.Marker | null>(null); // 마커 지우기 위해서 사용
 
   const managerRef =
     useRef<
@@ -237,9 +238,8 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
       select = object;
     });
   });
-  
 
-  useEffect(()=> {
+  useEffect(() => {
     window.addEventListener('keydown', (ev: KeyboardEvent) => {
       if (ev.key === 'Delete' && selectedMarker) {
         selectedMarker.setMap(null);
@@ -253,8 +253,7 @@ const BaseMap: React.FC<BaseMapProps> = ({ mode }) => {
         setSelectedMarker(null);
       }
     });
-  },[marker, selectedMarker]);
-
+  }, [marker, selectedMarker]);
 
   return (
     <>

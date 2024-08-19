@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import AuthContainer from '../login/AuthContainer';
 import useRegisterStore from '../../stores/registerStore';
@@ -16,17 +17,26 @@ import { ReactComponent as Login } from '../../assets/btn_login.svg';
 import { ReactComponent as Logout } from '../../assets/btn_logout.svg';
 import useLogOutMutation from '../../apis/auth/useLogOutMutation';
 
+import instance from '../../apis/instance';
+
 const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
   const prevUrl = useLocation().pathname.split('?')[0];
-
+  const navigate = useNavigate();
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const location = useLocation();
-
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
 
   const logOutMutation = useLogOutMutation(prevUrl);
+  const [userData, setUserData] = useState({
+    nickname: '',
+    profileId: '',
+    imgUrl: '',
+    mapCnt: 0,
+    followerCnt: 0,
+    followingCnt: 0,
+  });
 
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
@@ -53,10 +63,31 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
   const handleLogoutClick = async () => {
     await logOutMutation.mutate();
   };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await instance.get('/user');
+        const data = response.data.result;
+
+        setUserData({
+          nickname: data.nickname,
+          profileId: data.profileId,
+          imgUrl: data.imgUrl,
+          mapCnt: data.mapCnt,
+          followerCnt: data.followerCnt,
+          followingCnt: data.followingCnt,
+        });
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const isHomeActive = location.pathname === '/timeline';
   const isExploreActive = location.pathname === '/explore';
-  const isUserpageActive = location.pathname === '/user/:userId';
+  const isUserpageActive = location.pathname === `/user/${userData.profileId}`;
 
   return (
     <div className={styles.container}>
@@ -86,11 +117,19 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
             )}
           </div>
         </Link>
-        <Link to="/user/:userId" className={styles.link}>
+        <Link to='/user/:userId' className={styles.link}>
           <div
             className={`${styles.iconContainer} ${isUserpageActive ? styles.iconContainer_on : styles.iconContainer_off}`}
           >
-            <User className={styles.icon} />
+            {userData.imgUrl ? (
+              <img
+                src={userData.imgUrl}
+                alt="User Profile"
+                className={styles.iconContainer}
+              />
+            ) : (
+              <User />
+            )}
           </div>
         </Link>
         <div

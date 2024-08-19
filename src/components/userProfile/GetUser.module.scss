@@ -26,8 +26,8 @@
 }
 
 .square {
-  width: 48px; 
-  height: 48px; 
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,11 +51,11 @@
 .dropdown {
   top: 100%;
   width: 100%;
-  max-height: 150px; 
+  max-height: 150px;
   background-color: white;
   border: 1px solid var(--gray_400);
   border-radius: 4px;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .dropdownItem {
@@ -104,7 +104,7 @@
   color: black;
 
   &::placeholder {
-    color: var(--gray_400); 
+    color: var(--gray_400);
   }
 }
 
@@ -252,7 +252,7 @@
   gap: 140px;
 }
 
-.mapInfo div, 
+.mapInfo div,
 .mapListInfo div {
   width: 186px; /* 각 요소의 너비를 동일하게 설정 */
   text-align: left; /* 텍스트 왼쪽 정렬 */
@@ -264,7 +264,6 @@
   margin-left: 20px;
   flex-direction: column;
 }
-
 
 .mapList {
   display: flex;

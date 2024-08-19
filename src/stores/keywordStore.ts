@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { StateStorage, persist, createJSONStorage } from 'zustand/middleware';
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
-import { KeywordType } from '../types/KeywordType';
+import { KeywordType } from '../types/keywords/KeywordType';
 
 const cookieStorage: StateStorage = {
   getItem: (name: string) => {
@@ -9,7 +9,7 @@ const cookieStorage: StateStorage = {
     return cookie ? JSON.parse(cookie) : null;
   },
   setItem: (name: string, value: string) => {
-    setCookie(name, value, { path: "/" });
+    setCookie(name, value, { path: '/' });
   },
   removeItem: (name: string) => {
     removeCookie(name);

@@ -6,8 +6,7 @@ import { ReactComponent as DownArrow } from '../../assets/DownArrow.svg';
 import { ReactComponent as Search } from '../../assets/Search.svg';
 import { ReactComponent as Gallery } from '../../assets/GalleryView.svg';
 import { ReactComponent as List } from '../../assets/ListView.svg';
-import {ReactComponent as CreatMap} from '../../assets/btn_map_create.svg';
-
+import { ReactComponent as CreatMap } from '../../assets/btn_map_create.svg';
 
 const EmptyUser = (props: { children?: React.ReactNode }) => {
   return (
@@ -37,7 +36,9 @@ const EmptyUser = (props: { children?: React.ReactNode }) => {
           <Gallery />
           <List />
         </div>
-        <div className={styles.newMap}><CreatMap /></div>
+        <div className={styles.newMap}>
+          <CreatMap />
+        </div>
       </div>
       <div className={styles.emptyAlert}>
         <div>지도 파일이 없습니다</div>
