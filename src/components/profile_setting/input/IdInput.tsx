@@ -1,6 +1,7 @@
 import styles from './UserDataInput.module.scss';
 import InfoGrayCircle from '../../../assets/ico_info_gray.svg';
 import InfoErrorCircle from '../../../assets/ico_info_error_red.svg';
+import useRegisterStore from '../../../stores/registerStore';
 
 interface Props {
   isIdEmpty: boolean;
@@ -17,8 +18,11 @@ const IdInput: React.FC<Props> = ({
   setIsIdEmpty,
   setIsValidId,
 }) => {
+  const { isIdDuplicate, setIsIdDuplicate } = useRegisterStore();
+
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     const idValue = e.target.value;
+    if (isIdDuplicate) setIsIdDuplicate(false);
     setId(idValue);
     checkId(idValue);
   };
@@ -64,16 +68,25 @@ const IdInput: React.FC<Props> = ({
           </div>
         </div>
       ) : isValidId ? (
-        <div className={styles.valueInfoContainer}>
-          <div className={styles.valueInfo}>
-            <img src={InfoGrayCircle} alt="안내 아이콘" />
-            <span>3~20글자 이내</span>
+        isIdDuplicate ? (
+          <div className={styles.valueInfoContainer}>
+            <div className={`${styles.valueInfo} ${styles.errorValueInfo}`}>
+              <img src={InfoErrorCircle} alt="오류 안내 아이콘" />
+              <span>사용 중인 아이디</span>
+            </div>
           </div>
-          <div className={styles.valueInfo}>
-            <img src={InfoGrayCircle} alt="안내 아이콘" />
-            <span>영문 소문자, 숫자, 특수문자(._) 사용</span>
+        ) : (
+          <div className={styles.valueInfoContainer}>
+            <div className={styles.valueInfo}>
+              <img src={InfoGrayCircle} alt="안내 아이콘" />
+              <span>3~20글자 이내</span>
+            </div>
+            <div className={styles.valueInfo}>
+              <img src={InfoGrayCircle} alt="안내 아이콘" />
+              <span>영문 소문자, 숫자, 특수문자(._) 사용</span>
+            </div>
           </div>
-        </div>
+        )
       ) : (
         <div className={styles.valueInfoContainer}>
           <div className={`${styles.valueInfo} ${styles.errorValueInfo}`}>

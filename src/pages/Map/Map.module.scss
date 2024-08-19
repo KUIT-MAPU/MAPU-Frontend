@@ -4,6 +4,7 @@
   height: 100vh;
   overflow: hidden;
   position: relative;
+  display: flex;
 
   ::-webkit-scrollbar {
     padding: 0 2px;

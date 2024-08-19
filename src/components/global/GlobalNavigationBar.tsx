@@ -13,11 +13,14 @@ import { ReactComponent as Home_on } from '../../assets/btn_home_on.svg';
 import { ReactComponent as Explore_off } from '../../assets/btn_explore_off.svg';
 import { ReactComponent as Explore_on } from '../../assets/btn_explore_on.svg';
 import { ReactComponent as User } from '../../assets/user.svg';
-import { ReactComponent as Login } from '../../assets/login.svg';
+import { ReactComponent as Login } from '../../assets/btn_login.svg';
+import { ReactComponent as Logout } from '../../assets/btn_logout.svg';
+import useLogOutMutation from '../../apis/auth/useLogOutMutation';
 
 import instance from '../../apis/instance';
 
 const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
+  const prevUrl = useLocation().pathname.split('?')[0];
   const navigate = useNavigate();
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
@@ -25,6 +28,7 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
 
+  const logOutMutation = useLogOutMutation(prevUrl);
   const [userData, setUserData] = useState({
     nickname: '',
     profileId: '',
@@ -56,6 +60,9 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
     setIsOverlayVisible(true);
   };
 
+  const handleLogoutClick = async () => {
+    await logOutMutation.mutate();
+  };
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -128,7 +135,11 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
         <div
           className={`${styles.iconContainer} ${styles.bottomIconContainer}`}
         >
-          <Login className={styles.icon} onClick={handleLoginClick} />
+          {registerStatus === RegisterStatus.LOG_IN ? (
+            <Logout className={styles.icon} onClick={handleLogoutClick} />
+          ) : (
+            <Login className={styles.icon} onClick={handleLoginClick} />
+          )}
         </div>
       </div>
       {isOverlayVisible && (
