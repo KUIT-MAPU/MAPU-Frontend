@@ -1,11 +1,11 @@
-import { MapType } from '../../types/MapType';
-import user_default from '../../assets/img_user_default_profile.svg';
+import React, { useState } from 'react';
 import styles from './MapList.module.scss';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import user_default from '../../assets/img_user_default_profile.svg';
 import { ExploreMapType } from '../../types/mapData/ExploreMapType';
 import { KeywordType } from '../../types/keywords/KeywordType';
 import { MapsType } from '../../types/keywords/MapsType';
+import MapKeywordCard from './MapKeywordCard';
 
 interface MapListProps {
   map?: ExploreMapType;
@@ -13,22 +13,29 @@ interface MapListProps {
   keyword: KeywordType[] | KeywordType;
 }
 
-const MapList: React.FC<MapListProps> = ({ map, keywordMap, keyword }) => {
-  const [selectedKeyword, setSelectedKeyword] = useState<string>('');
+const MapList: React.FC<MapListProps> = ({ map, keywordMap }) => {
+  const [selected, setSelected] = useState<{
+    keyword: string;
+    mapId: number;
+  } | null>(null);
 
-  const handleSelectPills = (mapKeyword: KeywordType) => {
-    if (selectedKeyword === mapKeyword.title) {
-      setSelectedKeyword('');
+  const handleSelectPills = (mapKeyword: KeywordType, mapId: number) => {
+    if (
+      selected &&
+      selected.keyword === mapKeyword.title &&
+      selected.mapId === mapId
+    ) {
+      setSelected(null);
     } else {
-      setSelectedKeyword(mapKeyword.title);
+      setSelected({ keyword: mapKeyword.title, mapId: mapId });
     }
   };
 
   return (
-    <div className={styles.MapListRoot}>
-      {keywordMap !== undefined ? (
-        keywordMap.map((mapItem: MapsType, index: number) => (
-          <div key={index}>
+    <>
+      {keywordMap ? (
+        keywordMap.map((mapItem: MapsType) => (
+          <div className={styles.MapListRoot} key={mapItem.mapId}>
             <div className={styles.Images}>
               <Link
                 to={`/map/${mapItem.mapTitle}/view`}
@@ -58,42 +65,53 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap, keyword }) => {
                 <div className={styles.mapTitle}>
                   <span className={styles.mapName}>{mapItem.mapTitle}</span>
                   <span className={styles.mapAddress}>
-                    지도 설명 API 추가 요청
+                    {mapItem.mapAddress}
                   </span>
                 </div>
                 <span className={styles.description}>
-                  지도 설명 API 추가 요청
+                  {mapItem.madDescription}
                 </span>
+                <div className={styles.mapKeyword}>
+                  {mapItem.mapKeywords?.map((mapKeyword: KeywordType) => (
+                    <button
+                      className={
+                        selected?.keyword === mapKeyword.title &&
+                        selected.mapId === mapItem.mapId
+                          ? styles.selected
+                          : styles.keywordPills
+                      }
+                      key={mapKeyword.id}
+                      onClick={() =>
+                        handleSelectPills(mapKeyword, mapItem.mapId)
+                      }
+                    >
+                      {mapKeyword.title}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div className={styles.mapKeyword}>
-                {/* {mapItem.keyword?.map((mapKeyword: KeywordType) => (
-                  <button
-                    className={
-                      selectedKeyword !== mapKeyword.title
-                        ? styles.selected
-                        : styles.keywordPills
-                    }
-                    key={mapKeyword.id}
-                    onClick={() => handleSelectPills(mapKeyword)}
-                  >
-                    {mapKeyword.title}
-                  </button>
-                ))} */}
+              <div className={styles.keywordContainer}>
+                {selected && selected.mapId === mapItem.mapId && (
+                  <MapKeywordCard
+                    keyword={selected.keyword}
+                    mapId={selected.mapId}
+                    isSelect={true}
+                  />
+                )}
               </div>
             </div>
           </div>
         ))
       ) : (
-        <div>
+        <div className={styles.MapListRoot}>
           <div className={styles.Images}>
             <Link
-              to={`/map/${map?.title}/view`}
+              to={`/map/${map?.mapId}/view`}
               style={{ textDecoration: 'none' }}
             >
               <img src={map?.imageUrl} className={styles.mapImg} alt="Map" />
             </Link>
-
             <div className={styles.editor}>
               <img
                 className={styles.editorImg}
@@ -114,27 +132,36 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap, keyword }) => {
                 <span className={styles.mapAddress}>{map?.region}</span>
               </div>
               <span className={styles.description}>{map?.description}</span>
+              <div className={styles.mapKeyword}>
+                {map?.keyword?.map((mapKeyword: KeywordType) => (
+                  <button
+                    className={
+                      selected?.keyword === mapKeyword.title &&
+                      selected.mapId === map.mapId
+                        ? styles.selected
+                        : styles.keywordPills
+                    }
+                    key={mapKeyword.id}
+                    onClick={() => handleSelectPills(mapKeyword, map.mapId)}
+                  >
+                    {mapKeyword.title}
+                  </button>
+                ))}
+              </div>
             </div>
-
-            <div className={styles.mapKeyword}>
-              {map?.keyword?.map((mapKeyword: KeywordType) => (
-                <button
-                  className={
-                    selectedKeyword !== mapKeyword.title
-                      ? styles.selected
-                      : styles.keywordPills
-                  }
-                  key={mapKeyword.id}
-                  onClick={() => handleSelectPills(mapKeyword)}
-                >
-                  {mapKeyword.title}
-                </button>
-              ))}
+            <div className={styles.keywordContainer}>
+              {selected && selected.mapId === map?.mapId && (
+                <MapKeywordCard
+                  keyword={selected.keyword}
+                  mapId={selected.mapId}
+                  isSelect={true}
+                />
+              )}
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

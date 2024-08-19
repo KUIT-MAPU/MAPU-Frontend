@@ -31,9 +31,6 @@ const ProfileInfoSetting = () => {
   const [isIdEmpty, setIsIdEmpty] = useState<boolean>(false);
   const [isValidId, setIsValidId] = useState<boolean>(true);
 
-  //시작/적용하기 눌렀을 때
-  const [idDuplicatedError, setIdDuplicatedError] = useState<boolean>(false); //사용 중인 아이디인지
-
   const signUpMutation = useSignUpMutation(prevUrl);
 
   useEffect(() => {
@@ -48,8 +45,6 @@ const ProfileInfoSetting = () => {
   }, [isNicknameEmpty, isValidNickname, isIdEmpty, isValidId]);
 
   const handleProfileSettingSubmit = async () => {
-    //TODO: profileId 중복 검사
-
     const formData = new FormData();
     imgFile && formData.append('imageFile', imgFile);
     const requestJson = JSON.stringify({
@@ -59,7 +54,6 @@ const ProfileInfoSetting = () => {
     const requestDTO = new Blob([requestJson], { type: 'application/json' });
     formData.append('requestDTO', requestDTO);
 
-    //TODO: 회원가입 api 연결
     await signUpMutation.mutate(formData);
   };
 

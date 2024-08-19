@@ -1,15 +1,18 @@
 .MapListRoot {
   display: flex;
+  flex-direction: row;
   gap: 12px;
   width: 1408px;
   height: 288px;
+  margin-bottom: 28px;
 }
 
 .Images {
   display: flex;
   flex-direction: column;
-  width: 492px;
+
   height: 100%;
+  width: 492px;
 
   border-radius: 6px;
   border: 1px solid#EBEEF2;
@@ -17,6 +20,7 @@
 
 .mapImg {
   width: 100%;
+
   height: 216px;
   border-bottom: 1px solid#EBEEF2;
 }
@@ -66,7 +70,8 @@
 .mapInfo {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  justify-content: space-between;
 }
 
 .mapContent {
