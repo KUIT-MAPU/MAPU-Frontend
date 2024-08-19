@@ -20,9 +20,11 @@ const ObjectList: React.FC<Props> = ({ mode, mapId }) => {
       </div>
       <div
         className={
-          mapBasicInfo !== undefined && mapBasicInfo!.result.mine
-            ? `${styles.objectList}`
-            : `${styles.objectList} ${styles.notMineList}`
+          mapBasicInfo !== undefined
+            ? mapBasicInfo!.result.mine
+              ? `${styles.objectList}`
+              : `${styles.objectList} ${styles.notMineList}`
+            : `${styles.objectList}`
         }
       >
         {innerData.objects &&

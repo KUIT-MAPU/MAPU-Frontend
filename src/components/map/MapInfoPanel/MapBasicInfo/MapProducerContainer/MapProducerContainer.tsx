@@ -12,8 +12,7 @@ interface Props {
 }
 
 const MapProducerConatiner: React.FC<Props> = ({ mode, mapId }) => {
-  const owner: UserType = useMapBasicInfoQuery(mapId, mode).mapBasicInfo!.result
-    .owner;
+  const mapBasicInfo = useMapBasicInfoQuery(mapId, mode).mapBasicInfo!;
   const { registerStatus, setLoginNeededStatus } = useRegisterStore();
 
   const handleFollowBtn = () => {
@@ -28,18 +27,22 @@ const MapProducerConatiner: React.FC<Props> = ({ mode, mapId }) => {
       <div className={styles.mapProducer__info}>
         <img
           src={
-            owner !== undefined
-              ? owner.imageUrl !== null
-                ? owner.imageUrl!
+            mapBasicInfo !== undefined
+              ? mapBasicInfo.result.owner.imageUrl !== null
+                ? mapBasicInfo.result.owner.imageUrl!
                 : UserDefaultProfile
               : UserDefaultProfile
           }
           // src={UserDefaultProfile}
           alt="프로필 이미지"
         />
-        <span>{owner !== undefined && owner.nickName!}</span>
+        <span>
+          {mapBasicInfo.result.owner !== undefined &&
+            mapBasicInfo.result.owner.nickName!}
+        </span>
       </div>
-      {owner !== undefined && owner.amIFollowing ? (
+      {mapBasicInfo.result.owner !== undefined &&
+      mapBasicInfo.result.owner.amIFollowing ? (
         <button type="button" className={styles.followBtn} disabled>
           팔로잉
         </button>
