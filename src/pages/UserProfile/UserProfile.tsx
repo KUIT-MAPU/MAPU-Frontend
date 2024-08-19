@@ -36,12 +36,12 @@ const UserProfile = () => {
     titleElement.innerHTML = `@@@님의 페이지 | MAPU`; //api 호출 -> 사용자 타이틀에 추가
   }, []);
 
-  console.log(RegisterStatus.LOG_IN);
+  console.log(registerStatus);
   return (
     <div className={styles.container}>
       <GlobalNavigationBar />
-      {RegisterStatus.LOG_IN ? <GetUserInfobar /> : <EmtpyUserInfobar />}
-      {RegisterStatus.LOG_IN ? <GetUser /> : <EmptyUser />}
+      {registerStatus === RegisterStatus.LOG_IN ? <GetUserInfobar /> : <EmtpyUserInfobar />}
+      {registerStatus === RegisterStatus.LOG_IN ? <GetUser /> : <EmptyUser />}
     </div>
   );
 };
