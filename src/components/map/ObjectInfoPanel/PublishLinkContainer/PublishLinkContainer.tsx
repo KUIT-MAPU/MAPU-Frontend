@@ -6,6 +6,7 @@ import PublishBtn from '../../../../assets/map/btn_publish.svg';
 import PublishCancelBtn from '../../../../assets/map/btn_cancel_publish.svg';
 import CopyLinkBtn from '../../../../assets/map/btn_link_copy.svg';
 import { MapMode } from '../../../../types/enum/MapMode';
+import useMapPublishMutation from '../../../../apis/Map/useMapPublishMutation';
 
 interface Props {
   mode: MapMode;
@@ -14,7 +15,9 @@ interface Props {
 
 const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
   const { innerData } = useMapInfoStore();
+
   const { mapBasicInfo } = useMapBasicInfoQuery(mapId, mode);
+  const mapPublishMutation = useMapPublishMutation(mapId);
 
   const handleCopyLink = async () => {
     //클립보드에 공유 링크 복사
@@ -28,8 +31,9 @@ const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
     }
   };
 
-  const handleSwitchIsPublished = () => {
-    //TODO: 게시 여부 설정 api 호출
+  const handleSwitchIsPublished = async () => {
+    //게시 여부 설정 api 호출
+    await mapPublishMutation.mutate();
   };
 
   //editor
@@ -38,14 +42,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
       <section
         className={`${styles.objectInfoHeader} ${styles.publishContainer}`}
       >
-        {mapBasicInfo !== undefined && mapBasicInfo.result.published ? (
-          <div className={publicStyles.publicTextContainer}>
-            <span className={publicStyles.boxTitle}>지도 게시 취소하기</span>
-            <span className={publicStyles.publicDescription}>
-              공개된 지도가 비공개됩니다
-            </span>
-          </div>
-        ) : !innerData.objects ? (
+        {innerData.objects.length === 0 ? (
           <div className={publicStyles.publicTextContainer}>
             <span
               className={`${publicStyles.boxTitle} ${publicStyles.cannotPublishBoxTitle}`}
@@ -58,6 +55,13 @@ const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
               내 지도가 모두에게 공개됩니다
             </span>
           </div>
+        ) : mapBasicInfo !== undefined && mapBasicInfo.result.published ? (
+          <div className={publicStyles.publicTextContainer}>
+            <span className={publicStyles.boxTitle}>지도 게시 취소하기</span>
+            <span className={publicStyles.publicDescription}>
+              공개된 지도가 비공개됩니다
+            </span>
+          </div>
         ) : (
           <div className={publicStyles.publicTextContainer}>
             <span className={publicStyles.boxTitle}>지도 게시하기</span>
@@ -66,21 +70,21 @@ const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
             </span>
           </div>
         )}
-        {mapBasicInfo !== undefined && mapBasicInfo.result.published ? (
-          <button
-            type="button"
-            className={styles.publishBtn}
-            onClick={handleSwitchIsPublished}
-          >
-            <img src={PublishCancelBtn} alt="게시 취소하기" />
-          </button>
-        ) : !innerData.objects ? (
+        {innerData.objects.length === 0 ? (
           <button
             type="button"
             className={`${styles.publishBtn} ${styles.cannotPublishBtn}`}
             disabled
           >
             <img src={PublishBtn} alt="게시하기" />
+          </button>
+        ) : mapBasicInfo !== undefined && mapBasicInfo.result.published ? (
+          <button
+            type="button"
+            className={styles.publishBtn}
+            onClick={handleSwitchIsPublished}
+          >
+            <img src={PublishCancelBtn} alt="게시 취소하기" />
           </button>
         ) : (
           <button

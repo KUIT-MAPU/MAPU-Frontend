@@ -3,6 +3,7 @@ import ObjectOutlineBtn from './ObjectOutlineBtn';
 import useMapInfoStore from '../../../../stores/mapInfoStore';
 import { useMapBasicInfoQuery } from '../../../../apis/Map/fetchMapBasicInfo';
 import { MapMode } from '../../../../types/enum/MapMode';
+import { useEffect } from 'react';
 
 interface Props {
   mode: MapMode;
@@ -12,6 +13,10 @@ interface Props {
 const ObjectList: React.FC<Props> = ({ mode, mapId }) => {
   const { innerData } = useMapInfoStore();
   const { mapBasicInfo } = useMapBasicInfoQuery(mapId, mode);
+
+  useEffect(() => {
+    console.log('innerData.objects:', innerData.objects);
+  }, [innerData]);
 
   return (
     <div className={styles.objectListContainer}>

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import styles from './ObjectPropertyBox.module.scss';
 import { ObjectOutline } from '../../../../types/map/object/ObjectOutline';
 import { StarRating } from '../../../../types/map/object/StarRating';
@@ -24,9 +24,44 @@ const ObjectPropertyBox: React.FC<Props> = ({ mode, type, attributeId }) => {
   const selectedObject = useMapInfoStore((state) => state.getSelectedObject());
   const objects = useMapInfoStore((state) => state.getObjects());
   const { selectedObjectId, doc } = useMapInfoStore();
+  const outside = useRef<HTMLDivElement>(null);
+  const [isTagMenuPopUp, setIsTagMenuPopUp] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (outside.current && !outside.current.contains(event.target as Node)) {
+        setIsTagMenuPopUp(false);
+      }
+    };
+
+    if (isTagMenuPopUp) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isTagMenuPopUp]);
+
+  const handleTagMenuBtnOnClick = (event: React.MouseEvent) => {
+    setIsTagMenuPopUp(true);
+  };
 
   const handleTagNameOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedTag(e.currentTarget.value);
+  };
+
+  const handleDeleteAllTagsOnClick = (attributeId: string) => {
+    doc?.update((root) => {
+      const objectToUpdate = root.objects.find(
+        (obj: MapObject) => obj.objectId === selectedObjectId,
+      );
+      if (objectToUpdate && objectToUpdate.userAttribute[attributeId]) {
+        delete objectToUpdate.userAttribute[attributeId];
+      }
+    });
   };
 
   const handleAddTag = () => {
@@ -123,9 +158,22 @@ const ObjectPropertyBox: React.FC<Props> = ({ mode, type, attributeId }) => {
         <div className={styles.propertyTitleContainer}>
           <span className={styles.propertyTitle}>태그</span>
           {mode === MapMode.EDIT && (
-            <button type="button" className={styles.propertyMenuBtn}>
+            <button
+              type="button"
+              className={styles.propertyMenuBtn}
+              onClick={handleTagMenuBtnOnClick}
+            >
               <img src={MenuBtn} alt="메뉴" />
             </button>
+          )}
+          {isTagMenuPopUp && (
+            <div
+              ref={outside}
+              className={styles.deleteAllTagPopUp}
+              onClick={() => handleDeleteAllTagsOnClick(attributeId)}
+            >
+              <span>모든 태그 삭제하기</span>
+            </div>
           )}
         </div>
         <div className={styles.propertyBox}>
@@ -150,29 +198,34 @@ const ObjectPropertyBox: React.FC<Props> = ({ mode, type, attributeId }) => {
               </button>
             </div>
           )}
-          <div className={styles.tagContainer}>
-            {selectedObject?.userAttribute[attributeId]?.map((tag: string) => (
-              <div
-                className={
-                  mode === MapMode.EDIT
-                    ? styles.tagBox
-                    : `${styles.tagBox} ${styles.viewerTagBox}`
-                }
-              >
-                <span className={styles.tagName}>{tag}</span>
-                {mode === MapMode.EDIT && (
-                  <button
-                    key={tag}
-                    type="button"
-                    className={styles.deleteTagBtn}
-                    onClick={() => handleDeleteTag(tag)}
-                  >
-                    <img src={DeleteBtn} alt="태그 지우기" />
-                  </button>
+          {selectedObject?.userAttribute[attributeId] !== undefined &&
+            selectedObject?.userAttribute[attributeId].length > 0 && (
+              <div className={styles.tagContainer}>
+                {selectedObject?.userAttribute[attributeId]?.map(
+                  (tag: string) => (
+                    <div
+                      className={
+                        mode === MapMode.EDIT
+                          ? styles.tagBox
+                          : `${styles.tagBox} ${styles.viewerTagBox}`
+                      }
+                    >
+                      <span className={styles.tagName}>{tag}</span>
+                      {mode === MapMode.EDIT && (
+                        <button
+                          key={tag}
+                          type="button"
+                          className={styles.deleteTagBtn}
+                          onClick={() => handleDeleteTag(tag)}
+                        >
+                          <img src={DeleteBtn} alt="태그 지우기" />
+                        </button>
+                      )}
+                    </div>
+                  ),
                 )}
               </div>
-            ))}
-          </div>
+            )}
         </div>
       </div>
     );

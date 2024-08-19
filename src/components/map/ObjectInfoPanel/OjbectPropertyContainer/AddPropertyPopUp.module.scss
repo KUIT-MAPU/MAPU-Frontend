@@ -23,5 +23,9 @@
   }
   &:disabled {
     color: var(--gray_50);
+    &:hover {
+      background: var(--white);
+      cursor: auto;
+    }
   }
 }

@@ -16,7 +16,9 @@ const useMapBookmarkEditMutation = (id: number) => {
 
     onSuccess: () => {
       console.log('북마크 여부 설정 성공!');
-      queryClient.invalidateQueries({ queryKey: ['useMapBasicInfoQuery'] }); // 수정이 성공하면 쿼리를 다시 가져옴
+      queryClient.invalidateQueries({
+        queryKey: ['useMapBasicInfoQuery'],
+      });
     },
   });
 

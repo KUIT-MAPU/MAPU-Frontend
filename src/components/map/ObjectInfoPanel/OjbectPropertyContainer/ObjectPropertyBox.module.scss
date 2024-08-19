@@ -8,6 +8,7 @@
 }
 
 .propertyTitleContainer {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -136,5 +137,28 @@
   }
   .viewerTagBox {
     padding: 3.5px 8px;
+  }
+}
+
+.deleteAllTagPopUp {
+  width: 148px;
+  padding: 10px 14px;
+  text-align: left;
+
+  background: var(--white);
+  border-radius: 4px;
+  box-shadow: 0px 0px 8px 0px rgba(118, 125, 134, 0.2);
+
+  position: absolute;
+  right: 16px;
+  top: 52px;
+
+  span {
+    font-size: 14px;
+  }
+
+  &:hover {
+    background: var(--gray_25);
+    cursor: pointer;
   }
 }
