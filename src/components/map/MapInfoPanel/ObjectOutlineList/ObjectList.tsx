@@ -3,7 +3,7 @@ import ObjectOutlineBtn from './ObjectOutlineBtn';
 import useMapInfoStore from '../../../../stores/mapInfoStore';
 
 const ObjectList = () => {
-  const { isMine, objectOutlineList } = useMapInfoStore();
+  const { mapInfo, innerData } = useMapInfoStore();
 
   return (
     <div className={styles.objectListContainer}>
@@ -12,14 +12,14 @@ const ObjectList = () => {
       </div>
       <div
         className={
-          isMine
+          mapInfo.isMine
             ? `${styles.objectList}`
             : `${styles.objectList} ${styles.notMineList}`
         }
       >
-        {objectOutlineList &&
-          objectOutlineList.map((object) => (
-            <ObjectOutlineBtn object={object} />
+        {innerData.objects &&
+          innerData.objects.map((object) => (
+            <ObjectOutlineBtn object={object} key={object.objectId} />
           ))}
       </div>
     </div>

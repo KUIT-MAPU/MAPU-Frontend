@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useCallback, useRef, useState } from 'react';
 import styles from './EditorObjectInfoInputContainer.module.scss';
 import publicStyles from '../ObjectContainerPublicStyle.module.scss';
+import useMapInfoStore from '../../../../stores/mapInfoStore';
+import { MapObject } from '../../../../types/map/object/ObjectInfo';
 
 interface Props {
-  name: string;
-  detailAddress: string;
+  name?: string;
+  detailAddress?: string;
 }
 
 const EditorObjectInfoInputContainer: React.FC<Props> = ({
@@ -14,15 +16,39 @@ const EditorObjectInfoInputContainer: React.FC<Props> = ({
   const [editedName, setEditedName] = useState<string>();
   const [isNameEmpty, setIsNameEmpty] = useState<boolean>(false);
   const [editedDetailAddress, setEditedDetailAddress] = useState<string>();
+  const { selectedObjectId, doc } = useMapInfoStore();
+  const selectedObject = useMapInfoStore((state) => state.getSelectedObject());
+  const timerRef = useRef<number | null>(null);
 
   useEffect(() => {
     setEditedName(name);
     setEditedDetailAddress(detailAddress);
   }, []);
 
-  const handleNameOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedName(e.currentTarget.value);
-  };
+  const handleNameOnChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEditedName(e.target.value);
+      if (timerRef.current !== null) {
+        clearTimeout(timerRef.current);
+      }
+
+      timerRef.current = window.setTimeout(() => {
+        doc?.update((root) => {
+          const objectToUpdate = root.objects.find(
+            (obj: MapObject) => obj.objectId === selectedObjectId,
+          );
+          if (objectToUpdate) {
+            objectToUpdate.name = e.target.value;
+          }
+        }, `Update object ${selectedObjectId} name to ${e.target.value}`);
+      }, 300);
+    },
+    [doc, selectedObjectId],
+  );
+
+  useEffect(() => {
+    setEditedName(selectedObject?.name);
+  }, [selectedObjectId]);
 
   const handleDetailAddressOnChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
@@ -55,13 +81,14 @@ const EditorObjectInfoInputContainer: React.FC<Props> = ({
               ? `${styles.objectNameInput} ${styles.errorNameInput}`
               : styles.objectNameInput
           }
-          value={editedName}
+          value={selectedObject === undefined ? '' : editedName}
           placeholder="객체 이름 (필수)"
           onChange={handleNameOnChange}
           onBlur={handleFocusOutName}
+          disabled={!selectedObjectId}
         />
       </div>
-      <div className={styles.inputContainer}>
+      {/* <div className={styles.inputContainer}>
         <span className={publicStyles.boxTitle}>상세 주소</span>
         <textarea
           name="objecyDetailAddress"
@@ -70,8 +97,9 @@ const EditorObjectInfoInputContainer: React.FC<Props> = ({
           placeholder="객체 상세 주소 (선택)"
           onChange={handleDetailAddressOnChange}
           onBlur={handleFocusOutDetailAddress}
+          disabled={!selectedObjectId}
         />
-      </div>
+      </div> */}
     </section>
   );
 };

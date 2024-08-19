@@ -1,11 +1,11 @@
 import styles from './ObjectBasicInfoContainer.module.scss';
 import publicStyles from '../ObjectContainerPublicStyle.module.scss';
 import { ObjectShape } from '../../../../types/enum/ObjectShape';
-import { ObjectInfo } from '../../../../types/map/object/ObjectInfo';
+import { MapObject } from '../../../../types/map/object/ObjectInfo';
 
 interface Props {
   mode: string;
-  object: ObjectInfo;
+  object?: MapObject;
 }
 
 const ObjectBasicInfoContainer: React.FC<Props> = ({ mode, object }) => {
@@ -17,27 +17,41 @@ const ObjectBasicInfoContainer: React.FC<Props> = ({ mode, object }) => {
         <div className={styles.basicInfoContainer}>
           <div className={styles.basicInfoTextContainer}>
             <span className={publicStyles.publicGray14}>도형</span>
-            <span className={styles.infoValue}>{object.shape}</span>
+            <span className={styles.infoValue}>{object?.type}</span>
           </div>
-          <div className={styles.basicInfoTextContainer}>
+          {/* <div className={styles.basicInfoTextContainer}>
             <span className={publicStyles.publicGray14}>도로명 주소</span>
-            <span className={styles.infoValue}>{object.roadNameAddress}</span>
-          </div>
-          {object.shape === ObjectShape.LINE && (
+            <span className={styles.infoValue}>
+              {object?.geoAttribute?.roadNameAddress}
+            </span>
+          </div> */}
+          {object?.type === ObjectShape.LINE && (
             <div className={styles.basicInfoTextContainer}>
               <span className={publicStyles.publicGray14}>도형 길이</span>
-              <span className={styles.infoValue}>{object.length}</span>
+              <span className={styles.infoValue}>
+                {object.geoAttribute?.length === undefined
+                  ? ''
+                  : Number(object.geoAttribute?.length).toFixed(2) + 'm'}
+              </span>
             </div>
           )}
-          {object.shape === ObjectShape.PLANE && (
+          {object?.type === ObjectShape.PLANE && (
             <>
               <div className={styles.basicInfoTextContainer}>
                 <span className={publicStyles.publicGray14}>도형 면적</span>
-                <span className={styles.infoValue}>{object.area}</span>
+                <span className={styles.infoValue}>
+                  {object.geoAttribute?.area === undefined
+                    ? ''
+                    : Number(object.geoAttribute?.area).toFixed(2) + 'm²'}
+                </span>
               </div>
               <div className={styles.basicInfoTextContainer}>
                 <span className={publicStyles.publicGray14}>도형 둘레</span>
-                <span className={styles.infoValue}>{object.perimeter}</span>
+                <span className={styles.infoValue}>
+                  {object.geoAttribute?.perimeter === undefined
+                    ? ''
+                    : Number(object.geoAttribute?.perimeter).toFixed(2) + 'm'}
+                </span>
               </div>
             </>
           )}
@@ -52,35 +66,51 @@ const ObjectBasicInfoContainer: React.FC<Props> = ({ mode, object }) => {
       <div className={styles.basicInfoContainer}>
         <div className={styles.basicInfoTextContainer}>
           <span className={publicStyles.publicGray14}>이름</span>
-          <span className={styles.infoValue}>{object.name}</span>
+          <span className={styles.infoValue}>{object?.name}</span>
         </div>
         <div className={styles.basicInfoTextContainer}>
           <span className={publicStyles.publicGray14}>도로명 주소</span>
-          <span className={styles.infoValue}>{object.roadNameAddress}</span>
+          <span className={styles.infoValue}>
+            {object?.geoAttribute?.roadNameAddress}
+          </span>
         </div>
-        <div className={styles.basicInfoTextContainer}>
+        {/* <div className={styles.basicInfoTextContainer}>
           <span className={publicStyles.publicGray14}>상세 주소</span>
-          <span className={styles.infoValue}>{object.detailAddress}</span>
-        </div>
+          <span className={styles.infoValue}>
+            {object?.userAttribute?.detailAddress}
+          </span>
+        </div> */}
         <div className={styles.basicInfoTextContainer}>
           <span className={publicStyles.publicGray14}>도형</span>
-          <span className={styles.infoValue}>{object.shape}</span>
+          <span className={styles.infoValue}>{object?.type}</span>
         </div>
-        {object.shape === ObjectShape.LINE && (
+        {object?.type === ObjectShape.LINE && (
           <div className={styles.basicInfoTextContainer}>
             <span className={publicStyles.publicGray14}>도형 길이</span>
-            <span className={styles.infoValue}>{object.length}</span>
+            <span className={styles.infoValue}>
+              {object.geoAttribute?.length === undefined
+                ? ''
+                : Number(object.geoAttribute?.length).toFixed(2) + 'm'}
+            </span>
           </div>
         )}
-        {object.shape === ObjectShape.PLANE && (
+        {object?.type === ObjectShape.PLANE && (
           <>
             <div className={styles.basicInfoTextContainer}>
               <span className={publicStyles.publicGray14}>도형 면적</span>
-              <span className={styles.infoValue}>{object.area}</span>
+              <span className={styles.infoValue}>
+                {object.geoAttribute?.area === undefined
+                  ? ''
+                  : Number(object.geoAttribute?.area).toFixed(2) + 'm²'}
+              </span>
             </div>
             <div className={styles.basicInfoTextContainer}>
               <span className={publicStyles.publicGray14}>도형 둘레</span>
-              <span className={styles.infoValue}>{object.perimeter}</span>
+              <span className={styles.infoValue}>
+                {object.geoAttribute?.perimeter === undefined
+                  ? ''
+                  : Number(object.geoAttribute?.perimeter).toFixed(2) + 'm'}
+              </span>
             </div>
           </>
         )}
