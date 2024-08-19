@@ -4,19 +4,20 @@ import publicStyles from '../ObjectContainerPublicStyle.module.scss';
 import AddPropertyPopUp from './AddPropertyPopUp';
 import PlusBtn from '../../../../assets/btn_plus_black.svg';
 import { ObjectShape } from '../../../../types/enum/ObjectShape';
-import { ObjectInfo } from '../../../../types/map/object/ObjectInfo';
+import { MapObject } from '../../../../types/map/object/ObjectInfo';
 import ObjectPropertyBox from './ObjectPropertyBox';
-import { ObjectPropertyType } from '../../../../types/enum/ObjectPropertyType';
 import { MapMode } from '../../../../types/enum/MapMode';
+import useMapInfoStore from '../../../../stores/mapInfoStore';
 
 interface Props {
   mode: MapMode;
-  object: ObjectInfo;
+  object?: MapObject;
 }
 
 const OjbectPropertyContainer: React.FC<Props> = ({ mode, object }) => {
   const outside = useRef<HTMLDivElement>(null);
   const [isPopUp, setIsPopUp] = useState<boolean>(false);
+  const { innerData } = useMapInfoStore();
 
   const handleAddProperty = (event: React.MouseEvent) => {
     setIsPopUp(true);
@@ -42,7 +43,7 @@ const OjbectPropertyContainer: React.FC<Props> = ({ mode, object }) => {
 
   const getContainerClassName = () => {
     if (mode === MapMode.EDIT) {
-      switch (object.shape) {
+      switch (object?.shape) {
         case ObjectShape.POINT:
           return `${styles.objectPropertyContainer} ${styles.editorPointContainer}`;
         case ObjectShape.LINE:
@@ -52,7 +53,7 @@ const OjbectPropertyContainer: React.FC<Props> = ({ mode, object }) => {
       }
     }
     if (mode === MapMode.VIEW) {
-      switch (object.shape) {
+      switch (object?.shape) {
         case ObjectShape.POINT:
           return `${styles.objectPropertyContainer} ${styles.viewerPointContainer}`;
         case ObjectShape.LINE:
@@ -83,28 +84,15 @@ const OjbectPropertyContainer: React.FC<Props> = ({ mode, object }) => {
         )}
       </div>
       <div className={styles.objectPropertyList}>
-        {object.connections.length !== 0 && (
-          <ObjectPropertyBox
-            type={ObjectPropertyType.CONNECTION}
-            values={object.connections}
-            mode={mode}
-          />
-        )}
-        {object.tags.length !== 0 && (
-          <ObjectPropertyBox
-            type={ObjectPropertyType.TAG}
-            values={object.tags}
-            mode={mode}
-          />
-        )}
-        TODO: 보류한 부분 주석 처리 (별점)
-        {/* {object.starRatings.length !== 0 && (
-          <ObjectPropertyBox
-            type={ObjectPropertyType.STAR_RATING}
-            values={object.starRatings}
-            mode={mode}
-          />
-        )} */}
+        {innerData.informationAttributes.map((infoAttribute) => {
+          return (
+            <ObjectPropertyBox
+              type={infoAttribute.type}
+              mode={mode}
+              attributeId={infoAttribute.id}
+            />
+          );
+        })}
       </div>
     </section>
   );

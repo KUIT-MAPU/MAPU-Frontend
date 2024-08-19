@@ -41,9 +41,11 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap }) => {
                 to={`/map/${mapItem.mapTitle}/view`}
                 style={{ textDecoration: 'none' }}
               >
-                <div className={styles.mapImg}>
-                  <img src={mapItem.mapImage} alt="Map" />
-                </div>
+                <img
+                  src={mapItem.mapImage}
+                  className={styles.mapImg}
+                  alt="Map"
+                />
               </Link>
               <div className={styles.editor}>
                 <img
@@ -105,7 +107,7 @@ const MapList: React.FC<MapListProps> = ({ map, keywordMap }) => {
         <div className={styles.MapListRoot}>
           <div className={styles.Images}>
             <Link
-              to={`/map/${map?.title}/view`}
+              to={`/map/${map?.mapId}/view`}
               style={{ textDecoration: 'none' }}
             >
               <img src={map?.imageUrl} className={styles.mapImg} alt="Map" />

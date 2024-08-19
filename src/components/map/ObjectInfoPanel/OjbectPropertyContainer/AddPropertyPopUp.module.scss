@@ -21,4 +21,7 @@
   &:active {
     background: var(--gray_50);
   }
+  &:disabled {
+    color: var(--gray_50);
+  }
 }

@@ -13,13 +13,15 @@ interface Props {
 }
 
 const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
-  const { publicLink, objectOutlineList } = useMapInfoStore();
+  const { innerData } = useMapInfoStore();
   const { mapBasicInfo } = useMapBasicInfoQuery(mapId, mode);
 
   const handleCopyLink = async () => {
     //클립보드에 공유 링크 복사
     try {
-      await navigator.clipboard.writeText(`${publicLink}`);
+      await navigator.clipboard.writeText(
+        `mapu-frontend.vercel.app/map/2/view`,
+      );
     } catch (e) {
       //TODO: 에러 상태로 설정
       alert('공유 링크 복사에 실패하였습니다.');
@@ -43,7 +45,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
               공개된 지도가 비공개됩니다
             </span>
           </div>
-        ) : objectOutlineList.length === 0 ? (
+        ) : !innerData.objects ? (
           <div className={publicStyles.publicTextContainer}>
             <span
               className={`${publicStyles.boxTitle} ${publicStyles.cannotPublishBoxTitle}`}
@@ -72,7 +74,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
           >
             <img src={PublishCancelBtn} alt="게시 취소하기" />
           </button>
-        ) : objectOutlineList.length === 0 ? (
+        ) : !innerData.objects ? (
           <button
             type="button"
             className={`${styles.publishBtn} ${styles.cannotPublishBtn}`}
@@ -99,7 +101,9 @@ const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
     >
       <span className={publicStyles.boxTitle}>지도 링크</span>
       <div className={styles.linkContainer}>
-        <span className={styles.publicLink}>{publicLink}</span>
+        <span
+          className={styles.publicLink}
+        >{`mapu-frontend.vercel.app/map/2/view`}</span>
         <img
           src={CopyLinkBtn}
           alt="링크 복사하기"

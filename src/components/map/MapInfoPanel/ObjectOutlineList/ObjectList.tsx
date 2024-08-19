@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ObjectList: React.FC<Props> = ({ mode, mapId }) => {
-  const { objectOutlineList } = useMapInfoStore();
+  const { innerData } = useMapInfoStore();
   const { mapBasicInfo } = useMapBasicInfoQuery(mapId, mode);
 
   return (
@@ -25,9 +25,9 @@ const ObjectList: React.FC<Props> = ({ mode, mapId }) => {
             : `${styles.objectList} ${styles.notMineList}`
         }
       >
-        {objectOutlineList &&
-          objectOutlineList.map((object) => (
-            <ObjectOutlineBtn object={object} />
+        {innerData.objects &&
+          innerData.objects.map((object) => (
+            <ObjectOutlineBtn object={object} key={object.objectId} />
           ))}
       </div>
     </div>

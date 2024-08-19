@@ -173,7 +173,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
         {view === 'gallery' && (
           <div className={styles.getMap}>
             {currentItems.map((map :any) => (
-              <Link to={`/map/${map.id}`} className={styles.link} key={map.id}>
+              <Link to='/map/mapname/edit' className={styles.link} key={map.id}>
                 <div className={styles.mapWrapper}>
                   <div className={styles.numMap}>
                     <img

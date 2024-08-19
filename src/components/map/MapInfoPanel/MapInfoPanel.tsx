@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './MapInfoPanel.module.scss';
 import MapProducerConatiner from './MapBasicInfo/MapProducerContainer/MapProducerContainer';
@@ -8,6 +7,7 @@ import { MapMode } from '../../../types/enum/MapMode';
 import BlackBackBtn from '../../../assets/btn_arrow_left_black.svg';
 import useRegisterStore from '../../../stores/registerStore';
 import { useMapBasicInfoQuery } from '../../../apis/Map/fetchMapBasicInfo';
+import useMapInfoStore from '../../../stores/mapInfoStore';
 
 interface Props {
   mode: MapMode;

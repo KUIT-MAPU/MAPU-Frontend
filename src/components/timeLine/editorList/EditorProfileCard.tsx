@@ -7,10 +7,13 @@ import styles from './EditorProfileCard.module.scss';
 import dimmedStyles from '../Dimmed.module.scss';
 import userImg from '../../../assets/img_user_default_profile.svg'
 import AuthContainer from '../../login/AuthContainer';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import { usePostFollow } from '../../../apis/follow/usePostFollow';
 import { FollowType } from '../../../types/follow/FollowType';
 import { useDeleteUnFollow } from '../../../apis/follow/useDeleteUnFollow';
+import { useQuery } from 'react-query';
+import { fetchFollowing } from '../../../apis/follow/useGetFollowing';
 
 interface ProfileCardProps {
   Editor: EditorType;
@@ -19,26 +22,30 @@ interface ProfileCardProps {
   
 }
 
-const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog }) => {
+const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token }) => {
   const { registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
-  const [pendingUser, setPendingUser] = useState<number | null>(null);
   const [isFollow, setIsFollow] = useState<boolean>(false);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
   const Followmutation = usePostFollow();
   const UnFollowmutation = useDeleteUnFollow();
 
-  const handleFollow = (followingId:number) => {
-    setIsFollow(true);
+  const { data: followingData } = useQuery(
+    ['followindData'],
+    () => fetchFollowing(token)
+  )
+
+  const handleFollow = (followingId: number) => {
+  
     if (!isLog) {
-      setPendingUser(followingId)
       setLoginNeededStatus(true);
       setIsOverlayVisible(true);
     } else {
+      setIsFollow(true);
       const followData: FollowType = {
         followingId: followingId,
-      }
+      };
       Followmutation.mutate(followData);
     }
   };
@@ -58,6 +65,18 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog }) => {
     navigate(prevUrl);
     setIsOverlayVisible(false);
   };
+
+  useEffect(()=>{
+    if(followingData?.users.some(user => user.userId === Editor.userId)) {
+      setIsFollow(true);
+    } else {
+      setIsFollow(false);
+    }
+  },[followingData])
+
+  useEffect(() => {
+    console.log('followingData:',followingData);
+  },[isLog,followingData])
 
   return (
     <div className={styles.cardRoot}>

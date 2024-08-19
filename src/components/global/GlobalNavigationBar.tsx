@@ -45,7 +45,6 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
       console.log('setDimmed(true');
     } else {
       setIsLog(true);
-      setIsOverlayVisible(false);
       console.log('setDimmed(false)');
     }
   }, [loginNeeded, registerStatus]);

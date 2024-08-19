@@ -1,3 +1,4 @@
+import yorkie, { Client, Document } from 'yorkie-js-sdk';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './Map.module.scss';
@@ -8,10 +9,11 @@ import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import ObjectInfoPanel from '../../components/map/ObjectInfoPanel/ObjectInfoPanel';
 import AuthContainer from '../../components/login/AuthContainer';
 import BaseMap from '../../components/map/BaseMap/BaseMap';
-import EditDesignPanel from '../../components/map/BaseMap/EditDesignPanel';
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import { MapMode } from '../../types/enum/MapMode';
 import { useMapBasicInfoQuery } from '../../apis/Map/fetchMapBasicInfo';
+import { YorkieDocType } from '../../types/map/object/ObjectInfo';
+import useMapInfoStore from '../../stores/mapInfoStore';
 
 //"editor"
 //마이페이지 > 편집 가능한 지도에서의 접근이므로, 이미 로그인 된 상태일 것.
@@ -29,10 +31,19 @@ const Map = () => {
         ? MapMode.VIEW
         : MapMode.UNVALID; //error;
   const navigate = useNavigate();
-  const mapId = Number(useParams().mapId);
+  const mapIdStr = useParams().mapId;
+  const mapId = Number(mapIdStr);
   const { registerStatus, loginNeeded, setLoginNeededStatus } =
     useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
+  const [client, setClient] = useState<Client>();
+  const {
+    doc,
+    setDoc: setYorkieDoc,
+    setInformationAttributes,
+    setObjects,
+    setInnerData,
+  } = useMapInfoStore();
 
   const { mapBasicInfo, isMapBasicInfoLoading } = useMapBasicInfoQuery(
     mapId,
@@ -55,32 +66,84 @@ const Map = () => {
     }
   }, [isMapBasicInfoLoading]);
 
-  // useEffect(() => {
-  //   if (mapMode === MapMode.EDIT) {
-  //     //editor
-  //     if (registerStatus !== RegisterStatus.LOG_IN) {
-  //       setDimmed(true);
-  //       setLoginNeededStatus(true);
-  //     } else {
-  //       setDimmed(false);
-  //     }
-  //   }
-  //   if (mapMode === MapMode.VIEW) {
-  //     //viewer
-  //     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
-  //       setDimmed(true);
-  //     } else {
-  //       setDimmed(false);
-  //     }
-  //   }
-  //   //else: 잘못된 접근(모드)
-  // }, [registerStatus, loginNeeded]);
+  useEffect(() => {
+    if (mapMode === MapMode.EDIT) {
+      //editor
+      if (registerStatus !== RegisterStatus.LOG_IN) {
+        setDimmed(true);
+        setLoginNeededStatus(true);
+      } else {
+        setDimmed(false);
+      }
+    }
+    if (mapMode === MapMode.VIEW) {
+      //viewer
+      if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
+        setDimmed(true);
+      } else {
+        setDimmed(false);
+      }
+    }
+    //else: 잘못된 접근(모드)
+  }, [registerStatus, loginNeeded]);
 
   const handleClose = () => {
     setLoginNeededStatus(false);
     const prevUrl = pathname.split('?')[0];
     navigate(prevUrl);
   };
+
+  useEffect(() => {
+    const YORKIE_CLIENT_API_KEY = process.env.REACT_APP_YORKIE_API_KEY;
+    const YORKIE_ENDPOINT = process.env.REACT_APP_YORKIE_URL;
+
+    if (!mapIdStr || !YORKIE_CLIENT_API_KEY || !YORKIE_ENDPOINT) {
+      return;
+    }
+
+    const initializeYorkie = async () => {
+      const client = new yorkie.Client(YORKIE_ENDPOINT, {
+        apiKey: YORKIE_CLIENT_API_KEY,
+      });
+      await client.activate();
+
+      const doc = new yorkie.Document<YorkieDocType>(mapIdStr + '111');
+      await client.attach(doc);
+
+      doc.update((root) => {
+        if (!root.informationAttributes) root.informationAttributes = [];
+        if (!root.objects) root.objects = [];
+        setInnerData(root);
+      }, 'initialize document');
+
+      setClient(client);
+      setYorkieDoc(doc);
+    };
+
+    initializeYorkie();
+
+    return () => {
+      if (client) {
+        client.deactivate();
+      }
+    };
+  }, [mapIdStr]);
+
+  if (!client || !doc) {
+    return <div>Loading...</div>;
+  }
+
+  if (mapMode === MapMode.EDIT) {
+    doc.subscribe('$.informationAttributes', (event) => {
+      console.log('informationAttributes updated', event);
+      setInformationAttributes(doc.getRoot().informationAttributes);
+    });
+
+    doc.subscribe('$.objects', (event) => {
+      console.log('objects updated', event);
+      setObjects(doc.getRoot().objects);
+    });
+  }
 
   // map
   return (
