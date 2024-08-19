@@ -4,7 +4,9 @@ import { FollowingType } from "../../types/follow/FollowingType";
 export const  fetchFollowing = async (token:string| undefined): Promise<FollowingType | undefined> => {
   try {
     if(token) {
-      return await getFollowing();
+      const result = await getFollowing();
+      console.log(result)
+      return result;
     } else {
       return undefined;
     }
