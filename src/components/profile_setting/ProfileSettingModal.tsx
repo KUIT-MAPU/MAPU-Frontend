@@ -12,6 +12,7 @@ const ProfileSettingModal = () => {
   const pathname = useLocation().pathname;
   const isWelcome = pathname === '/';
 
+  
   const handelCancel = () => {
     const prevUrl = pathname.split('?')[0];
     navigate(prevUrl);

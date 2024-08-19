@@ -9,7 +9,7 @@ import { ReactComponent as User } from '../../../assets/user.svg';
 import instance from '../../../apis/instance';
 
 const Follower = ({ onClose }: { onClose: () => void }) => {
-  const [followerUsers,setFollowerUsers] = useState([]);
+  const [followerUsers,setFollowerUsers] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
   }, []);
 
   const filteredUsers = followerUsers.filter((user:any) =>
-    user.nickname.toLowerCase().includes(searchTerm.toLowerCase())
+    user.nickName?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
@@ -57,11 +57,11 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
             <div key={user.userId} className={styles.userItem}>
               <div className={styles.userInfo}>
               <img
-                        src={user.profileImageUrl}
-                        alt="mapImage"
+                        src={user.imgUrl}
+                        alt="propfileImage"
                         className={styles.userProfilePic}
                 />
-                <div className={styles.userName}>{user.nickname}</div>
+                <div className={styles.userName}>{user.nickName}</div>
               </div>
               <button className={styles.isFollow}>
                 팔로잉
