@@ -59,14 +59,14 @@ const Following = ({ onClose }: { onClose: () => void }) => {
         <div className={styles.userList}>
           {filteredUsers.map((user: any) => (
             <div key={user.userId} className={styles.userItem}>
-              <div className={styles.userInfo}>
+              <Link to={`/user/${user.userId}`} className={styles.userInfo}>
               <img
                         src={user.imgUrl}
                         alt="profileImage"
                         className={styles.userProfilePic}
                       />
                 <div className={styles.userName}>{user.nickName}</div>
-              </div>
+              </Link>
               <button className={styles.isFollow}>
                 팔로잉
               </button>
