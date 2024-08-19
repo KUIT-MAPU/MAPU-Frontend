@@ -10,6 +10,7 @@ import Following from '../followModal/Following';
 import Follower from '../followModal/Follower';
 
 import instance from '../../../apis/instance';
+import ProfileEdit from '../getProfileEdit/ProfileEdit';
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
   const [isFollowerOpen, setIsFollowerOpen] = useState(false);
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+  const [isProfileEditOpen, setIsProfileEditOpen] = useState<boolean>(false);
   const [userData, setUserData] = useState({
     nickname: '',
     profileId: '',
@@ -108,6 +110,14 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
     setIsFollowerOpen(false);
   };
 
+  const handleProfileEditOpen = () => {
+    setIsProfileEditOpen(true);
+  };
+
+  const handleProfileEditClose = () => {
+    setIsProfileEditOpen(false);
+  };
+
   useEffect(() => {
     if (registerStatus !== RegisterStatus.LOG_IN && loginNeeded) {
       setIsLog(false);
@@ -161,12 +171,13 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
           <span>{userData.followingCnt}</span>
         </div>
       </div>
-      <div className={styles.ProfileBottom} onClick={handleLoginClick}>
+      <div className={styles.ProfileBottom} onClick={handleProfileEditOpen}>
         프로필 편집
       </div>
 
       {isFollowingOpen && <Following onClose={closeFollowing} />}
       {isFollowerOpen && <Follower onClose={closeFollower} />}
+      {isProfileEditOpen && <ProfileEdit onClose={handleProfileEditClose} />}
       {isOverlayVisible && (
         <>
           <div onClick={handleClose} />
