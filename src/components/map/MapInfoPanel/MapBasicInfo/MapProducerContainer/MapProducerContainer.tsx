@@ -27,7 +27,14 @@ const MapProducerConatiner: React.FC<Props> = ({ mode, mapId }) => {
     <div className={styles.mapProducerContainer}>
       <div className={styles.mapProducer__info}>
         <img
-          src={owner !== undefined ? owner.imgUrl! : UserDefaultProfile}
+          src={
+            owner !== undefined
+              ? owner.imageUrl !== null
+                ? owner.imageUrl!
+                : UserDefaultProfile
+              : UserDefaultProfile
+          }
+          // src={UserDefaultProfile}
           alt="프로필 이미지"
         />
         <span>{owner !== undefined && owner.nickName!}</span>
