@@ -1,6 +1,6 @@
-import { UserType } from "../UserType"
+import { UserType } from '../UserType';
 
 export interface FollowingType {
   userId: number;
-  users : UserType[];
+  users: UserType[];
 }

@@ -9,9 +9,9 @@ import MapInfoPanel from '../../components/map/MapInfoPanel/MapInfoPanel';
 import ObjectInfoPanel from '../../components/map/ObjectInfoPanel/ObjectInfoPanel';
 import AuthContainer from '../../components/login/AuthContainer';
 import BaseMap from '../../components/map/BaseMap/BaseMap';
-import EditDesignPanel from '../../components/map/BaseMap/EditDesignPanel';
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import { MapMode } from '../../types/enum/MapMode';
+import { useMapBasicInfoQuery } from '../../apis/Map/fetchMapBasicInfo';
 import { YorkieDocType } from '../../types/map/object/ObjectInfo';
 import useMapInfoStore from '../../stores/mapInfoStore';
 
@@ -31,7 +31,8 @@ const Map = () => {
         ? MapMode.VIEW
         : MapMode.UNVALID; //error;
   const navigate = useNavigate();
-  const { mapName } = useParams();
+  const mapIdStr = useParams().mapId;
+  const mapId = Number(mapIdStr);
   const { registerStatus, loginNeeded, setLoginNeededStatus } =
     useRegisterStore();
   const [dimmed, setDimmed] = useState<boolean>(false);
@@ -44,6 +45,11 @@ const Map = () => {
     setInnerData,
   } = useMapInfoStore();
 
+  const { mapBasicInfo, isMapBasicInfoLoading } = useMapBasicInfoQuery(
+    mapId,
+    mapMode,
+  );
+
   useEffect(() => {
     if (mapMode === MapMode.UNVALID) {
       //TODO: error 잘못된 접근 (모드)
@@ -52,11 +58,13 @@ const Map = () => {
 
   //TODO: 지도 정보 api 호출 -> react query의 캐시로 데이터 관리
   useEffect(() => {
-    const titleElement = document.getElementsByTagName('title')[0];
-    //TODO: 지도 제목이 바뀐 경우, 이전으로 갔을 때 오류 반환해야 함
-    //mapId를 통해 지도 정보 api 호출 -> 지도 제목이 일치하는지 확인 -> 불일치시 에러
-    titleElement.innerHTML = `${mapName!.replaceAll('-', ' ')} | MAPU`;
-  }, [mapName]);
+    if (!isMapBasicInfoLoading) {
+      const titleElement = document.getElementsByTagName('title')[0];
+      //TODO: 지도 제목이 바뀐 경우, 이전으로 갔을 때 오류 반환해야 함
+      //mapId를 통해 지도 정보 api 호출 -> 지도 제목이 일치하는지 확인 -> 불일치시 에러
+      titleElement.innerHTML = `${mapBasicInfo!.result.title} | MAPU`;
+    }
+  }, [isMapBasicInfoLoading]);
 
   useEffect(() => {
     if (mapMode === MapMode.EDIT) {
@@ -89,7 +97,7 @@ const Map = () => {
     const YORKIE_CLIENT_API_KEY = process.env.REACT_APP_YORKIE_API_KEY;
     const YORKIE_ENDPOINT = process.env.REACT_APP_YORKIE_URL;
 
-    if (!mapName || !YORKIE_CLIENT_API_KEY || !YORKIE_ENDPOINT) {
+    if (!mapIdStr || !YORKIE_CLIENT_API_KEY || !YORKIE_ENDPOINT) {
       return;
     }
 
@@ -99,7 +107,7 @@ const Map = () => {
       });
       await client.activate();
 
-      const doc = new yorkie.Document<YorkieDocType>(mapName);
+      const doc = new yorkie.Document<YorkieDocType>(mapIdStr + '111');
       await client.attach(doc);
 
       doc.update((root) => {
@@ -119,7 +127,7 @@ const Map = () => {
         client.deactivate();
       }
     };
-  }, [mapName]);
+  }, [mapIdStr]);
 
   if (!client || !doc) {
     return <div>Loading...</div>;
@@ -148,14 +156,9 @@ const Map = () => {
       )}
       {dimmed && <AuthContainer className={styles.authContainer} />}
       <GlobalNavigationBar />
-      <MapInfoPanel mode={mapMode} />
+      <MapInfoPanel mode={mapMode} mapId={mapId} />
       <BaseMap mode={mapMode} />
-      <ObjectInfoPanel mode={mapMode} />
-      <div className={styles.main}>
-        <MapInfoPanel mode={mapMode} />
-        <BaseMap mode={mapMode} />
-        <ObjectInfoPanel mode={mapMode} />
-      </div>
+      <ObjectInfoPanel mode={mapMode} mapId={mapId} />
     </div>
   );
 };

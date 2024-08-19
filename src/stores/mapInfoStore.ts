@@ -1,11 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { MapInfo } from '../types/map/MapInfo';
 import { MapObject, YorkieDocType } from '../types/map/object/ObjectInfo';
 import { Document } from 'yorkie-js-sdk';
 
 interface State {
-  mapInfo: MapInfo;
   innerData: YorkieDocType;
   selectedObjectId?: string;
   doc?: Document<any, any>;
@@ -25,7 +23,6 @@ interface State {
 const useMapInfoStore = create(
   persist<State>(
     (set, get) => ({
-      mapInfo: {} as MapInfo,
       innerData: {
         informationAttributes: [],
         objects: [],

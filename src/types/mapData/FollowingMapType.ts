@@ -1,4 +1,4 @@
-import { MapsType } from "./MapsType";
+import { MapsType } from './MapsType';
 
 export interface FollowingMapType {
   nickname: string;

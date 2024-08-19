@@ -1,21 +1,27 @@
 import styles from './PublishLinkContainer.module.scss';
 import publicStyles from '../ObjectContainerPublicStyle.module.scss';
+import { useMapBasicInfoQuery } from '../../../../apis/Map/fetchMapBasicInfo';
 import useMapInfoStore from '../../../../stores/mapInfoStore';
 import PublishBtn from '../../../../assets/map/btn_publish.svg';
 import PublishCancelBtn from '../../../../assets/map/btn_cancel_publish.svg';
 import CopyLinkBtn from '../../../../assets/map/btn_link_copy.svg';
+import { MapMode } from '../../../../types/enum/MapMode';
 
 interface Props {
-  mode: string;
+  mode: MapMode;
+  mapId: number;
 }
 
-const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
-  const { mapInfo, innerData } = useMapInfoStore();
+const PublishLinkContainer: React.FC<Props> = ({ mode, mapId }) => {
+  const { innerData } = useMapInfoStore();
+  const { mapBasicInfo } = useMapBasicInfoQuery(mapId, mode);
 
   const handleCopyLink = async () => {
     //클립보드에 공유 링크 복사
     try {
-      await navigator.clipboard.writeText(`${mapInfo.publicLink}`);
+      await navigator.clipboard.writeText(
+        `mapu-frontend.vercel.app/map/2/view`,
+      );
     } catch (e) {
       //TODO: 에러 상태로 설정
       alert('공유 링크 복사에 실패하였습니다.');
@@ -24,7 +30,6 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
 
   const handleSwitchIsPublished = () => {
     //TODO: 게시 여부 설정 api 호출
-    // swithIsPublished();
   };
 
   //editor
@@ -33,7 +38,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
       <section
         className={`${styles.objectInfoHeader} ${styles.publishContainer}`}
       >
-        {mapInfo.isPublished ? (
+        {mapBasicInfo !== undefined && mapBasicInfo.result.published ? (
           <div className={publicStyles.publicTextContainer}>
             <span className={publicStyles.boxTitle}>지도 게시 취소하기</span>
             <span className={publicStyles.publicDescription}>
@@ -61,7 +66,7 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
             </span>
           </div>
         )}
-        {mapInfo.isPublished ? (
+        {mapBasicInfo !== undefined && mapBasicInfo.result.published ? (
           <button
             type="button"
             className={styles.publishBtn}
@@ -96,7 +101,9 @@ const PublishLinkContainer: React.FC<Props> = ({ mode }) => {
     >
       <span className={publicStyles.boxTitle}>지도 링크</span>
       <div className={styles.linkContainer}>
-        <span className={styles.publicLink}>{mapInfo.publicLink}</span>
+        <span
+          className={styles.publicLink}
+        >{`mapu-frontend.vercel.app/map/2/view`}</span>
         <img
           src={CopyLinkBtn}
           alt="링크 복사하기"

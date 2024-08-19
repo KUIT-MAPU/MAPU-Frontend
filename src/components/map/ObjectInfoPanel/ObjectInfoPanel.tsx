@@ -8,14 +8,15 @@ import useMapInfoStore from '../../../stores/mapInfoStore';
 
 interface Props {
   mode: MapMode;
+  mapId: number;
 }
 
-const ObjectInfoPanel: React.FC<Props> = ({ mode }) => {
+const ObjectInfoPanel: React.FC<Props> = ({ mode, mapId }) => {
   const object = useMapInfoStore((state) => state.getSelectedObject());
 
   return (
     <div id={styles.objectInfoPanel}>
-      <PublishLinkContainer mode={mode} />
+      <PublishLinkContainer mode={mode} mapId={mapId} />
       <ObjectBasicInfoContainer mode={mode} object={object} />
       {mode === MapMode.EDIT && (
         <EditorObjectInfoInputContainer

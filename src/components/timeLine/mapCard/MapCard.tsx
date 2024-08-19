@@ -8,10 +8,8 @@ import ico_carousel_forward from '../../../assets/ico_carousel_forward.svg';
 import { Link } from 'react-router-dom';
 import { MapsType as KeywordMapsType } from '../../../types/keywords/MapsType';
 import { MapsType } from '../../../types/mapData/MapsType';
-import { APIMapsType } from '../../../types/keywords/APIMapsType';
 import { FollowingMapType } from '../../../types/mapData/FollowingMapType';
 import { KeywordType } from '../../../types/keywords/KeywordType';
-import { keywordMap } from '../../../apis/keywords/keywordMap';
 
 interface MapCardProps {
   KeywordmapData?: KeywordMapsType[];
@@ -41,7 +39,11 @@ const MapCard: React.FC<MapCardProps> = ({
     }
     return styles.backward;
   };
-  
+
+  useEffect(() => {
+    console.log('MapCard followingMap:', followingMap);
+  }, [followingMap]);
+
   const handleForward = () => {
     setRenderMap((preVisibleItems) => preVisibleItems - MAP_PER_PAGE);
   };
@@ -65,10 +67,7 @@ const MapCard: React.FC<MapCardProps> = ({
             <img src={ico_carousel_forward} alt="Forward" />
           </button>
 
-          <button
-            className={buttonClassName()}
-            onClick={handleBackward}
-          >
+          <button className={buttonClassName()} onClick={handleBackward}>
             <img src={ico_carousel_backward} alt="Backward" />
           </button>
         </div>

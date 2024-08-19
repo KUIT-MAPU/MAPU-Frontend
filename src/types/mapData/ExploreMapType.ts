@@ -1,12 +1,12 @@
-import { UserType } from "../UserType";
-import { KeywordType } from "../keywords/KeywordType";
+import { KeywordType } from '../keywords/KeywordType';
+import { UserType } from '../UserType';
 
 export interface ExploreMapType {
   mapId: number;
   imageUrl: string;
   title: string;
-  region : string;
+  region: string;
   description: string;
-  user : UserType;
+  user: UserType;
   keyword: KeywordType[];
 }

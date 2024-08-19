@@ -1,30 +1,23 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './MapInfoPanel.module.scss';
 import MapProducerConatiner from './MapBasicInfo/MapProducerContainer/MapProducerContainer';
 import MapBasicInfoContainer from './MapBasicInfo/MapBasicInfoContainer/MapBasicInfoContainer';
-import useMapInfoStore from '../../../stores/mapInfoStore';
 import ObjectList from './ObjectOutlineList/ObjectList';
 import { MapMode } from '../../../types/enum/MapMode';
 import BlackBackBtn from '../../../assets/btn_arrow_left_black.svg';
 import useRegisterStore from '../../../stores/registerStore';
+import { useMapBasicInfoQuery } from '../../../apis/Map/fetchMapBasicInfo';
+import useMapInfoStore from '../../../stores/mapInfoStore';
 
 interface Props {
   mode: MapMode;
+  mapId: number;
 }
 
-const MapInfoPanel: React.FC<Props> = ({ mode }) => {
-  const { mapInfo } = useMapInfoStore();
-  const { loginNeeded } = useRegisterStore();
-
+const MapInfoPanel: React.FC<Props> = ({ mode, mapId }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    //TODO: 내가 제작한 지도인지 판단
-    //아니라면
-    //1. 상단에 지도 제작자 프로필 표시
-    //2. 팔로잉 중인지 판단
-  }, []);
+  const { loginNeeded } = useRegisterStore();
+  const { mapBasicInfo } = useMapBasicInfoQuery(mapId, mode);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -43,9 +36,9 @@ const MapInfoPanel: React.FC<Props> = ({ mode }) => {
             />
           </button>
         </div>
-        <MapProducerConatiner />
-        <MapBasicInfoContainer mode={mode} />
-        <ObjectList />
+        <MapProducerConatiner mode={mode} mapId={mapId} />
+        <MapBasicInfoContainer mode={mode} mapId={mapId} />
+        <ObjectList mode={mode} mapId={mapId} />
       </section>
     );
 
@@ -62,9 +55,11 @@ const MapInfoPanel: React.FC<Props> = ({ mode }) => {
             />
           </button>
         </div>
-        {!mapInfo.isMine && <MapProducerConatiner />}
-        <MapBasicInfoContainer mode={mode} />
-        {!loginNeeded && <ObjectList />}
+        {mapBasicInfo !== undefined && !mapBasicInfo.result.mine && (
+          <MapProducerConatiner mode={mode} mapId={mapId} />
+        )}
+        <MapBasicInfoContainer mode={mode} mapId={mapId} />
+        {!loginNeeded && <ObjectList mode={mode} mapId={mapId} />}
       </section>
     );
 

@@ -1,9 +1,17 @@
 import styles from './ObjectList.module.scss';
 import ObjectOutlineBtn from './ObjectOutlineBtn';
 import useMapInfoStore from '../../../../stores/mapInfoStore';
+import { useMapBasicInfoQuery } from '../../../../apis/Map/fetchMapBasicInfo';
+import { MapMode } from '../../../../types/enum/MapMode';
 
-const ObjectList = () => {
-  const { mapInfo, innerData } = useMapInfoStore();
+interface Props {
+  mode: MapMode;
+  mapId: number;
+}
+
+const ObjectList: React.FC<Props> = ({ mode, mapId }) => {
+  const { innerData } = useMapInfoStore();
+  const { mapBasicInfo } = useMapBasicInfoQuery(mapId, mode);
 
   return (
     <div className={styles.objectListContainer}>
@@ -12,7 +20,7 @@ const ObjectList = () => {
       </div>
       <div
         className={
-          mapInfo.isMine
+          mapBasicInfo !== undefined && mapBasicInfo!.result.mine
             ? `${styles.objectList}`
             : `${styles.objectList} ${styles.notMineList}`
         }
