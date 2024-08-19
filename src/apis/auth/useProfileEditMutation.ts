@@ -22,7 +22,8 @@ export const useProfileUpdateMutation = (prevUrl: string) => {
     },
     onSuccess: (response) => {
       const responseData = response.data;
-
+      console.log(response.data);
+      
       if (responseData.code === ResponseCode.SUCCESS) {
         console.log('프로필 업데이트 성공!');
 

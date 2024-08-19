@@ -2,6 +2,7 @@ import styles from './UserDataInput.module.scss';
 import InfoGrayCircle from '../../../assets/ico_info_gray.svg';
 import InfoErrorCircle from '../../../assets/ico_info_error_red.svg';
 
+import { useState } from 'react';
 interface Props {
   isNicknameEmpty: boolean;
   isValidNickname: boolean;
@@ -17,8 +18,11 @@ const NicknameInput: React.FC<Props> = ({
   setIsNicknameEmpty,
   setIsValidNickname,
 }) => {
+  const [nicknameValue, setnicknameValue] = useState<string>(''); // 상태 관리
+
   const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const nicknameValue = e.target.value;
+    const value = e.target.value;
+    setnicknameValue(value); // 입력값을 상태에 저장
     setNickname(nicknameValue);
     checkNickname(nicknameValue);
   };
@@ -48,6 +52,7 @@ const NicknameInput: React.FC<Props> = ({
         placeholder="닉네임을 입력하세요."
         required
         autoFocus
+        value={nicknameValue}
         onChange={onChangeNickname}
         onBlur={handleFocusOut}
         name="nickname"

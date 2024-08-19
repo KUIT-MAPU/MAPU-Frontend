@@ -11,7 +11,7 @@ import Follower from '../followModal/Follower';
 
 import instance from '../../../apis/instance';
 import ProfileEdit from '../getProfileEdit/ProfileEdit';
-import ProfileSettingModal from '../../profile_setting/ProfileSettingModal';
+import ProfileSettingModal from '../../profile_setting/LoginProfileSetting';
 
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
@@ -181,7 +181,10 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
       {isFollowerOpen && <Follower onClose={closeFollower} />}
       {isProfileEditOpen && (
         <div onClick={handleProfileEditClose} className={styles.modalOverlay}>
-          <ProfileSettingModal />
+          <div className={styles.modalContent}
+          onClick={(e) => e.stopPropagation}>
+            <ProfileSettingModal onClose={handleProfileEditClose} />
+            </div>
         </div>
       )}
       {isOverlayVisible && (

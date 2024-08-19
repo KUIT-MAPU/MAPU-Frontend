@@ -15,6 +15,8 @@ import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import UserProfile from '../../pages/UserProfile/UserProfile';
 
+import instance from '../../apis/instance';
+import { profile } from 'console';
 const ProfileInfoSetting = () => {
   const prevUrl = useLocation().pathname.split('?')[0];
 
@@ -33,8 +35,11 @@ const ProfileInfoSetting = () => {
   const [isIdEmpty, setIsIdEmpty] = useState<boolean>(false);
   const [isValidId, setIsValidId] = useState<boolean>(true);
 
-  const signUpMutation = useSignUpMutation(prevUrl);
-  const profileEditMutation = useProfileEditMutation(prevUrl);
+  const [userData, setUserData] = useState({
+    nickname: '',
+    profileId: '',
+    imgUrl: '',
+  });
 
   useEffect(() => {
     if (id === undefined || nickname === undefined) {
@@ -48,37 +53,51 @@ const ProfileInfoSetting = () => {
   }, [isNicknameEmpty, isValidNickname, isIdEmpty, isValidId]);
 
   
-  const handleProfileSettingSubmit = async () => {
-    const formData = new FormData();
-    imgFile && formData.append('imageFile', imgFile);
-
-
-    const requestJson = JSON.stringify({
-      nickname: nickname,
-      profileId: id,
-    });
-    const requestDTO = new Blob([requestJson], { type: 'application/json' });
-    formData.append('requestDTO', requestDTO);
-    await signUpMutation.mutate(formData);
-    await profileEditMutation.mutate(formData);
-
-    console.log(imgFile);
-    console.log(formData);
+  const sendDataToBackend = async (data:any) => {
+    try {
+      const response = await instance.patch('/user', data);
+      console.log('Data sent successfully:', response.data);
+    } catch (error) {
+      console.error('Failed to send data:', error);
+    }
   };
+  
 
-  const onChangeIamge = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    //이미지 압축
-    if (!e.target.files) return;
-    const file = e.target.files[0];
-    setImgFile(file);
+  const handleProfileSettingSubmit = async (event:any) => {
+    event.preventDefault();
 
-    const options = {
-      maxSizeMB: 0.6,
-      maxWidthOrHeight: 512,
+    const formData = {
+      nickname,
+      id,
+      imageUrl: "https://profile-image-s3-bucket-mapu-backend.s3.ap-northeast-2.amazonaws.com/soju.png/2024-08-08T03%3A37%3A25.889237300",
     };
-    const compressedFile = await imageCompression(file, options);
-    setImagePreview(URL.createObjectURL(compressedFile));
+    
+    console.log('데이터 생성 완료')
+    console.log(formData);
+    sendDataToBackend(formData);
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await instance.get('/user');
+        const data = response.data.result;
+
+        setUserData({
+          nickname: data.nickname,
+          profileId: data.profileId,
+          imgUrl: data.imgUrl,
+        });
+
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };  //로그인 한 유저 정보 받아오기
+    
+
+    fetchUserData();
+  }, []);
+
 
   return (
     <div className={styles.profileInfoContainer}>
@@ -94,7 +113,6 @@ const ProfileInfoSetting = () => {
               id="user-profile-img"
               className={styles.profileEditInput}
               accept=".jpg, .jpeg, .png"
-              onChange={onChangeIamge}
             />
           </div>
           <label htmlFor="user-profile-img" className={styles.profileEditBtn}>

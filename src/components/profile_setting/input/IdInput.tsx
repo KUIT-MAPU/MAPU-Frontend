@@ -3,6 +3,7 @@ import InfoGrayCircle from '../../../assets/ico_info_gray.svg';
 import InfoErrorCircle from '../../../assets/ico_info_error_red.svg';
 import useRegisterStore from '../../../stores/registerStore';
 
+import { useState } from 'react';
 interface Props {
   isIdEmpty: boolean;
   isValidId: boolean;
@@ -19,9 +20,11 @@ const IdInput: React.FC<Props> = ({
   setIsValidId,
 }) => {
   const { isIdDuplicate, setIsIdDuplicate } = useRegisterStore();
+  const [idValue, setIdValue] = useState<string>(''); // 상태 관리
 
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const idValue = e.target.value;
+    const value = e.target.value;
+    setIdValue(value); // 입력값을 상태에 저장
     if (isIdDuplicate) setIsIdDuplicate(false);
     setId(idValue);
     checkId(idValue);
@@ -51,6 +54,7 @@ const IdInput: React.FC<Props> = ({
         type="text"
         placeholder="아이디를 입력하세요."
         required
+        value={idValue}
         onChange={onChangeId}
         name="id"
         onBlur={handleFocusOut}

@@ -29,6 +29,14 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [mapData, setMapData] = useState([]);
   const [searchInput,setSearchInput] = useState<string>('');
+  const [userData, setUserData] = useState({
+    nickname: '',
+    profileId: '',
+    imgUrl: '',
+    mapCnt: 0,
+    followerCnt: 0,
+    followingCnt: 0,
+  });
 
   const openNewMap = () => {
     setIsNewMapOpen(true);
@@ -99,6 +107,32 @@ const GetUser = (props: { children?: React.ReactNode }) => {
       setCurrentPage(currentPage + 1);
     }
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await instance.get('/user');
+        const data = response.data.result;
+
+        setUserData({
+          nickname: data.nickname,
+          profileId: data.profileId,
+          imgUrl: data.imgUrl,
+          mapCnt: data.mapCnt,
+          followerCnt: data.followerCnt,
+          followingCnt: data.followingCnt,
+        });
+
+        navigate(`/user/${data.profileId}`);
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };  //로그인 한 유저 정보 받아오기
+
+        fetchUserData();
+  }, [navigate]);
+
+    
 
   return (
     <div className={styles.container}>
@@ -173,7 +207,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
         {view === 'gallery' && (
           <div className={styles.getMap}>
             {currentItems.map((map :any) => (
-              <Link to='/map/mapname/edit' className={styles.link} key={map.id}>
+              <Link to={`/map/${map.mapId}/edit`}  className={styles.link}>
                 <div className={styles.mapWrapper}>
                   <div className={styles.numMap}>
                     <img
@@ -187,7 +221,11 @@ const GetUser = (props: { children?: React.ReactNode }) => {
                       <div className={styles.mapTitle}>{map.title}</div>
                       <div className={styles.mapLocation}>{map.region}</div>
                     </div>
-                    <ExampleUser />
+                    <img
+                      src={userData.imgUrl}
+                      alt="userProfileImage"
+                      className={styles.profileImage}
+                    />
                   </div>
                 </div>
               </Link>
@@ -207,7 +245,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
             </div>
             <div className={styles.listContainer}>
               {currentItems.map((map:any) => (
-                <div key={map.id} className={styles.mapList}>
+                <Link to={`/map/${map.mapId}/edit`}  className={styles.mapList}>
                   <div className={styles.mapListName}>
                     <div className={styles.mapListImage}>
                       <img
@@ -228,12 +266,16 @@ const GetUser = (props: { children?: React.ReactNode }) => {
                   <div className={styles.mapListInfo}>
                     <div>{map.role}</div>
                     <div>
-                      <ExampleUser />
+                      <img
+                        src={userData.imgUrl}
+                        alt="userProfileImage"
+                        className={styles.profileImage}
+                      />
                     </div>
                     <div>{map.createdDate}</div>
                     <div>{map.center}</div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

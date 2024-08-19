@@ -249,7 +249,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 140px;
+  gap: 160px;
 }
 
 .mapInfo div,
@@ -328,4 +328,11 @@
   font-size: 14px;
   line-height: 21px;
   color: var(--gray_500);
+}
+
+.profileImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 150px;
+  border: 1.36px;
 }
