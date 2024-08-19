@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
-import styles1 from '../../components/global/GlobalNavigationBar.module.scss';
-import styles2 from '../components/userProfile/GetUserInfoBar.module.scss';
+import styles from './UserProfile.module.scss';
 import GetUser from '../../components/userProfile/GetUser';
 import EmptyUser from '../../components/userProfile/EmptyUser';
 import EmtpyUserInfobar from '../../components/userProfile/userInfoBarCard/EmptyUserInfoBar';
@@ -39,13 +38,10 @@ const UserProfile = () => {
 
   console.log(RegisterStatus.LOG_IN);
   return (
-    <div className={styles1.container}>
+    <div className={styles.container}>
       <GlobalNavigationBar />
       {RegisterStatus.LOG_IN ? <GetUserInfobar /> : <EmtpyUserInfobar />}
       {RegisterStatus.LOG_IN ? <GetUser /> : <EmptyUser />}
-      <main className={styles1.main}>
-        <Outlet />
-      </main>
     </div>
   );
 };
