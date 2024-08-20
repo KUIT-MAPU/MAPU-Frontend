@@ -110,6 +110,7 @@ const ProfileInfoSetting = () => {
             setIsNicknameEmpty={setIsNicknameEmpty}
             setIsValidNickname={setIsValidNickname}
             setNickname={setNickname}
+            value="닉네임을 입력하세요"
           />
           <IdInput
             isIdEmpty={isIdEmpty}
@@ -117,6 +118,7 @@ const ProfileInfoSetting = () => {
             setIsIdEmpty={setIsIdEmpty}
             setIsValidId={setIsValidId}
             setId={setId}
+            value="아이디를 입력하세요"
           />
         </div>
         <button

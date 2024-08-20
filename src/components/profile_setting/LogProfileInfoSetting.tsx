@@ -105,7 +105,7 @@ const ProfileInfoSetting = () => {
         <div className={styles.userImg}>
           <div className={styles.userImg__view}>
             <img
-              src={imagePreview ? `${imagePreview}` : `${UserDefaultImage}`}
+              src={userData.imgUrl}
               alt="사용자 기본 프로필 이미지"
             />
             <input
@@ -128,6 +128,7 @@ const ProfileInfoSetting = () => {
             setIsNicknameEmpty={setIsNicknameEmpty}
             setIsValidNickname={setIsValidNickname}
             setNickname={setNickname}
+            value={userData.nickname}
           />
           <IdInput
             isIdEmpty={isIdEmpty}
@@ -135,6 +136,7 @@ const ProfileInfoSetting = () => {
             setIsIdEmpty={setIsIdEmpty}
             setIsValidId={setIsValidId}
             setId={setId}
+            value={userData.profileId}
           />
         </div>
         <button

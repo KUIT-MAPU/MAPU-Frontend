@@ -3,8 +3,10 @@ import InfoGrayCircle from '../../../assets/ico_info_gray.svg';
 import InfoErrorCircle from '../../../assets/ico_info_error_red.svg';
 import useRegisterStore from '../../../stores/registerStore';
 
+import { useEffect } from 'react';
 import { useState } from 'react';
 interface Props {
+  value:string;
   isIdEmpty: boolean;
   isValidId: boolean;
   setId: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -13,6 +15,7 @@ interface Props {
 }
 
 const IdInput: React.FC<Props> = ({
+  value,
   isIdEmpty,
   isValidId,
   setId,
@@ -22,12 +25,15 @@ const IdInput: React.FC<Props> = ({
   const { isIdDuplicate, setIsIdDuplicate } = useRegisterStore();
   const [idValue, setIdValue] = useState<string>(''); // 상태 관리
 
+  useEffect(() => {
+    setIdValue(value || ''); // 외부에서 value가 변경될 경우 내부 상태를 업데이트
+  }, [value]);
+
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setIdValue(value); // 입력값을 상태에 저장
-    if (isIdDuplicate) setIsIdDuplicate(false);
-    setId(idValue);
-    checkId(idValue);
+    const newValue = e.target.value;
+    setIdValue(newValue); // 입력값을 상태에 저장
+    setId(newValue); // 부모 컴포넌트의 상태도 업데이트
+    checkId(newValue);
   };
 
   const checkId = async (id: string) => {
