@@ -6,7 +6,7 @@ import ProfileInfoSetting from './ProfileInfoSetting';
 import ProfileSetting from '../../assets/ico_person.svg';
 import CloseBtn from '../../assets/btn_close.svg';
 
-const ProfileSettingModal = () => {
+const ProfileSettingModal = (props : any) => {
   const { registerStatus } = useRegisterStore();
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
@@ -19,7 +19,7 @@ const ProfileSettingModal = () => {
   };
 
   if (isWelcome) {
-    return <ProfileInfoSetting />;
+    return <ProfileInfoSetting loginedUserId={props.userId}/>;
   }
 
   return (

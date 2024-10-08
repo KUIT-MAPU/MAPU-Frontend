@@ -9,9 +9,11 @@ import CloseBtn from '../../assets/btn_close.svg';
 
 interface ProfileSettingModalProps {
   onClose: () => void;
+  loginedNickName: string;
+  loginedId: string;
 }
 
-const ProfileSettingModal: React.FC<ProfileSettingModalProps> = ({ onClose }) => {
+const ProfileSettingModal: React.FC<ProfileSettingModalProps> = ({ onClose,loginedNickName,loginedId }) => {
   const { registerStatus } = useRegisterStore();
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
@@ -38,7 +40,7 @@ const ProfileSettingModal: React.FC<ProfileSettingModalProps> = ({ onClose }) =>
         </button>
       </div>
 
-      <ProfileInfoSetting />
+      <ProfileInfoSetting loginedNickName={loginedNickName} loginedId={loginedId}/>
     </div>
   );
 };

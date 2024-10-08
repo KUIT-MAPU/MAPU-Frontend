@@ -75,63 +75,64 @@ const ProfileEdit = ({ onClose }: { onClose: () => void }) => {
       }, []);
 
     return (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <div className={styles.modalTop}>
-              <ProfileEditIcon />
-              <button className={styles.closeButton} onClick={onClose}>
-                <ModalClose />
-              </button>
-            </div>
-            <div className={styles.userProfilePicBox}>
-                 <img
-                          src={userProfileData.imgUrl}
-                          alt="profileImage"
-                          className={styles.userProfilePic}
-                />
-            </div>
+      <ProfileSettingModal />
+        // <div className={styles.modalOverlay}>
+        //   <div className={styles.modalContent}>
+        //     <div className={styles.modalTop}>
+        //       <ProfileEditIcon />
+        //       <button className={styles.closeButton} onClick={onClose}>
+        //         <ModalClose />
+        //       </button>
+        //     </div>
+        //     <div className={styles.userProfilePicBox}>
+        //          <img
+        //                   src={userProfileData.imgUrl}
+        //                   alt="profileImage"
+        //                   className={styles.userProfilePic}
+        //         />
+        //     </div>
 
-            <div className={styles.getNickName}>
-              <input
-                type="text"
-                className={styles.getNickNameInput}
-                value={userNickName}
-                onChange={(e) => setUserNickName(e.target.value)} 
-                placeholder="닉네임"
-              />
-            </div>
-            <div className={styles.alertNickName}>
-                <FontAlert />
-                <div>3~12글자 이내</div>
-            </div>
+        //     <div className={styles.getNickName}>
+        //       <input
+        //         type="text"
+        //         className={styles.getNickNameInput}
+        //         value={userNickName}
+        //         onChange={(e) => setUserNickName(e.target.value)} 
+        //         placeholder="닉네임"
+        //       />
+        //     </div>
+        //     <div className={styles.alertNickName}>
+        //         <FontAlert />
+        //         <div>3~12글자 이내</div>
+        //     </div>
 
-            <div className={styles.getId}>
-              <input
-                type="text"
-                className={styles.getIdInput}
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)} 
-                placeholder="아이디"
-              />
-            </div>
-            <div className={styles.alertId}>
-                <div className={styles.alertLettersCount}>
-                    <FontAlert />
-                    <div>3~20글자 이내</div>
-                    </div>
-                    <div className={styles.alertLettersStyle}>
-                    <FontAlert />
-                    <div>영문 소문자,숫자,특수문자(._) 사용</div>
-                </div>
-            </div>
+        //     <div className={styles.getId}>
+        //       <input
+        //         type="text"
+        //         className={styles.getIdInput}
+        //         value={userId}
+        //         onChange={(e) => setUserId(e.target.value)} 
+        //         placeholder="아이디"
+        //       />
+        //     </div>
+        //     <div className={styles.alertId}>
+        //         <div className={styles.alertLettersCount}>
+        //             <FontAlert />
+        //             <div>3~20글자 이내</div>
+        //             </div>
+        //             <div className={styles.alertLettersStyle}>
+        //             <FontAlert />
+        //             <div>영문 소문자,숫자,특수문자(._) 사용</div>
+        //         </div>
+        //     </div>
 
-            <div className={`${styles.createBtn} ${getButtonStyle()}`}>
-              <div 
+        //     <div className={`${styles.createBtn} ${getButtonStyle()}`}>
+        //       <div 
                 
-              onClick={handleSubmit}>적용하기</div>
-            </div>
-          </div>
-        </div>
+        //       onClick={handleSubmit}>적용하기</div>
+        //     </div>
+        //   </div>
+        // </div>
       );
 }
 

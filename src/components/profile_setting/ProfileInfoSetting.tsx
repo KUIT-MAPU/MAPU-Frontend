@@ -15,7 +15,7 @@ import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
 import UserProfile from '../../pages/UserProfile/UserProfile';
 
-const ProfileInfoSetting = () => {
+const ProfileInfoSetting = (props:any) => {
   const prevUrl = useLocation().pathname.split('?')[0];
 
   const { registerStatus } = useRegisterStore();
@@ -105,6 +105,7 @@ const ProfileInfoSetting = () => {
       <div className={styles.userDataContainer}>
         <div className={styles.inputContainer}>
           <NicknameInput
+            initialNickName={nickname}
             isNicknameEmpty={isNicknameEmpty}
             isValidNickname={isValidNickname}
             setIsNicknameEmpty={setIsNicknameEmpty}
@@ -112,6 +113,7 @@ const ProfileInfoSetting = () => {
             setNickname={setNickname}
           />
           <IdInput
+            initialId={id}
             isIdEmpty={isIdEmpty}
             isValidId={isValidId}
             setIsIdEmpty={setIsIdEmpty}
