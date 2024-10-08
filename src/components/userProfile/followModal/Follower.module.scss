@@ -132,10 +132,23 @@
   color: black;
 }
 
-.isFollow {
+.isFollowing {
   display: flex;
   border-radius: 4px;
   background-color: var(--gray_50);
+  width: 56px;
+  height: 25px;
+  align-items: center;
+  padding: 2px 12px 2px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.notFollowing {
+  display: flex;
+  border-radius: 4px;
+  background-color: var(--main);
   width: 56px;
   height: 25px;
   align-items: center;

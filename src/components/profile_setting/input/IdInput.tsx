@@ -10,6 +10,7 @@ interface Props {
   setId: React.Dispatch<React.SetStateAction<string | undefined>>;
   setIsIdEmpty: React.Dispatch<React.SetStateAction<boolean>>;
   setIsValidId: React.Dispatch<React.SetStateAction<boolean>>;
+  initialId : string | undefined;
 }
 
 const IdInput: React.FC<Props> = ({
@@ -18,9 +19,10 @@ const IdInput: React.FC<Props> = ({
   setId,
   setIsIdEmpty,
   setIsValidId,
+  initialId,
 }) => {
   const { isIdDuplicate, setIsIdDuplicate } = useRegisterStore();
-  const [idValue, setIdValue] = useState<string>(''); // 상태 관리
+  const [idValue, setIdValue] = useState<string>( initialId || ''); // 상태 관리
 
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
