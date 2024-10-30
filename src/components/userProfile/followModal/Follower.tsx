@@ -54,6 +54,32 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
     user.nickName?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  const unFollowing = async (followingId : number) => { 
+    try{
+      const response = await instance.delete(`/unfollow?followingId=${followingId}`);
+      console.error("삭제성공", response.data);
+
+      setFollowingUsers((currentUsers) =>
+        currentUsers.filter((user) => user.userId !== followingId)
+      );
+    } catch(error){
+      console.error("삭제실패",error);
+    }
+  }
+
+  const Following = async (followingId : number) => { 
+    try{
+      const response = await instance.post(`/follow`,{followingId});
+      console.error("팔로우성공", response.data);
+
+      setFollowingUsers((currentUsers) =>
+        currentUsers.filter((user) => user.userId !== followingId)
+      );
+    } catch(error){
+      console.error("팔로우실패",error);
+    }
+  }
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
@@ -86,7 +112,9 @@ const Follower = ({ onClose }: { onClose: () => void }) => {
                 />
                 <div className={styles.userName}>{user.nickName}</div>
               </Link>
-              <button className={isFollowing(user.userId) ? styles.isFollowing : styles.notFollowing}>
+              <button className={isFollowing(user.userId) ? styles.isFollowing : styles.notFollowing}
+              onClick={() => {isFollowing(user.userId) ? unFollowing(user.userId) : Following(user.userId)}}
+              >
                 {isFollowing(user.userId) ? '팔로잉' : '팔로우'}
               </button>
             </div>

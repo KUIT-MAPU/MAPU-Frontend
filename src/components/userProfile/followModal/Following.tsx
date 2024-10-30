@@ -7,6 +7,7 @@ import { ReactComponent as Search } from '../../../assets/ico_search.svg';
 import { ReactComponent as User } from '../../../assets/user.svg';
 
 import instance from '../../../apis/instance';
+import axios from 'axios';
 
 
 const Following = ({ onClose }: { onClose: () => void }) => {
@@ -32,6 +33,19 @@ const Following = ({ onClose }: { onClose: () => void }) => {
     user.nickName?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
+  const unFollowing = async (followingId : number) => { 
+    try{
+      const response = await instance.delete(`/unfollow?followingId=${followingId}`);
+      console.error("삭제성공", response.data);
+
+      setFollowingUsers((currentUsers) =>
+        currentUsers.filter((user) => user.userId !== followingId)
+      );
+    } catch(error){
+      console.error("삭제실패",error);
+    }
+  }
+  
   console.log(followingUsers);
   // console.log(filteredUsers);
 
@@ -67,7 +81,7 @@ const Following = ({ onClose }: { onClose: () => void }) => {
                       />
                 <div className={styles.userName}>{user.nickName}</div>
               </Link>
-              <button className={styles.isFollow}>
+              <button className={styles.isFollow} onClick={() => {unFollowing(user.userId)}}>
                 팔로잉
               </button>
             </div>
