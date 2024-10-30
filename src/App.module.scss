@@ -1,0 +1,209 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+  v2.0 | 20110126
+  License: none (public domain)
+*/
+:root {
+  --main: #00bd57;
+  --sub: #ccf2dd;
+  --error: #ff4b12;
+  --hover: #00a84d;
+  --edit_red: #ff4b12;
+  --edit_yellow: #ffa011;
+  --edit_blue: #0085ff;
+  --edit_purple: #821fff;
+  --white: #ffffff;
+  --gray_25: #fbfcfd;
+  --gray_50: #f2f5f8;
+  --gray_100: #ebeef2;
+  --gray_150: #dce2e7;
+  --gray_200: #ced3da;
+  --gray_300: #b7c0c9;
+  --gray_400: #a3abb3;
+  --gray_500: #767d86;
+  --gray_600: #4b535a;
+  --gray_700: #3a4149;
+  --gray_800: #2c2f34;
+  --gray_900: #232629;
+  --black: #111111;
+}
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  font-family: 'Freesentation', Arial, sans-serif;
+  font-weight: 400;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Freesentation', Arial, sans-serif;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Freesentation';
+  src: url('./assets/fonts/Freesentation-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Freesentation';
+  src: url('./assets/fonts/Freesentation-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Freesentation';
+  src: url('./assets/fonts/Freesentation-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+input {
+  outline: none;
+}
+button {
+  border: none;
+  background: none;
+}
+button:hover {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+p,
+input,
+textarea {
+  line-height: 150%;
+}
+
+span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,40 @@
+.mapProducerContainer {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mapProducer__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  img {
+    height: 32px;
+    width: 32px;
+    flex-shrink: 0;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+
+  span {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.followBtn {
+  padding: 2px 12px;
+  height: 25px;
+  border-radius: 4px;
+  background: var(--sub);
+  color: var(--main);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 150%;
+}
+.followBtn:disabled {
+  background: var(--gray_50);
+  color: var(--black);
+}

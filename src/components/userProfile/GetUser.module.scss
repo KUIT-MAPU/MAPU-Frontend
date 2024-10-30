@@ -1,0 +1,347 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topBar {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--gray_50);
+}
+
+.iconContainer {
+  margin-left: 8px;
+  min-width: 96px;
+  width: auto;
+  min-height: 48px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.square {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnTitleContainer {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.btnTitle {
+  width: 200px;
+  margin-left: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: row;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+  color: var(--black);
+  gap: 12px;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  width: 150px;
+  margin-left: 100px;
+  max-height: 150px;
+  background-color: white;
+  border: 1px solid var(--gray_400);
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--gray_100); /* 마우스 오버 시 배경색 변경 */
+  }
+}
+
+.middleBar {
+  width: 100%;
+  min-height: 48px;
+  height: auto;
+  margin-left: 20px;
+  display: flex;
+}
+
+.searchBar {
+  display: flex;
+  width: 1250px;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: var(--gray_50);
+}
+
+.search {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.searchInput {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  margin-left: 8px;
+  color: black;
+
+  &::placeholder {
+    color: var(--gray_400);
+  }
+}
+
+.contentView {
+  display: flex;
+  width: 94px;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-left: 16px;
+  border: 1px solid var(--gray_50);
+  border-radius: 8px;
+}
+
+.iconButton {
+  background-color: var(--white); // 기본 배경색
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px; // 버튼을 정사각형으로 만들기 위해 적용
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--gray_500); // 기본 SVG 색상
+  }
+}
+
+.activeView {
+  background-color: var(--gray_50);
+}
+
+.newMap {
+  margin-left: 16px;
+  width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--main);
+  color: #000;
+  padding: 5px 10px;
+  border-radius: 8px;
+  color: var(--white);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.mapContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.getMap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 1508px;
+  min-height: 256px;
+  height: auto;
+  margin: 16px;
+  align-items: center;
+  justify-items: center;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mapWrapper {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  align-items: center;
+}
+
+.numMap {
+  width: 492px;
+  height: 256px;
+  margin: 8px;
+  background-color: var(--gray_400);
+}
+
+.galleryInfo {
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+  padding: 8px;
+  color: var(--black);
+  text-align: center;
+  width: 492px;
+  height: 55px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mapTitle {
+  display: flex;
+  color: black;
+  font-size: 20px;
+  line-height: 30px;
+  justify-content: flex-start;
+}
+
+.mapLocation {
+  display: flex;
+  color: var(--gray_500);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  justify-items: flex-start;
+}
+
+.listInfo {
+  display: flex;
+  width: 1366px;
+  height: 21px;
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 14px;
+  color: var(--gray_500);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mapName {
+  display: flex;
+  width: 274px;
+}
+
+.mapInfo,
+.mapListInfo {
+  display: flex;
+  width: 729px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 160px;
+}
+
+.mapInfo div,
+.mapListInfo div {
+  width: 186px; /* 각 요소의 너비를 동일하게 설정 */
+  text-align: left; /* 텍스트 왼쪽 정렬 */
+}
+
+.listContainer {
+  display: flex;
+  width: 100%;
+  margin-left: 20px;
+  flex-direction: column;
+}
+
+.mapList {
+  display: flex;
+  width: 1366px;
+  height: 102px;
+  margin-top: 8px;
+  justify-content: space-between;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--gray_400);
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.mapListName {
+  display: flex;
+  width: 274px;
+  height: 80px;
+  margin-top: 8px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mapListImage {
+  width: 152px;
+  height: 80px;
+  background-color: #000;
+}
+
+.mapListImageTitleLocation {
+  margin-left: 16px;
+  gap: 2px;
+}
+.mapListImageTitle {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--black);
+}
+
+.mapListImageLocation {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--gray_500);
+}
+
+.profileImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 150px;
+  border: 1.36px;
+}

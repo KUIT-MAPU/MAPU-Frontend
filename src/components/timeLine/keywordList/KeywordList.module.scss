@@ -1,0 +1,74 @@
+.titleBar {
+  padding-bottom: 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+}
+
+.refreshBtn {
+  display: flex;
+  width: 70px;
+  height: 40px;
+  padding: 7px 8px 6px 8px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  font-size: 18px;
+  color: var(--gray_500);
+
+  background-color: transparent;
+  border: none;
+
+  cursor: pointer;
+}
+
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selected {
+  display: flex;
+  padding: 6px 16px;
+  align-items: center;
+  margin-right: 12px;
+  margin-bottom: 12px;
+
+  border-radius: 4px;
+  background-color: #d3f7e3;
+
+  color: var(--main);
+  font-weight: 600;
+  line-height: 150%;
+}
+
+.keywordPills {
+  display: flex;
+  padding: 6px 16px;
+  align-items: center;
+  margin-right: 12px;
+  margin-bottom: 12px;
+
+  border-radius: 4px;
+  background-color: var(--gray_50);
+
+  color: var(--black);
+  font-weight: 600;
+  line-height: 150%;
+}
+
+.alertComment {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--gray_500);
+  font-size: 14px;
+  line-height: 150%;
+}

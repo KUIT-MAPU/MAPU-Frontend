@@ -1,0 +1,67 @@
+.cardRoot {
+  display: flex;
+  width: 360px;
+  height: 60px;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editorInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+.editorImg {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 90.795px;
+  border: 0.908px solid var(--gray_100);
+}
+
+.editorNameNid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.editorName {
+  font-weight: 600;
+}
+
+.editorId {
+  color: var(--gray_400);
+}
+
+.following {
+  display: flex;
+  padding: 2px 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #d3f7e3;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 150%;
+  color: var(--main);
+}
+
+.unfollowing {
+  display: flex;
+  padding: 2px 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #f2f5f8;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 150%;
+  color: #111111;
+}

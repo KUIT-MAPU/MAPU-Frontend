@@ -1,0 +1,38 @@
+.leftBar {
+  width: 400px;
+  height: 100%;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-right: 1px solid var(--gray_50);
+}
+
+.border {
+  width: 360px;
+  height: 1px;
+
+  background: var(--gray_50);
+}
+
+.editorList {
+  width: 100%;
+  height: 482px;
+  padding: 57px 20px 24px 20px;
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.keywordList {
+  width: 100%;
+  flex-grow: 1;
+  padding: 24px 20px 392px 20px;
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}

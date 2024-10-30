@@ -1,19 +1,21 @@
 <!-- Title Convention
-pr 생성시 Format -> Type(Scope): Description
+pr 생성시 Format -> **type(scope): description**
 - 하나의 커밋일 경우 해당 커밋 메시지와 동일하게 작성한다.
 - 여러 커밋이 포함된 경우 요약되어야 한다.
-- Descriptiona: 영어인 경우, 첫 글자는 대문자.
-- ex. Feat(jwt): 사용자 인증을 위한 jwt 토큰 추가
+- description: 내용
+- ex. feat(jwt): 사용자 인증을 위한 jwt 토큰 추가
 
-merge pr시 Format -> Resolves #{이슈-번호}
+merge pr시 Format -> **merge/type(scope): description**
 -->
 
 ## 📌 개요
+
 _변경 사항 및 관련 이슈에 대해 간단하게 작성해주세요._
 
 <br>
 
 ## 📝 PR 유형
+
 어떤 변경 사항이 있나요?
 
 - [ ] 새로운 기능 추가
@@ -29,7 +31,7 @@ _변경 사항 및 관련 이슈에 대해 간단하게 작성해주세요._
 <br>
 
 ## ✔ PR Checklist
+
 PR이 다음 요구 사항을 충족하는지 확인하세요.
 
-- [ ] 커밋 메시지 컨벤션에 맞게 작성했습니다.  Commit message convention 참고  (Ctrl + 클릭하세요.) 
-- [ ] 변경 사항에 대한 테스트를 했습니다.(버그 수정/기능에 대한 테스트).
+- [ ] 커밋 메시지 컨벤션에 맞게 작성했습니다. Commit message convention 참고
