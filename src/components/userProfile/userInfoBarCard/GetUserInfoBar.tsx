@@ -11,8 +11,7 @@ import Follower from '../followModal/Follower';
 
 import instance from '../../../apis/instance';
 import ProfileEdit from '../getProfileEdit/ProfileEdit';
-import ProfileSettingModal from '../../profile_setting/LoginProfileSetting';
-
+import LogProfileSettingModal from '../../profile_setting/LoginProfileSetting';
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
   const navigate = useNavigate();
@@ -83,7 +82,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
           followingCnt: data.followingCnt,
         });
 
-        navigate(`/user/${data.profileId}`);
+        // navigate(`/user/${data.profileId}`);
       } catch (error) {
         console.error('Failed to fetch user data', error);
       }
@@ -91,7 +90,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
     
 
     fetchUserData();
-  }, [navigate]);
+  }, []);
 
   const { loginNeeded, registerStatus, setLoginNeededStatus } =
     useRegisterStore();
@@ -183,7 +182,7 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
         <div onClick={handleProfileEditClose} className={styles.modalOverlay}>
           <div className={styles.modalContent}
           onClick={(e) => {e.stopPropagation();}}>
-            <ProfileSettingModal loginedNickName={userData.nickname} loginedId={userData.profileId} onClose={handleProfileEditClose} />
+            <LogProfileSettingModal loginedNickName={userData.nickname} loginedId={userData.profileId} onClose={handleProfileEditClose} />
             </div>
         </div>
       )}

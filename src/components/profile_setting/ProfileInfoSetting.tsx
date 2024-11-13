@@ -42,9 +42,12 @@ const ProfileInfoSetting = (props:any) => {
       return;
     }
 
-    if (!isNicknameEmpty && !isIdEmpty && isValidNickname && isValidId)
+    if (!isNicknameEmpty && !isIdEmpty && isValidNickname && isValidId){
       setIsComplete(true);
-    else setIsComplete(false);
+    }
+    else {
+      setIsComplete(false);
+    }
   }, [isNicknameEmpty, isValidNickname, isIdEmpty, isValidId]);
 
   
