@@ -28,14 +28,17 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  text-decoration: none;
 }
 
 .editorName {
   font-weight: 600;
+  text-decoration: none;
 }
 
 .editorId {
   color: var(--gray_400);
+  text-decoration: none;
 }
 
 .following {

@@ -8,7 +8,7 @@ import GetUser from '../../components/userProfile/GetUser';
 import EmptyUser from '../../components/userProfile/EmptyUser';
 import EmtpyUserInfobar from '../../components/userProfile/userInfoBarCard/EmptyUserInfoBar';
 import GetUserInfobar from '../../components/userProfile/userInfoBarCard/GetUserInfoBar';
-
+import OtherUserInfobar from '../../components/userProfile/userInfoBarCard/OtherUserInfoBar';
 
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';

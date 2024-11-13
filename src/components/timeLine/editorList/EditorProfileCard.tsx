@@ -5,10 +5,10 @@ import useRegisterStore from '../../../stores/registerStore';
 
 import styles from './EditorProfileCard.module.scss';
 import dimmedStyles from '../Dimmed.module.scss';
-import userImg from '../../../assets/img_user_default_profile.svg'
+import userImg from '../../../assets/img_user_default_profile.svg';
 import AuthContainer from '../../login/AuthContainer';
 
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { usePostFollow } from '../../../apis/follow/usePostFollow';
 import { FollowType } from '../../../types/follow/FollowType';
 import { useDeleteUnFollow } from '../../../apis/follow/useDeleteUnFollow';
@@ -17,12 +17,15 @@ import { fetchFollowing } from '../../../apis/follow/useGetFollowing';
 
 interface ProfileCardProps {
   Editor: EditorType;
-  token: string|undefined;
+  token: string | undefined;
   isLog: boolean;
-  
 }
 
-const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token }) => {
+const EditorProfileCard: React.FC<ProfileCardProps> = ({
+  Editor,
+  isLog,
+  token,
+}) => {
   const { registerStatus, setLoginNeededStatus } = useRegisterStore();
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
   const [isFollow, setIsFollow] = useState<boolean>(false);
@@ -31,13 +34,11 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token })
   const Followmutation = usePostFollow();
   const UnFollowmutation = useDeleteUnFollow();
 
-  const { data: followingData } = useQuery(
-    ['followindData'],
-    () => fetchFollowing(token)
-  )
+  const { data: followingData } = useQuery(['followindData'], () =>
+    fetchFollowing(token),
+  );
 
   const handleFollow = (followingId: number) => {
-  
     if (!isLog) {
       setLoginNeededStatus(true);
       setIsOverlayVisible(true);
@@ -50,14 +51,13 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token })
     }
   };
 
-  const handleUnFollow = (followingId:number) => {
-  setIsFollow(false);
-  const unfollowData : FollowType = {
-    followingId: followingId,
-  }
-  UnFollowmutation.mutate(unfollowData);
+  const handleUnFollow = (followingId: number) => {
+    setIsFollow(false);
+    const unfollowData: FollowType = {
+      followingId: followingId,
+    };
+    UnFollowmutation.mutate(unfollowData);
   };
-
 
   const handleClose = () => {
     setLoginNeededStatus(false);
@@ -66,17 +66,17 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token })
     setIsOverlayVisible(false);
   };
 
-  useEffect(()=>{
-    if(followingData?.users.some(user => user.userId === Editor.userId)) {
+  useEffect(() => {
+    if (followingData?.users.some((user) => user.userId === Editor.userId)) {
       setIsFollow(true);
     } else {
       setIsFollow(false);
     }
-  },[followingData])
+  }, [followingData]);
 
   useEffect(() => {
-    console.log('followingData:',followingData);
-  },[isLog,followingData])
+    console.log('followingData:', followingData);
+  }, [isLog, followingData]);
 
   return (
     <div className={styles.cardRoot}>
@@ -86,7 +86,21 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token })
           <AuthContainer className={dimmedStyles.authContainer} />
         </>
       )}
-      <div className={styles.editorInfo}>
+      <Link to={`/user/${Editor.profileId}`} style={{ textDecoration: 'none',color: 'inherit' }}>
+        <div className={styles.editorInfo}>
+          <img
+            className={styles.editorImg}
+            src={Editor.image ? Editor.image : userImg}
+            alt="Editor Image"
+          />
+
+          <div className={styles.editorNameNid}>
+            <div className={styles.editorName}>{Editor.nickname}</div>
+            <span className={styles.editorId}>@{Editor.profileId}</span>
+          </div>
+        </div>
+      </Link>
+      {/* <div className={styles.editorInfo}>
         <img
           className={styles.editorImg}
           src={Editor.image ? Editor.image : userImg}
@@ -97,11 +111,17 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({ Editor, isLog, token })
           <div className={styles.editorName}>{Editor.nickname}</div>
           <span className={styles.editorId}>@{Editor.profileId}</span>
         </div>
-      </div>
+      </div> */}
 
-      <button className={`${isFollow ? styles.unfollowing : styles.following}`} onClick={isFollow ? () => handleUnFollow(Editor.userId):() => handleFollow(Editor.userId)}>
-        {isFollow ? "팔로잉" : "팔로우"}
-
+      <button
+        className={`${isFollow ? styles.unfollowing : styles.following}`}
+        onClick={
+          isFollow
+            ? () => handleUnFollow(Editor.userId)
+            : () => handleFollow(Editor.userId)
+        }
+      >
+        {isFollow ? '팔로잉' : '팔로우'}
       </button>
     </div>
   );
