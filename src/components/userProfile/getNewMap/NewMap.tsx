@@ -19,6 +19,19 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
   const [zoomLevel, setZoomLever] = useState<number>(0);
   const [isOnSearch, setIsOnSearch] = useState<boolean>(true);
   const [keywords,setKeywords] = useState<string[]>(["추천"]);
+  const [showCity,setShowCity] = useState<boolean>(false);
+
+  const cities = [
+    "서울특별시",
+    "부산광역시",
+    "대구광역시",
+    "인천광역시",
+    "광주광역시",
+    "대전광역시",
+    "울산광역시",
+    "세종특별자치시",
+    "제주특별자치도"
+  ];
 
   const getButtonStyle = (buttonLocation: string) => {
     return location === buttonLocation
@@ -45,6 +58,7 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
 
   const mapContainer = useRef<HTMLDivElement>(null); 
   const handleCurrentLocation = () => {
+    setShowCity(false);
     setLocation('현재 위치');
     kakao.maps.load(() => {
       if (navigator.geolocation) {
@@ -69,6 +83,20 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
     });
   };
 
+  const handleAllLocation = () => {
+    setLocation('전국');
+    setShowCity(false);
+  }
+  
+  const handleCityLocation = () => {
+    setLocation('광역자치단체');
+    setShowCity(true);
+  }
+
+  const handleCitySelect = (city:string) => {
+    setLocation(city);
+  }
+
 
   const sendDataToBackend = async (data:any) => {
     try {
@@ -83,7 +111,8 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
   const handleSubmit = (event:any) => {
     event.preventDefault();
     
-    if(!mapTitle || !latitude || !longitude){
+    // if(!mapTitle || !latitude || !longitude)
+    if(!mapTitle || !location){
       alert('모든 필수 정보를 입력해주세요');
       return;
     }
@@ -95,7 +124,7 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
       latitude,
       longitude,
       zoomLevel,
-      publishLink : imageUrl, 
+      publishLink : "https://example.com/maps/seoul-food-tour", 
       isOnSearch,
       keywords,
     };
@@ -134,17 +163,30 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
           </button>
           <button
             className={getButtonStyle('전국')}
-            onClick={() => setLocation('전국')}
+            onClick={handleAllLocation}
           >
             전국
           </button>
           <button
             className={getButtonStyle('광역자치단체')}
-            onClick={() => setLocation('광역자치단체')}
+            onClick={handleCityLocation}
           >
             광역자치단체
           </button>
         </div>
+
+        {showCity && (
+          <div className={styles.citiesList}>
+            {cities.map((city) => (
+              <button key={city} 
+              className={`${styles.cityButton} ${location === city ? styles.selectedCityButton : ''}`}
+              onClick={() => handleCitySelect(city)
+              }>
+                {city}
+              </button>
+            ))}
+          </div>
+        )}
         <div className={`${styles.createBtn} ${getMapCreateStyle()}`}>
           <div 
             role="button" 
