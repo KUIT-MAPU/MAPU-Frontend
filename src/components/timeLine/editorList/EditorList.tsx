@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -48,3 +49,6 @@ const EditorList: React.FC<EditorListProps> = ({ className, isLog, token }) => {
 };
 
 export default EditorList;
+=======
+import React from "react";
+>>>>>>> b00baec9 (feat : add HeaderNavigation component)
