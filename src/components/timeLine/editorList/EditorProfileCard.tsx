@@ -14,7 +14,9 @@ import { FollowType } from '../../../types/follow/FollowType';
 import { useDeleteUnFollow } from '../../../apis/follow/useDeleteUnFollow';
 import { useQuery } from 'react-query';
 import { fetchFollowing } from '../../../apis/follow/useGetFollowing';
+import instance from '../../../apis/instance';
 
+import { useUserViewState } from '../../../stores/userViewState';
 interface ProfileCardProps {
   Editor: EditorType;
   token: string | undefined;
@@ -33,10 +35,34 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({
   const pathname = useLocation().pathname;
   const Followmutation = usePostFollow();
   const UnFollowmutation = useDeleteUnFollow();
+  const { setViewUserData } = useUserViewState();
 
   const { data: followingData } = useQuery(['followindData'], () =>
     fetchFollowing(token),
   );
+
+  const handleUserProfile = (userId: number) => {
+    const fetchUserData = async () => {
+      try {
+        const response = await instance.get(`/user/${userId}`);
+        const data = response.data.result;
+        console.log(data);
+        setViewUserData({
+          nickname: data.nickname,
+          profileId: data.profileId,
+          imgUrl: data.imgUrl,
+          mapCnt: data.mapCnt,
+          followerCnt: data.followerCnt,
+          followingCnt: data.followingCnt,
+        });
+
+        navigate(`/user/${data.profileId}`);
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    }; 
+    fetchUserData();
+  }
 
   const handleFollow = (followingId: number) => {
     if (!isLog) {
@@ -86,7 +112,12 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({
           <AuthContainer className={dimmedStyles.authContainer} />
         </>
       )}
-      <Link to={`/user/${Editor.profileId}`} style={{ textDecoration: 'none',color: 'inherit' }}>
+      <Link to={`/user/${Editor.profileId}`} 
+      style={{ textDecoration: 'none',color: 'inherit' }}
+      onClick={() => {
+        handleUserProfile(Editor.userId);
+      }}
+      >
         <div className={styles.editorInfo}>
           <img
             className={styles.editorImg}
@@ -100,18 +131,6 @@ const EditorProfileCard: React.FC<ProfileCardProps> = ({
           </div>
         </div>
       </Link>
-      {/* <div className={styles.editorInfo}>
-        <img
-          className={styles.editorImg}
-          src={Editor.image ? Editor.image : userImg}
-          alt="Editor Image"
-        />
-
-        <div className={styles.editorNameNid}>
-          <div className={styles.editorName}>{Editor.nickname}</div>
-          <span className={styles.editorId}>@{Editor.profileId}</span>
-        </div>
-      </div> */}
 
       <button
         className={`${isFollow ? styles.unfollowing : styles.following}`}

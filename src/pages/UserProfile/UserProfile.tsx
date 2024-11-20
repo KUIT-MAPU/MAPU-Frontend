@@ -6,12 +6,15 @@ import GlobalNavigationBar from '../../components/global/GlobalNavigationBar';
 import styles from './UserProfile.module.scss';
 import GetUser from '../../components/userProfile/GetUser';
 import EmptyUser from '../../components/userProfile/EmptyUser';
+import OtherUser from '../../components/userProfile/OtherUser';
+
 import EmtpyUserInfobar from '../../components/userProfile/userInfoBarCard/EmptyUserInfoBar';
 import GetUserInfobar from '../../components/userProfile/userInfoBarCard/GetUserInfoBar';
 import OtherUserInfobar from '../../components/userProfile/userInfoBarCard/OtherUserInfoBar';
 
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import useUserViewState from '../../stores/userViewState';
 
 import instance from '../../apis/instance';
 
@@ -20,6 +23,7 @@ const UserProfile = () => {
   const { profileId } = useParams();
   const [isLog, setIsLog] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+  const { viewUserData, resetViewUserData } = useUserViewState();
   const [userData, setUserData] = useState({
     nickname: '',
     profileId: '',
@@ -74,13 +78,27 @@ const UserProfile = () => {
     titleElement.innerHTML = `${userData.nickname}님의 페이지 | MAPU`; //api 호출 -> 사용자 타이틀에 추가
   }, [userData.nickname]);
 
+  // useEffect(() => {
+  //   return () => {
+  //     resetViewUserData();
+  //   }
+  // }, [resetViewUserData]);
 
   console.log(registerStatus);
   return (
     <div className={styles.container}>
       <GlobalNavigationBar />
-      {registerStatus === RegisterStatus.LOG_IN ? <GetUserInfobar /> : <EmtpyUserInfobar />}
-      {registerStatus === RegisterStatus.LOG_IN ? <GetUser /> : <EmptyUser />}
+      {registerStatus === RegisterStatus.LOG_IN ? (
+        viewUserData.nickname!='' ? <OtherUserInfobar /> : <GetUserInfobar />
+      ): (
+      <EmtpyUserInfobar />
+    )}
+      
+      {registerStatus === RegisterStatus.LOG_IN ? (
+        viewUserData.nickname!='' ? <OtherUser /> : <GetUser />
+      ): (
+      <EmptyUser />
+    )}
     </div>
   );
 };

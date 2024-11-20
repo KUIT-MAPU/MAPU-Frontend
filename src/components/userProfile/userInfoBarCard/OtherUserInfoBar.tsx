@@ -12,6 +12,7 @@ import Follower from '../followModal/Follower';
 import instance from '../../../apis/instance';
 import ProfileEdit from '../getProfileEdit/ProfileEdit';
 import ProfileSettingModal from '../../profile_setting/LoginProfileSetting';
+import useUserViewState from '../../../stores/userViewState';
 
 
 const UserInfoBar = (props: { children?: React.ReactNode }) => {
@@ -30,20 +31,18 @@ const UserInfoBar = (props: { children?: React.ReactNode }) => {
     followerCnt: 0,
     followingCnt: 0,
   });
+  const { viewUserData} = useUserViewState();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await instance.get(`/user/${otherUserProfileId}`);
-        const data = response.data.result;
-
         setUserData({
-          nickname: data.nickname,
-          profileId: data.profileId,
-          imgUrl: data.imgUrl,
-          mapCnt: data.mapCnt,
-          followerCnt: data.followerCnt,
-          followingCnt: data.followingCnt,
+          nickname: viewUserData.nickname,
+          profileId: viewUserData.profileId,
+          imgUrl: viewUserData.imgUrl,
+          mapCnt: viewUserData.mapCnt,
+          followerCnt: viewUserData.followerCnt,
+          followingCnt: viewUserData.followingCnt,
         });
       } catch (error) {
         console.error('Failed to fetch user data', error);

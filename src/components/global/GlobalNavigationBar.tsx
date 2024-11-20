@@ -16,6 +16,7 @@ import { ReactComponent as User } from '../../assets/user.svg';
 import { ReactComponent as Login } from '../../assets/btn_login.svg';
 import { ReactComponent as Logout } from '../../assets/btn_logout.svg';
 import useLogOutMutation from '../../apis/auth/useLogOutMutation';
+import useUserViewState from '../../stores/userViewState';
 
 import instance from '../../apis/instance';
 
@@ -29,6 +30,7 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
     useRegisterStore();
 
   const logOutMutation = useLogOutMutation(prevUrl);
+  const { viewUserData } = useUserViewState();
   const [userData, setUserData] = useState({
     nickname: '',
     profileId: '',
@@ -120,7 +122,7 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
           <div
             className={`${styles.iconContainer} ${isUserpageActive ? styles.iconContainer_on : styles.iconContainer_off}`}
           >
-            {userData.imgUrl ? (
+            {/* {userData.imgUrl ? (
               <img
                 src={userData.imgUrl}
                 alt="User Profile"
@@ -128,6 +130,19 @@ const GlobalNavigationBar = (props: { children?: React.ReactNode }) => {
               />
             ) : (
               <User />
+            )} */}
+            { viewUserData.nickname != '' ? (
+              <img
+               src={viewUserData.imgUrl}
+               alt="User Profile"
+               className={styles.iconContainer}
+              />
+            ) : (
+              <img
+              src={userData.imgUrl}
+              alt="User Profile"
+              className={styles.iconContainer}
+              />
             )}
           </div>
         </Link>
