@@ -89,13 +89,13 @@ const UserProfile = () => {
     <div className={styles.container}>
       <GlobalNavigationBar />
       {registerStatus === RegisterStatus.LOG_IN ? (
-        viewUserData ? <OtherUserInfobar /> : <GetUserInfobar />
+        viewUserData.nickname!='' ? <OtherUserInfobar /> : <GetUserInfobar />
       ): (
       <EmtpyUserInfobar />
     )}
       
       {registerStatus === RegisterStatus.LOG_IN ? (
-        viewUserData ? <OtherUser /> : <GetUser />
+        viewUserData.nickname!='' ? <OtherUser /> : <GetUser />
       ): (
       <EmptyUser />
     )}

@@ -15,6 +15,7 @@ import { ReactComponent as CreatMap } from '../../assets/btn_map_create.svg';
 
 import useRegisterStore from '../../stores/registerStore';
 import { RegisterStatus } from '../../types/enum/RegisterStatus';
+import useUserViewState from '../../stores/userViewState';
 
 import instance from '../../apis/instance';
 import NewMap from './getNewMap/NewMap';
@@ -29,6 +30,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [mapData, setMapData] = useState([]);
   const [searchInput,setSearchInput] = useState<string>('');
+  const { viewUserData } = useUserViewState();
   const [userData, setUserData] = useState({
     nickname: '',
     profileId: '',
@@ -224,7 +226,7 @@ const GetUser = (props: { children?: React.ReactNode }) => {
                       <div className={styles.mapLocation}>{map.region}</div>
                     </div>
                     <img
-                      src={userData.imgUrl}
+                      src={viewUserData.imgUrl}
                       alt="userProfileImage"
                       className={styles.profileImage}
                     />
