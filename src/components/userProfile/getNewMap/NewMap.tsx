@@ -16,7 +16,7 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
   const [mapCreate, setMapCreate] = useState<boolean>(false);
   const [latitude, setLatitude] = useState<number | null>(null); //위도(기본값 null)
   const [longitude, setLongitude] = useState<number | null>(null); //경도(기본값 null)
-  const [zoomLevel, setZoomLever] = useState<number>(0);
+  const [zoomLevel, setZoomLevel] = useState<number>(0);
   const [isOnSearch, setIsOnSearch] = useState<boolean>(true);
   const [keywords,setKeywords] = useState<string[]>(["추천"]);
 
@@ -42,8 +42,14 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
     return mapCreate ? `${styles.onMapCreate}` : `${styles.offMapCreate}`;
   };
 
+  const createMapImageUrl = (lat : number, lon: number) => {
+    const apiKey = "fe0a051a2cc8dcb3191209d036318c67";  // 발급받은 Kakao API Key로 대체
+    const level = 3; // 지도 축척 레벨
+    setZoomLevel(level);
+    return `https://dapi.kakao.com/v2/maps/staticmap?center=${lon},${lat}&level=${level}&size=640x480&map_type=roadmap&markers=color:red|${lon},${lat}`;
+  };
 
-  const mapContainer = useRef<HTMLDivElement>(null); 
+  const mapContainer = document.getElementById('currentMap');
   const handleCurrentLocation = () => {
     setLocation('현재 위치');
     kakao.maps.load(() => {
@@ -55,13 +61,15 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
           setLongitude(lon);
           console.log(lat, lon);
 
-          if(mapContainer.current){
-            let staticMapOption = {
-              center: new kakao.maps.LatLng(lat,lon),
-              level: 3
-            }
-            new kakao.maps.StaticMap(mapContainer.current,staticMapOption)
-          };
+          setImageUrl(createMapImageUrl(lat,lon));
+
+          // if(mapContainer){
+          //   let staticMapOption = {
+          //     center: new kakao.maps.LatLng(lat,lon),
+          //     level: 3
+          //   }
+          //   let map = new kakao.maps.StaticMap(mapContainer,staticMapOption)
+          //};
         });
       } else {
         alert('현재 위치 사용 불가');
@@ -87,11 +95,12 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
       alert('모든 필수 정보를 입력해주세요');
       return;
     }
+    
     const formData = {
       mapTitle,
       mapDescription,
       address: location,
-      imageUrl: "https://example.com/maps/seoul-food-tour",
+      imageUrl,
       latitude,
       longitude,
       zoomLevel,
@@ -126,9 +135,9 @@ const NewMap = ({ onClose }: { onClose: () => void }) => {
         </div>
         <div className={styles.mapStartText}>시작 위치</div>
         <div className={styles.btnLocation}>
-          <button
+          <button id='currentMap'
             className={getButtonStyle('현재 위치')}
-            onClick={handleCurrentLocation}
+            onClick={() => {handleCurrentLocation()}}
           >
             현재 위치
           </button>
